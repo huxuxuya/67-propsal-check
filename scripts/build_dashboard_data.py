@@ -1326,6 +1326,86 @@ def build_interest_clusters(actors, evidence_claims, identity_graph):
     return clusters
 
 
+def build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_claims):
+    recipient_by_address = {row["address"]: row for row in recipients}
+    vote_by_address = {row["voter"]: row for row in votes}
+    claims_by_address = defaultdict(list)
+    for claim in evidence_claims:
+        if claim.get("address"):
+            claims_by_address[claim["address"]].append(claim)
+
+    cluster_by_address = {}
+    for cluster in interest_clusters:
+        for address in cluster.get("addresses", []):
+            cluster_by_address[address] = cluster
+
+    addresses = sorted(set(recipient_by_address) | set(vote_by_address))
+    rows = []
+    for address in addresses:
+        recipient = recipient_by_address.get(address, {})
+        vote = vote_by_address.get(address, {})
+        cluster = cluster_by_address.get(address, {})
+        claims = claims_by_address.get(address, [])
+        proof_claims = [claim for claim in claims if claim.get("isAttributionProof")]
+        high_claims = [claim for claim in claims if claim.get("confidence") == "high"]
+        total_comp = recipient.get("totalGonka") or 0
+        voting_power = vote.get("votingPower") or 0
+        is_recipient = bool(recipient)
+        is_voter = bool(vote)
+        overlap = is_recipient and is_voter
+        evidence_boundary = cluster.get("evidenceBoundary") or ("public_owner_proof" if proof_claims else ("public_signal" if high_claims else "unknown_or_weak_signal"))
+        triage_score = (
+            min(40, total_comp / 4000)
+            + min(40, voting_power / 7000)
+            + (15 if overlap else 0)
+            + (8 if evidence_boundary == "public_owner_proof" else 0)
+        )
+        next_actions = []
+        if overlap:
+            next_actions.append("review conflict narrative")
+        if voting_power and not proof_claims:
+            next_actions.append("prioritize owner attribution")
+        if total_comp and not proof_claims:
+            next_actions.append("enrich beneficiary identity")
+        if cluster.get("kind") == "signal_cluster":
+            next_actions.append("corroborate infrastructure cluster")
+        if not next_actions:
+            next_actions.append("monitor")
+
+        rows.append(
+            {
+                "address": address,
+                "label": recipient.get("label") or vote.get("label") or "Unknown public owner",
+                "isRecipient": is_recipient,
+                "isVoter": is_voter,
+                "recipientVoterOverlap": overlap,
+                "totalCompensationGonka": round(total_comp, 6),
+                "votingPower": round(voting_power, 6),
+                "voteOption": vote.get("primaryOption", "did_not_vote"),
+                "clusterId": cluster.get("id", ""),
+                "clusterKind": cluster.get("kind", ""),
+                "evidenceBoundary": evidence_boundary,
+                "proofCount": len(proof_claims),
+                "highConfidenceClaimCount": len(high_claims),
+                "triageScore": round(triage_score, 3),
+                "nextActions": next_actions,
+                "topEvidence": sorted(
+                    claims,
+                    key=lambda claim: (
+                        {"high": 0, "medium": 1, "low": 2}.get(claim.get("confidence"), 3),
+                        not claim.get("isAttributionProof"),
+                        claim.get("sourceType", ""),
+                    ),
+                )[:5],
+            }
+        )
+
+    rows.sort(key=lambda row: (-row["triageScore"], -row["votingPower"], -row["totalCompensationGonka"], row["label"]))
+    for index, row in enumerate(rows, start=1):
+        row["rank"] = index
+    return rows
+
+
 def load_epoch_group_snapshot(epoch):
     path = DATA / "voting_end_epochs" / f"e{epoch}" / "epoch_group_data.json"
     if not path.exists():
@@ -1687,7 +1767,7 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
     ]
 
 
-def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None):
+def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None, benefit_power_matrix=None):
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
 
@@ -1769,6 +1849,85 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                     "caveat": row["caveat"],
                 }
             )
+
+    if benefit_power_matrix is not None:
+        with (reports / "benefit_power_matrix.csv").open("w", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "rank",
+                    "address",
+                    "label",
+                    "is_recipient",
+                    "is_voter",
+                    "recipient_voter_overlap",
+                    "total_compensation_gonka",
+                    "voting_power",
+                    "vote_option",
+                    "cluster_id",
+                    "cluster_kind",
+                    "evidence_boundary",
+                    "proof_count",
+                    "high_confidence_claim_count",
+                    "triage_score",
+                    "next_actions",
+                    "top_evidence",
+                ],
+            )
+            writer.writeheader()
+            for row in benefit_power_matrix:
+                writer.writerow(
+                    {
+                        "rank": row["rank"],
+                        "address": row["address"],
+                        "label": row["label"],
+                        "is_recipient": row["isRecipient"],
+                        "is_voter": row["isVoter"],
+                        "recipient_voter_overlap": row["recipientVoterOverlap"],
+                        "total_compensation_gonka": row["totalCompensationGonka"],
+                        "voting_power": row["votingPower"],
+                        "vote_option": row["voteOption"],
+                        "cluster_id": row["clusterId"],
+                        "cluster_kind": row["clusterKind"],
+                        "evidence_boundary": row["evidenceBoundary"],
+                        "proof_count": row["proofCount"],
+                        "high_confidence_claim_count": row["highConfidenceClaimCount"],
+                        "triage_score": row["triageScore"],
+                        "next_actions": " | ".join(row["nextActions"]),
+                        "top_evidence": " | ".join(f"{item['sourceType']}:{item['sourceValue']}:{item['confidence']}" for item in row["topEvidence"]),
+                    }
+                )
+
+        lines = [
+            "# Proposal 67 Benefit + Governance Power Matrix",
+            "",
+            "This report ranks addresses by combined compensation benefit, exact archive-derived governance voting power, recipient-voter overlap, and public evidence boundary. It is a triage queue: `public_owner_proof` is stronger attribution; URL/IP-only labels remain investigation leads.",
+            "",
+            "## Highest Priority Rows",
+            "",
+        ]
+        for row in benefit_power_matrix[:35]:
+            lines.extend(
+                [
+                    f"### #{row['rank']} {row['label']}",
+                    "",
+                    f"- Address: `{row['address']}`",
+                    f"- Compensation: {row['totalCompensationGonka']} GONKA; governance power: {row['votingPower']}; vote: {row['voteOption']}",
+                    f"- Recipient: {row['isRecipient']}; voter: {row['isVoter']}; overlap: {row['recipientVoterOverlap']}",
+                    f"- Cluster: {row['clusterId'] or 'none'} ({row['clusterKind'] or 'none'})",
+                    f"- Evidence boundary: {row['evidenceBoundary']} (proof {row['proofCount']}, high-confidence claims {row['highConfidenceClaimCount']})",
+                    f"- Triage score: {row['triageScore']}",
+                    f"- Next actions: {' | '.join(row['nextActions'])}",
+                    "",
+                ]
+            )
+            if row["topEvidence"]:
+                lines.append("Top evidence:")
+                for item in row["topEvidence"]:
+                    proof = "proof" if item["isAttributionProof"] else "signal"
+                    lines.append(f"- {item['sourceType']} ({item['confidence']}, {proof}): {item['sourceValue']}")
+                lines.append("")
+        (reports / "benefit_power_matrix.md").write_text("\n".join(lines).rstrip() + "\n")
 
     if interest_clusters is not None:
         with (reports / "interest_clusters.csv").open("w", newline="") as f:
@@ -2216,9 +2375,10 @@ def main():
     epoch_entry_exit_clusters = build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity_graph, evidence_claims)
     ranked_parties = build_ranked_parties(actors, evidence_claims, identity_graph)
     interest_clusters = build_interest_clusters(actors, evidence_claims, identity_graph)
+    benefit_power_matrix = build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_claims)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
-    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters)
+    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters, benefit_power_matrix)
 
     dashboard = {
         "metadata": {
@@ -2264,6 +2424,9 @@ def main():
             "interestClustersCount": len(interest_clusters),
             "interestClustersWithVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0),
             "interestClustersWithCompensationAndVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0 and row["totalCompensationGonka"] > 0),
+            "benefitPowerMatrixCount": len(benefit_power_matrix),
+            "benefitPowerOverlapCount": sum(1 for row in benefit_power_matrix if row["recipientVoterOverlap"]),
+            "benefitPowerPublicProofOverlapCount": sum(1 for row in benefit_power_matrix if row["recipientVoterOverlap"] and row["evidenceBoundary"] == "public_owner_proof"),
             "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
             "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
             "epochAnomaliesCount": len(epoch_anomalies),
@@ -2288,6 +2451,7 @@ def main():
         "evidenceClaims": evidence_claims,
         "rankedParties": ranked_parties,
         "interestClusters": interest_clusters,
+        "benefitPowerMatrix": benefit_power_matrix,
         "telegramEvidence": telegram_evidence.get("messages") or [],
         "epochAnomalies": epoch_anomalies,
         "epochEntryExitClusters": epoch_entry_exit_clusters,

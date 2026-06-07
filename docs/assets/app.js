@@ -22,6 +22,7 @@ const els = {
   component: document.getElementById("componentFilter"),
   confidence: document.getElementById("confidenceFilter"),
   sourceType: document.getElementById("sourceTypeFilter"),
+  benefitPowerTable: document.getElementById("benefitPowerTable"),
   rankedTable: document.getElementById("rankedTable"),
   interestClusterTable: document.getElementById("interestClusterTable"),
   evidenceTable: document.getElementById("evidenceTable"),
@@ -535,6 +536,45 @@ function renderInterestClusterTable() {
   `).join("");
 }
 
+function benefitPowerMatches(row, query) {
+  if (!query) return true;
+  return [
+    row.address,
+    row.label,
+    row.voteOption,
+    row.clusterId,
+    row.clusterKind,
+    row.evidenceBoundary,
+    ...(row.nextActions || []),
+  ].join(" ").toLowerCase().includes(query);
+}
+
+function renderBenefitPowerTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const selectedLabel = els.label.value;
+  const rows = (state.data.benefitPowerMatrix || []).filter((row) => {
+    if (!benefitPowerMatches(row, query)) return false;
+    if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
+    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (els.confidence.value !== "all" && !(row.topEvidence || []).some((item) => item.confidence === els.confidence.value)) return false;
+    if (els.sourceType.value !== "all" && !(row.topEvidence || []).some((item) => item.sourceType === els.sourceType.value)) return false;
+    return true;
+  });
+  document.getElementById("benefitPowerRows").textContent = `${rows.length} shown`;
+  els.benefitPowerTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td class="num">${row.rank}<br><span class="muted">${fmt.format(row.triageScore)}</span></td>
+      <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
+      <td>${escapeHtml(row.label)}<br><span class="muted">${escapeHtml(row.clusterId || "no cluster")}</span></td>
+      <td class="num">${gonka(row.totalCompensationGonka)}</td>
+      <td class="num">${fmt.format(row.votingPower || 0)}<br><span class="muted">${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}</span></td>
+      <td>${row.recipientVoterOverlap ? "<span class=\"tag warn\">recipient voter</span>" : row.isRecipient ? "<span class=\"tag\">recipient</span>" : row.isVoter ? "<span class=\"tag\">voter</span>" : "-"}</td>
+      <td><span class="tag ${row.evidenceBoundary === "public_owner_proof" ? "good" : ""}">${escapeHtml(row.evidenceBoundary)}</span><br><span class="muted">proof ${row.proofCount}; high ${row.highConfidenceClaimCount}</span></td>
+      <td>${(row.nextActions || []).map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join(" ")}</td>
+    </tr>
+  `).join("");
+}
+
 function renderActorGraph() {
   const ranked = (state.data.rankedParties || []).slice(0, 25);
   const claims = state.data.evidenceClaims || [];
@@ -791,6 +831,7 @@ function renderAll() {
   renderAnomalyTable();
   renderEntryExitTable();
   renderTelegramTable();
+  renderBenefitPowerTable();
   renderRankedTable();
   renderInterestClusterTable();
   renderEvidenceTable();
