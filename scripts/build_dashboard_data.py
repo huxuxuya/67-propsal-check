@@ -1937,7 +1937,7 @@ def main():
         "governancePowerEvidence": governance_power_evidence,
         "methodology": {
             "governanceVoteRule": "A vote is evidenced by an on-chain governance vote transaction for proposal #67. A prior vote remains part of the saved vote set unless superseded by a later vote from the same voter under last-vote-wins consolidation.",
-            "governanceVotingPowerRule": "Per-voter governance voting power is not inferred from inference epochs. Archive abci_query confirms the exact gov vote set and aggregate TallyResult, but gov Votes does not expose per-voter power. Until a chain-specific voting-power calculator/API is added, per-voter votingPower remains unknown.",
+            "governanceVotingPowerRule": "Per-voter governance voting power is not inferred from inference epochs. It is computed from archive staking Query/Validators and Query/DelegatorDelegations at the last pre-end block using Gonka SDK gov tally logic; the truncated decimal result must match the final on-chain TallyResult.",
             "inferenceEpochRule": "e287 validation_weights are inference/epoch participation weights. They are operational timing signals only and are not used as governance voting power.",
             "recipientConflictRule": "Recipient-voter conflict is based on address overlap between compensation outputs and final on-chain governance voters; it does not imply the compensation amount affected vote weight.",
             "identityRule": "Public attribution requires public validator/GNS/metadata/source evidence. Infrastructure, Telegram, and inference timing remain signals unless independently corroborated.",

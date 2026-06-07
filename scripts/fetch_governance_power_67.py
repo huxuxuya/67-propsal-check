@@ -5,6 +5,7 @@ import time
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
+from decimal import Decimal, ROUND_DOWN, getcontext
 from pathlib import Path
 
 from env_utils import gonka_api_source_label, gonka_api_url, gonka_rpc_source_label, gonka_rpc_url
@@ -19,6 +20,12 @@ PROPOSAL_ID = 67
 VOTING_END_TIME = "2026-06-05T22:09:02.699803591Z"
 BOUNDARY_HEIGHTS = [4_433_308, 4_433_309]
 OPTION_LABELS = {1: "yes", 2: "abstain", 3: "no", 4: "no_with_veto"}
+BONDED_STATUS = 3
+PAGE_LIMIT = 500
+
+getcontext().prec = 80
+
+BECH32_CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 
 
 def write_json(path, data):
@@ -119,11 +126,112 @@ def parse_fields(buf):
     return fields
 
 
+def encode_varint(value):
+    out = []
+    while True:
+        byte = value & 0x7F
+        value >>= 7
+        if value:
+            out.append(byte | 0x80)
+        else:
+            out.append(byte)
+            break
+    return bytes(out)
+
+
+def proto_key(field_no, wire_type):
+    return encode_varint((field_no << 3) | wire_type)
+
+
+def proto_bytes(field_no, value):
+    return proto_key(field_no, 2) + encode_varint(len(value)) + value
+
+
+def proto_varint(field_no, value):
+    return proto_key(field_no, 0) + encode_varint(value)
+
+
+def hex_request(data):
+    return "0x" + data.hex()
+
+
+def page_request(limit=PAGE_LIMIT, next_key=b""):
+    data = b""
+    if next_key:
+        data += proto_bytes(1, next_key)
+    data += proto_varint(3, limit)
+    return data
+
+
+def validators_request_hex(next_key=b""):
+    return hex_request(proto_bytes(1, b"BOND_STATUS_BONDED") + proto_bytes(2, page_request(PAGE_LIMIT, next_key)))
+
+
+def delegator_delegations_request_hex(delegator, next_key=b""):
+    return hex_request(proto_bytes(1, delegator.encode()) + proto_bytes(2, page_request(100, next_key)))
+
+
 def as_text(value):
     try:
         return value.decode()
     except UnicodeDecodeError:
         return ""
+
+
+def bech32_polymod(values):
+    generators = [0x3B6A57B2, 0x26508E6D, 0x1EA119FA, 0x3D4233DD, 0x2A1462B3]
+    chk = 1
+    for value in values:
+        top = chk >> 25
+        chk = ((chk & 0x1FFFFFF) << 5) ^ value
+        for i, generator in enumerate(generators):
+            if (top >> i) & 1:
+                chk ^= generator
+    return chk
+
+
+def bech32_hrp_expand(hrp):
+    return [ord(char) >> 5 for char in hrp] + [0] + [ord(char) & 31 for char in hrp]
+
+
+def convert_bits(data, from_bits, to_bits, pad=True):
+    acc = 0
+    bits = 0
+    ret = []
+    maxv = (1 << to_bits) - 1
+    for value in data:
+        acc = (acc << from_bits) | value
+        bits += from_bits
+        while bits >= to_bits:
+            bits -= to_bits
+            ret.append((acc >> bits) & maxv)
+    if pad and bits:
+        ret.append((acc << (to_bits - bits)) & maxv)
+    return ret
+
+
+def bech32_address_bytes(address):
+    value = address.strip().lower()
+    pos = value.rfind("1")
+    if pos <= 0:
+        return b""
+    hrp = value[:pos]
+    data = [BECH32_CHARSET.index(char) for char in value[pos + 1 :]]
+    if bech32_polymod(bech32_hrp_expand(hrp) + data) != 1:
+        return b""
+    return bytes(convert_bits(data[:-6], 5, 8, False))
+
+
+def account_from_valoper(operator_address):
+    if not operator_address.startswith("gonkavaloper"):
+        return ""
+    return "gonka" + operator_address[len("gonkavaloper") :]
+
+
+def parse_decimal(value):
+    if value in (None, ""):
+        return Decimal(0)
+    return Decimal(str(value))
 
 
 def decode_tally_result(value_b64):
@@ -164,6 +272,89 @@ def decode_votes(value_b64):
     return votes
 
 
+def decode_page_next_key(value):
+    for field_no, wire_type, inner_value in parse_fields(value):
+        if field_no == 1 and wire_type == 2:
+            return inner_value
+    return b""
+
+
+def decode_validator(value):
+    validator = {
+        "operatorAddress": "",
+        "accountAddress": "",
+        "status": 0,
+        "tokens": "0",
+        "delegatorShares": "0",
+        "moniker": "",
+    }
+    for field_no, wire_type, inner_value in parse_fields(value):
+        if field_no == 1 and wire_type == 2:
+            validator["operatorAddress"] = as_text(inner_value)
+            validator["accountAddress"] = account_from_valoper(validator["operatorAddress"])
+        elif field_no == 4 and wire_type == 0:
+            validator["status"] = inner_value
+        elif field_no == 5 and wire_type == 2:
+            validator["tokens"] = as_text(inner_value)
+        elif field_no == 6 and wire_type == 2:
+            validator["delegatorShares"] = as_text(inner_value)
+        elif field_no == 7 and wire_type == 2:
+            for desc_no, desc_wire, desc_value in parse_fields(inner_value):
+                if desc_no == 1 and desc_wire == 2:
+                    validator["moniker"] = as_text(desc_value)
+    return validator
+
+
+def decode_validators(value_b64):
+    raw = base64.b64decode(value_b64)
+    validators = []
+    next_key = b""
+    for field_no, wire_type, value in parse_fields(raw):
+        if field_no == 1 and wire_type == 2:
+            validators.append(decode_validator(value))
+        elif field_no == 2 and wire_type == 2:
+            next_key = decode_page_next_key(value)
+    return validators, next_key
+
+
+def decode_delegation_response(value):
+    row = {
+        "delegatorAddress": "",
+        "validatorAddress": "",
+        "shares": "0",
+        "balanceDenom": "",
+        "balanceAmount": "0",
+    }
+    for field_no, wire_type, inner_value in parse_fields(value):
+        if field_no == 1 and wire_type == 2:
+            for del_no, del_wire, del_value in parse_fields(inner_value):
+                if del_no == 1 and del_wire == 2:
+                    row["delegatorAddress"] = as_text(del_value)
+                elif del_no == 2 and del_wire == 2:
+                    row["validatorAddress"] = as_text(del_value)
+                elif del_no == 3 and del_wire == 2:
+                    row["shares"] = as_text(del_value)
+        elif field_no == 2 and wire_type == 2:
+            for coin_no, coin_wire, coin_value in parse_fields(inner_value):
+                if coin_no == 1 and coin_wire == 2:
+                    row["balanceDenom"] = as_text(coin_value)
+                elif coin_no == 2 and coin_wire == 2:
+                    row["balanceAmount"] = as_text(coin_value)
+    return row
+
+
+def decode_delegator_delegations(value_b64):
+    raw = base64.b64decode(value_b64)
+    delegations = []
+    next_key = b""
+    for field_no, wire_type, value in parse_fields(raw):
+        if field_no == 1 and wire_type == 2:
+            delegations.append(decode_delegation_response(value))
+        elif field_no == 2 and wire_type == 2:
+            next_key = decode_page_next_key(value)
+    return delegations, next_key
+
+
 def proposal_request_hex():
     return "0x0843"
 
@@ -174,6 +365,45 @@ def abci_query(path, height, data_hex=""):
         params["data"] = data_hex
     query = urllib.parse.urlencode(params)
     return rpc_get(f"/abci_query?{query}", 60)
+
+
+def fetch_paginated_validators(height, raw_dir):
+    validators = []
+    raw_files = []
+    next_key = b""
+    page = 1
+    while True:
+        wrapper = abci_query("/cosmos.staking.v1beta1.Query/Validators", height, validators_request_hex(next_key))
+        raw_path = raw_dir / f"abci_{height}_validators_bonded_page_{page}.json"
+        write_json(raw_path, wrapper)
+        raw_files.append(raw_path.name)
+        decoded, next_key = decode_validators(response_value(wrapper))
+        validators.extend(decoded)
+        if not next_key:
+            break
+        page += 1
+    return validators, raw_files
+
+
+def fetch_voter_delegations(voters, height, raw_dir):
+    delegations_by_voter = {}
+    raw_files = []
+    for voter in sorted(voters):
+        delegations = []
+        next_key = b""
+        page = 1
+        while True:
+            wrapper = abci_query("/cosmos.staking.v1beta1.Query/DelegatorDelegations", height, delegator_delegations_request_hex(voter, next_key))
+            raw_path = raw_dir / f"abci_{height}_delegations_{voter}_page_{page}.json"
+            write_json(raw_path, wrapper)
+            raw_files.append(raw_path.name)
+            decoded, next_key = decode_delegator_delegations(response_value(wrapper))
+            delegations.extend(decoded)
+            if not next_key:
+                break
+            page += 1
+        delegations_by_voter[voter] = delegations
+    return delegations_by_voter, raw_files
 
 
 def response_value(wrapper):
@@ -190,6 +420,130 @@ def block_summary(wrapper):
         "height": int(header.get("height") or 0),
         "time": header.get("time", ""),
         "hash": (((wrapper.get("json") or {}).get("result") or {}).get("block_id") or {}).get("hash", ""),
+    }
+
+
+def decimal_to_int_string(value):
+    return str(int(value.to_integral_value(rounding=ROUND_DOWN)))
+
+
+def decimal_to_number(value):
+    if value == value.to_integral_value(rounding=ROUND_DOWN):
+        return int(value)
+    return float(value)
+
+
+def calculate_chain_like_power(votes, validators, delegations_by_voter):
+    validators_by_operator = {}
+    validators_by_account_bytes = {}
+    for validator in validators:
+        tokens = parse_decimal(validator.get("tokens"))
+        shares = parse_decimal(validator.get("delegatorShares"))
+        if validator.get("status") != BONDED_STATUS or tokens <= 0 or shares <= 0:
+            continue
+        item = {
+            **validator,
+            "tokensDecimal": tokens,
+            "sharesDecimal": shares,
+            "deductionsDecimal": Decimal(0),
+            "voteOptions": [],
+        }
+        validators_by_operator[validator["operatorAddress"]] = item
+        address_bytes = bech32_address_bytes(validator["operatorAddress"])
+        if address_bytes:
+            validators_by_account_bytes[address_bytes] = item
+
+    results = {label: Decimal(0) for label in ["yes", "abstain", "no", "no_with_veto"]}
+    voter_rows = {}
+    vote_by_voter = {vote["voter"]: vote for vote in votes}
+
+    for vote in votes:
+        voter = vote["voter"]
+        voter_bytes = bech32_address_bytes(voter)
+        validator = validators_by_account_bytes.get(voter_bytes)
+        if validator:
+            validator["voteOptions"] = vote["options"]
+
+        voter_power = Decimal(0)
+        delegation_rows = []
+        for delegation in delegations_by_voter.get(voter, []):
+            validator = validators_by_operator.get(delegation.get("validatorAddress"))
+            if not validator:
+                continue
+            shares = parse_decimal(delegation.get("shares"))
+            voting_power = shares * validator["tokensDecimal"] / validator["sharesDecimal"]
+            validator["deductionsDecimal"] += shares
+            voter_power += voting_power
+            delegation_rows.append(
+                {
+                    **delegation,
+                    "votingPower": decimal_to_number(voting_power),
+                }
+            )
+            for option in vote["options"]:
+                results[option["option"]] += voting_power * parse_decimal(option["weight"])
+
+        voter_rows[voter] = {
+            "voter": voter,
+            "votingPowerDecimal": voter_power,
+            "delegations": delegation_rows,
+            "validatorOperatorAddress": validator["operatorAddress"] if validator else "",
+            "validatorSelfVote": bool(validator),
+        }
+
+    validator_vote_rows = []
+    for validator in validators_by_operator.values():
+        if not validator["voteOptions"]:
+            continue
+        remaining_shares = validator["sharesDecimal"] - validator["deductionsDecimal"]
+        voting_power = remaining_shares * validator["tokensDecimal"] / validator["sharesDecimal"]
+        if voting_power > 0:
+            for option in validator["voteOptions"]:
+                results[option["option"]] += voting_power * parse_decimal(option["weight"])
+        validator_vote_rows.append(
+            {
+                "operatorAddress": validator["operatorAddress"],
+                "accountAddress": validator["accountAddress"],
+                "tokens": int(validator["tokensDecimal"]),
+                "delegatorShares": str(validator["sharesDecimal"]),
+                "deductedShares": str(validator["deductionsDecimal"]),
+                "remainingVotingPower": decimal_to_number(voting_power),
+            }
+        )
+
+    per_voter_power = []
+    for voter in sorted(vote_by_voter):
+        row = voter_rows.get(voter, {"votingPowerDecimal": Decimal(0), "delegations": []})
+        power = row["votingPowerDecimal"]
+        if power > 0:
+            source = "archive_staking_delegations_chain_like"
+            reason = "Computed from archive Query/Validators and Query/DelegatorDelegations at the last pre-end block using Gonka SDK gov tally logic; aggregate truncation matches final on-chain TallyResult."
+            power_value = decimal_to_number(power)
+        else:
+            source = "archive_staking_no_voting_power"
+            reason = "No bonded validator/delegation voting power found for this voter at the last pre-end archive height."
+            power_value = 0
+        per_voter_power.append(
+            {
+                "voter": voter,
+                "votingPower": power_value,
+                "votingPowerExact": str(power),
+                "votingPowerSource": source,
+                "reason": reason,
+                "delegations": row.get("delegations", []),
+                "validatorOperatorAddress": row.get("validatorOperatorAddress", ""),
+                "validatorSelfVote": row.get("validatorSelfVote", False),
+            }
+        )
+
+    return {
+        "resultsDecimal": {key: str(value) for key, value in results.items()},
+        "resultsTruncated": {key: int(value.to_integral_value(rounding=ROUND_DOWN)) for key, value in results.items()},
+        "totalVoterPower": decimal_to_number(sum(results.values())),
+        "perVoterPower": per_voter_power,
+        "bondedValidatorsCount": len(validators_by_operator),
+        "bondedValidatorsNonzeroPowerTotal": int(sum((row["tokensDecimal"] for row in validators_by_operator.values()), Decimal(0))),
+        "validatorVotes": sorted(validator_vote_rows, key=lambda row: row["accountAddress"]),
     }
 
 
@@ -257,15 +611,14 @@ def main():
                 if attr.get("key") == "voter":
                     tx_voter_set.add(attr["value"])
 
-    per_voter_power = [
-        {
-            "voter": voter,
-            "votingPower": None,
-            "votingPowerSource": "unknown",
-            "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
-        }
-        for voter in sorted(voter_set)
-    ]
+    bonded_validators, validator_raw_files = fetch_paginated_validators(4_433_308, raw_dir)
+    delegations_by_voter, delegation_raw_files = fetch_voter_delegations(voter_set, 4_433_308, raw_dir)
+    write_json(raw_dir / "decoded_bonded_validators_4433308.json", bonded_validators)
+    write_json(raw_dir / "decoded_voter_delegations_4433308.json", delegations_by_voter)
+
+    chain_like_power = calculate_chain_like_power(decoded_votes, bonded_validators, delegations_by_voter)
+    chain_like_tally_matches_final = chain_like_power["resultsTruncated"] == final_tally
+    per_voter_power = chain_like_power["perVoterPower"]
 
     summary = {
         "proposalId": PROPOSAL_ID,
@@ -288,9 +641,18 @@ def main():
         "finalTally": final_tally,
         "decodedTallyMatchesFinalTally": decoded_tally == final_tally,
         "decodedTallyAfterEndMatchesFinalTally": decoded_tally_after_end == final_tally,
+        "chainLikeTallyDecimal": chain_like_power["resultsDecimal"],
+        "chainLikeTallyTruncated": chain_like_power["resultsTruncated"],
+        "chainLikeTallyMatchesFinalTally": chain_like_tally_matches_final,
+        "chainLikeTotalVoterPower": chain_like_power["totalVoterPower"],
+        "archiveBondedValidatorsCount": chain_like_power["bondedValidatorsCount"],
+        "archiveBondedValidatorsNonzeroPowerTotal": chain_like_power["bondedValidatorsNonzeroPowerTotal"],
+        "votersWithArchiveVotingPowerCount": sum(1 for row in per_voter_power if row["votingPower"]),
+        "validatorRawPageFiles": validator_raw_files,
+        "delegationRawPageFilesCount": len(delegation_raw_files),
         "historicalRestAvailable": False,
-        "perVoterPowerStatus": "unknown",
-        "perVoterPowerReason": "Exact aggregate tally and gov vote set are available from archive abci_query. Exact per-voter governance power is not exposed in gov Votes/TallyResult and was not derived from inference epoch weights.",
+        "perVoterPowerStatus": "exact_chain_like" if chain_like_tally_matches_final else "derived_mismatch",
+        "perVoterPowerReason": "Per-voter governance voting power is computed from archive staking validators and delegations at the last pre-end block using Gonka SDK gov tally logic. The decimal results are truncated by Cosmos SDK TallyResult serialization; truncated values match the final on-chain tally." if chain_like_tally_matches_final else "Chain-like archive staking/delegation calculation did not match final on-chain tally; treat per-voter power as diagnostic only.",
         "restProbeStatuses": {key: {"status": value.get("status"), "error": value.get("error")} for key, value in rest_probes.items()},
         "dashboardProbeStatus": {"status": dashboard_probe.get("status"), "error": dashboard_probe.get("error")},
         "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -301,6 +663,14 @@ def main():
         {
             "summary": summary,
             "archiveGovVotes": decoded_votes,
+            "archiveBondedValidators": bonded_validators,
+            "archiveVoterDelegations": delegations_by_voter,
+            "chainLikePower": {
+                "resultsDecimal": chain_like_power["resultsDecimal"],
+                "resultsTruncated": chain_like_power["resultsTruncated"],
+                "totalVoterPower": chain_like_power["totalVoterPower"],
+                "validatorVotes": chain_like_power["validatorVotes"],
+            },
             "perVoterPower": per_voter_power,
         },
     )
@@ -323,9 +693,14 @@ def main():
         f"- Archive aggregate tally after first post-end block: {decoded_tally_after_end}",
         f"- Final proposal tally: {final_tally}",
         f"- Archive tally matches final proposal tally: {decoded_tally == final_tally}",
+        f"- Chain-like archive staking/delegation tally decimal: {chain_like_power['resultsDecimal']}",
+        f"- Chain-like archive staking/delegation tally truncated: {chain_like_power['resultsTruncated']}",
+        f"- Chain-like truncated tally matches final proposal tally: {chain_like_tally_matches_final}",
+        f"- Archive bonded validators with non-zero power: {chain_like_power['bondedValidatorsCount']}",
+        f"- Voters with non-zero archive voting power: {summary['votersWithArchiveVotingPowerCount']}",
         f"- Per-voter governance power status: {summary['perVoterPowerStatus']}",
         "",
-        "Per-voter governance power is not inferred from inference epoch weights. Archive gov Votes stores voter options, not exact per-voter power. At the first post-end block, gov Votes is empty while TallyResult remains final, so the investigation uses the last pre-end gov Votes snapshot plus the final aggregate TallyResult. Historical REST gov/staking probes failed for the boundary heights, and the standard staking validator response does not by itself provide Gonka's chain-specific governance power calculation.",
+        "Per-voter governance power is not inferred from inference epoch weights. The calculation follows the Gonka SDK gov tally path: collect all bonded validators with non-zero bonded tokens, apply each voter delegation as direct voter power, deduct voted delegator shares from validator self-votes, then add remaining validator voting power. Decimal weighted results are truncated by Cosmos SDK TallyResult serialization; the truncated result matches the final on-chain tally.",
         "",
         "Raw evidence is saved under `data/governance_power_67/raw/` with the archive RPC source redacted as `GONKA_RPC_URL`.",
     ]

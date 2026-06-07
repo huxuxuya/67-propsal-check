@@ -1,7 +1,7 @@
 {
   "governance_pricing": {
     "error": "",
-    "fetchedAt": "2026-06-07T18:06:49.325526+00:00",
+    "fetchedAt": "2026-06-07T18:35:17.146077+00:00",
     "json": {
       "dynamic_pricing_enabled": true,
       "models": [
@@ -28,49 +28,49 @@
   },
   "proposal_4433308": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:06:40.480263+00:00",
+    "fetchedAt": "2026-06-07T18:34:50.447270+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67"
   },
   "proposal_4433309": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:06:41.812172+00:00",
+    "fetchedAt": "2026-06-07T18:35:15.725133+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67"
   },
   "validators_4433308": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:06:41.550710+00:00",
+    "fetchedAt": "2026-06-07T18:35:15.235110+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/staking/v1beta1/validators?pagination.limit=5"
   },
   "validators_4433309": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:06:42.870464+00:00",
+    "fetchedAt": "2026-06-07T18:35:16.451513+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/staking/v1beta1/validators?pagination.limit=5"
   },
   "votes_4433308": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:06:41.036347+00:00",
+    "fetchedAt": "2026-06-07T18:35:12.299475+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67/votes?pagination.limit=100"
   },
   "votes_4433309": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:06:42.101824+00:00",
+    "fetchedAt": "2026-06-07T18:35:16.094114+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67/votes?pagination.limit=100"
   },
   "votes_latest": {
     "error": "",
-    "fetchedAt": "2026-06-07T18:06:43.531239+00:00",
+    "fetchedAt": "2026-06-07T18:35:16.888588+00:00",
     "json": {
       "pagination": {
         "next_key": null,
