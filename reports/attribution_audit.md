@@ -20,7 +20,7 @@ Top evidence:
 - matched_validator_moniker (high, proof): ancapex | Mine from $1, no losses from node failures
 - validator_key_match (high, proof): 1MsHbnXp09bUZK/WEJVpwTOiZgKN+P5R7zuXXQUnYDM=
 
-### #2 http://89.169.97.113:8000
+### #2 Votkon · http://89.169.97.113:8000
 
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - Roles: epoch_commit_participant, operator, recipient, voter

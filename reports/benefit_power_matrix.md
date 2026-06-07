@@ -4,12 +4,12 @@ This report ranks addresses by combined compensation benefit, exact archive-deri
 
 ## Highest Priority Rows
 
-### #1 http://89.169.97.113:8000
+### #1 Votkon · http://89.169.97.113:8000
 
 - Address: `gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg`
 - Compensation: 73073.708453 GONKA; governance power: 92840; vote: yes
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://89.169.97.113:8000 (label)
+- Cluster: label:Votkon · http://89.169.97.113:8000 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 5)
 - Triage score: 46.531
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity

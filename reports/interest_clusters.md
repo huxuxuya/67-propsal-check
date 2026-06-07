@@ -2,9 +2,9 @@
 
 Clusters combine compensation, exact archive-derived governance voting power, vote direction, and public evidence boundaries. `public_owner_proof` clusters are stronger; `infrastructure_or_public_signal` and `shared_public_label_only` clusters are investigation leads and must not be treated as ownership proof by themselves.
 
-## #1 http://89.169.97.113:8000
+## #1 Votkon · http://89.169.97.113:8000
 
-- Cluster: label:http://89.169.97.113:8000 (label; shared_public_label_only)
+- Cluster: label:Votkon · http://89.169.97.113:8000 (label; shared_public_label_only)
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - Roles: epoch_commit_participant, operator, recipient, voter
 - Compensation: 73073.708453 GONKA across 1 recipients

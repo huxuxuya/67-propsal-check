@@ -2639,7 +2639,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "73073.708453 GONKA",
-          "subject": "http://89.169.97.113:8000"
+          "subject": "Votkon \u00b7 http://89.169.97.113:8000"
         },
         {
           "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
@@ -2675,7 +2675,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "http://89.169.97.113:8000"
+          "subject": "Votkon \u00b7 http://89.169.97.113:8000"
         },
         {
           "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
@@ -2728,7 +2728,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://89.169.97.113:8000",
-      "label": "http://89.169.97.113:8000",
+      "label": "Votkon \u00b7 http://89.169.97.113:8000",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",

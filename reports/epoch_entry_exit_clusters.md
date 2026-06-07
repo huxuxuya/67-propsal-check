@@ -2,9 +2,9 @@
 
 This report groups voting-end inference epoch timing signals by strict public identity cluster, signal cluster, or public label. Inference epoch weight is not governance voting power; a cluster is an investigation lead, not owner attribution unless the evidence is explicitly marked as public proof.
 
-## #1 http://89.169.97.113:8000
+## #1 Votkon · http://89.169.97.113:8000
 
-- Cluster: label:http://89.169.97.113:8000 (label_group)
+- Cluster: label:Votkon · http://89.169.97.113:8000 (label_group)
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - e287 inference weight: total 92840, max 92840
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 1

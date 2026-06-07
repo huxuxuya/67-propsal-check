@@ -118,7 +118,7 @@ Public sources:
 - gns_name (high, proof): wat.gnk
 - gns_name (high, proof): sosnov.gnk
 
-### http://89.169.97.113:8000
+### Votkon · http://89.169.97.113:8000
 
 - Address: `gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg`
 - Roles: recipient, voter; compensation: 73073.708453 GONKA; voting power: 92840; vote: yes

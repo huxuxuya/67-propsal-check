@@ -1028,6 +1028,42 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
     return sorted(deduped.values(), key=lambda row: (row["address"], row["category"], row["sourceType"], row["sourceValue"]))
 
 
+def apply_investigation_labels(recipients, votes, evidence_claims):
+    operator_labels = {}
+    for claim in evidence_claims:
+        if claim.get("sourceType") != "telegram_operator_statement":
+            continue
+        if claim.get("confidence") != "high":
+            continue
+        address = claim.get("address") or ""
+        subject = claim.get("subject") or ""
+        if not address or not subject:
+            continue
+        operator_labels[address] = {
+            "label": subject,
+            "sourceType": claim.get("sourceType", ""),
+            "confidence": claim.get("confidence", ""),
+            "sourceUrl": claim.get("sourceUrl", ""),
+            "caveat": claim.get("caveat", ""),
+        }
+
+    def apply(row, address_key):
+        signal = operator_labels.get(row.get(address_key, ""))
+        if not signal:
+            return
+        public_label_value = row.get("publicLabel") or row.get("label") or "Unknown public owner"
+        row["publicLabel"] = public_label_value
+        row["operatorSignalLabel"] = signal["label"]
+        row["operatorSignal"] = signal
+        if signal["label"] not in public_label_value:
+            row["label"] = f"{signal['label']} · {public_label_value}"
+
+    for row in recipients:
+        apply(row, "address")
+    for row in votes:
+        apply(row, "voter")
+
+
 def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, labels, identity_types):
     actors = {}
 
@@ -2718,6 +2754,17 @@ def main():
         row["strictClusterId"] = strict_cluster_by_address.get(row["voter"], "")
         row["signalClusterId"] = signal_cluster_by_address.get(row["voter"], "")
 
+    labels_by_address, identity_types_by_address = collect_address_labels(
+        recipients,
+        votes,
+        participants,
+        account_labels,
+        consensus_labels,
+        gns_by_address,
+    )
+    epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
+    apply_investigation_labels(recipients, votes, evidence_claims)
     labels_by_address, identity_types_by_address = collect_address_labels(
         recipients,
         votes,
