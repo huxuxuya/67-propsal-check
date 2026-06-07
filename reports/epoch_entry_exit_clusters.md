@@ -2,28 +2,15 @@
 
 This report groups voting-end inference epoch timing signals by strict public identity cluster, signal cluster, or public label. Inference epoch weight is not governance voting power; a cluster is an investigation lead, not owner attribution unless the evidence is explicitly marked as public proof.
 
-## #1 http://78.46.89.87:8000
-
-- Cluster: label:http://78.46.89.87:8000 (label_group)
-- Addresses: gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum
-- e287 inference weight: total 113284, max 113284
-- Inference enter / governance vote tx during e287 / inference exit counts: 1 / 1 / 0
-- Full operational enter-vote-exit signals: 0
-- Recipients: 0; compensation: 0.0 GONKA
-- Votes: no_with_veto=1
-- Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
-
-Top evidence:
-- gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum matched_validator_moniker (high, signal): gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk
-- gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum proposal_vote (high, signal): no_with_veto
-
-## #2 http://89.169.97.113:8000
+## #1 http://89.169.97.113:8000
 
 - Cluster: label:http://89.169.97.113:8000 (label_group)
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - e287 inference weight: total 92840, max 92840
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 1
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 92840 (yes=92840.0)
 - Recipients: 1; compensation: 73073.708453 GONKA
 - Votes: yes=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -32,6 +19,23 @@ Top evidence:
 - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg compensation_output (high, signal): 73073.708453 GONKA
 - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg matched_validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 
+## #2 http://78.46.89.87:8000
+
+- Cluster: label:http://78.46.89.87:8000 (label_group)
+- Addresses: gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum
+- e287 inference weight: total 113284, max 113284
+- Inference enter / governance vote tx during e287 / inference exit counts: 1 / 1 / 0
+- Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (no_with_veto=0.0)
+- Recipients: 0; compensation: 0.0 GONKA
+- Votes: no_with_veto=1
+- Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
+
+Top evidence:
+- gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum matched_validator_moniker (high, signal): gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk
+- gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum proposal_vote (high, signal): no_with_veto
+
 ## #3 http://54.38.118.143:8000
 
 - Cluster: label:http://54.38.118.143:8000 (label_group)
@@ -39,6 +43,8 @@ Top evidence:
 - e287 inference weight: total 86433, max 86433
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 86433 (yes=86433.0)
 - Recipients: 1; compensation: 52290.195676 GONKA
 - Votes: yes=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -54,6 +60,8 @@ Top evidence:
 - e287 inference weight: total 57838, max 57838
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 1
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 57838 (yes=57838.0)
 - Recipients: 1; compensation: 11262.520198 GONKA
 - Votes: yes=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -70,6 +78,8 @@ Top evidence:
 - e287 inference weight: total 28865, max 28865
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 28865 (no_with_veto=28865.0)
 - Recipients: 1; compensation: 66487.744752 GONKA
 - Votes: no_with_veto=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -85,6 +95,8 @@ Top evidence:
 - e287 inference weight: total 23621, max 23621
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (none)
 - Recipients: 1; compensation: 158541.879456 GONKA
 - Votes: did_not_vote=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -100,6 +112,8 @@ Top evidence:
 - e287 inference weight: total 20647, max 20647
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 20647 (yes=20647.0)
 - Recipients: 0; compensation: 0.0 GONKA
 - Votes: yes=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -108,13 +122,66 @@ Top evidence:
 - gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj matched_validator_moniker (high, signal): gonkavaloper1nmn039cgpkhmkzekpkfz3nkv9tcjckpnf6rr5l
 - gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj proposal_vote (high, signal): yes
 
-## #8 http://95.217.35.48:8000
+## #8 http://148.113.47.235:8000
+
+- Cluster: label:http://148.113.47.235:8000 (label_group)
+- Addresses: gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
+- e287 inference weight: total 31217, max 31217
+- Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
+- Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 31217 (yes=31217.0)
+- Recipients: 1; compensation: 1805.142498 GONKA
+- Votes: yes=1
+- Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
+
+Top evidence:
+- gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt compensation_output (high, signal): 1805.142498 GONKA
+- gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
+
+## #9 http://network002.kaitaku.ai:8000
+
+- Cluster: label:http://network002.kaitaku.ai:8000 (label_group)
+- Addresses: gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0
+- e287 inference weight: total 31063, max 31063
+- Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
+- Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 31063 (no_with_veto=31063.0)
+- Recipients: 0; compensation: 0.0 GONKA
+- Votes: no_with_veto=1
+- Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
+
+Top evidence:
+- gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 matched_validator_moniker (high, signal): gonkavaloper1d694r00czmq75txghwjcuk07lxvc8d4e2gps2z
+- gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 proposal_vote (high, signal): no_with_veto
+
+## #10 http://network000.kaitaku.ai:8000
+
+- Cluster: label:http://network000.kaitaku.ai:8000 (label_group)
+- Addresses: gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2
+- e287 inference weight: total 25278, max 25278
+- Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
+- Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 25278 (no_with_veto=25278.0)
+- Recipients: 1; compensation: 11021.18308 GONKA
+- Votes: no_with_veto=1
+- Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
+
+Top evidence:
+- gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 compensation_output (high, signal): 11021.18308 GONKA
+- gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 matched_validator_moniker (high, signal): gonkavaloper168rtjfkszuhcggg4dfyse4yh7xn9zwfgrn8588
+
+## #11 http://95.217.35.48:8000
 
 - Cluster: label:http://95.217.35.48:8000 (label_group)
 - Addresses: gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje
 - e287 inference weight: total 8333, max 8333
 - Inference enter / governance vote tx during e287 / inference exit counts: 1 / 0 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (none)
 - Recipients: 1; compensation: 10456.612261 GONKA
 - Votes: did_not_vote=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -124,13 +191,15 @@ Top evidence:
 - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=6720
 - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=6496
 
-## #9 http://20.171.77.105:8000
+## #12 http://20.171.77.105:8000
 
 - Cluster: label:http://20.171.77.105:8000 (label_group)
 - Addresses: gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww
 - e287 inference weight: total 4420, max 4420
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (no_with_veto=0.0)
 - Recipients: 1; compensation: 108.366532 GONKA
 - Votes: no_with_veto=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -139,13 +208,15 @@ Top evidence:
 - gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww compensation_output (high, signal): 108.366532 GONKA
 - gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww matched_validator_moniker (high, signal): gonkavaloper1cuwejs77gectp3n32wg8q27hlsa4m3hqvpcjer
 
-## #10 http://20.163.111.183:8000
+## #13 http://20.163.111.183:8000
 
 - Cluster: label:http://20.163.111.183:8000 (label_group)
 - Addresses: gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p
 - e287 inference weight: total 4295, max 4295
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (no_with_veto=0.0)
 - Recipients: 1; compensation: 113.864834 GONKA
 - Votes: no_with_veto=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -154,13 +225,15 @@ Top evidence:
 - gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p compensation_output (high, signal): 113.864834 GONKA
 - gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p matched_validator_moniker (high, signal): gonkavaloper1fvly5jrewyjmjfgwah3khy9rttq4cqajyeptjv
 
-## #11 http://198.244.228.95:8000
+## #14 http://198.244.228.95:8000
 
 - Cluster: label:http://198.244.228.95:8000 (label_group)
 - Addresses: gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n
 - e287 inference weight: total 8230, max 8230
 - Inference enter / governance vote tx during e287 / inference exit counts: 1 / 0 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (none)
 - Recipients: 1; compensation: 1753.409171 GONKA
 - Votes: did_not_vote=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -170,43 +243,15 @@ Top evidence:
 - gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n epoch_commit_participant (medium, signal): e272 moonshotai/Kimi-K2.6 count=6592
 - gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n epoch_commit_participant (medium, signal): e273 moonshotai/Kimi-K2.6 count=6528
 
-## #12 http://148.113.47.235:8000
-
-- Cluster: label:http://148.113.47.235:8000 (label_group)
-- Addresses: gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
-- e287 inference weight: total 31217, max 31217
-- Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
-- Full operational enter-vote-exit signals: 0
-- Recipients: 1; compensation: 1805.142498 GONKA
-- Votes: yes=1
-- Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
-
-Top evidence:
-- gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt compensation_output (high, signal): 1805.142498 GONKA
-- gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
-
-## #13 http://network002.kaitaku.ai:8000
-
-- Cluster: label:http://network002.kaitaku.ai:8000 (label_group)
-- Addresses: gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0
-- e287 inference weight: total 31063, max 31063
-- Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
-- Full operational enter-vote-exit signals: 0
-- Recipients: 0; compensation: 0.0 GONKA
-- Votes: no_with_veto=1
-- Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
-
-Top evidence:
-- gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 matched_validator_moniker (high, signal): gonkavaloper1d694r00czmq75txghwjcuk07lxvc8d4e2gps2z
-- gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 proposal_vote (high, signal): no_with_veto
-
-## #14 http://20.88.58.210:8000
+## #15 http://20.88.58.210:8000
 
 - Cluster: label:http://20.88.58.210:8000 (label_group)
 - Addresses: gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3
 - e287 inference weight: total 645, max 645
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (no_with_veto=0.0)
 - Recipients: 0; compensation: 0.0 GONKA
 - Votes: no_with_veto=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -215,21 +260,6 @@ Top evidence:
 - gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3 matched_validator_moniker (high, signal): gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu
 - gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3 proposal_vote (high, signal): no_with_veto
 
-## #15 http://network000.kaitaku.ai:8000
-
-- Cluster: label:http://network000.kaitaku.ai:8000 (label_group)
-- Addresses: gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2
-- e287 inference weight: total 25278, max 25278
-- Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
-- Full operational enter-vote-exit signals: 0
-- Recipients: 1; compensation: 11021.18308 GONKA
-- Votes: no_with_veto=1
-- Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
-
-Top evidence:
-- gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 compensation_output (high, signal): 11021.18308 GONKA
-- gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 matched_validator_moniker (high, signal): gonkavaloper168rtjfkszuhcggg4dfyse4yh7xn9zwfgrn8588
-
 ## #16 http://35.89.168.230:8000
 
 - Cluster: label:http://35.89.168.230:8000 (label_group)
@@ -237,6 +267,8 @@ Top evidence:
 - e287 inference weight: total 20495, max 20495
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (none)
 - Recipients: 1; compensation: 12612.234866 GONKA
 - Votes: did_not_vote=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
@@ -252,6 +284,8 @@ Top evidence:
 - e287 inference weight: total 21252, max 21252
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
 - Full operational enter-vote-exit signals: 0
+- Full operational enter-vote-exit signals with non-zero governance power: 0
+- Exact governance voting power in cluster: 0 (none)
 - Recipients: 0; compensation: 0.0 GONKA
 - Votes: did_not_vote=1
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.

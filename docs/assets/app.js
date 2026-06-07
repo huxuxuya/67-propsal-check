@@ -316,6 +316,7 @@ function renderAnomalyTable() {
       <td class="num">${fmt.format(row.prevMaxWeight)}</td>
       <td class="num">${fmt.format(row.nextMaxWeight)}</td>
       <td>${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}${row.voteHeight ? `<br><span class="mono muted">${row.voteHeight}</span>` : ""}${row.voteBlockTime ? `<br><span class="muted">${escapeHtml(row.voteBlockTime)}</span>` : ""}</td>
+      <td class="num">${fmt.format(row.governanceVotingPower || 0)}<br><span class="muted">${escapeHtml(row.governanceVotingPowerSource || "")}</span></td>
       <td><span class="tag ${row.status === "operational_enter_vote_exit_signal" ? "warn" : row.status === "partial_operational_timing_signal" ? "warn" : ""}">${escapeHtml(row.status)}</span><br><span class="muted">${escapeHtml(row.caveat || "")}</span></td>
     </tr>
   `).join("");
@@ -346,7 +347,7 @@ function renderEntryExitChart() {
     tooltip: {
       formatter: (params) => {
         const row = rows[params.dataIndex];
-        return `${escapeHtml(row.label)}<br>${escapeHtml(row.kind)}<br>e287 inference weight ${fmt.format(row.totalE287Weight)}<br>${row.confirmedEnterVoteExitCount} operational enter/vote/exit signals<br>Not governance voting power`;
+        return `${escapeHtml(row.label)}<br>${escapeHtml(row.kind)}<br>e287 inference weight ${fmt.format(row.totalE287Weight)}<br>exact gov power ${fmt.format(row.totalGovernanceVotingPower || 0)}<br>${row.confirmedEnterVoteExitWithPowerCount || 0} full enter/vote/exit with power`;
       },
     },
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
@@ -365,6 +366,7 @@ function renderEntryExitTable() {
   document.getElementById("entryExitRows").textContent = `${rows.length} shown`;
   els.entryExitTable.innerHTML = rows.map((row) => {
     const voteText = Object.entries(row.voteCounts || {}).map(([option, count]) => `${optionLabels[option] || option}: ${count}`).join("<br>") || "-";
+    const powerText = Object.entries(row.votePowerByOption || {}).map(([option, power]) => `${optionLabels[option] || option}: ${fmt.format(power)}`).join("<br>") || "-";
     const topEvidence = (row.topEvidence || []).slice(0, 3).map((item) => `${escapeHtml(item.sourceType)} <span class="tag ${item.isAttributionProof ? "good" : ""}">${item.isAttributionProof ? "proof" : "signal"}</span> <span class="tag">${escapeHtml(item.confidence)}</span>`).join("<br>");
     const addressRows = (row.addressRows || []).slice(0, 8).map((item) => {
       const flags = [
@@ -380,8 +382,9 @@ function renderEntryExitTable() {
         <td>${escapeHtml(row.label)}<br><span class="tag">${escapeHtml(row.kind)}</span><br><span class="mono muted">${escapeHtml(row.id)}</span></td>
         <td>${addressRows}</td>
         <td class="num">${fmt.format(row.totalE287Weight)}<br><span class="muted">max ${fmt.format(row.maxE287Weight)}; not gov power</span></td>
-        <td>${row.enteredCount}/${row.votedDuringCount}/${row.exitedCount}<br><span class="muted">${row.confirmedEnterVoteExitCount} operational full path</span></td>
+        <td>${row.enteredCount}/${row.votedDuringCount}/${row.exitedCount}<br><span class="muted">${row.confirmedEnterVoteExitCount} operational full path; ${row.confirmedEnterVoteExitWithPowerCount || 0} with power</span></td>
         <td>${voteText}</td>
+        <td class="num">${fmt.format(row.totalGovernanceVotingPower || 0)}<br><span class="muted">${powerText}</span></td>
         <td class="num">${gonka(row.totalCompensationGonka)}<br><span class="muted">${row.recipientCount} recipients</span></td>
         <td>${topEvidence || "<span class=\"muted\">no public owner proof</span>"}<br><span class="muted">${escapeHtml((row.caveats || []).join(" "))}</span></td>
       </tr>
@@ -855,7 +858,7 @@ function openDrawer(address) {
       ${entryExitClusters.length ? `<dl class="kv">${entryExitClusters.map((cluster) => {
         const item = (cluster.addressRows || []).find((row) => row.address === address) || {};
         const neighbors = (cluster.addresses || []).filter((itemAddress) => itemAddress !== address).slice(0, 8);
-        return `<dt>#${cluster.rank} ${escapeHtml(cluster.kind)}</dt><dd>${escapeHtml(cluster.label)}<br>e287 inference weight ${fmt.format(item.e287Weight || 0)}, prev ${fmt.format(item.prevMaxWeight || 0)}, next ${fmt.format(item.nextMaxWeight || 0)}<br>inference enter / governance vote tx in e287 / inference exit: ${item.enteredE287 ? "yes" : "no"} / ${item.votedDuringE287 ? "yes" : "no"} / ${item.exitedAfterE287 ? "yes" : "no"}<br>vote tx ${escapeHtml(optionLabels[item.voteOption] || item.voteOption || "none")} ${item.voteHeight ? `at ${item.voteHeight}` : ""}<br><span class="muted">Inference weight is not governance voting power. Neighbors: ${neighbors.length ? neighbors.map(escapeHtml).join(", ") : "none"}</span><br><span class="muted">${escapeHtml((cluster.caveats || []).join(" "))}</span></dd>`;
+        return `<dt>#${cluster.rank} ${escapeHtml(cluster.kind)}</dt><dd>${escapeHtml(cluster.label)}<br>e287 inference weight ${fmt.format(item.e287Weight || 0)}, prev ${fmt.format(item.prevMaxWeight || 0)}, next ${fmt.format(item.nextMaxWeight || 0)}<br>exact governance voting power ${fmt.format(item.governanceVotingPower || 0)}<br>inference enter / governance vote tx in e287 / inference exit: ${item.enteredE287 ? "yes" : "no"} / ${item.votedDuringE287 ? "yes" : "no"} / ${item.exitedAfterE287 ? "yes" : "no"}<br>vote tx ${escapeHtml(optionLabels[item.voteOption] || item.voteOption || "none")} ${item.voteHeight ? `at ${item.voteHeight}` : ""}<br><span class="muted">Inference weight is not governance voting power. Neighbors: ${neighbors.length ? neighbors.map(escapeHtml).join(", ") : "none"}</span><br><span class="muted">${escapeHtml((cluster.caveats || []).join(" "))}</span></dd>`;
       }).join("")}</dl>` : "<p>No e287 inference timing cluster for this address.</p>"}
     </div>
     <div class="drawer-section">

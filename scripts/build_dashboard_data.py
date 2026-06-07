@@ -1382,6 +1382,8 @@ def build_epoch_anomalies(votes, recipients, labels_by_address):
         exited_after_e287 = next_max == 0
         vote = vote_by_address.get(address)
         vote_height = vote.get("height") if vote else None
+        governance_voting_power = vote.get("votingPower") if vote else 0
+        governance_voting_power = governance_voting_power or 0
         voted_during_e287 = bool(vote_height and e287_start and (not e288_start or e287_start <= vote_height < e288_start))
         weight_delta = e287_weight - prev_max
         anomaly_score = 0
@@ -1407,6 +1409,9 @@ def build_epoch_anomalies(votes, recipients, labels_by_address):
                     "voteHeight": vote_height,
                     "voteBlockTime": block_time(vote_height) if vote_height else "",
                     "voteOption": vote.get("primaryOption") if vote else "did_not_vote",
+                    "governanceVotingPower": governance_voting_power,
+                    "governanceVotingPowerSource": vote.get("votingPowerSource", "") if vote else "",
+                    "hasGovernanceVotingPower": governance_voting_power > 0,
                     "e287StartHeight": e287_start,
                     "e287StartTime": e287_start_time,
                     "e288StartHeight": e288_start,
@@ -1460,6 +1465,9 @@ def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity
                 "recipientCount": 0,
                 "totalCompensationGonka": 0.0,
                 "voteCounts": Counter(),
+                "votePowerByOption": defaultdict(float),
+                "totalGovernanceVotingPower": 0,
+                "confirmedEnterVoteExitWithPowerCount": 0,
                 "topEvidence": [],
                 "topEvidenceKeys": set(),
                 "caveats": set(),
@@ -1476,6 +1484,11 @@ def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity
         group["recipientCount"] += int(row["isRecipient"])
         group["totalCompensationGonka"] += payout
         group["voteCounts"][row["voteOption"]] += 1
+        group["totalGovernanceVotingPower"] += row.get("governanceVotingPower") or 0
+        if row.get("voteOption") != "did_not_vote":
+            group["votePowerByOption"][row["voteOption"]] += row.get("governanceVotingPower") or 0
+        if row["enteredE287"] and row["exitedAfterE287"] and row["votedDuringE287"] and row.get("governanceVotingPower"):
+            group["confirmedEnterVoteExitWithPowerCount"] += 1
         if row["status"] != "operational_enter_vote_exit_signal":
             group["caveats"].add("Some addresses are timing/context leads, not full enter-vote-exit operational cases.")
         if kind != "strict_identity":
@@ -1516,6 +1529,9 @@ def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity
                 "voteOption": row["voteOption"],
                 "voteHeight": row["voteHeight"],
                 "voteBlockTime": row["voteBlockTime"],
+                "governanceVotingPower": row.get("governanceVotingPower", 0),
+                "governanceVotingPowerSource": row.get("governanceVotingPowerSource", ""),
+                "hasGovernanceVotingPower": row.get("hasGovernanceVotingPower", False),
                 "isRecipient": row["isRecipient"],
                 "totalCompensationGonka": round(payout, 6),
                 "strictClusterId": strict_by_address.get(address, ""),
@@ -1545,8 +1561,11 @@ def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity
                 "exitedCount": group["exitedCount"],
                 "votedDuringCount": group["votedDuringCount"],
                 "confirmedEnterVoteExitCount": len(confirmed),
+                "confirmedEnterVoteExitWithPowerCount": group["confirmedEnterVoteExitWithPowerCount"],
                 "recipientCount": group["recipientCount"],
                 "totalCompensationGonka": round(group["totalCompensationGonka"], 6),
+                "totalGovernanceVotingPower": round(group["totalGovernanceVotingPower"], 6),
+                "votePowerByOption": {key: round(value, 6) for key, value in sorted(group["votePowerByOption"].items())},
                 "voteCounts": dict(group["voteCounts"]),
                 "topEvidence": group["topEvidence"][:8],
                 "caveats": sorted(group["caveats"]) or ["Operational timing cluster; not governance voting power and owner attribution still requires public proof."],
@@ -1556,6 +1575,7 @@ def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity
                     + group["exitedCount"] * 8
                     + group["votedDuringCount"] * 10
                     + len(confirmed) * 12
+                    + min(20, group["totalGovernanceVotingPower"] / 7000)
                     + min(20, group["totalCompensationGonka"] / 8000),
                     3,
                 ),
@@ -1624,15 +1644,21 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
     telegram_rows = telegram_evidence.get("messages") or []
     e287_vote_anomalies = [row for row in epoch_anomalies if row["votedDuringE287"]]
     entered_and_exited = [row for row in epoch_anomalies if row["enteredE287"] and row["exitedAfterE287"]]
+    e287_vote_with_power = [row for row in epoch_anomalies if row["votedDuringE287"] and row.get("governanceVotingPower")]
+    full_enter_vote_exit_with_power = [
+        row
+        for row in epoch_anomalies
+        if row["enteredE287"] and row["votedDuringE287"] and row["exitedAfterE287"] and row.get("governanceVotingPower")
+    ]
     recipient_voters = [row for row in ranked_parties if "recipient" in row["roles"] and "voter" in row["roles"]]
     return [
         {
             "id": "large_weight_node_entered_voting_end_epoch",
             "title": "Large-weight node around voting-end epoch",
             "status": "partially_supported" if e287_vote_anomalies else "needs_more_data",
-            "summary": f"{len(e287_vote_anomalies)} voting addresses overlap with e287 inference timing; {len(entered_and_exited)} entered and exited strictly in the compared inference window. This does not establish governance vote weight.",
+            "summary": f"{len(e287_vote_anomalies)} voting addresses overlap with e287 inference timing; {len(e287_vote_with_power)} of them have non-zero exact governance power. {len(entered_and_exited)} entered and exited strictly in the compared inference window, but {len(full_enter_vote_exit_with_power)} rows satisfy enter+vote+exit with non-zero governance power.",
             "evidenceRefs": [row["address"] for row in epoch_anomalies[:10]],
-            "nextCheck": "Use archive-node gov/staking snapshots to compute exact per-voter governance power, then compare separately with inference join/exit signals and ownership evidence.",
+            "nextCheck": "Review reports/voting_window_power_reconciliation.md, then widen the compared epoch window if the suspected temporary validator entered before e287 or exited after e290.",
         },
         {
             "id": "recipient_voters_conflict",
@@ -1839,8 +1865,11 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                     "voted_during_count",
                     "exited_count",
                     "confirmed_enter_vote_exit_count",
+                    "confirmed_enter_vote_exit_with_power_count",
                     "recipient_count",
                     "total_compensation_gonka",
+                    "total_governance_voting_power",
+                    "vote_power_by_option",
                     "vote_counts",
                     "top_evidence",
                     "caveats",
@@ -1861,8 +1890,11 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                         "voted_during_count": row["votedDuringCount"],
                         "exited_count": row["exitedCount"],
                         "confirmed_enter_vote_exit_count": row["confirmedEnterVoteExitCount"],
+                        "confirmed_enter_vote_exit_with_power_count": row["confirmedEnterVoteExitWithPowerCount"],
                         "recipient_count": row["recipientCount"],
                         "total_compensation_gonka": row["totalCompensationGonka"],
+                        "total_governance_voting_power": row["totalGovernanceVotingPower"],
+                        "vote_power_by_option": " ".join(f"{option}:{power}" for option, power in row["votePowerByOption"].items()),
                         "vote_counts": " ".join(f"{option}:{count}" for option, count in row["voteCounts"].items()),
                         "top_evidence": " | ".join(f"{item['sourceType']}:{item['sourceValue']}:{item['confidence']}" for item in row["topEvidence"]),
                         "caveats": " | ".join(row["caveats"]),
@@ -1885,6 +1917,8 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                     f"- e287 inference weight: total {row['totalE287Weight']}, max {row['maxE287Weight']}",
                     f"- Inference enter / governance vote tx during e287 / inference exit counts: {row['enteredCount']} / {row['votedDuringCount']} / {row['exitedCount']}",
                     f"- Full operational enter-vote-exit signals: {row['confirmedEnterVoteExitCount']}",
+                    f"- Full operational enter-vote-exit signals with non-zero governance power: {row['confirmedEnterVoteExitWithPowerCount']}",
+                    f"- Exact governance voting power in cluster: {row['totalGovernanceVotingPower']} ({', '.join(f'{option}={power}' for option, power in row['votePowerByOption'].items()) or 'none'})",
                     f"- Recipients: {row['recipientCount']}; compensation: {row['totalCompensationGonka']} GONKA",
                     f"- Votes: {', '.join(f'{option}={count}' for option, count in row['voteCounts'].items()) or 'none'}",
                     f"- Caveats: {' | '.join(row['caveats'])}",
@@ -1898,6 +1932,119 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                     lines.append(f"- {item['address']} {item['sourceType']} ({item['confidence']}, {proof}): {item['sourceValue']}")
                 lines.append("")
         (reports / "epoch_entry_exit_clusters.md").write_text("\n".join(lines).rstrip() + "\n")
+
+        reconciliation_rows = []
+        for cluster in epoch_entry_exit_clusters:
+            for row in cluster.get("addressRows", []):
+                reconciliation_rows.append(
+                    {
+                        "rank": cluster["rank"],
+                        "cluster_id": cluster["id"],
+                        "cluster_label": cluster["label"],
+                        "address": row["address"],
+                        "label": row["label"],
+                        "entered_e287": row["enteredE287"],
+                        "voted_during_e287": row["votedDuringE287"],
+                        "exited_after_e287": row["exitedAfterE287"],
+                        "full_enter_vote_exit": row["enteredE287"] and row["votedDuringE287"] and row["exitedAfterE287"],
+                        "e287_weight": row["e287Weight"],
+                        "prev_max_weight": row["prevMaxWeight"],
+                        "next_max_weight": row["nextMaxWeight"],
+                        "vote_option": row["voteOption"],
+                        "vote_height": row["voteHeight"],
+                        "governance_voting_power": row.get("governanceVotingPower", 0),
+                        "governance_voting_power_source": row.get("governanceVotingPowerSource", ""),
+                        "is_recipient": row["isRecipient"],
+                        "total_compensation_gonka": row["totalCompensationGonka"],
+                        "status": row["status"],
+                    }
+                )
+        reconciliation_rows.sort(
+            key=lambda row: (
+                not row["full_enter_vote_exit"],
+                -float(row["governance_voting_power"] or 0),
+                -int(row["e287_weight"] or 0),
+                row["address"],
+            )
+        )
+        with (reports / "voting_window_power_reconciliation.csv").open("w", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "rank",
+                    "cluster_id",
+                    "cluster_label",
+                    "address",
+                    "label",
+                    "entered_e287",
+                    "voted_during_e287",
+                    "exited_after_e287",
+                    "full_enter_vote_exit",
+                    "e287_weight",
+                    "prev_max_weight",
+                    "next_max_weight",
+                    "vote_option",
+                    "vote_height",
+                    "governance_voting_power",
+                    "governance_voting_power_source",
+                    "is_recipient",
+                    "total_compensation_gonka",
+                    "status",
+                ],
+            )
+            writer.writeheader()
+            writer.writerows(reconciliation_rows)
+
+        full_with_power = [row for row in reconciliation_rows if row["full_enter_vote_exit"] and row["governance_voting_power"]]
+        timing_voted_with_power = [row for row in reconciliation_rows if row["voted_during_e287"] and row["governance_voting_power"]]
+        timing_voted_zero_power = [row for row in reconciliation_rows if row["voted_during_e287"] and not row["governance_voting_power"]]
+        lines = [
+            "# Proposal 67 Voting-Window Power Reconciliation",
+            "",
+            "This report reconciles e287 inference timing signals with exact archive-derived governance voting power. Inference epoch weight is operational timing evidence only; counted governance influence is the archive staking/delegation voting power.",
+            "",
+            f"- e287 timing rows: {len(reconciliation_rows)}",
+            f"- Voted during e287 with non-zero governance power: {len(timing_voted_with_power)}",
+            f"- Voted during e287 with zero governance power: {len(timing_voted_zero_power)}",
+            f"- Full enter-vote-exit rows with non-zero governance power: {len(full_with_power)}",
+            "",
+        ]
+        if full_with_power:
+            lines.append("## Full Enter-Vote-Exit With Power")
+            lines.append("")
+            for row in full_with_power[:25]:
+                lines.extend(
+                    [
+                        f"### {row['label']}",
+                        "",
+                        f"- Address: {row['address']}",
+                        f"- Cluster: {row['cluster_id']} ({row['cluster_label']})",
+                        f"- e287 inference weight: {row['e287_weight']} (prev max {row['prev_max_weight']}, next max {row['next_max_weight']})",
+                        f"- Vote: {row['vote_option']} at height {row['vote_height']}",
+                        f"- Exact governance voting power: {row['governance_voting_power']} ({row['governance_voting_power_source']})",
+                        f"- Recipient: {row['is_recipient']}; compensation: {row['total_compensation_gonka']} GONKA",
+                        "",
+                    ]
+                )
+        else:
+            lines.extend(
+                [
+                    "## Full Enter-Vote-Exit With Power",
+                    "",
+                    "No row currently satisfies all three operational conditions (entered e287, voted during e287, exited after e287) while also having non-zero archive governance voting power.",
+                    "",
+                ]
+            )
+        lines.append("## Voted During e287 With Power")
+        lines.append("")
+        for row in timing_voted_with_power[:30]:
+            lines.append(
+                f"- {row['label']} `{row['address']}`: vote={row['vote_option']} power={row['governance_voting_power']} e287_weight={row['e287_weight']} entered={row['entered_e287']} exited={row['exited_after_e287']}"
+            )
+        if not timing_voted_with_power:
+            lines.append("- none")
+        lines.append("")
+        (reports / "voting_window_power_reconciliation.md").write_text("\n".join(lines).rstrip() + "\n")
 
     lines = [
         "# Proposal 67 Attribution Audit",
