@@ -360,8 +360,8 @@ Top evidence:
 - gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33 proposal_message_sender (high, signal): /inference.streamvesting.MsgBatchTransferWithVesting
 - gonka1nvcwl2c7jxj2h47c56y8dmcmf0tynt5dplzngy proposal_proposer (high, signal): 67
 - gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2 proposal_vote (high, signal): yes
-- gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33 telegram_export_excerpt (medium, signal): из вот этого кармана gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
-- gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f telegram_export_excerpt (medium, signal): 17:51 In reply to this message И закорешиться с gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f )))
+- gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33 telegram_address_context (medium, signal): из вот этого кармана gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
+- gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f telegram_address_context (medium, signal): 17:51 In reply to this message И закорешиться с gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f )))
 
 ## #20 http://178.104.95.5:8000
 

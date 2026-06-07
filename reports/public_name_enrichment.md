@@ -30,7 +30,7 @@ Public sources:
 - validator_identity (high, proof): B22258DF68546529
 - participant_inference_url (medium, signal): http://89.149.242.149:8000
 
-### Hyperfusion
+### Arturs Plisko · Hyperfusion
 
 - Address: `gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p`
 - Roles: voter; compensation: 0 GONKA; voting power: 5395; vote: no_with_veto

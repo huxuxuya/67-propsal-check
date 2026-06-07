@@ -982,22 +982,16 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
         for address in message.get("addresses") or [""]:
             excerpt_value = message.get("excerpt", "")
             author_value = message.get("author") or message.get("chat", "")
-            operator_statement = (
-                address
-                and message.get("author")
-                and re.search(r"\bVotkon\b", message.get("author", ""), re.IGNORECASE)
-                and re.search(r"делегировать|будет запускать|буду давать|прогресс|если что-то пойдет", excerpt_value, re.IGNORECASE)
-            )
             claims.append(
                 make_claim(
                     address,
                     author_value,
-                    "telegram_operator_statement" if operator_statement else "telegram_export_excerpt",
+                    message.get("sourceType", "telegram_export_excerpt"),
                     excerpt_value,
                     message.get("sourceFile", "history"),
-                    "high" if operator_statement else message.get("confidence", "medium"),
+                    message.get("confidence", "medium"),
                     False,
-                    "Telegram author posted the address with operator/delegation language; this is a strong local-export operator signal, but not public owner proof without a linkable public source." if operator_statement else message.get("caveat", "Telegram excerpt requires corroboration."),
+                    message.get("caveat", "Telegram excerpt requires corroboration."),
                 )
             )
 
@@ -1029,9 +1023,10 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
 
 
 def apply_investigation_labels(recipients, votes, evidence_claims):
+    label_source_types = {"telegram_operator_statement", "telegram_self_or_team_claim"}
     operator_labels = {}
     for claim in evidence_claims:
-        if claim.get("sourceType") != "telegram_operator_statement":
+        if claim.get("sourceType") not in label_source_types:
             continue
         if claim.get("confidence") != "high":
             continue
@@ -1189,7 +1184,14 @@ def build_ranked_parties(actors, claims, identity_graph):
         if "recipient" in row["roles"] and "voter" in row["roles"]:
             governance_score += 8
         governance_score = min(25, governance_score)
-        telegram_score = min(12, sum(1 for claim in row["claims"] if claim["sourceType"] == "telegram_export_excerpt") * 2)
+        telegram_claims = [claim for claim in row["claims"] if claim["sourceType"].startswith("telegram_")]
+        telegram_score = min(
+            12,
+            sum(
+                4 if claim["sourceType"] in {"telegram_operator_statement", "telegram_self_or_team_claim"} else 2
+                for claim in telegram_claims
+            ),
+        )
         operational_timing_score = min(18, sum(1 for claim in row["claims"] if claim["sourceType"] == "voting_end_epoch_anomaly") * 8)
         inference_vote_overlap_score = 6 if any("vote=" in claim["sourceValue"] and "@None" not in claim["sourceValue"] for claim in row["claims"] if claim["sourceType"] == "voting_end_epoch_anomaly") else 0
         proposal_role_score = 10 if {"proposer", "message_sender"} & row["roles"] else 0
@@ -2013,6 +2015,104 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
     ]
 
 
+def build_telegram_attribution_audit(recipients, votes, evidence_claims):
+    recipient_by_address = {row["address"]: row for row in recipients}
+    vote_by_address = {row["voter"]: row for row in votes}
+    relevant_addresses = sorted(set(recipient_by_address) | set(vote_by_address))
+    telegram_claims = [
+        claim
+        for claim in evidence_claims
+        if claim.get("address") in relevant_addresses and claim.get("sourceType", "").startswith("telegram_")
+    ]
+    priority = {
+        "telegram_self_or_team_claim": 0,
+        "telegram_operator_statement": 1,
+        "telegram_owner_inquiry": 2,
+        "telegram_address_context": 3,
+        "telegram_export_excerpt": 4,
+    }
+    rows = []
+    for claim in sorted(
+        telegram_claims,
+        key=lambda row: (
+            row["address"],
+            priority.get(row.get("sourceType", ""), 9),
+            {"high": 0, "medium": 1, "low": 2}.get(row.get("confidence", ""), 3),
+            row.get("sourceValue", ""),
+        ),
+    ):
+        address = claim["address"]
+        recipient = recipient_by_address.get(address, {})
+        vote = vote_by_address.get(address, {})
+        roles = []
+        if recipient:
+            roles.append("recipient")
+        if vote:
+            roles.append("voter")
+        rows.append(
+            {
+                "address": address,
+                "label": recipient.get("label") or vote.get("label") or "Unknown public owner",
+                "publicLabel": recipient.get("publicLabel") or vote.get("publicLabel") or recipient.get("label") or vote.get("label") or "",
+                "roles": roles,
+                "totalCompensationGonka": round(recipient.get("totalGonka") or 0, 6),
+                "voteOption": vote.get("primaryOption") or recipient.get("voteOption") or "did_not_vote",
+                "votingPower": round(vote.get("votingPower") or 0, 6),
+                "sourceType": claim.get("sourceType", ""),
+                "subject": claim.get("subject", ""),
+                "confidence": claim.get("confidence", ""),
+                "isAttributionProof": claim.get("isAttributionProof", False),
+                "sourceUrl": claim.get("sourceUrl", ""),
+                "sourceValue": claim.get("sourceValue", ""),
+                "caveat": claim.get("caveat", ""),
+            }
+        )
+    return rows
+
+
+def write_telegram_attribution_report(rows):
+    reports = ROOT / "reports"
+    reports.mkdir(exist_ok=True)
+    with (reports / "telegram_attribution_audit.csv").open("w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "address",
+                "label",
+                "publicLabel",
+                "roles",
+                "totalCompensationGonka",
+                "voteOption",
+                "votingPower",
+                "sourceType",
+                "subject",
+                "confidence",
+                "isAttributionProof",
+                "sourceUrl",
+                "sourceValue",
+                "caveat",
+            ],
+        )
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({**row, "roles": " ".join(row["roles"])})
+
+    strong = [row for row in rows if row["sourceType"] in {"telegram_self_or_team_claim", "telegram_operator_statement"}]
+    with (reports / "telegram_attribution_audit.md").open("w") as f:
+        f.write("# Telegram Attribution Audit\n\n")
+        f.write("Local Telegram exports are used as investigation context only. Strong self/operator statements can label dashboard rows, but remain non-public signals unless corroborated by linkable public evidence.\n\n")
+        f.write(f"- Proposal/voter Telegram evidence rows: {len(rows)}\n")
+        f.write(f"- Strong self/operator rows: {len(strong)}\n\n")
+        for row in rows:
+            f.write(f"## {row['label']}\n\n")
+            f.write(f"- Address: `{row['address']}`\n")
+            f.write(f"- Roles: {', '.join(row['roles']) or 'context only'}; vote: {row['voteOption']}; voting power: {row['votingPower']}; compensation: {row['totalCompensationGonka']} GONKA\n")
+            f.write(f"- Telegram signal: {row['sourceType']} ({row['confidence']}, {'proof' if row['isAttributionProof'] else 'signal'}) by {row['subject']}\n")
+            f.write(f"- Source: {row['sourceUrl']}\n")
+            f.write(f"- Excerpt: {row['sourceValue']}\n")
+            f.write(f"- Caveat: {row['caveat']}\n\n")
+
+
 def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None, benefit_power_matrix=None, public_name_enrichment=None):
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
@@ -2781,10 +2881,12 @@ def main():
     interest_clusters = build_interest_clusters(actors, evidence_claims, identity_graph)
     benefit_power_matrix = build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_claims)
     public_name_enrichment = build_public_name_enrichment(recipients, votes, identity_evidence, evidence_claims, gns_by_address)
+    telegram_attribution_audit = build_telegram_attribution_audit(recipients, votes, evidence_claims)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
     (DATA / "public_name_enrichment.json").write_text(json.dumps(public_name_enrichment, indent=2, sort_keys=True) + "\n")
     write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters, benefit_power_matrix, public_name_enrichment)
+    write_telegram_attribution_report(telegram_attribution_audit)
 
     dashboard = {
         "metadata": {
@@ -2865,6 +2967,7 @@ def main():
         "interestClusters": interest_clusters,
         "benefitPowerMatrix": benefit_power_matrix,
         "publicNameEnrichment": public_name_enrichment,
+        "telegramAttributionAudit": telegram_attribution_audit,
         "telegramEvidence": telegram_evidence.get("messages") or [],
         "epochAnomalies": epoch_anomalies,
         "epochEntryExitClusters": epoch_entry_exit_clusters,

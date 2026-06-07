@@ -1907,7 +1907,19 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "Hyperfusion"
+          "subject": "Arturs Plisko \u00b7 Hyperfusion"
+        },
+        {
+          "address": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
+          "category": "public_identity",
+          "caveat": "Telegram author used self/team ownership language around this address; strong local-export attribution signal, but not public owner proof without a linkable public source.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages16.html",
+          "sourceType": "telegram_self_or_team_claim",
+          "sourceUrl": "history/Gonka Devs/messages16.html",
+          "sourceValue": "AP 16:11 In reply to this message \u041d\u0435\u0442. \u041c\u044b \u043f\u043e\u0441\u043b\u0430\u043b\u0438 \u0438\u043d\u0442\u0435\u043d\u0442 \u043e\u0442 gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, \u043d\u043e \u043f\u043e \u0442\u043e\u043c\u0443 \u0447\u0442\u043e \u044f \u0432\u0438\u0436\u0443 \u043e\u043d \u0442\u0435\u043c\u0438 \u0441\u043a\u0440\u0438\u043f\u0442\u0430\u043c\u0438 \u043d\u0435 \u0432\u0438\u0434\u0435\u043d",
+          "subject": "Arturs Plisko"
         },
         {
           "address": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
@@ -1920,23 +1932,11 @@
           "sourceUrl": "docs/data/dashboard.json",
           "sourceValue": "RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI=",
           "subject": "public_label:RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI="
-        },
-        {
-          "address": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e268/epoch268_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e268/epoch268_commits.json",
-          "sourceValue": "e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=52544",
-          "subject": "03fc8b9c986a37e0bd35a80252656f16032c1638344a8e49e06722f80cb83da57b"
         }
       ],
       "gnsNames": [],
       "inferenceUrl": "http://46.4.101.189:8000",
-      "label": "Hyperfusion",
+      "label": "Arturs Plisko \u00b7 Hyperfusion",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2680,7 +2680,7 @@
         {
           "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
           "category": "public_identity",
-          "caveat": "Telegram author posted the address with operator/delegation language; this is a strong local-export operator signal, but not public owner proof without a linkable public source.",
+          "caveat": "Telegram author posted operator/delegation language around this address; strong local-export operator signal, but not public owner proof without a linkable public source.",
           "confidence": "high",
           "isAttributionProof": false,
           "sourceFile": "history/Gonka Devs/messages14.html",
@@ -9978,11 +9978,11 @@
         {
           "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
           "category": "public_identity",
-          "caveat": "Telegram export excerpt is context evidence; it is attribution proof only if manually corroborated by public on-chain or profile data.",
+          "caveat": "Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.",
           "confidence": "medium",
           "isAttributionProof": false,
           "sourceFile": "history/Gonka Devs/messages17.html",
-          "sourceType": "telegram_export_excerpt",
+          "sourceType": "telegram_address_context",
           "sourceUrl": "history/Gonka Devs/messages17.html",
           "sourceValue": "\u0427\u0442\u043e \u0434\u0443\u043c\u0430\u0435\u0442\u0435 \u043f\u0440\u043e \u043a\u0440\u0443\u043f\u043d\u0435\u0439\u0448\u0435\u0433\u043e \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u0430 gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum? \u043f\u0440\u043e (\u043d\u0435)\u0443\u0447\u0435\u0442 \u0435\u0433\u043e \u0433\u043e\u043b\u043e\u0441\u0430 \u0432 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u043d\u0438\u0438?",
           "subject": "Mykola"

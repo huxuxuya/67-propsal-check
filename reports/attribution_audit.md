@@ -25,7 +25,7 @@ Top evidence:
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - Roles: epoch_commit_participant, operator, recipient, voter
 - Total compensation: 73073.708453 GONKA
-- Overall priority: 54.365 (identity 14, benefit 14.615, governance 16, coordination 3.75, telegram 6, proposal 0); operational priority 68.365 (inference timing 8, inference/vote overlap 6)
+- Overall priority: 58.365 (identity 14, benefit 14.615, governance 16, coordination 3.75, telegram 10, proposal 0); operational priority 72.365 (inference timing 8, inference/vote overlap 6)
 - Confidence: medium
 - Caveats: No strict public owner proof. | Address both received compensation and voted. | e287 inference timing is an operational signal, not governance voting power.
 
@@ -95,7 +95,7 @@ Top evidence:
 
 Top evidence:
 - proposal_message_sender (high, signal): /inference.streamvesting.MsgBatchTransferWithVesting
-- telegram_export_excerpt (medium, signal): из вот этого кармана gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
+- telegram_address_context (medium, signal): из вот этого кармана gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
 
 ### #7 gonka-3
 
@@ -113,7 +113,23 @@ Top evidence:
 - matched_validator_identity (high, proof): 673C81B66A67ED67
 - matched_validator_moniker (high, proof): gonka-3
 
-### #8 Unknown public owner
+### #8 Arturs Plisko · Hyperfusion
+
+- Addresses: gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
+- Roles: epoch_commit_participant, voter
+- Total compensation: 0 GONKA
+- Overall priority: 42.15 (identity 25, benefit 0.0, governance 8, coordination 3.15, telegram 6, proposal 0); operational priority 42.15 (inference timing 0, inference/vote overlap 0)
+- Confidence: high
+- Caveats: none
+
+Top evidence:
+- matched_validator_identity (high, proof): 7B07CCF42FA50009
+- matched_validator_identity (high, proof): 7B07CCF42FA50009
+- matched_validator_moniker (high, proof): Hyperfusion
+- matched_validator_moniker (high, proof): Hyperfusion
+- validator_key_match (high, proof): RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI=
+
+### #9 Unknown public owner
 
 - Addresses: gonka1nvcwl2c7jxj2h47c56y8dmcmf0tynt5dplzngy
 - Roles: proposer
@@ -124,22 +140,6 @@ Top evidence:
 
 Top evidence:
 - proposal_proposer (high, signal): 67
-
-### #9 Hyperfusion
-
-- Addresses: gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
-- Roles: epoch_commit_participant, voter
-- Total compensation: 0 GONKA
-- Overall priority: 40.15 (identity 25, benefit 0.0, governance 8, coordination 3.15, telegram 4, proposal 0); operational priority 40.15 (inference timing 0, inference/vote overlap 0)
-- Confidence: high
-- Caveats: none
-
-Top evidence:
-- matched_validator_identity (high, proof): 7B07CCF42FA50009
-- matched_validator_identity (high, proof): 7B07CCF42FA50009
-- matched_validator_moniker (high, proof): Hyperfusion
-- matched_validator_moniker (high, proof): Hyperfusion
-- validator_key_match (high, proof): RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI=
 
 ### #10 http://54.37.131.156:8000
 

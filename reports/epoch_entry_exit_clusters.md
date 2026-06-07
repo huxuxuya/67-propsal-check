@@ -291,5 +291,5 @@ Top evidence:
 - Caveats: Cluster is not strict public owner proof. | Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data. | Some addresses are timing/context leads, not full enter-vote-exit operational cases.
 
 Top evidence:
-- gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d telegram_export_excerpt (medium, signal): Также добавил в трекер демонстрацию сколько у кого срезает веса. Например, этот участник не делал делегации ни qwen ни kimi и поэтому потерял 30%: https://tracker.gonka.vip/?participant=gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d
+- gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d telegram_delegation_context (medium, signal): Также добавил в трекер демонстрацию сколько у кого срезает веса. Например, этот участник не делал делегации ни qwen ни kimi и поэтому потерял 30%: https://tracker.gonka.vip/?participant=gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d
 - gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d voting_end_epoch_anomaly (medium, signal): e287=21252 prev=21453 next=20925 vote=did_not_vote@None

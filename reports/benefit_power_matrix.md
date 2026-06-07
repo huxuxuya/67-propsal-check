@@ -310,13 +310,13 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1024
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=57984
 
-### #19 Hyperfusion
+### #19 Arturs Plisko · Hyperfusion
 
 - Address: `gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p`
 - Compensation: 0 GONKA; governance power: 5395; vote: no_with_veto
 - Recipient: False; voter: True; overlap: False
-- Cluster: label:Hyperfusion (label)
-- Evidence boundary: public_owner_proof (proof 5, high-confidence claims 7)
+- Cluster: label:Arturs Plisko · Hyperfusion (label)
+- Evidence boundary: public_owner_proof (proof 5, high-confidence claims 8)
 - Triage score: 8.771
 - Next actions: monitor
 
