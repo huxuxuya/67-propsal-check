@@ -66,6 +66,7 @@ function initCharts() {
     matrix: "matrixChart",
     timeline: "timelineChart",
     tally: "tallyChart",
+    voterPower: "voterPowerChart",
     actorGraph: "actorGraphChart",
     entryExit: "entryExitChart",
   })) {
@@ -256,6 +257,33 @@ function renderTally() {
       radius: ["45%", "72%"],
       label: { color: "#eef0f2", formatter: "{b}\n{d}%" },
       data: Object.entries(tally).map(([name, value]) => ({ name: optionLabels[name], value, itemStyle: { color: optionColors[name] } })),
+    }],
+  }, true);
+}
+
+function renderVoterPowerChart() {
+  const rows = (state.data.benefitPowerMatrix || [])
+    .filter((row) => row.isVoter)
+    .sort((a, b) => (b.votingPower || 0) - (a.votingPower || 0) || a.label.localeCompare(b.label));
+  state.charts.voterPower.setOption({
+    grid: { left: 220, right: 34, top: 24, bottom: 42 },
+    tooltip: {
+      formatter: (p) => {
+        const row = rows[p.dataIndex];
+        const roles = [
+          row.isRecipient ? "recipient" : "",
+          row.isVoter ? "voter" : "",
+        ].filter(Boolean).join(" + ");
+        return `<strong>${escapeHtml(row.label)}</strong><br>${escapeHtml(row.address)}<br>${escapeHtml(roles)}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}<br>governance power ${fmt.format(row.votingPower || 0)}<br>compensation ${gonka(row.totalCompensationGonka || 0)}<br>${escapeHtml(row.evidenceBoundary || "")}`;
+      },
+    },
+    xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
+    yAxis: { type: "category", data: rows.map((row) => row.label), axisLabel: { color: "#a7afba", width: 200, overflow: "truncate" } },
+    series: [{
+      type: "bar",
+      data: rows.map((row) => row.votingPower || 0),
+      itemStyle: { color: (p) => optionColors[rows[p.dataIndex]?.voteOption] || "#4db7a8" },
+      label: { show: true, position: "right", color: "#eef0f2", formatter: (p) => fmt.format(p.value) },
     }],
   }, true);
 }
@@ -874,6 +902,7 @@ function renderAll() {
   renderMatrix();
   renderTimeline();
   renderTally();
+  renderVoterPowerChart();
   renderActorGraph();
   renderEntryExitChart();
   renderHypotheses();
