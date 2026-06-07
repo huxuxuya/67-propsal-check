@@ -25,7 +25,7 @@ Top evidence:
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - Roles: epoch_commit_participant, operator, recipient, voter
 - Total compensation: 73073.708453 GONKA
-- Overall priority: 56.365 (identity 14, benefit 14.615, governance 16, coordination 3.75, telegram 8, proposal 0); operational priority 70.365 (inference timing 8, inference/vote overlap 6)
+- Overall priority: 54.365 (identity 14, benefit 14.615, governance 16, coordination 3.75, telegram 6, proposal 0); operational priority 68.365 (inference timing 8, inference/vote overlap 6)
 - Confidence: medium
 - Caveats: No strict public owner proof. | Address both received compensation and voted. | e287 inference timing is an operational signal, not governance voting power.
 
@@ -34,7 +34,7 @@ Top evidence:
 - matched_validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 - matched_validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 - proposal_vote (high, signal): yes
-- epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=80416
+- telegram_operator_statement (high, signal): Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда:./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \ --from <your-account-key> \ --node http://node2.gonka.ai:8000/chain-rpc/ \ --chain-id gonka-mainnet \ --keyring-backend file \ --gas auto \ --gas-adjustment 1.3 \ -yЭто топ 1 сегмент по весу...
 
 ### #3 http://178.105.170.135:8000
 

@@ -2679,6 +2679,18 @@
         },
         {
           "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+          "category": "public_identity",
+          "caveat": "Telegram author posted the address with operator/delegation language; this is a strong local-export operator signal, but not public owner proof without a linkable public source.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages14.html",
+          "sourceType": "telegram_operator_statement",
+          "sourceUrl": "history/Gonka Devs/messages14.html",
+          "sourceValue": "\u0423\u0441\u043f\u0435\u0432\u0430\u0439\u0442\u0435 \u0437\u0430\u0434\u0435\u043b\u0435\u0433\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u041a\u0438\u043c\u0438 \u0434\u043e \u0441\u043b\u0435\u0434 \u044d\u043f\u043e\u0445\u0438 \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u043f\u043e\u0442\u0435\u0440\u044f\u0442\u044c 15% ! \u0415\u0441\u043b\u0438 \u0438\u0449\u0438\u0442\u0435 \u043a\u043e\u043c\u0443 \u0434\u0435\u043b\u0435\u0433\u0438\u0440\u043e\u0432\u0430\u0442\u044c, \u0442\u043e \u043c\u043e\u0436\u043d\u043e \u0432\u043e\u0442 \u0441\u044e\u0434\u0430:./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \\ --from <your-account-key> \\ --node http://node2.gonka.ai:8000/chain-rpc/ \\ --chain-id gonka-mainnet \\ --keyring-backend file \\ --gas auto \\ --gas-adjustment 1.3 \\ -y\u042d\u0442\u043e \u0442\u043e\u043f 1 \u0441\u0435\u0433\u043c\u0435\u043d\u0442 \u043f\u043e \u0432\u0435\u0441\u0443...",
+          "subject": "Votkon"
+        },
+        {
+          "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
           "category": "financial_or_epoch_activity",
           "caveat": "Epoch commit activity links an address to model participation and public key usage.",
           "confidence": "medium",
@@ -2711,18 +2723,6 @@
           "sourceType": "epoch_commit_participant",
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e267/epoch267_commits.json",
           "sourceValue": "e267 moonshotai/Kimi-K2.6 count=77056",
-          "subject": "02f196facea0c57cfe2d571e910df4295ea38c70d45ca9981928b136d91ae7a7ff"
-        },
-        {
-          "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e268/epoch268_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e268/epoch268_commits.json",
-          "sourceValue": "e268 moonshotai/Kimi-K2.6 count=79744",
           "subject": "02f196facea0c57cfe2d571e910df4295ea38c70d45ca9981928b136d91ae7a7ff"
         }
       ],

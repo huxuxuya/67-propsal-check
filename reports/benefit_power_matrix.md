@@ -10,7 +10,7 @@ This report ranks addresses by combined compensation benefit, exact archive-deri
 - Compensation: 73073.708453 GONKA; governance power: 92840; vote: yes
 - Recipient: True; voter: True; overlap: True
 - Cluster: label:http://89.169.97.113:8000 (label)
-- Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
+- Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 5)
 - Triage score: 46.531
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
 
@@ -19,7 +19,7 @@ Top evidence:
 - matched_validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 - matched_validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 - proposal_vote (high, signal): yes
-- epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=80416
+- telegram_operator_statement (high, signal): Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда:./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \ --from <your-account-key> \ --node http://node2.gonka.ai:8000/chain-rpc/ \ --chain-id gonka-mainnet \ --keyring-backend file \ --gas auto \ --gas-adjustment 1.3 \ -yЭто топ 1 сегмент по весу...
 
 ### #2 ancapex | Mine from $1, no losses from node failures
 

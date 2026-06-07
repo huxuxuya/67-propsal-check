@@ -980,16 +980,24 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
 
     for message in (telegram_evidence or {}).get("messages") or []:
         for address in message.get("addresses") or [""]:
+            excerpt_value = message.get("excerpt", "")
+            author_value = message.get("author") or message.get("chat", "")
+            operator_statement = (
+                address
+                and message.get("author")
+                and re.search(r"\bVotkon\b", message.get("author", ""), re.IGNORECASE)
+                and re.search(r"делегировать|будет запускать|буду давать|прогресс|если что-то пойдет", excerpt_value, re.IGNORECASE)
+            )
             claims.append(
                 make_claim(
                     address,
-                    message.get("author") or message.get("chat", ""),
-                    "telegram_export_excerpt",
-                    message.get("excerpt", ""),
+                    author_value,
+                    "telegram_operator_statement" if operator_statement else "telegram_export_excerpt",
+                    excerpt_value,
                     message.get("sourceFile", "history"),
-                    message.get("confidence", "medium"),
+                    "high" if operator_statement else message.get("confidence", "medium"),
                     False,
-                    message.get("caveat", "Telegram excerpt requires corroboration."),
+                    "Telegram author posted the address with operator/delegation language; this is a strong local-export operator signal, but not public owner proof without a linkable public source." if operator_statement else message.get("caveat", "Telegram excerpt requires corroboration."),
                 )
             )
 

@@ -19,7 +19,7 @@ Top evidence:
 - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg matched_validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg matched_validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg proposal_vote (high, signal): yes
-- gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=80416
+- gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg telegram_operator_statement (high, signal): Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда:./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \ --from <your-account-key> \ --node http://node2.gonka.ai:8000/chain-rpc/ \ --chain-id gonka-mainnet \ --keyring-backend file \ --gas auto \ --gas-adjustment 1.3 \ -yЭто топ 1 сегмент по весу...
 
 ## #2 http://54.38.118.143:8000
 
