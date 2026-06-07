@@ -26,6 +26,7 @@ const els = {
   evidenceTable: document.getElementById("evidenceTable"),
   hypothesisTable: document.getElementById("hypothesisTable"),
   anomalyTable: document.getElementById("anomalyTable"),
+  entryExitTable: document.getElementById("entryExitTable"),
   telegramTable: document.getElementById("telegramTable"),
   labelTable: document.getElementById("labelTable"),
   epochTable: document.getElementById("epochTable"),
@@ -63,6 +64,7 @@ function initCharts() {
     timeline: "timelineChart",
     tally: "tallyChart",
     actorGraph: "actorGraphChart",
+    entryExit: "entryExitChart",
   })) {
     state.charts[key] = echarts.init(document.getElementById(id));
   }
@@ -316,6 +318,74 @@ function renderAnomalyTable() {
       <td><span class="tag ${row.status === "confirmed_window_anomaly" ? "good" : row.status === "partially_supported" ? "warn" : ""}">${escapeHtml(row.status)}</span></td>
     </tr>
   `).join("");
+}
+
+function entryExitClusterMatches(row, query) {
+  if (els.label.value !== "all" && row.label !== els.label.value) return false;
+  if (els.vote.value !== "all" && !Object.keys(row.voteCounts || {}).includes(els.vote.value)) return false;
+  if (els.confidence.value !== "all" && !(row.topEvidence || []).some((item) => item.confidence === els.confidence.value)) return false;
+  if (els.sourceType.value !== "all" && !(row.topEvidence || []).some((item) => item.sourceType === els.sourceType.value)) return false;
+  if (!query) return true;
+  return [
+    row.id,
+    row.kind,
+    row.label,
+    ...(row.addresses || []),
+    ...(row.caveats || []),
+    ...(row.addressRows || []).map((item) => [item.address, item.label, item.inferenceUrl, item.txHash, item.status].join(" ")),
+    ...(row.topEvidence || []).map((item) => [item.sourceType, item.sourceValue, item.confidence].join(" ")),
+  ].join(" ").toLowerCase().includes(query);
+}
+
+function renderEntryExitChart() {
+  const query = els.search.value.trim().toLowerCase();
+  const rows = (state.data.epochEntryExitClusters || []).filter((row) => entryExitClusterMatches(row, query)).slice(0, 16);
+  state.charts.entryExit.setOption({
+    grid: { left: 170, right: 24, top: 24, bottom: 42 },
+    tooltip: {
+      formatter: (params) => {
+        const row = rows[params.dataIndex];
+        return `${escapeHtml(row.label)}<br>${escapeHtml(row.kind)}<br>e287 weight ${fmt.format(row.totalE287Weight)}<br>${row.confirmedEnterVoteExitCount} confirmed enter/vote/exit`;
+      },
+    },
+    xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
+    yAxis: { type: "category", data: rows.map((row) => `#${row.rank} ${row.label}`), axisLabel: { color: "#a7afba", width: 160, overflow: "truncate" } },
+    series: [{
+      type: "bar",
+      data: rows.map((row) => row.totalE287Weight),
+      itemStyle: { color: (p) => rows[p.dataIndex]?.kind === "strict_identity" ? "#79b66a" : rows[p.dataIndex]?.kind === "signal_cluster" ? "#d7a84f" : "#4db7a8" },
+    }],
+  }, true);
+}
+
+function renderEntryExitTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const rows = (state.data.epochEntryExitClusters || []).filter((row) => entryExitClusterMatches(row, query));
+  document.getElementById("entryExitRows").textContent = `${rows.length} shown`;
+  els.entryExitTable.innerHTML = rows.map((row) => {
+    const voteText = Object.entries(row.voteCounts || {}).map(([option, count]) => `${optionLabels[option] || option}: ${count}`).join("<br>") || "-";
+    const topEvidence = (row.topEvidence || []).slice(0, 3).map((item) => `${escapeHtml(item.sourceType)} <span class="tag ${item.isAttributionProof ? "good" : ""}">${item.isAttributionProof ? "proof" : "signal"}</span> <span class="tag">${escapeHtml(item.confidence)}</span>`).join("<br>");
+    const addressRows = (row.addressRows || []).slice(0, 8).map((item) => {
+      const flags = [
+        item.enteredE287 ? "enter" : "",
+        item.votedDuringE287 ? "vote" : "",
+        item.exitedAfterE287 ? "exit" : "",
+      ].filter(Boolean).join("/");
+      return `<button class="row-button mono" data-address="${item.address}">${escapeHtml(item.address)}</button><br><span class="muted">${escapeHtml(flags || item.status)} e287 ${fmt.format(item.e287Weight)}</span>`;
+    }).join("<br>");
+    return `
+      <tr>
+        <td class="num">${row.rank}<br><span class="muted">${fmt.format(row.priorityScore)}</span></td>
+        <td>${escapeHtml(row.label)}<br><span class="tag">${escapeHtml(row.kind)}</span><br><span class="mono muted">${escapeHtml(row.id)}</span></td>
+        <td>${addressRows}</td>
+        <td class="num">${fmt.format(row.totalE287Weight)}<br><span class="muted">max ${fmt.format(row.maxE287Weight)}</span></td>
+        <td>${row.enteredCount}/${row.votedDuringCount}/${row.exitedCount}<br><span class="muted">${row.confirmedEnterVoteExitCount} confirmed full path</span></td>
+        <td>${voteText}</td>
+        <td class="num">${gonka(row.totalCompensationGonka)}<br><span class="muted">${row.recipientCount} recipients</span></td>
+        <td>${topEvidence || "<span class=\"muted\">no public owner proof</span>"}<br><span class="muted">${escapeHtml((row.caveats || []).join(" "))}</span></td>
+      </tr>
+    `;
+  }).join("");
 }
 
 function renderTelegramTable() {
@@ -648,8 +718,10 @@ function renderAll() {
   renderTimeline();
   renderTally();
   renderActorGraph();
+  renderEntryExitChart();
   renderHypotheses();
   renderAnomalyTable();
+  renderEntryExitTable();
   renderTelegramTable();
   renderRankedTable();
   renderEvidenceTable();
@@ -676,6 +748,7 @@ function openDrawer(address) {
     ...(state.data.identityGraph?.strictClusters || []),
     ...(state.data.identityGraph?.signalClusters || []),
   ].filter((cluster) => cluster.addresses.includes(address));
+  const entryExitClusters = (state.data.epochEntryExitClusters || []).filter((cluster) => cluster.addresses.includes(address));
   const graphEdges = (state.data.identityGraph?.edges || []).filter((edge) => edge.source === `address:${address}` || edge.target === `address:${address}`);
   const label = recipient?.label || vote?.label || "Unknown public owner";
   els.drawerContent.innerHTML = `
@@ -709,6 +782,14 @@ function openDrawer(address) {
         <dt>Tx hash</dt><dd class="mono">${escapeHtml(vote.txHash)}</dd>
         <dt>Voting power</dt><dd>unknown</dd>
       </dl>` : "<p>No final on-chain vote in the saved proposal vote transactions.</p>"}
+    </div>
+    <div class="drawer-section">
+      <h3>e287 Entry/Exit Cluster</h3>
+      ${entryExitClusters.length ? `<dl class="kv">${entryExitClusters.map((cluster) => {
+        const item = (cluster.addressRows || []).find((row) => row.address === address) || {};
+        const neighbors = (cluster.addresses || []).filter((itemAddress) => itemAddress !== address).slice(0, 8);
+        return `<dt>#${cluster.rank} ${escapeHtml(cluster.kind)}</dt><dd>${escapeHtml(cluster.label)}<br>e287 weight ${fmt.format(item.e287Weight || 0)}, prev ${fmt.format(item.prevMaxWeight || 0)}, next ${fmt.format(item.nextMaxWeight || 0)}<br>enter/vote/exit: ${item.enteredE287 ? "yes" : "no"} / ${item.votedDuringE287 ? "yes" : "no"} / ${item.exitedAfterE287 ? "yes" : "no"}<br>vote ${escapeHtml(optionLabels[item.voteOption] || item.voteOption || "none")} ${item.voteHeight ? `at ${item.voteHeight}` : ""}<br><span class="muted">Neighbors: ${neighbors.length ? neighbors.map(escapeHtml).join(", ") : "none"}</span><br><span class="muted">${escapeHtml((cluster.caveats || []).join(" "))}</span></dd>`;
+      }).join("")}</dl>` : "<p>No e287 entry/exit anomaly cluster for this address.</p>"}
     </div>
     <div class="drawer-section">
       <h3>GNS Names</h3>

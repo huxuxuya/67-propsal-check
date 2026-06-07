@@ -1822,6 +1822,1134 @@ window.DASHBOARD_DATA = {
       }
     }
   ],
+  "epochEntryExitClusters": [
+    {
+      "addressRows": [
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "anomalyScore": 87.367,
+          "e287Weight": 113284,
+          "enteredE287": true,
+          "exitedAfterE287": false,
+          "inferenceUrl": "",
+          "isRecipient": false,
+          "label": "http://78.46.89.87:8000",
+          "nextMaxWeight": 126624,
+          "prevMaxWeight": 0,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 0,
+          "txHash": "DD94D2782864280DB6CA45617CD9CAF9BD0EA2C8A6E85C60E650599D42DFDC59",
+          "voteBlockTime": "2026-06-05T16:44:35.416685664Z",
+          "voteHeight": 4429647,
+          "voteOption": "no_with_veto",
+          "votedDuringE287": true
+        }
+      ],
+      "addresses": [
+        "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 1,
+      "exitedCount": 0,
+      "id": "label:http://78.46.89.87:8000",
+      "kind": "label_group",
+      "label": "http://78.46.89.87:8000",
+      "maxE287Weight": 113284,
+      "priorityScore": 55.761,
+      "rank": 1,
+      "recipientCount": 0,
+      "topEvidence": [
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk"
+        },
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "proposal_vote",
+          "sourceValue": "no_with_veto"
+        }
+      ],
+      "totalCompensationGonka": 0.0,
+      "totalE287Weight": 113284,
+      "voteCounts": {
+        "no_with_veto": 1
+      },
+      "votedDuringCount": 1
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+          "anomalyScore": 59.526,
+          "e287Weight": 92840,
+          "enteredE287": false,
+          "exitedAfterE287": true,
+          "inferenceUrl": "http://89.169.97.113:8000",
+          "isRecipient": true,
+          "label": "http://89.169.97.113:8000",
+          "nextMaxWeight": 0,
+          "prevMaxWeight": 70871,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 73073.708453,
+          "txHash": "68AAF23B69D68A7265D3F7CBBBC5F1F8AAF1148AC68F310C5DF991588C3E3E03",
+          "voteBlockTime": "",
+          "voteHeight": 4406965,
+          "voteOption": "yes",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 1,
+      "id": "label:http://89.169.97.113:8000",
+      "kind": "label_group",
+      "label": "http://89.169.97.113:8000",
+      "maxE287Weight": 92840,
+      "priorityScore": 48.081,
+      "rank": 2,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "73073.708453 GONKA"
+        },
+        {
+          "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9"
+        }
+      ],
+      "totalCompensationGonka": 73073.708453,
+      "totalE287Weight": 92840,
+      "voteCounts": {
+        "yes": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
+          "anomalyScore": 32.695,
+          "e287Weight": 86433,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://54.38.118.143:8000",
+          "isRecipient": true,
+          "label": "http://54.38.118.143:8000",
+          "nextMaxWeight": 61537,
+          "prevMaxWeight": 70043,
+          "signalClusterId": "",
+          "status": "context",
+          "strictClusterId": "",
+          "totalCompensationGonka": 52290.195676,
+          "txHash": "BC1D95F0A2C95BC02C56AFE4A1F169B778B1A01E6710215097BA27CE8E2155D8",
+          "voteBlockTime": "",
+          "voteHeight": 4401130,
+          "voteOption": "yes",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://54.38.118.143:8000",
+      "kind": "label_group",
+      "label": "http://54.38.118.143:8000",
+      "maxE287Weight": 86433,
+      "priorityScore": 35.347,
+      "rank": 3,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "52290.195676 GONKA"
+        },
+        {
+          "address": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1gvrrhjmy4w4mayvs2s5l23edj8ertcmt32aj4w"
+        }
+      ],
+      "totalCompensationGonka": 52290.195676,
+      "totalE287Weight": 86433,
+      "voteCounts": {
+        "yes": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "anomalyScore": 49.525,
+          "e287Weight": 57838,
+          "enteredE287": false,
+          "exitedAfterE287": true,
+          "inferenceUrl": "http://178.105.174.27:8000",
+          "isRecipient": true,
+          "label": "http://178.105.174.27:8000",
+          "nextMaxWeight": 0,
+          "prevMaxWeight": 37261,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 11262.520198,
+          "txHash": "2163756502FF44AF25F1F41C5E1791ACC4236C8DC1ECBB0A825FDC4228BBBBBC",
+          "voteBlockTime": "",
+          "voteHeight": 4414864,
+          "voteOption": "yes",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 1,
+      "id": "label:http://178.105.174.27:8000",
+      "kind": "label_group",
+      "label": "http://178.105.174.27:8000",
+      "maxE287Weight": 57838,
+      "priorityScore": 28.687,
+      "rank": 4,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "11262.520198 GONKA"
+        },
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "proposal_vote",
+          "sourceValue": "yes"
+        },
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceType": "epoch_commit_participant",
+          "sourceValue": "e268 moonshotai/Kimi-K2.6 count=14528"
+        }
+      ],
+      "totalCompensationGonka": 11262.520198,
+      "totalE287Weight": 57838,
+      "voteCounts": {
+        "yes": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+          "anomalyScore": 46.247,
+          "e287Weight": 28865,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://89.149.242.149:8000",
+          "isRecipient": true,
+          "label": "ancapex | Mine from $1, no losses from node failures",
+          "nextMaxWeight": 29166,
+          "prevMaxWeight": 34599,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 66487.744752,
+          "txHash": "84D0A3CCE584407EEED45D96F30E944F8F6AB32ECFF933278770D6011E6E3E0E",
+          "voteBlockTime": "2026-06-05T17:17:10.255325351Z",
+          "voteHeight": 4430015,
+          "voteOption": "no_with_veto",
+          "votedDuringE287": true
+        }
+      ],
+      "addresses": [
+        "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:ancapex | Mine from $1, no losses from node failures",
+      "kind": "label_group",
+      "label": "ancapex | Mine from $1, no losses from node failures",
+      "maxE287Weight": 28865,
+      "priorityScore": 27.933,
+      "rank": 5,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+          "confidence": "high",
+          "isAttributionProof": true,
+          "sourceType": "matched_validator_identity",
+          "sourceValue": "B22258DF68546529"
+        },
+        {
+          "address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+          "confidence": "high",
+          "isAttributionProof": true,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "ancapex | Mine from $1, no losses from node failures"
+        }
+      ],
+      "totalCompensationGonka": 66487.744752,
+      "totalE287Weight": 28865,
+      "voteCounts": {
+        "no_with_veto": 1
+      },
+      "votedDuringCount": 1
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+          "anomalyScore": 14.749,
+          "e287Weight": 23621,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://135.181.56.61:8000",
+          "isRecipient": true,
+          "label": "http://135.181.56.61:8000",
+          "nextMaxWeight": 53975,
+          "prevMaxWeight": 38345,
+          "signalClusterId": "",
+          "status": "context",
+          "strictClusterId": "",
+          "totalCompensationGonka": 158541.879456,
+          "txHash": "",
+          "voteBlockTime": "",
+          "voteHeight": null,
+          "voteOption": "did_not_vote",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://135.181.56.61:8000",
+      "kind": "label_group",
+      "label": "http://135.181.56.61:8000",
+      "maxE287Weight": 23621,
+      "priorityScore": 27.691,
+      "rank": 6,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "158541.879456 GONKA"
+        },
+        {
+          "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1qa90tgczc0k5dvk4l5nvlf5y6phgm6mgk2pw9p"
+        }
+      ],
+      "totalCompensationGonka": 158541.879456,
+      "totalE287Weight": 23621,
+      "voteCounts": {
+        "did_not_vote": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
+          "anomalyScore": 25.899,
+          "e287Weight": 20647,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "",
+          "isRecipient": false,
+          "label": "http://94.237.52.191:8000",
+          "nextMaxWeight": 9807,
+          "prevMaxWeight": 2725,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 0,
+          "txHash": "DAE6F185AA5013735B505B44C59F295D0994B7D818E2B724ADE2DC95D16674FB",
+          "voteBlockTime": "2026-06-05T17:52:46.886362077Z",
+          "voteHeight": 4430417,
+          "voteOption": "yes",
+          "votedDuringE287": true
+        }
+      ],
+      "addresses": [
+        "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://94.237.52.191:8000",
+      "kind": "label_group",
+      "label": "http://94.237.52.191:8000",
+      "maxE287Weight": 20647,
+      "priorityScore": 16.882,
+      "rank": 7,
+      "recipientCount": 0,
+      "topEvidence": [
+        {
+          "address": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1nmn039cgpkhmkzekpkfz3nkv9tcjckpnf6rr5l"
+        },
+        {
+          "address": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "proposal_vote",
+          "sourceValue": "yes"
+        }
+      ],
+      "totalCompensationGonka": 0.0,
+      "totalE287Weight": 20647,
+      "voteCounts": {
+        "yes": 1
+      },
+      "votedDuringCount": 1
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+          "anomalyScore": 35.381,
+          "e287Weight": 8333,
+          "enteredE287": true,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://95.217.35.48:8000",
+          "isRecipient": true,
+          "label": "http://95.217.35.48:8000",
+          "nextMaxWeight": 8291,
+          "prevMaxWeight": 0,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 10456.612261,
+          "txHash": "",
+          "voteBlockTime": "",
+          "voteHeight": null,
+          "voteOption": "did_not_vote",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 1,
+      "exitedCount": 0,
+      "id": "label:http://95.217.35.48:8000",
+      "kind": "label_group",
+      "label": "http://95.217.35.48:8000",
+      "maxE287Weight": 8333,
+      "priorityScore": 12.085,
+      "rank": 8,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "10456.612261 GONKA"
+        },
+        {
+          "address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceType": "epoch_commit_participant",
+          "sourceValue": "e265 moonshotai/Kimi-K2.6 count=6720"
+        },
+        {
+          "address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceType": "epoch_commit_participant",
+          "sourceValue": "e266 moonshotai/Kimi-K2.6 count=6496"
+        }
+      ],
+      "totalCompensationGonka": 10456.612261,
+      "totalE287Weight": 8333,
+      "voteCounts": {
+        "did_not_vote": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+          "anomalyScore": 39.263,
+          "e287Weight": 4420,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://20.171.77.105:8000",
+          "isRecipient": true,
+          "label": "http://20.171.77.105:8000",
+          "nextMaxWeight": 326,
+          "prevMaxWeight": 347,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 108.366532,
+          "txHash": "968C6B605887FFEFA4014384FCBAEFA6E84C2DA6CE9527C5598CDDFE576A8ABD",
+          "voteBlockTime": "2026-06-05T17:33:40.72496972Z",
+          "voteHeight": 4430201,
+          "voteOption": "no_with_veto",
+          "votedDuringE287": true
+        }
+      ],
+      "addresses": [
+        "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://20.171.77.105:8000",
+      "kind": "label_group",
+      "label": "http://20.171.77.105:8000",
+      "maxE287Weight": 4420,
+      "priorityScore": 11.487,
+      "rank": 9,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "108.366532 GONKA"
+        },
+        {
+          "address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1cuwejs77gectp3n32wg8q27hlsa4m3hqvpcjer"
+        }
+      ],
+      "totalCompensationGonka": 108.366532,
+      "totalE287Weight": 4420,
+      "voteCounts": {
+        "no_with_veto": 1
+      },
+      "votedDuringCount": 1
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+          "anomalyScore": 39.227,
+          "e287Weight": 4295,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://20.163.111.183:8000",
+          "isRecipient": true,
+          "label": "http://20.163.111.183:8000",
+          "nextMaxWeight": 373,
+          "prevMaxWeight": 365,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 113.864834,
+          "txHash": "4E3CCBD1843951453C4597537BF45E9C7BECA6DE509BC305F4150C862EC1BB8F",
+          "voteBlockTime": "2026-06-05T17:33:35.1076372Z",
+          "voteHeight": 4430200,
+          "voteOption": "no_with_veto",
+          "votedDuringE287": true
+        }
+      ],
+      "addresses": [
+        "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://20.163.111.183:8000",
+      "kind": "label_group",
+      "label": "http://20.163.111.183:8000",
+      "maxE287Weight": 4295,
+      "priorityScore": 11.446,
+      "rank": 10,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "113.864834 GONKA"
+        },
+        {
+          "address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1fvly5jrewyjmjfgwah3khy9rttq4cqajyeptjv"
+        }
+      ],
+      "totalCompensationGonka": 113.864834,
+      "totalE287Weight": 4295,
+      "voteCounts": {
+        "no_with_veto": 1
+      },
+      "votedDuringCount": 1
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+          "anomalyScore": 35.351,
+          "e287Weight": 8230,
+          "enteredE287": true,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://198.244.228.95:8000",
+          "isRecipient": true,
+          "label": "http://198.244.228.95:8000",
+          "nextMaxWeight": 9283,
+          "prevMaxWeight": 0,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 1753.409171,
+          "txHash": "",
+          "voteBlockTime": "",
+          "voteHeight": null,
+          "voteOption": "did_not_vote",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 1,
+      "exitedCount": 0,
+      "id": "label:http://198.244.228.95:8000",
+      "kind": "label_group",
+      "label": "http://198.244.228.95:8000",
+      "maxE287Weight": 8230,
+      "priorityScore": 10.963,
+      "rank": 11,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "1753.409171 GONKA"
+        },
+        {
+          "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceType": "epoch_commit_participant",
+          "sourceValue": "e272 moonshotai/Kimi-K2.6 count=6592"
+        },
+        {
+          "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceType": "epoch_commit_participant",
+          "sourceValue": "e273 moonshotai/Kimi-K2.6 count=6528"
+        }
+      ],
+      "totalCompensationGonka": 1753.409171,
+      "totalE287Weight": 8230,
+      "voteCounts": {
+        "did_not_vote": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+          "anomalyScore": 16.919,
+          "e287Weight": 31217,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://148.113.47.235:8000",
+          "isRecipient": true,
+          "label": "http://148.113.47.235:8000",
+          "nextMaxWeight": 29657,
+          "prevMaxWeight": 36458,
+          "signalClusterId": "",
+          "status": "context",
+          "strictClusterId": "",
+          "totalCompensationGonka": 1805.142498,
+          "txHash": "F149F6128C4D51CE95E34FD7DAD6C571A3EC0436C1027758828AFD26677D927A",
+          "voteBlockTime": "",
+          "voteHeight": 4406961,
+          "voteOption": "yes",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://148.113.47.235:8000",
+      "kind": "label_group",
+      "label": "http://148.113.47.235:8000",
+      "maxE287Weight": 31217,
+      "priorityScore": 10.631,
+      "rank": 12,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "1805.142498 GONKA"
+        },
+        {
+          "address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x"
+        }
+      ],
+      "totalCompensationGonka": 1805.142498,
+      "totalE287Weight": 31217,
+      "voteCounts": {
+        "yes": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+          "anomalyScore": 18.875,
+          "e287Weight": 31063,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "",
+          "isRecipient": false,
+          "label": "http://network002.kaitaku.ai:8000",
+          "nextMaxWeight": 44808,
+          "prevMaxWeight": 40669,
+          "signalClusterId": "",
+          "status": "context",
+          "strictClusterId": "",
+          "totalCompensationGonka": 0,
+          "txHash": "879FDD98A0A26913154EBA8E9DB863CA8284C8F5DECC6CDDD8AB25DFD27B2B74",
+          "voteBlockTime": "",
+          "voteHeight": 4412030,
+          "voteOption": "no_with_veto",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://network002.kaitaku.ai:8000",
+      "kind": "label_group",
+      "label": "http://network002.kaitaku.ai:8000",
+      "maxE287Weight": 31063,
+      "priorityScore": 10.354,
+      "rank": 13,
+      "recipientCount": 0,
+      "topEvidence": [
+        {
+          "address": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1d694r00czmq75txghwjcuk07lxvc8d4e2gps2z"
+        },
+        {
+          "address": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "proposal_vote",
+          "sourceValue": "no_with_veto"
+        }
+      ],
+      "totalCompensationGonka": 0.0,
+      "totalE287Weight": 31063,
+      "voteCounts": {
+        "no_with_veto": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "anomalyScore": 30.184,
+          "e287Weight": 645,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "",
+          "isRecipient": false,
+          "label": "http://20.88.58.210:8000",
+          "nextMaxWeight": 318,
+          "prevMaxWeight": 312,
+          "signalClusterId": "",
+          "status": "partially_supported",
+          "strictClusterId": "",
+          "totalCompensationGonka": 0,
+          "txHash": "ECF9274238EA5B9D3675955AA4A247D57FAFD338F9E37E4C39BC902CF32E54C7",
+          "voteBlockTime": "2026-06-05T17:33:46.307415502Z",
+          "voteHeight": 4430202,
+          "voteOption": "no_with_veto",
+          "votedDuringE287": true
+        }
+      ],
+      "addresses": [
+        "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://20.88.58.210:8000",
+      "kind": "label_group",
+      "label": "http://20.88.58.210:8000",
+      "maxE287Weight": 645,
+      "priorityScore": 10.215,
+      "rank": 14,
+      "recipientCount": 0,
+      "topEvidence": [
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu"
+        },
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "proposal_vote",
+          "sourceValue": "no_with_veto"
+        }
+      ],
+      "totalCompensationGonka": 0.0,
+      "totalE287Weight": 645,
+      "voteCounts": {
+        "no_with_veto": 1
+      },
+      "votedDuringCount": 1
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+          "anomalyScore": 25.222,
+          "e287Weight": 25278,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://network000.kaitaku.ai:8000",
+          "isRecipient": true,
+          "label": "http://network000.kaitaku.ai:8000",
+          "nextMaxWeight": 40254,
+          "prevMaxWeight": 39406,
+          "signalClusterId": "",
+          "status": "context",
+          "strictClusterId": "",
+          "totalCompensationGonka": 11021.18308,
+          "txHash": "EB3997DE70CD373007828A268A2946749A449E0F5880773145E544A678E95836",
+          "voteBlockTime": "",
+          "voteHeight": 4412026,
+          "voteOption": "no_with_veto",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://network000.kaitaku.ai:8000",
+      "kind": "label_group",
+      "label": "http://network000.kaitaku.ai:8000",
+      "maxE287Weight": 25278,
+      "priorityScore": 9.804,
+      "rank": 15,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "11021.18308 GONKA"
+        },
+        {
+          "address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper168rtjfkszuhcggg4dfyse4yh7xn9zwfgrn8588"
+        }
+      ],
+      "totalCompensationGonka": 11021.18308,
+      "totalE287Weight": 25278,
+      "voteCounts": {
+        "no_with_veto": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+          "anomalyScore": 13.856,
+          "e287Weight": 20495,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "http://35.89.168.230:8000",
+          "isRecipient": true,
+          "label": "http://35.89.168.230:8000",
+          "nextMaxWeight": 20301,
+          "prevMaxWeight": 20458,
+          "signalClusterId": "",
+          "status": "context",
+          "strictClusterId": "",
+          "totalCompensationGonka": 12612.234866,
+          "txHash": "",
+          "voteBlockTime": "",
+          "voteHeight": null,
+          "voteOption": "did_not_vote",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:http://35.89.168.230:8000",
+      "kind": "label_group",
+      "label": "http://35.89.168.230:8000",
+      "maxE287Weight": 20495,
+      "priorityScore": 8.408,
+      "rank": 16,
+      "recipientCount": 1,
+      "topEvidence": [
+        {
+          "address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "compensation_output",
+          "sourceValue": "12612.234866 GONKA"
+        },
+        {
+          "address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceType": "matched_validator_moniker",
+          "sourceValue": "gonkavaloper1ujnc662v6g69jm6fgxnr79a2m7ehzeutn55dxg"
+        }
+      ],
+      "totalCompensationGonka": 12612.234866,
+      "totalE287Weight": 20495,
+      "voteCounts": {
+        "did_not_vote": 1
+      },
+      "votedDuringCount": 0
+    },
+    {
+      "addressRows": [
+        {
+          "address": "gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d",
+          "anomalyScore": 6.072,
+          "e287Weight": 21252,
+          "enteredE287": false,
+          "exitedAfterE287": false,
+          "inferenceUrl": "",
+          "isRecipient": false,
+          "label": "Unknown public owner",
+          "nextMaxWeight": 20925,
+          "prevMaxWeight": 21453,
+          "signalClusterId": "",
+          "status": "context",
+          "strictClusterId": "",
+          "totalCompensationGonka": 0,
+          "txHash": "",
+          "voteBlockTime": "",
+          "voteHeight": null,
+          "voteOption": "did_not_vote",
+          "votedDuringE287": false
+        }
+      ],
+      "addresses": [
+        "gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d"
+      ],
+      "addressesCount": 1,
+      "caveats": [
+        "Cluster is not strict public owner proof.",
+        "Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases."
+      ],
+      "confirmedEnterVoteExitCount": 0,
+      "enteredCount": 0,
+      "exitedCount": 0,
+      "id": "label:Unknown public owner",
+      "kind": "label_group",
+      "label": "Unknown public owner",
+      "maxE287Weight": 21252,
+      "priorityScore": 7.084,
+      "rank": 17,
+      "recipientCount": 0,
+      "topEvidence": [
+        {
+          "address": "gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceType": "telegram_export_excerpt",
+          "sourceValue": "\u0422\u0430\u043a\u0436\u0435 \u0434\u043e\u0431\u0430\u0432\u0438\u043b \u0432 \u0442\u0440\u0435\u043a\u0435\u0440 \u0434\u0435\u043c\u043e\u043d\u0441\u0442\u0440\u0430\u0446\u0438\u044e \u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0443 \u043a\u043e\u0433\u043e \u0441\u0440\u0435\u0437\u0430\u0435\u0442 \u0432\u0435\u0441\u0430. \u041d\u0430\u043f\u0440\u0438\u043c\u0435\u0440, \u044d\u0442\u043e\u0442 \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a \u043d\u0435 \u0434\u0435\u043b\u0430\u043b \u0434\u0435\u043b\u0435\u0433\u0430\u0446\u0438\u0438 \u043d\u0438 qwen \u043d\u0438 kimi \u0438 \u043f\u043e\u044d\u0442\u043e\u043c\u0443 \u043f\u043e\u0442\u0435\u0440\u044f\u043b 30%: https://tracker.gonka.vip/?participant=gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d"
+        },
+        {
+          "address": "gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceType": "voting_end_epoch_anomaly",
+          "sourceValue": "e287=21252 prev=21453 next=20925 vote=did_not_vote@None"
+        }
+      ],
+      "totalCompensationGonka": 0.0,
+      "totalE287Weight": 21252,
+      "voteCounts": {
+        "did_not_vote": 1
+      },
+      "votedDuringCount": 0
+    }
+  ],
   "epochs": [
     {
       "componentSource": "attack_e265_e266",
@@ -50072,6 +51200,7 @@ window.DASHBOARD_DATA = {
     "capE267E276Gonka": 727219.351169,
     "epochAnomaliesCount": 17,
     "epochCount": 12,
+    "epochEntryExitClusterCount": 17,
     "evidenceClaimsCount": 2672,
     "finalTally": {
       "abstain": 744,

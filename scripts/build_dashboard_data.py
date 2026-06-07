@@ -1286,6 +1286,151 @@ def build_epoch_anomalies(votes, recipients, labels_by_address):
     return anomalies
 
 
+def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity_graph, evidence_claims):
+    recipient_by_address = {row["address"]: row for row in recipients}
+    vote_by_address = {row["voter"]: row for row in votes}
+    strict_by_address = {
+        address: cluster["id"]
+        for cluster in identity_graph.get("strictClusters", [])
+        for address in cluster.get("addresses", [])
+    }
+    signal_by_address = {
+        address: cluster["id"]
+        for cluster in identity_graph.get("signalClusters", [])
+        for address in cluster.get("addresses", [])
+    }
+    claims_by_address = defaultdict(list)
+    for claim in evidence_claims:
+        if claim.get("address"):
+            claims_by_address[claim["address"]].append(claim)
+
+    groups = {}
+    for row in epoch_anomalies:
+        address = row["address"]
+        group_id = strict_by_address.get(address) or signal_by_address.get(address) or f"label:{row['label']}"
+        kind = "strict_identity" if strict_by_address.get(address) else ("signal_cluster" if signal_by_address.get(address) else "label_group")
+        group = groups.setdefault(
+            group_id,
+            {
+                "id": group_id,
+                "kind": kind,
+                "label": row["label"],
+                "addresses": set(),
+                "addressRows": [],
+                "totalE287Weight": 0,
+                "maxE287Weight": 0,
+                "enteredCount": 0,
+                "exitedCount": 0,
+                "votedDuringCount": 0,
+                "recipientCount": 0,
+                "totalCompensationGonka": 0.0,
+                "voteCounts": Counter(),
+                "topEvidence": [],
+                "topEvidenceKeys": set(),
+                "caveats": set(),
+            },
+        )
+        payout = recipient_by_address.get(address, {}).get("totalGonka", 0) or 0
+        vote = vote_by_address.get(address) or {}
+        group["addresses"].add(address)
+        group["totalE287Weight"] += row["e287Weight"]
+        group["maxE287Weight"] = max(group["maxE287Weight"], row["e287Weight"])
+        group["enteredCount"] += int(row["enteredE287"])
+        group["exitedCount"] += int(row["exitedAfterE287"])
+        group["votedDuringCount"] += int(row["votedDuringE287"])
+        group["recipientCount"] += int(row["isRecipient"])
+        group["totalCompensationGonka"] += payout
+        group["voteCounts"][row["voteOption"]] += 1
+        if row["status"] != "confirmed_window_anomaly":
+            group["caveats"].add("Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases.")
+        if kind != "strict_identity":
+            group["caveats"].add("Cluster is not strict public owner proof.")
+        address_claims = sorted(
+            claims_by_address.get(address, []),
+            key=lambda claim: (
+                {"high": 0, "medium": 1, "low": 2}.get(claim.get("confidence"), 3),
+                not claim.get("isAttributionProof"),
+                claim.get("sourceType", ""),
+            ),
+        )
+        for claim in address_claims[:3]:
+            evidence_key = (address, claim["sourceType"], claim["sourceValue"], claim["confidence"], claim["isAttributionProof"])
+            if evidence_key in group["topEvidenceKeys"]:
+                continue
+            group["topEvidenceKeys"].add(evidence_key)
+            group["topEvidence"].append(
+                {
+                    "address": address,
+                    "sourceType": claim["sourceType"],
+                    "sourceValue": claim["sourceValue"],
+                    "confidence": claim["confidence"],
+                    "isAttributionProof": claim["isAttributionProof"],
+                }
+            )
+        group["addressRows"].append(
+            {
+                "address": address,
+                "label": row["label"],
+                "e287Weight": row["e287Weight"],
+                "prevMaxWeight": row["prevMaxWeight"],
+                "nextMaxWeight": row["nextMaxWeight"],
+                "enteredE287": row["enteredE287"],
+                "exitedAfterE287": row["exitedAfterE287"],
+                "votedDuringE287": row["votedDuringE287"],
+                "voteOption": row["voteOption"],
+                "voteHeight": row["voteHeight"],
+                "voteBlockTime": row["voteBlockTime"],
+                "isRecipient": row["isRecipient"],
+                "totalCompensationGonka": round(payout, 6),
+                "strictClusterId": strict_by_address.get(address, ""),
+                "signalClusterId": signal_by_address.get(address, ""),
+                "inferenceUrl": recipient_by_address.get(address, {}).get("inferenceUrl", ""),
+                "txHash": vote.get("txHash", ""),
+                "anomalyScore": row["anomalyScore"],
+                "status": row["status"],
+            }
+        )
+
+    clusters = []
+    for group in groups.values():
+        rows = sorted(group["addressRows"], key=lambda item: (-item["anomalyScore"], -item["e287Weight"], item["address"]))
+        confirmed = [row for row in rows if row["enteredE287"] and row["exitedAfterE287"] and row["votedDuringE287"]]
+        clusters.append(
+            {
+                "id": group["id"],
+                "kind": group["kind"],
+                "label": group["label"],
+                "addresses": sorted(group["addresses"]),
+                "addressRows": rows,
+                "addressesCount": len(group["addresses"]),
+                "totalE287Weight": group["totalE287Weight"],
+                "maxE287Weight": group["maxE287Weight"],
+                "enteredCount": group["enteredCount"],
+                "exitedCount": group["exitedCount"],
+                "votedDuringCount": group["votedDuringCount"],
+                "confirmedEnterVoteExitCount": len(confirmed),
+                "recipientCount": group["recipientCount"],
+                "totalCompensationGonka": round(group["totalCompensationGonka"], 6),
+                "voteCounts": dict(group["voteCounts"]),
+                "topEvidence": group["topEvidence"][:8],
+                "caveats": sorted(group["caveats"]) or ["Operational timing cluster; owner attribution still requires public proof."],
+                "priorityScore": round(
+                    min(45, group["totalE287Weight"] / 3000)
+                    + group["enteredCount"] * 8
+                    + group["exitedCount"] * 8
+                    + group["votedDuringCount"] * 10
+                    + len(confirmed) * 12
+                    + min(20, group["totalCompensationGonka"] / 8000),
+                    3,
+                ),
+            }
+        )
+    clusters.sort(key=lambda row: (-row["priorityScore"], -row["totalE287Weight"], row["label"]))
+    for index, row in enumerate(clusters, start=1):
+        row["rank"] = index
+    return clusters
+
+
 def build_attack_narrative(proposal, votes, epochs, epoch_anomalies):
     voting_start = proposal.get("voting_start_time", "")
     voting_end = proposal.get("voting_end_time", "")
@@ -1380,7 +1525,7 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
     ]
 
 
-def write_attribution_reports(ranked_parties, evidence_claims):
+def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None):
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
 
@@ -1462,6 +1607,82 @@ def write_attribution_reports(ranked_parties, evidence_claims):
                     "caveat": row["caveat"],
                 }
             )
+
+    if epoch_entry_exit_clusters is not None:
+        with (reports / "epoch_entry_exit_clusters.csv").open("w", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "rank",
+                    "cluster_id",
+                    "kind",
+                    "label",
+                    "addresses",
+                    "total_e287_weight",
+                    "max_e287_weight",
+                    "entered_count",
+                    "voted_during_count",
+                    "exited_count",
+                    "confirmed_enter_vote_exit_count",
+                    "recipient_count",
+                    "total_compensation_gonka",
+                    "vote_counts",
+                    "top_evidence",
+                    "caveats",
+                ],
+            )
+            writer.writeheader()
+            for row in epoch_entry_exit_clusters:
+                writer.writerow(
+                    {
+                        "rank": row["rank"],
+                        "cluster_id": row["id"],
+                        "kind": row["kind"],
+                        "label": row["label"],
+                        "addresses": " ".join(row["addresses"]),
+                        "total_e287_weight": row["totalE287Weight"],
+                        "max_e287_weight": row["maxE287Weight"],
+                        "entered_count": row["enteredCount"],
+                        "voted_during_count": row["votedDuringCount"],
+                        "exited_count": row["exitedCount"],
+                        "confirmed_enter_vote_exit_count": row["confirmedEnterVoteExitCount"],
+                        "recipient_count": row["recipientCount"],
+                        "total_compensation_gonka": row["totalCompensationGonka"],
+                        "vote_counts": " ".join(f"{option}:{count}" for option, count in row["voteCounts"].items()),
+                        "top_evidence": " | ".join(f"{item['sourceType']}:{item['sourceValue']}:{item['confidence']}" for item in row["topEvidence"]),
+                        "caveats": " | ".join(row["caveats"]),
+                    }
+                )
+
+        lines = [
+            "# Proposal 67 e287 Entry/Exit Clusters",
+            "",
+            "This report groups voting-end epoch anomalies by strict public identity cluster, signal cluster, or public label. A cluster is an investigation lead, not owner attribution unless the evidence is explicitly marked as public proof.",
+            "",
+        ]
+        for row in epoch_entry_exit_clusters[:25]:
+            lines.extend(
+                [
+                    f"## #{row['rank']} {row['label']}",
+                    "",
+                    f"- Cluster: {row['id']} ({row['kind']})",
+                    f"- Addresses: {' '.join(row['addresses'])}",
+                    f"- e287 weight: total {row['totalE287Weight']}, max {row['maxE287Weight']}",
+                    f"- Enter/vote/exit counts: {row['enteredCount']} / {row['votedDuringCount']} / {row['exitedCount']}",
+                    f"- Confirmed full enter-vote-exit addresses: {row['confirmedEnterVoteExitCount']}",
+                    f"- Recipients: {row['recipientCount']}; compensation: {row['totalCompensationGonka']} GONKA",
+                    f"- Votes: {', '.join(f'{option}={count}' for option, count in row['voteCounts'].items()) or 'none'}",
+                    f"- Caveats: {' | '.join(row['caveats'])}",
+                    "",
+                ]
+            )
+            if row["topEvidence"]:
+                lines.append("Top evidence:")
+                for item in row["topEvidence"][:5]:
+                    proof = "proof" if item["isAttributionProof"] else "signal"
+                    lines.append(f"- {item['address']} {item['sourceType']} ({item['confidence']}, {proof}): {item['sourceValue']}")
+                lines.append("")
+        (reports / "epoch_entry_exit_clusters.md").write_text("\n".join(lines).rstrip() + "\n")
 
     lines = [
         "# Proposal 67 Attribution Audit",
@@ -1625,10 +1846,11 @@ def main():
     actors = build_actors(proposal, recipients, votes, identity_graph, onchain_graph, labels_by_address, identity_types_by_address)
     epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
     evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
+    epoch_entry_exit_clusters = build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity_graph, evidence_claims)
     ranked_parties = build_ranked_parties(actors, evidence_claims, identity_graph)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
-    write_attribution_reports(ranked_parties, evidence_claims)
+    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters)
 
     dashboard = {
         "metadata": {
@@ -1674,6 +1896,7 @@ def main():
             "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
             "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
             "epochAnomaliesCount": len(epoch_anomalies),
+            "epochEntryExitClusterCount": len(epoch_entry_exit_clusters),
             "votingEndEpochSnapshotCount": len(voting_end_epochs.get("epochs") or []),
             "finalVoteAddressCounts": dict(final_vote_counts),
             "recipientVoteAddressCounts": dict(recipient_vote_counts),
@@ -1690,6 +1913,7 @@ def main():
         "rankedParties": ranked_parties,
         "telegramEvidence": telegram_evidence.get("messages") or [],
         "epochAnomalies": epoch_anomalies,
+        "epochEntryExitClusters": epoch_entry_exit_clusters,
         "hypotheses": hypotheses,
         "attackNarrative": attack_narrative,
         "notes": [
