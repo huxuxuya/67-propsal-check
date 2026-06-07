@@ -1,0 +1,23 @@
+{
+  "error": "",
+  "fetchedAt": "2026-06-07T21:10:45.604244+00:00",
+  "json": {
+    "id": -1,
+    "jsonrpc": "2.0",
+    "result": {
+      "response": {
+        "code": 0,
+        "codespace": "",
+        "height": "4401104",
+        "index": "0",
+        "info": "",
+        "key": null,
+        "log": "",
+        "proofOps": null,
+        "value": "Co8BCnwKLGdvbmthMTBtbWRqYXU0ZG5qOGtyczdzaDd0NzYzNXR0bm1xOXUzdnFnejA5EjNnb25rYXZhbG9wZXIxMG1tZGphdTRkbmo4a3JzN3NoN3Q3NjM1dHRubXE5dTNzcWU5Y2caFzM0MzY5MDAwMDAwMDAwMDAwMDAwMDAwEg8KBm5nb25rYRIFMzQzNjkSAA=="
+      }
+    }
+  },
+  "status": 200,
+  "url": "GONKA_RPC_URL/abci_query?path=%22%2Fcosmos.staking.v1beta1.Query%2FDelegatorDelegations%22&height=4401104&data=0x0a2c676f6e6b6131306d6d646a617534646e6a386b727337736837743736333574746e6d713975337671677a303912021864"
+}

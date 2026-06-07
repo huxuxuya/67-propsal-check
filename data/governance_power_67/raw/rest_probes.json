@@ -1,7 +1,7 @@
 {
   "governance_pricing": {
     "error": "",
-    "fetchedAt": "2026-06-07T18:35:17.146077+00:00",
+    "fetchedAt": "2026-06-07T21:10:05.059913+00:00",
     "json": {
       "dynamic_pricing_enabled": true,
       "models": [
@@ -26,51 +26,93 @@
     "status": 200,
     "url": "http://node1.gonka.ai:8000/v1/governance/pricing"
   },
+  "proposal_4401104": {
+    "error": "HTTPError",
+    "fetchedAt": "2026-06-07T21:08:50.549159+00:00",
+    "json": null,
+    "status": 500,
+    "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67"
+  },
+  "proposal_4401105": {
+    "error": "HTTPError",
+    "fetchedAt": "2026-06-07T21:09:25.920423+00:00",
+    "json": null,
+    "status": 500,
+    "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67"
+  },
   "proposal_4433308": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:34:50.447270+00:00",
+    "fetchedAt": "2026-06-07T21:09:38.889150+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67"
   },
   "proposal_4433309": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:35:15.725133+00:00",
+    "fetchedAt": "2026-06-07T21:10:03.473554+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67"
   },
+  "validators_4401104": {
+    "error": "TimeoutError",
+    "fetchedAt": "2026-06-07T21:09:22.066899+00:00",
+    "json": null,
+    "status": null,
+    "url": "http://node1.gonka.ai:8000/chain-api/cosmos/staking/v1beta1/validators?pagination.limit=5"
+  },
+  "validators_4401105": {
+    "error": "HTTPError",
+    "fetchedAt": "2026-06-07T21:09:26.789677+00:00",
+    "json": null,
+    "status": 500,
+    "url": "http://node1.gonka.ai:8000/chain-api/cosmos/staking/v1beta1/validators?pagination.limit=5"
+  },
   "validators_4433308": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:35:15.235110+00:00",
+    "fetchedAt": "2026-06-07T21:10:03.118606+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/staking/v1beta1/validators?pagination.limit=5"
   },
   "validators_4433309": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:35:16.451513+00:00",
+    "fetchedAt": "2026-06-07T21:10:04.243036+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/staking/v1beta1/validators?pagination.limit=5"
   },
+  "votes_4401104": {
+    "error": "HTTPError",
+    "fetchedAt": "2026-06-07T21:08:50.887224+00:00",
+    "json": null,
+    "status": 500,
+    "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67/votes?pagination.limit=100"
+  },
+  "votes_4401105": {
+    "error": "HTTPError",
+    "fetchedAt": "2026-06-07T21:09:26.307270+00:00",
+    "json": null,
+    "status": 500,
+    "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67/votes?pagination.limit=100"
+  },
   "votes_4433308": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:35:12.299475+00:00",
+    "fetchedAt": "2026-06-07T21:09:39.387027+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67/votes?pagination.limit=100"
   },
   "votes_4433309": {
     "error": "HTTPError",
-    "fetchedAt": "2026-06-07T18:35:16.094114+00:00",
+    "fetchedAt": "2026-06-07T21:10:03.856407+00:00",
     "json": null,
     "status": 500,
     "url": "http://node1.gonka.ai:8000/chain-api/cosmos/gov/v1/proposals/67/votes?pagination.limit=100"
   },
   "votes_latest": {
     "error": "",
-    "fetchedAt": "2026-06-07T18:35:16.888588+00:00",
+    "fetchedAt": "2026-06-07T21:10:04.614752+00:00",
     "json": {
       "pagination": {
         "next_key": null,

@@ -407,6 +407,64 @@ def read_governance_power_evidence():
     return load_optional_json(DATA / "governance_power_67" / "governance_power_67.json", {"summary": {}, "archiveGovVotes": [], "perVoterPower": []})
 
 
+def build_voting_power_window(votes, governance_power_evidence):
+    by_voter = {row["voter"]: row for row in governance_power_evidence.get("windowVoterPower", [])}
+    summary = governance_power_evidence.get("summary", {})
+    rows = []
+    for vote in votes:
+        window = by_voter.get(vote["voter"], {})
+        start_power = window.get("startVotingPower")
+        end_power = window.get("endVotingPower")
+        if start_power is None:
+            start_power = vote.get("votingPower") if vote.get("votingPower") is not None else 0
+        if end_power is None:
+            end_power = vote.get("votingPower") if vote.get("votingPower") is not None else 0
+        rows.append(
+            {
+                "voter": vote["voter"],
+                "address": vote["voter"],
+                "label": vote["label"],
+                "publicLabel": vote.get("publicLabel", ""),
+                "operatorSignalLabel": vote.get("operatorSignalLabel", ""),
+                "operatorSignalDisplayLabel": vote.get("operatorSignalDisplayLabel", ""),
+                "primaryOption": vote["primaryOption"],
+                "height": vote["height"],
+                "txHash": vote["txHash"],
+                "isRecipient": vote["isRecipient"],
+                "startVotingPower": round(start_power or 0, 6),
+                "endVotingPower": round(end_power or 0, 6),
+                "startVotingPowerSource": window.get("startVotingPowerSource", "unknown"),
+                "endVotingPowerSource": window.get("endVotingPowerSource", vote.get("votingPowerSource", "unknown")),
+                "windowPowerStatus": window.get("windowPowerStatus", "not_in_window_snapshot" if not window else "unchanged"),
+                "startDelegationCount": len(window.get("startDelegations") or []),
+                "endDelegationCount": len(window.get("endDelegations") or []),
+            }
+        )
+    rows.sort(key=lambda row: (row["windowPowerStatus"] == "unchanged", -abs(row["endVotingPower"] - row["startVotingPower"]), -row["endVotingPower"], row["label"]))
+    return {
+        "summary": {
+            "votingStartTime": summary.get("votingStartTime", ""),
+            "votingEndTime": summary.get("votingEndTime", ""),
+            "lastBlockBeforeVotingStart": summary.get("lastBlockBeforeVotingStart", {}),
+            "firstBlockAfterVotingStart": summary.get("firstBlockAfterVotingStart", {}),
+            "lastBlockBeforeVotingEnd": summary.get("lastBlockBeforeVotingEnd", {}),
+            "firstBlockAfterVotingEnd": summary.get("firstBlockAfterVotingEnd", {}),
+            "decodedGovVotesBeforeStartCount": summary.get("decodedGovVotesBeforeStartCount", 0),
+            "decodedGovVotesAfterStartCount": summary.get("decodedGovVotesAfterStartCount", 0),
+            "decodedGovVotesBeforeEndCount": summary.get("decodedGovVotesBeforeEndCount", 0),
+            "votersWithStartVotingPowerCount": summary.get("votersWithStartVotingPowerCount", 0),
+            "votersWithEndVotingPowerCount": summary.get("votersWithEndVotingPowerCount", 0),
+            "votersZeroAtStartAndEndCount": summary.get("votersZeroAtStartAndEndCount", 0),
+            "votersPowerAtStartOnlyCount": summary.get("votersPowerAtStartOnlyCount", 0),
+            "votersPowerAtEndOnlyCount": summary.get("votersPowerAtEndOnlyCount", 0),
+            "startChainLikeTallyTruncatedForFinalVoters": summary.get("startChainLikeTallyTruncatedForFinalVoters", {}),
+            "chainLikeTallyTruncated": summary.get("chainLikeTallyTruncated", {}),
+            "chainLikeTallyMatchesFinalTally": summary.get("chainLikeTallyMatchesFinalTally", False),
+        },
+        "rows": rows,
+    }
+
+
 def source_url_for_file(source_file):
     if source_file.startswith("http"):
         return source_file
@@ -2135,6 +2193,51 @@ def write_telegram_attribution_report(rows):
             f.write(f"- Caveat: {row['caveat']}\n\n")
 
 
+def write_voting_power_window_report(voting_power_window):
+    reports = ROOT / "reports"
+    reports.mkdir(exist_ok=True)
+    rows = voting_power_window.get("rows") or []
+    summary = voting_power_window.get("summary") or {}
+    with (reports / "voting_power_window_comparison.csv").open("w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "voter",
+                "label",
+                "primaryOption",
+                "height",
+                "isRecipient",
+                "startVotingPower",
+                "endVotingPower",
+                "windowPowerStatus",
+                "startVotingPowerSource",
+                "endVotingPowerSource",
+                "startDelegationCount",
+                "endDelegationCount",
+                "txHash",
+            ],
+        )
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({key: row.get(key, "") for key in writer.fieldnames})
+
+    zero_both = [row for row in rows if row["windowPowerStatus"] == "zero_at_start_and_end"]
+    start_only = [row for row in rows if row["windowPowerStatus"] == "power_at_start_only"]
+    end_only = [row for row in rows if row["windowPowerStatus"] == "power_at_end_only"]
+    with (reports / "voting_power_window_comparison.md").open("w") as f:
+        f.write("# Voting Power Window Comparison\n\n")
+        f.write("This report reconciles final proposal #67 voters against archive staking/delegation snapshots at the governance voting start and voting end boundaries. It does not use inference epoch weights as governance voting power.\n\n")
+        f.write(f"- Voting start: {summary.get('votingStartTime', '')}; last block before/start boundary: {summary.get('lastBlockBeforeVotingStart', {}).get('height', '')}\n")
+        f.write(f"- Voting end: {summary.get('votingEndTime', '')}; last block before/end boundary: {summary.get('lastBlockBeforeVotingEnd', {}).get('height', '')}\n")
+        f.write(f"- On-chain vote records before start: {summary.get('decodedGovVotesBeforeStartCount', 0)}; before end: {summary.get('decodedGovVotesBeforeEndCount', 0)}\n")
+        f.write(f"- Voters with non-zero power at start/end: {summary.get('votersWithStartVotingPowerCount', 0)} / {summary.get('votersWithEndVotingPowerCount', 0)}\n")
+        f.write(f"- Zero at both boundaries: {len(zero_both)}; power at start only: {len(start_only)}; power at end only: {len(end_only)}\n")
+        f.write(f"- End-window chain-like tally matches final tally: {summary.get('chainLikeTallyMatchesFinalTally', False)}\n\n")
+        f.write("## Non-stable Voting Power Rows\n\n")
+        for row in start_only + end_only + zero_both:
+            f.write(f"- {row['label']} `{row['voter']}`: vote={row['primaryOption']} tx_height={row['height']} start_power={row['startVotingPower']} end_power={row['endVotingPower']} status={row['windowPowerStatus']}\n")
+
+
 def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None, benefit_power_matrix=None, public_name_enrichment=None):
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
@@ -2831,12 +2934,14 @@ def main():
         )
 
     governance_power_by_voter = {row["voter"]: row for row in governance_power_evidence.get("perVoterPower", [])}
+    governance_power_window_by_voter = {row["voter"]: row for row in governance_power_evidence.get("windowVoterPower", [])}
     governance_power_summary = governance_power_evidence.get("summary", {})
     votes = []
     for vote in final_votes:
         participant = participants.get(vote["voter"]) or {}
         evidence_rows = evidence_by_address.get(vote["voter"], [])
         governance_power = governance_power_by_voter.get(vote["voter"], {})
+        governance_window = governance_power_window_by_voter.get(vote["voter"], {})
         public_name = public_label(vote["voter"], participant, account_labels, consensus_labels, gns_by_address)
         votes.append(
             {
@@ -2853,6 +2958,9 @@ def main():
                 "votingPower": governance_power.get("votingPower"),
                 "votingPowerSource": governance_power.get("votingPowerSource", "unknown"),
                 "votingPowerReason": governance_power.get("reason", governance_power_summary.get("perVoterPowerReason", "")),
+                "startVotingPower": governance_window.get("startVotingPower"),
+                "endVotingPower": governance_window.get("endVotingPower", governance_power.get("votingPower")),
+                "windowPowerStatus": governance_window.get("windowPowerStatus", ""),
                 "identityType": primary_identity_type(evidence_rows),
             }
         )
@@ -2906,6 +3014,7 @@ def main():
     ranked_parties = build_ranked_parties(actors, evidence_claims, identity_graph)
     interest_clusters = build_interest_clusters(actors, evidence_claims, identity_graph)
     benefit_power_matrix = build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_claims)
+    voting_power_window = build_voting_power_window(votes, governance_power_evidence)
     public_name_enrichment = build_public_name_enrichment(recipients, votes, identity_evidence, evidence_claims, gns_by_address)
     telegram_attribution_audit = build_telegram_attribution_audit(recipients, votes, evidence_claims)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
@@ -2913,6 +3022,7 @@ def main():
     (DATA / "public_name_enrichment.json").write_text(json.dumps(public_name_enrichment, indent=2, sort_keys=True) + "\n")
     write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters, benefit_power_matrix, public_name_enrichment)
     write_telegram_attribution_report(telegram_attribution_audit)
+    write_voting_power_window_report(voting_power_window)
 
     dashboard = {
         "metadata": {
@@ -2975,8 +3085,15 @@ def main():
             "governanceArchiveVotesCount": governance_power_summary.get("decodedGovVotesCount", 0),
             "governanceArchiveTallyMatchesFinal": governance_power_summary.get("decodedTallyMatchesFinalTally", False),
             "governancePerVoterPowerStatus": governance_power_summary.get("perVoterPowerStatus", "unknown"),
+            "votingStartLastBlockBefore": governance_power_summary.get("lastBlockBeforeVotingStart", {}),
+            "votingStartFirstBlockAfter": governance_power_summary.get("firstBlockAfterVotingStart", {}),
             "votingEndLastBlockBefore": governance_power_summary.get("lastBlockBeforeVotingEnd", {}),
             "votingEndFirstBlockAfter": governance_power_summary.get("firstBlockAfterVotingEnd", {}),
+            "votersWithStartVotingPowerCount": governance_power_summary.get("votersWithStartVotingPowerCount", 0),
+            "votersWithEndVotingPowerCount": governance_power_summary.get("votersWithEndVotingPowerCount", 0),
+            "votersZeroAtStartAndEndCount": governance_power_summary.get("votersZeroAtStartAndEndCount", 0),
+            "votersPowerAtStartOnlyCount": governance_power_summary.get("votersPowerAtStartOnlyCount", 0),
+            "votersPowerAtEndOnlyCount": governance_power_summary.get("votersPowerAtEndOnlyCount", 0),
             "finalVoteAddressCounts": dict(final_vote_counts),
             "recipientVoteAddressCounts": dict(recipient_vote_counts),
             "grcOffchainVote": {"include": 2, "exclude": 6, "abstain": 1, "votersIdentified": False},
@@ -2992,6 +3109,7 @@ def main():
         "rankedParties": ranked_parties,
         "interestClusters": interest_clusters,
         "benefitPowerMatrix": benefit_power_matrix,
+        "votingPowerWindow": voting_power_window,
         "publicNameEnrichment": public_name_enrichment,
         "telegramAttributionAudit": telegram_attribution_audit,
         "telegramEvidence": telegram_evidence.get("messages") or [],
@@ -3001,6 +3119,7 @@ def main():
         "methodology": {
             "governanceVoteRule": "A vote is evidenced by an on-chain governance vote transaction for proposal #67. A prior vote remains part of the saved vote set unless superseded by a later vote from the same voter under last-vote-wins consolidation.",
             "governanceVotingPowerRule": "Per-voter governance voting power is not inferred from inference epochs. It is computed from archive staking Query/Validators and Query/DelegatorDelegations at the last pre-end block using Gonka SDK gov tally logic; the truncated decimal result must match the final on-chain TallyResult.",
+            "governanceVotingWindowRule": "Zero-power voters are still real on-chain governance voters. The dashboard compares archive staking/delegation power at the voting-start boundary and the voting-end boundary; the final tally is governed by the end-window chain-like power, while the start-window view is a reconciliation check.",
             "inferenceEpochRule": "e287 validation_weights are inference/epoch participation weights. They are operational timing signals only and are not used as governance voting power.",
             "recipientConflictRule": "Recipient-voter conflict is based on address overlap between compensation outputs and final on-chain governance voters; it does not imply the compensation amount affected vote weight.",
             "identityRule": "Public attribution requires public validator/GNS/metadata/source evidence. Infrastructure, Telegram, and inference timing remain signals unless independently corroborated.",

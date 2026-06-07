@@ -17,8 +17,8 @@ OUT = DATA / "governance_power_67"
 RPC_NODE = gonka_rpc_url()
 API_NODE = gonka_api_url()
 PROPOSAL_ID = 67
+VOTING_START_TIME = "2026-06-03T22:09:02.699803591Z"
 VOTING_END_TIME = "2026-06-05T22:09:02.699803591Z"
-BOUNDARY_HEIGHTS = [4_433_308, 4_433_309]
 OPTION_LABELS = {1: "yes", 2: "abstain", 3: "no", 4: "no_with_veto"}
 BONDED_STATUS = 3
 PAGE_LIMIT = 500
@@ -423,6 +423,31 @@ def block_summary(wrapper):
     }
 
 
+def parse_block_time(value):
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+
+def find_boundary_heights(target_time_iso, low=4_000_000, high=4_500_000):
+    target = parse_block_time(target_time_iso)
+    cache = {}
+
+    def get_block(height):
+        if height not in cache:
+            cache[height] = rpc_get(f"/block?height={height}", 60)
+        return cache[height]
+
+    while low < high:
+        mid = (low + high + 1) // 2
+        summary = block_summary(get_block(mid))
+        if parse_block_time(summary["time"]) <= target:
+            low = mid
+        else:
+            high = mid - 1
+    before = low
+    after = before + 1
+    return before, after, {before: get_block(before), after: get_block(after)}
+
+
 def decimal_to_int_string(value):
     return str(int(value.to_integral_value(rounding=ROUND_DOWN)))
 
@@ -433,7 +458,7 @@ def decimal_to_number(value):
     return float(value)
 
 
-def calculate_chain_like_power(votes, validators, delegations_by_voter):
+def calculate_chain_like_power(votes, validators, delegations_by_voter, height_label="last pre-end archive height"):
     validators_by_operator = {}
     validators_by_account_bytes = {}
     for validator in validators:
@@ -517,11 +542,11 @@ def calculate_chain_like_power(votes, validators, delegations_by_voter):
         power = row["votingPowerDecimal"]
         if power > 0:
             source = "archive_staking_delegations_chain_like"
-            reason = "Computed from archive Query/Validators and Query/DelegatorDelegations at the last pre-end block using Gonka SDK gov tally logic; aggregate truncation matches final on-chain TallyResult."
+            reason = f"Computed from archive Query/Validators and Query/DelegatorDelegations at {height_label} using Gonka SDK gov tally logic."
             power_value = decimal_to_number(power)
         else:
             source = "archive_staking_no_voting_power"
-            reason = "No bonded validator/delegation voting power found for this voter at the last pre-end archive height."
+            reason = f"No bonded validator/delegation voting power found for this voter at {height_label}."
             power_value = 0
         per_voter_power.append(
             {
@@ -555,14 +580,16 @@ def main():
     proposal = read_json(DATA / "proposal_67.json")["proposal"]
     tx_votes = read_json(DATA / "proposal_67_tx_search.json")["result"]["txs"]
 
-    blocks = {}
-    for height in BOUNDARY_HEIGHTS:
-        wrapper = rpc_get(f"/block?height={height}", 60)
-        blocks[height] = wrapper
+    start_before_height, start_after_height, start_blocks = find_boundary_heights(VOTING_START_TIME)
+    end_before_height, end_after_height, end_blocks = find_boundary_heights(VOTING_END_TIME)
+    boundary_heights = [start_before_height, start_after_height, end_before_height, end_after_height]
+
+    blocks = {**start_blocks, **end_blocks}
+    for height, wrapper in blocks.items():
         write_json(raw_dir / f"block_{height}.json", wrapper)
 
     archive = {}
-    for height in BOUNDARY_HEIGHTS:
+    for height in boundary_heights:
         archive[height] = {
             "proposal": abci_query("/cosmos.gov.v1.Query/Proposal", height, proposal_request_hex()),
             "votes": abci_query("/cosmos.gov.v1.Query/Votes", height, proposal_request_hex()),
@@ -573,7 +600,7 @@ def main():
             write_json(raw_dir / f"abci_{height}_{key}.json", wrapper)
 
     rest_probes = {}
-    for height in BOUNDARY_HEIGHTS:
+    for height in boundary_heights:
         headers = {"x-cosmos-block-height": str(height)}
         rest_probes[f"proposal_{height}"] = api_get(f"/chain-api/cosmos/gov/v1/proposals/{PROPOSAL_ID}", 30, headers)
         rest_probes[f"votes_{height}"] = api_get(f"/chain-api/cosmos/gov/v1/proposals/{PROPOSAL_ID}/votes?pagination.limit=100", 30, headers)
@@ -589,12 +616,18 @@ def main():
     )
     write_json(raw_dir / "dashboard_gov_67_html.json", dashboard_probe)
 
-    end_before = block_summary(blocks[4_433_308])
-    end_after = block_summary(blocks[4_433_309])
-    decoded_votes = decode_votes(response_value(archive[4_433_308]["votes"]))
-    decoded_votes_after_end = decode_votes(response_value(archive[4_433_309]["votes"]))
-    decoded_tally = decode_tally_result(response_value(archive[4_433_308]["tally"]))
-    decoded_tally_after_end = decode_tally_result(response_value(archive[4_433_309]["tally"]))
+    start_before = block_summary(blocks[start_before_height])
+    start_after = block_summary(blocks[start_after_height])
+    end_before = block_summary(blocks[end_before_height])
+    end_after = block_summary(blocks[end_after_height])
+    decoded_votes_start_before = decode_votes(response_value(archive[start_before_height]["votes"]))
+    decoded_votes_start_after = decode_votes(response_value(archive[start_after_height]["votes"]))
+    decoded_votes = decode_votes(response_value(archive[end_before_height]["votes"]))
+    decoded_votes_after_end = decode_votes(response_value(archive[end_after_height]["votes"]))
+    decoded_tally_start_before = decode_tally_result(response_value(archive[start_before_height]["tally"]))
+    decoded_tally_start_after = decode_tally_result(response_value(archive[start_after_height]["tally"]))
+    decoded_tally = decode_tally_result(response_value(archive[end_before_height]["tally"]))
+    decoded_tally_after_end = decode_tally_result(response_value(archive[end_after_height]["tally"]))
     final_tally = {
         "yes": int(proposal["final_tally_result"]["yes_count"]),
         "abstain": int(proposal["final_tally_result"]["abstain_count"]),
@@ -611,31 +644,72 @@ def main():
                 if attr.get("key") == "voter":
                     tx_voter_set.add(attr["value"])
 
-    bonded_validators, validator_raw_files = fetch_paginated_validators(4_433_308, raw_dir)
-    delegations_by_voter, delegation_raw_files = fetch_voter_delegations(voter_set, 4_433_308, raw_dir)
-    write_json(raw_dir / "decoded_bonded_validators_4433308.json", bonded_validators)
-    write_json(raw_dir / "decoded_voter_delegations_4433308.json", delegations_by_voter)
+    bonded_validators, validator_raw_files = fetch_paginated_validators(end_before_height, raw_dir)
+    delegations_by_voter, delegation_raw_files = fetch_voter_delegations(voter_set, end_before_height, raw_dir)
+    write_json(raw_dir / f"decoded_bonded_validators_{end_before_height}.json", bonded_validators)
+    write_json(raw_dir / f"decoded_voter_delegations_{end_before_height}.json", delegations_by_voter)
 
-    chain_like_power = calculate_chain_like_power(decoded_votes, bonded_validators, delegations_by_voter)
+    start_bonded_validators, start_validator_raw_files = fetch_paginated_validators(start_before_height, raw_dir)
+    start_delegations_by_voter, start_delegation_raw_files = fetch_voter_delegations(voter_set, start_before_height, raw_dir)
+    write_json(raw_dir / f"decoded_bonded_validators_{start_before_height}.json", start_bonded_validators)
+    write_json(raw_dir / f"decoded_voter_delegations_{start_before_height}.json", start_delegations_by_voter)
+
+    chain_like_power = calculate_chain_like_power(decoded_votes, bonded_validators, delegations_by_voter, f"block {end_before_height}, last block before voting end")
+    start_chain_like_power = calculate_chain_like_power(decoded_votes, start_bonded_validators, start_delegations_by_voter, f"block {start_before_height}, last block before voting start")
     chain_like_tally_matches_final = chain_like_power["resultsTruncated"] == final_tally
     per_voter_power = chain_like_power["perVoterPower"]
+    start_power_by_voter = {row["voter"]: row for row in start_chain_like_power["perVoterPower"]}
+    window_power = []
+    for row in per_voter_power:
+        start_row = start_power_by_voter.get(row["voter"], {})
+        start_power = start_row.get("votingPower", 0)
+        end_power = row.get("votingPower", 0)
+        if start_power and end_power:
+            status = "power_at_start_and_end"
+        elif start_power and not end_power:
+            status = "power_at_start_only"
+        elif end_power and not start_power:
+            status = "power_at_end_only"
+        else:
+            status = "zero_at_start_and_end"
+        window_power.append(
+            {
+                "voter": row["voter"],
+                "startVotingPower": start_power,
+                "startVotingPowerExact": start_row.get("votingPowerExact", "0"),
+                "startVotingPowerSource": start_row.get("votingPowerSource", ""),
+                "endVotingPower": end_power,
+                "endVotingPowerExact": row.get("votingPowerExact", "0"),
+                "endVotingPowerSource": row.get("votingPowerSource", ""),
+                "windowPowerStatus": status,
+                "startDelegations": start_row.get("delegations", []),
+                "endDelegations": row.get("delegations", []),
+            }
+        )
 
     summary = {
         "proposalId": PROPOSAL_ID,
+        "votingStartTime": VOTING_START_TIME,
         "votingEndTime": VOTING_END_TIME,
+        "lastBlockBeforeVotingStart": start_before,
+        "firstBlockAfterVotingStart": start_after,
         "lastBlockBeforeVotingEnd": end_before,
         "firstBlockAfterVotingEnd": end_after,
         "archiveSource": gonka_rpc_source_label(),
         "apiSource": gonka_api_source_label(),
-        "archiveGovProposalCode": response_code(archive[4_433_308]["proposal"]),
-        "archiveGovVotesCode": response_code(archive[4_433_308]["votes"]),
-        "archiveGovTallyCode": response_code(archive[4_433_308]["tally"]),
-        "archiveStakingValidatorsCode": response_code(archive[4_433_308]["validators"]),
+        "archiveGovProposalCode": response_code(archive[end_before_height]["proposal"]),
+        "archiveGovVotesCode": response_code(archive[end_before_height]["votes"]),
+        "archiveGovTallyCode": response_code(archive[end_before_height]["tally"]),
+        "archiveStakingValidatorsCode": response_code(archive[end_before_height]["validators"]),
+        "decodedGovVotesBeforeStartCount": len(decoded_votes_start_before),
+        "decodedGovVotesAfterStartCount": len(decoded_votes_start_after),
         "decodedGovVotesCount": len(decoded_votes),
         "decodedGovVotesBeforeEndCount": len(decoded_votes),
         "decodedGovVotesAfterEndCount": len(decoded_votes_after_end),
         "txSearchUniqueVotersCount": len(tx_voter_set),
         "govVotesMatchTxSearchVoters": voter_set == tx_voter_set,
+        "decodedTallyBeforeStart": decoded_tally_start_before,
+        "decodedTallyAfterStart": decoded_tally_start_after,
         "decodedTally": decoded_tally,
         "decodedTallyAfterEnd": decoded_tally_after_end,
         "finalTally": final_tally,
@@ -645,11 +719,21 @@ def main():
         "chainLikeTallyTruncated": chain_like_power["resultsTruncated"],
         "chainLikeTallyMatchesFinalTally": chain_like_tally_matches_final,
         "chainLikeTotalVoterPower": chain_like_power["totalVoterPower"],
+        "startChainLikeTallyDecimalForFinalVoters": start_chain_like_power["resultsDecimal"],
+        "startChainLikeTallyTruncatedForFinalVoters": start_chain_like_power["resultsTruncated"],
+        "startChainLikeTotalFinalVoterPower": start_chain_like_power["totalVoterPower"],
         "archiveBondedValidatorsCount": chain_like_power["bondedValidatorsCount"],
         "archiveBondedValidatorsNonzeroPowerTotal": chain_like_power["bondedValidatorsNonzeroPowerTotal"],
         "votersWithArchiveVotingPowerCount": sum(1 for row in per_voter_power if row["votingPower"]),
+        "votersWithStartVotingPowerCount": sum(1 for row in window_power if row["startVotingPower"]),
+        "votersWithEndVotingPowerCount": sum(1 for row in window_power if row["endVotingPower"]),
+        "votersZeroAtStartAndEndCount": sum(1 for row in window_power if row["windowPowerStatus"] == "zero_at_start_and_end"),
+        "votersPowerAtStartOnlyCount": sum(1 for row in window_power if row["windowPowerStatus"] == "power_at_start_only"),
+        "votersPowerAtEndOnlyCount": sum(1 for row in window_power if row["windowPowerStatus"] == "power_at_end_only"),
         "validatorRawPageFiles": validator_raw_files,
+        "startValidatorRawPageFiles": start_validator_raw_files,
         "delegationRawPageFilesCount": len(delegation_raw_files),
+        "startDelegationRawPageFilesCount": len(start_delegation_raw_files),
         "historicalRestAvailable": False,
         "perVoterPowerStatus": "exact_chain_like" if chain_like_tally_matches_final else "derived_mismatch",
         "perVoterPowerReason": "Per-voter governance voting power is computed from archive staking validators and delegations at the last pre-end block using Gonka SDK gov tally logic. The decimal results are truncated by Cosmos SDK TallyResult serialization; truncated values match the final on-chain tally." if chain_like_tally_matches_final else "Chain-like archive staking/delegation calculation did not match final on-chain tally; treat per-voter power as diagnostic only.",
@@ -665,13 +749,22 @@ def main():
             "archiveGovVotes": decoded_votes,
             "archiveBondedValidators": bonded_validators,
             "archiveVoterDelegations": delegations_by_voter,
+            "startArchiveBondedValidators": start_bonded_validators,
+            "startArchiveVoterDelegations": start_delegations_by_voter,
             "chainLikePower": {
                 "resultsDecimal": chain_like_power["resultsDecimal"],
                 "resultsTruncated": chain_like_power["resultsTruncated"],
                 "totalVoterPower": chain_like_power["totalVoterPower"],
                 "validatorVotes": chain_like_power["validatorVotes"],
             },
+            "startChainLikePowerForFinalVoters": {
+                "resultsDecimal": start_chain_like_power["resultsDecimal"],
+                "resultsTruncated": start_chain_like_power["resultsTruncated"],
+                "totalVoterPower": start_chain_like_power["totalVoterPower"],
+                "validatorVotes": start_chain_like_power["validatorVotes"],
+            },
             "perVoterPower": per_voter_power,
+            "windowVoterPower": window_power,
         },
     )
     write_json(OUT / "manifest.json", {"summary": summary, "rawFiles": sorted(str(path.relative_to(OUT)) for path in raw_dir.glob("*.json"))})
@@ -682,9 +775,14 @@ def main():
         "",
         "This report separates on-chain governance evidence from inference epoch timing.",
         "",
+        f"- Voting start time: {VOTING_START_TIME}",
+        f"- Last block before voting start: {start_before['height']} at {start_before['time']}",
+        f"- First block after voting start: {start_after['height']} at {start_after['time']}",
         f"- Voting end time: {VOTING_END_TIME}",
         f"- Last block before voting end: {end_before['height']} at {end_before['time']}",
         f"- First block after voting end: {end_after['height']} at {end_after['time']}",
+        f"- Archive gov votes decoded before voting start: {len(decoded_votes_start_before)}",
+        f"- Archive gov votes decoded after first post-start block: {len(decoded_votes_start_after)}",
         f"- Archive gov votes decoded: {len(decoded_votes)}",
         f"- Archive gov votes decoded after first post-end block: {len(decoded_votes_after_end)}",
         f"- Tx search unique voters: {len(tx_voter_set)}",
@@ -696,8 +794,13 @@ def main():
         f"- Chain-like archive staking/delegation tally decimal: {chain_like_power['resultsDecimal']}",
         f"- Chain-like archive staking/delegation tally truncated: {chain_like_power['resultsTruncated']}",
         f"- Chain-like truncated tally matches final proposal tally: {chain_like_tally_matches_final}",
+        f"- Chain-like start-window power for final voters: {start_chain_like_power['resultsTruncated']}",
         f"- Archive bonded validators with non-zero power: {chain_like_power['bondedValidatorsCount']}",
         f"- Voters with non-zero archive voting power: {summary['votersWithArchiveVotingPowerCount']}",
+        f"- Voters with non-zero start-window power: {summary['votersWithStartVotingPowerCount']}",
+        f"- Voters zero at both start and end snapshots: {summary['votersZeroAtStartAndEndCount']}",
+        f"- Voters with power at start only: {summary['votersPowerAtStartOnlyCount']}",
+        f"- Voters with power at end only: {summary['votersPowerAtEndOnlyCount']}",
         f"- Per-voter governance power status: {summary['perVoterPowerStatus']}",
         "",
         "Per-voter governance power is not inferred from inference epoch weights. The calculation follows the Gonka SDK gov tally path: collect all bonded validators with non-zero bonded tokens, apply each voter delegation as direct voter power, deduct voted delegator shares from validator self-votes, then add remaining validator voting power. Decimal weighted results are truncated by Cosmos SDK TallyResult serialization; the truncated result matches the final on-chain tally.",

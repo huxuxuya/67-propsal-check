@@ -1,5 +1,41 @@
 {
   "rawFiles": [
+    "raw/abci_4401104_delegations_gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv_page_1.json",
+    "raw/abci_4401104_delegations_gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09_page_1.json",
+    "raw/abci_4401104_delegations_gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2_page_1.json",
+    "raw/abci_4401104_delegations_gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6_page_1.json",
+    "raw/abci_4401104_delegations_gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww_page_1.json",
+    "raw/abci_4401104_delegations_gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0_page_1.json",
+    "raw/abci_4401104_delegations_gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p_page_1.json",
+    "raw/abci_4401104_delegations_gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr_page_1.json",
+    "raw/abci_4401104_delegations_gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5_page_1.json",
+    "raw/abci_4401104_delegations_gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz_page_1.json",
+    "raw/abci_4401104_delegations_gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum_page_1.json",
+    "raw/abci_4401104_delegations_gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf_page_1.json",
+    "raw/abci_4401104_delegations_gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2_page_1.json",
+    "raw/abci_4401104_delegations_gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3_page_1.json",
+    "raw/abci_4401104_delegations_gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj_page_1.json",
+    "raw/abci_4401104_delegations_gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg_page_1.json",
+    "raw/abci_4401104_delegations_gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4_page_1.json",
+    "raw/abci_4401104_delegations_gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl_page_1.json",
+    "raw/abci_4401104_delegations_gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv_page_1.json",
+    "raw/abci_4401104_delegations_gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt_page_1.json",
+    "raw/abci_4401104_delegations_gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu_page_1.json",
+    "raw/abci_4401104_delegations_gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4_page_1.json",
+    "raw/abci_4401104_delegations_gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p_page_1.json",
+    "raw/abci_4401104_delegations_gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx_page_1.json",
+    "raw/abci_4401104_proposal.json",
+    "raw/abci_4401104_tally.json",
+    "raw/abci_4401104_validators.json",
+    "raw/abci_4401104_validators_bonded_page_1.json",
+    "raw/abci_4401104_validators_bonded_page_2.json",
+    "raw/abci_4401104_validators_bonded_page_3.json",
+    "raw/abci_4401104_validators_bonded_page_4.json",
+    "raw/abci_4401104_votes.json",
+    "raw/abci_4401105_proposal.json",
+    "raw/abci_4401105_tally.json",
+    "raw/abci_4401105_validators.json",
+    "raw/abci_4401105_votes.json",
     "raw/abci_4433308_delegations_gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv_page_1.json",
     "raw/abci_4433308_delegations_gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09_page_1.json",
     "raw/abci_4433308_delegations_gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2_page_1.json",
@@ -36,10 +72,14 @@
     "raw/abci_4433309_tally.json",
     "raw/abci_4433309_validators.json",
     "raw/abci_4433309_votes.json",
+    "raw/block_4401104.json",
+    "raw/block_4401105.json",
     "raw/block_4433308.json",
     "raw/block_4433309.json",
     "raw/dashboard_gov_67_html.json",
+    "raw/decoded_bonded_validators_4401104.json",
     "raw/decoded_bonded_validators_4433308.json",
+    "raw/decoded_voter_delegations_4401104.json",
     "raw/decoded_voter_delegations_4433308.json",
     "raw/rest_probes.json"
   ],
@@ -71,7 +111,9 @@
       "status": 200
     },
     "decodedGovVotesAfterEndCount": 0,
+    "decodedGovVotesAfterStartCount": 0,
     "decodedGovVotesBeforeEndCount": 24,
+    "decodedGovVotesBeforeStartCount": 0,
     "decodedGovVotesCount": 24,
     "decodedTally": {
       "abstain": 744,
@@ -86,6 +128,18 @@
       "yes": 319920
     },
     "decodedTallyAfterEndMatchesFinalTally": true,
+    "decodedTallyAfterStart": {
+      "abstain": 0,
+      "no": 0,
+      "no_with_veto": 0,
+      "yes": 0
+    },
+    "decodedTallyBeforeStart": {
+      "abstain": 0,
+      "no": 0,
+      "no_with_veto": 0,
+      "yes": 0
+    },
     "decodedTallyMatchesFinalTally": true,
     "delegationRawPageFilesCount": 24,
     "finalTally": {
@@ -99,13 +153,23 @@
       "height": 4433309,
       "time": "2026-06-05T22:09:03.332831118Z"
     },
-    "generatedAt": "2026-06-07T18:35:48.674414+00:00",
+    "firstBlockAfterVotingStart": {
+      "hash": "4BECBFC668DDE3D909113F09856D2BBE2D1250464BDC991561BE8B7C89082C08",
+      "height": 4401105,
+      "time": "2026-06-03T22:09:08.33331477Z"
+    },
+    "generatedAt": "2026-06-07T21:10:59.511419+00:00",
     "govVotesMatchTxSearchVoters": true,
     "historicalRestAvailable": false,
     "lastBlockBeforeVotingEnd": {
       "hash": "319A3003D8FB628B82EA65D8C27B0A08B3DCDF18F15F01A0AC869C2313C308B8",
       "height": 4433308,
       "time": "2026-06-05T22:08:57.716062379Z"
+    },
+    "lastBlockBeforeVotingStart": {
+      "hash": "844CFC1A15AE75D476E5BFEF0643A288EAE37AF28F199E9214F2003223F7008D",
+      "height": 4401104,
+      "time": "2026-06-03T22:09:02.699803591Z"
     },
     "perVoterPowerReason": "Per-voter governance voting power is computed from archive staking validators and delegations at the last pre-end block using Gonka SDK gov tally logic. The decimal results are truncated by Cosmos SDK TallyResult serialization; truncated values match the final on-chain tally.",
     "perVoterPowerStatus": "exact_chain_like",
@@ -115,6 +179,14 @@
         "error": "",
         "status": 200
       },
+      "proposal_4401104": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "proposal_4401105": {
+        "error": "HTTPError",
+        "status": 500
+      },
       "proposal_4433308": {
         "error": "HTTPError",
         "status": 500
@@ -123,11 +195,27 @@
         "error": "HTTPError",
         "status": 500
       },
+      "validators_4401104": {
+        "error": "TimeoutError",
+        "status": null
+      },
+      "validators_4401105": {
+        "error": "HTTPError",
+        "status": 500
+      },
       "validators_4433308": {
         "error": "HTTPError",
         "status": 500
       },
       "validators_4433309": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "votes_4401104": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "votes_4401105": {
         "error": "HTTPError",
         "status": 500
       },
@@ -144,6 +232,26 @@
         "status": 200
       }
     },
+    "startChainLikeTallyDecimalForFinalVoters": {
+      "abstain": "886.720200000000000000",
+      "no": "178.718800000000000000",
+      "no_with_veto": "124462.904100000000000000",
+      "yes": "215554.656900000000000000"
+    },
+    "startChainLikeTallyTruncatedForFinalVoters": {
+      "abstain": 886,
+      "no": 178,
+      "no_with_veto": 124462,
+      "yes": 215554
+    },
+    "startChainLikeTotalFinalVoterPower": 341083,
+    "startDelegationRawPageFilesCount": 24,
+    "startValidatorRawPageFiles": [
+      "abci_4401104_validators_bonded_page_1.json",
+      "abci_4401104_validators_bonded_page_2.json",
+      "abci_4401104_validators_bonded_page_3.json",
+      "abci_4401104_validators_bonded_page_4.json"
+    ],
     "txSearchUniqueVotersCount": 24,
     "validatorRawPageFiles": [
       "abci_4433308_validators_bonded_page_1.json",
@@ -151,7 +259,13 @@
       "abci_4433308_validators_bonded_page_3.json",
       "abci_4433308_validators_bonded_page_4.json"
     ],
+    "votersPowerAtEndOnlyCount": 1,
+    "votersPowerAtStartOnlyCount": 2,
     "votersWithArchiveVotingPowerCount": 14,
-    "votingEndTime": "2026-06-05T22:09:02.699803591Z"
+    "votersWithEndVotingPowerCount": 14,
+    "votersWithStartVotingPowerCount": 15,
+    "votersZeroAtStartAndEndCount": 8,
+    "votingEndTime": "2026-06-05T22:09:02.699803591Z",
+    "votingStartTime": "2026-06-03T22:09:02.699803591Z"
   }
 }

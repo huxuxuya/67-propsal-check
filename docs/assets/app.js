@@ -24,6 +24,7 @@ const els = {
   sourceType: document.getElementById("sourceTypeFilter"),
   benefitPowerTable: document.getElementById("benefitPowerTable"),
   voterPowerTable: document.getElementById("voterPowerTable"),
+  windowPowerTable: document.getElementById("windowPowerTable"),
   publicNameTable: document.getElementById("publicNameTable"),
   rankedTable: document.getElementById("rankedTable"),
   interestClusterTable: document.getElementById("interestClusterTable"),
@@ -68,6 +69,7 @@ function initCharts() {
     timeline: "timelineChart",
     tally: "tallyChart",
     voterPower: "voterPowerChart",
+    windowPower: "windowPowerChart",
     actorGraph: "actorGraphChart",
     entryExit: "entryExitChart",
   })) {
@@ -328,6 +330,58 @@ function renderVoterPowerChart() {
       <td><span class="tag" style="border-color:${optionColors[row.voteOption] || "#6d7682"}">${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}</span></td>
       <td class="num">${fmt.format(row.votingPower || 0)}</td>
       <td><span class="tag ${row.evidenceBoundary === "public_owner_proof" ? "good" : ""}">${escapeHtml(row.evidenceBoundary || "")}</span><br><span class="muted">proof ${row.proofCount}; high ${row.highConfidenceClaimCount}</span></td>
+    </tr>
+  `).join("");
+}
+
+function windowStatusLabel(status) {
+  return {
+    zero_at_start_and_end: "Zero at start and end",
+    power_at_start_only: "Power at start only",
+    power_at_end_only: "Power at end only",
+    power_at_start_and_end: "Power at start and end",
+    unchanged: "Stable",
+    changed: "Changed",
+  }[status] || status || "Unknown";
+}
+
+function renderWindowPowerChart() {
+  const query = els.search.value.trim().toLowerCase();
+  const selectedLabel = els.label.value;
+  const rows = ((state.data.votingPowerWindow || {}).rows || [])
+    .filter((row) => {
+      if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
+      if (els.vote.value !== "all" && row.primaryOption !== els.vote.value) return false;
+      if (!query) return true;
+      return textMatch({ ...row, address: row.voter, status: row.windowPowerStatus }, query);
+    })
+    .sort((a, b) => Math.abs((b.endVotingPower || 0) - (b.startVotingPower || 0)) - Math.abs((a.endVotingPower || 0) - (a.startVotingPower || 0)) || (b.endVotingPower || 0) - (a.endVotingPower || 0) || a.label.localeCompare(b.label));
+  document.getElementById("windowPowerRows").textContent = `${rows.length} shown`;
+  state.charts.windowPower.setOption({
+    grid: { left: 260, right: 44, top: 34, bottom: 52 },
+    legend: { top: 4, textStyle: { color: "#a7afba" } },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "shadow" },
+      formatter: (items) => {
+        const row = rows[items[0]?.dataIndex || 0];
+        return `<strong>${escapeHtml(row.label)}</strong><br>${escapeHtml(row.voter)}<br>${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)} at height ${row.height}<br>start ${fmt.format(row.startVotingPower || 0)} · end ${fmt.format(row.endVotingPower || 0)}<br>${escapeHtml(windowStatusLabel(row.windowPowerStatus))}`;
+      },
+    },
+    xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
+    yAxis: { type: "category", data: rows.map(voterDisplayLabel), axisLabel: { color: "#a7afba", width: 240, overflow: "break", lineHeight: 15 } },
+    series: [
+      { name: "Start boundary", type: "bar", data: rows.map((row) => row.startVotingPower || 0), itemStyle: { color: "#5da9e9" } },
+      { name: "End boundary", type: "bar", data: rows.map((row) => row.endVotingPower || 0), itemStyle: { color: (p) => optionColors[rows[p.dataIndex]?.primaryOption] || "#4db7a8" } },
+    ],
+  }, true);
+  els.windowPowerTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td>${escapeHtml(voterDisplayLabel(row))}<br><button class="row-button mono" data-address="${row.voter}">${escapeHtml(row.voter)}</button></td>
+      <td><span class="tag" style="border-color:${optionColors[row.primaryOption] || "#6d7682"}">${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}</span><br><span class="muted">tx height ${fmt.format(row.height || 0)}</span></td>
+      <td class="num">${fmt.format(row.startVotingPower || 0)}<br><span class="muted">${escapeHtml(row.startVotingPowerSource || "")}</span></td>
+      <td class="num">${fmt.format(row.endVotingPower || 0)}<br><span class="muted">${escapeHtml(row.endVotingPowerSource || "")}</span></td>
+      <td><span class="tag ${row.windowPowerStatus === "zero_at_start_and_end" ? "" : "warn"}">${escapeHtml(windowStatusLabel(row.windowPowerStatus))}</span><br><span class="muted">delegations ${fmt.format(row.startDelegationCount || 0)} -> ${fmt.format(row.endDelegationCount || 0)}</span></td>
     </tr>
   `).join("");
 }
@@ -947,6 +1001,7 @@ function renderAll() {
   renderTimeline();
   renderTally();
   renderVoterPowerChart();
+  renderWindowPowerChart();
   renderActorGraph();
   renderEntryExitChart();
   renderHypotheses();
@@ -975,6 +1030,7 @@ function openDrawer(address) {
   const evidenceClaims = (state.data.evidenceClaims || []).filter((row) => row.address === address);
   const actor = (state.data.actors || []).find((row) => row.address === address);
   const rankedParty = (state.data.rankedParties || []).find((row) => (row.addresses || []).includes(address));
+  const windowPower = ((state.data.votingPowerWindow || {}).rows || []).find((row) => row.voter === address);
   const nodeInfo = recipient?.publicNodeInfo || vote?.publicNodeInfo || {};
   const matchedValidator = nodeInfo.matchedValidator || {};
   const gnsNames = recipient?.gnsNames || vote?.gnsNames || [];
@@ -1015,6 +1071,7 @@ function openDrawer(address) {
         <dt>Height</dt><dd>${vote.height}</dd>
         <dt>Tx hash</dt><dd class="mono">${escapeHtml(vote.txHash)}</dd>
         <dt>Voting power</dt><dd>${vote.votingPower == null ? "unknown" : fmt.format(vote.votingPower)}<br><span class="muted">${escapeHtml(vote.votingPowerReason || vote.votingPowerSource || "")}</span></dd>
+        <dt>Start/end power</dt><dd>${windowPower ? `${fmt.format(windowPower.startVotingPower || 0)} -> ${fmt.format(windowPower.endVotingPower || 0)}<br><span class="muted">${escapeHtml(windowStatusLabel(windowPower.windowPowerStatus))}</span>` : "not in window snapshot"}</dd>
       </dl>` : "<p>No final on-chain vote in the saved proposal vote transactions.</p>"}
     </div>
     <div class="drawer-section">

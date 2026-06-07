@@ -1,0 +1,23 @@
+{
+  "error": "",
+  "fetchedAt": "2026-06-07T21:10:58.218108+00:00",
+  "json": {
+    "id": -1,
+    "jsonrpc": "2.0",
+    "result": {
+      "response": {
+        "code": 111222,
+        "codespace": "undefined",
+        "height": "0",
+        "index": "0",
+        "info": "",
+        "key": null,
+        "log": "division by zero: panic",
+        "proofOps": null,
+        "value": null
+      }
+    }
+  },
+  "status": 200,
+  "url": "GONKA_RPC_URL/abci_query?path=%22%2Fcosmos.staking.v1beta1.Query%2FDelegatorDelegations%22&height=4401104&data=0x0a2c676f6e6b61317774387372396a787a70656336356a377a6b787367683665646b336d3672386e6c66357a613412021864"
+}

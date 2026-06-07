@@ -190,6 +190,10 @@ select {
   height: 620px;
 }
 
+.voter-power-window-chart {
+  height: 520px;
+}
+
 .compact-table {
   max-height: 360px;
   margin-top: 12px;
