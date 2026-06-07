@@ -16,11 +16,13 @@ const els = {
   status: document.getElementById("statusFilter"),
   vote: document.getElementById("voteFilter"),
   identity: document.getElementById("identityFilter"),
+  label: document.getElementById("labelFilter"),
   node: document.getElementById("nodeFilter"),
   top: document.getElementById("topFilter"),
   component: document.getElementById("componentFilter"),
   confidence: document.getElementById("confidenceFilter"),
   sourceType: document.getElementById("sourceTypeFilter"),
+  labelTable: document.getElementById("labelTable"),
   epochTable: document.getElementById("epochTable"),
   recipientTable: document.getElementById("recipientTable"),
   voteTable: document.getElementById("voteTable"),
@@ -73,10 +75,11 @@ function setupFilters(data) {
   fillSelect(els.status, [...new Set(data.recipients.map((row) => row.status))].sort());
   fillSelect(els.vote, [...new Set([...data.votes.map(primaryOption), "did_not_vote"])].sort(), optionLabels);
   fillSelect(els.identity, [...new Set([...data.recipients, ...data.votes].map((row) => row.identityType))].sort());
+  fillSelect(els.label, buildLabelRows(data).map((row) => row.label));
   fillSelect(els.component, [...new Set(data.recipients.map((row) => row.componentSource))].sort());
   fillSelect(els.confidence, [...new Set((data.identityGraph?.edges || []).map((edge) => edge.confidence))].sort());
   fillSelect(els.sourceType, [...new Set((data.identityGraph?.edges || []).map((edge) => edge.sourceType))].sort());
-  [els.search, els.status, els.vote, els.identity, els.node, els.top, els.component, els.confidence, els.sourceType].forEach((el) => {
+  [els.search, els.status, els.vote, els.identity, els.label, els.node, els.top, els.component, els.confidence, els.sourceType].forEach((el) => {
     el.addEventListener("input", applyFilters);
     el.addEventListener("change", applyFilters);
   });
@@ -107,11 +110,13 @@ function textMatch(row, query) {
 
 function applyFilters() {
   const query = els.search.value.trim().toLowerCase();
+  const label = els.label.value;
   state.filteredRecipients = state.data.recipients.filter((row) => {
     if (!textMatch(row, query)) return false;
     if (els.status.value !== "all" && row.status !== els.status.value) return false;
     if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
     if (els.identity.value !== "all" && row.identityType !== els.identity.value) return false;
+    if (label !== "all" && row.label !== label) return false;
     if (els.node.value === "active" && !row.activeNode) return false;
     if (els.node.value === "inactive" && row.activeNode) return false;
     if (els.top.value !== "all" && row.rank > Number(els.top.value)) return false;
@@ -259,6 +264,78 @@ function renderEpochTable() {
   `).join("");
 }
 
+function buildLabelRows(data) {
+  const labels = new Map();
+  const ensure = (label) => {
+    if (!labels.has(label)) {
+      labels.set(label, {
+        label,
+        addresses: new Set(),
+        identityTypes: new Set(),
+        recipientCount: 0,
+        voterCount: 0,
+        totalGonka: 0,
+        votes: new Set(),
+      });
+    }
+    return labels.get(label);
+  };
+
+  data.recipients.forEach((row) => {
+    const item = ensure(row.label || "Unknown public owner");
+    item.addresses.add(row.address);
+    item.identityTypes.add(row.identityType || "unknown");
+    item.recipientCount += 1;
+    item.totalGonka += row.totalGonka || 0;
+  });
+
+  data.votes.forEach((row) => {
+    const item = ensure(row.label || "Unknown public owner");
+    item.addresses.add(row.voter);
+    item.identityTypes.add(row.identityType || "unknown");
+    item.voterCount += 1;
+    item.votes.add(row.primaryOption || primaryOption(row));
+  });
+
+  return [...labels.values()]
+    .map((row) => ({
+      ...row,
+      addresses: [...row.addresses].sort(),
+      identityTypes: [...row.identityTypes].sort(),
+      votes: [...row.votes].sort(),
+    }))
+    .sort((a, b) => b.totalGonka - a.totalGonka || b.addresses.length - a.addresses.length || a.label.localeCompare(b.label));
+}
+
+function renderLabelTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const selectedLabel = els.label.value;
+  const rows = buildLabelRows(state.data).filter((row) => {
+    if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
+    if (els.identity.value !== "all" && !row.identityTypes.includes(els.identity.value)) return false;
+    if (els.vote.value !== "all" && !row.votes.includes(els.vote.value) && !(els.vote.value === "did_not_vote" && row.recipientCount > row.voterCount)) return false;
+    if (!query) return true;
+    return [
+      row.label,
+      ...row.identityTypes,
+      ...row.addresses,
+      ...row.votes,
+    ].join(" ").toLowerCase().includes(query);
+  });
+
+  document.getElementById("labelRows").textContent = `${rows.length} shown`;
+  els.labelTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td>${escapeHtml(row.label)}</td>
+      <td>${row.identityTypes.map((type) => `<span class="tag">${escapeHtml(type)}</span>`).join(" ")}</td>
+      <td>${row.addresses.map((address) => `<button class="row-button mono" data-address="${address}">${escapeHtml(address)}</button>`).join("<br>")}</td>
+      <td class="num">${row.recipientCount}</td>
+      <td class="num">${row.voterCount}</td>
+      <td class="num">${gonka(row.totalGonka)}</td>
+    </tr>
+  `).join("");
+}
+
 function renderTables() {
   document.getElementById("recipientRows").textContent = `${state.filteredRecipients.length} shown`;
   els.recipientTable.innerHTML = state.filteredRecipients.map((row) => `
@@ -274,10 +351,12 @@ function renderTables() {
   `).join("");
 
   const query = els.search.value.trim().toLowerCase();
+  const label = els.label.value;
   const filteredVotes = state.data.votes.filter((row) => {
     if (!textMatch({ ...row, address: row.voter }, query)) return false;
     if (els.vote.value !== "all" && row.primaryOption !== els.vote.value) return false;
     if (els.identity.value !== "all" && row.identityType !== els.identity.value) return false;
+    if (label !== "all" && row.label !== label) return false;
     return true;
   });
   document.getElementById("voteRows").textContent = `${filteredVotes.length} shown`;
@@ -358,6 +437,7 @@ function renderAll() {
   renderMatrix();
   renderTimeline();
   renderTally();
+  renderLabelTable();
   renderEpochTable();
   renderTables();
   renderClusterTables();

@@ -65,6 +65,12 @@
           </select>
         </label>
         <label>
+          Public label
+          <select id="labelFilter">
+            <option value="all">All</option>
+          </select>
+        </label>
+        <label>
           Node state
           <select id="nodeFilter">
             <option value="all">All</option>
@@ -150,6 +156,27 @@
       </section>
 
       <section class="table-grid">
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Public Labels</h2>
+            <span id="labelRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Public label</th>
+                  <th>Identity types</th>
+                  <th>Addresses</th>
+                  <th>Recipients</th>
+                  <th>Voters</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="labelTable"></tbody>
+            </table>
+          </div>
+        </div>
         <div class="panel table-panel">
           <div class="panel-head">
             <h2>Epoch Totals</h2>

@@ -123,7 +123,7 @@ small {
 
 .filters {
   display: grid;
-  grid-template-columns: minmax(220px, 2fr) repeat(8, minmax(128px, 1fr));
+  grid-template-columns: minmax(220px, 2fr) repeat(9, minmax(128px, 1fr));
   gap: 10px;
   padding: 12px;
   margin-bottom: 14px;
