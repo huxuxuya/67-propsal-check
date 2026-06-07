@@ -3,13 +3,13 @@ import json
 import urllib.request
 from pathlib import Path
 
-from env_utils import gonka_rpc_url
+from env_utils import gonka_api_url
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 UPSTREAM = ROOT / "upstream" / "gonka-kimi-restitution"
-NODE = gonka_rpc_url()
+NODE = gonka_api_url()
 
 
 def fetch_json(url):

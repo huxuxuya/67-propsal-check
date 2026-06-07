@@ -1,4 +1,47 @@
 {
+  "apiFallbackUsed": false,
+  "blocks": [
+    {
+      "file": "blocks/block_4413581.json",
+      "height": 4413581
+    },
+    {
+      "file": "blocks/block_4428572.json",
+      "height": 4428572
+    },
+    {
+      "file": "blocks/block_4428972.json",
+      "height": 4428972
+    },
+    {
+      "file": "blocks/block_4429647.json",
+      "height": 4429647
+    },
+    {
+      "file": "blocks/block_4430015.json",
+      "height": 4430015
+    },
+    {
+      "file": "blocks/block_4430200.json",
+      "height": 4430200
+    },
+    {
+      "file": "blocks/block_4430201.json",
+      "height": 4430201
+    },
+    {
+      "file": "blocks/block_4430202.json",
+      "height": 4430202
+    },
+    {
+      "file": "blocks/block_4430417.json",
+      "height": 4430417
+    },
+    {
+      "file": "blocks/block_4444363.json",
+      "height": 4444363
+    }
+  ],
   "epochs": [
     {
       "epoch": 285,
@@ -37,10 +80,11 @@
       }
     }
   ],
-  "fallbackUsed": true,
+  "rpcFallbackUsed": false,
   "source": {
-    "generatedAt": "2026-06-07T17:24:10.656447+00:00",
-    "node": "GONKA_RPC_URL",
+    "apiNode": "http://node1.gonka.ai:8000",
+    "generatedAt": "2026-06-07T17:37:44.184714+00:00",
+    "rpcNode": "GONKA_RPC_URL",
     "scope": "Proposal #67 voting-end epoch window e285-e290"
   }
 }

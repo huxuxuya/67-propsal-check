@@ -6,13 +6,13 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-from env_utils import gonka_rpc_source_label, gonka_rpc_url
+from env_utils import gonka_api_source_label, gonka_api_url
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 
-NODE = gonka_rpc_url()
+NODE = gonka_api_url()
 GNS_CONTRACT = "gonka1rd582xazhyxde68g099ed0zpjzq0j0shnhkegg06s8009h7lnxjqvyf0qf"
 STATE_PATH = f"/chain-api/cosmwasm/wasm/v1/contract/{GNS_CONTRACT}/state"
 
@@ -65,7 +65,7 @@ def main():
             params["pagination.key"] = next_key
         url = f"{NODE}{STATE_PATH}?{urllib.parse.urlencode(params)}"
         page = fetch_json(url)
-        pages.append({"url": f"{gonka_rpc_source_label()}{STATE_PATH}?{urllib.parse.urlencode(params)}", "response": page})
+        pages.append({"url": f"{gonka_api_source_label()}{STATE_PATH}?{urllib.parse.urlencode(params)}", "response": page})
 
         for model in page.get("models", []):
             key = decode_key(model["key"])
@@ -135,7 +135,7 @@ def main():
 
     raw_snapshot = {
         "source": {
-            "node": gonka_rpc_source_label(),
+            "node": gonka_api_source_label(),
             "contract": GNS_CONTRACT,
             "path": STATE_PATH,
             "fetchedAt": datetime.now(timezone.utc).isoformat(),

@@ -1214,6 +1214,15 @@ def epoch_weights(epoch):
     return rows
 
 
+def block_time(height):
+    path = DATA / "voting_end_epochs" / "blocks" / f"block_{height}.json"
+    if not path.exists():
+        return ""
+    wrapper = load_json(path)
+    block = ((wrapper.get("json") or {}).get("result") or {}).get("block") or {}
+    return ((block.get("header") or {}).get("time")) or ""
+
+
 def build_epoch_anomalies(votes, recipients, labels_by_address):
     epochs = [285, 286, 287, 288, 289, 290]
     weights = {epoch: epoch_weights(epoch) for epoch in epochs}
@@ -1225,6 +1234,8 @@ def build_epoch_anomalies(votes, recipients, labels_by_address):
     anomalies = []
     e287_start = int(groups.get(287, {}).get("effective_block_height") or 0)
     e288_start = int(groups.get(288, {}).get("effective_block_height") or 0)
+    e287_start_time = block_time(e287_start)
+    e288_start_time = block_time(e288_start)
     for address in sorted(relevant):
         row_weights = {f"e{epoch}": weights.get(epoch, {}).get(address, {}).get("weight", 0) for epoch in epochs}
         e287_weight = row_weights.get("e287", 0)
@@ -1259,7 +1270,12 @@ def build_epoch_anomalies(votes, recipients, labels_by_address):
                     "exitedAfterE287": exited_after_e287,
                     "votedDuringE287": voted_during_e287,
                     "voteHeight": vote_height,
+                    "voteBlockTime": block_time(vote_height) if vote_height else "",
                     "voteOption": vote.get("primaryOption") if vote else "did_not_vote",
+                    "e287StartHeight": e287_start,
+                    "e287StartTime": e287_start_time,
+                    "e288StartHeight": e288_start,
+                    "e288StartTime": e288_start_time,
                     "isRecipient": address in recipient_set,
                     "anomalyScore": round(anomaly_score, 3),
                     "status": "confirmed_window_anomaly" if entered_e287 and exited_after_e287 and voted_during_e287 else ("partially_supported" if voted_during_e287 or entered_e287 or exited_after_e287 else "context"),
@@ -1273,6 +1289,7 @@ def build_epoch_anomalies(votes, recipients, labels_by_address):
 def build_attack_narrative(proposal, votes, epochs, epoch_anomalies):
     voting_start = proposal.get("voting_start_time", "")
     voting_end = proposal.get("voting_end_time", "")
+    e287_time = block_time(4_428_972)
     return {
         "title": "Proposal #67 Kimi restitution attack investigation",
         "phases": [
@@ -1307,7 +1324,7 @@ def build_attack_narrative(proposal, votes, epochs, epoch_anomalies):
             {
                 "id": "voting_end_epoch_anomaly",
                 "label": "Voting-end epoch anomaly",
-                "timeOrHeight": "e287",
+                "timeOrHeight": f"e287 effective 4428972 {e287_time}".strip(),
                 "summary": f"{len(epoch_anomalies)} e287 weight/timing anomalies detected from saved archive-node snapshots.",
                 "confidence": "medium" if epoch_anomalies else "low",
             },

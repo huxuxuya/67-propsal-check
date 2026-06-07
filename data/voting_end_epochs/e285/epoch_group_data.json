@@ -1,7 +1,7 @@
 {
   "attempts": 1,
   "error": "",
-  "fetchedAt": "2026-06-07T17:24:26.192437+00:00",
+  "fetchedAt": "2026-06-07T17:37:45.555921+00:00",
   "json": {
     "epoch_group_data": {
       "confirmation_weight_scales": [
@@ -764,5 +764,5 @@
     }
   },
   "status": 200,
-  "url": "fallback_public_node/chain-api/productscience/inference/inference/epoch_group_data/285"
+  "url": "http://node1.gonka.ai:8000/chain-api/productscience/inference/inference/epoch_group_data/285"
 }

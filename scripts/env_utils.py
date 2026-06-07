@@ -19,14 +19,40 @@ def load_dotenv(path=ROOT / ".env"):
             os.environ[key] = value
 
 
-def gonka_rpc_url(default="http://node1.gonka.ai:8000"):
-    load_dotenv()
-    value = os.environ.get("GONKA_RPC_URL", default).strip()
+def _normalized_url(value, default_scheme="http"):
+    value = (value or "").strip()
     if value and "://" not in value:
-        value = f"http://{value}"
+        value = f"{default_scheme}://{value}"
     return value.rstrip("/")
 
 
-def gonka_rpc_source_label(default_label="http://node1.gonka.ai:8000"):
+def _with_default_port(url, port):
+    from urllib.parse import urlparse
+
+    parsed = urlparse(url)
+    if parsed.hostname and parsed.port is None:
+        return f"{parsed.scheme}://{parsed.hostname}:{port}{parsed.path if parsed.path != '/' else ''}".rstrip("/")
+    return url
+
+
+def gonka_rpc_url(default="http://node1.gonka.ai:26657"):
+    load_dotenv()
+    value = _normalized_url(os.environ.get("GONKA_RPC_URL", default))
+    if os.environ.get("GONKA_RPC_URL"):
+        value = _with_default_port(value, 26657)
+    return value
+
+
+def gonka_api_url(default="http://node1.gonka.ai:8000"):
+    load_dotenv()
+    return _normalized_url(os.environ.get("GONKA_API_URL", default))
+
+
+def gonka_rpc_source_label(default_label="http://node1.gonka.ai:26657"):
     load_dotenv()
     return "GONKA_RPC_URL" if os.environ.get("GONKA_RPC_URL") else default_label
+
+
+def gonka_api_source_label(default_label="http://node1.gonka.ai:8000"):
+    load_dotenv()
+    return "GONKA_API_URL" if os.environ.get("GONKA_API_URL") else default_label

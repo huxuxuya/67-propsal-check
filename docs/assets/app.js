@@ -312,7 +312,7 @@ function renderAnomalyTable() {
       <td class="num">${fmt.format(row.e287Weight)}</td>
       <td class="num">${fmt.format(row.prevMaxWeight)}</td>
       <td class="num">${fmt.format(row.nextMaxWeight)}</td>
-      <td>${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}${row.voteHeight ? `<br><span class="mono muted">${row.voteHeight}</span>` : ""}</td>
+      <td>${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}${row.voteHeight ? `<br><span class="mono muted">${row.voteHeight}</span>` : ""}${row.voteBlockTime ? `<br><span class="muted">${escapeHtml(row.voteBlockTime)}</span>` : ""}</td>
       <td><span class="tag ${row.status === "confirmed_window_anomaly" ? "good" : row.status === "partially_supported" ? "warn" : ""}">${escapeHtml(row.status)}</span></td>
     </tr>
   `).join("");

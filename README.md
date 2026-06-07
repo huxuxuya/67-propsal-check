@@ -14,7 +14,7 @@ Investigation workspace for Gonka proposal #67, "Kimi Restitution (epochs 265-27
 - `data/osint/public_osint_sources.json` - raw public OSINT snapshot for Gonka names, GitHub repository metadata, commits, contributors, and public social/profile candidates.
 - `data/onchain_graph/proposal_67_local_graph.json` - deterministic local graph snapshot built from saved proposal, vote, upstream delegation, and epoch commit data.
 - `data/telegram_evidence.json` - curated short excerpts parsed from ignored Telegram exports under `history/`.
-- `data/voting_end_epochs/` - raw e285-e290 voting-end epoch snapshots fetched from `GONKA_RPC_URL` when available, with public-node fallback recorded in the manifest.
+- `data/voting_end_epochs/` - raw e285-e290 voting-end epoch snapshots and archive block snapshots, with public-node fallback recorded in the manifest.
 - `reports/proposal_67_analysis.md` - current summary: recipients, final voters, and why 30k became 946k.
 - `reports/attribution_audit.md` - ranked interested-party audit with evidence caveats.
 - `reports/ranked_parties.csv` - exportable ranked actor/cluster priority list.
@@ -39,7 +39,7 @@ python3 scripts/build_dashboard_data.py
 
 The fetch steps use public Gonka node APIs and may need network access. Run them only when intentionally refreshing raw snapshots. All analysis and dashboard builds after that use saved local data from `data/` and `upstream/`; they do not query nodes.
 `build_onchain_graph_snapshot.py` is local-only and derives graph evidence from already saved files.
-Set `GONKA_RPC_URL` in a local `.env` file to use an archive node for fetch scripts. `.env` is ignored; committed snapshots redact the actual node URL.
+Set `GONKA_RPC_URL` in a local `.env` file to use an archive CometBFT/Tendermint RPC node for raw endpoints such as `/block?height=...`. If no port is provided, scripts assume port `26657`. Set `GONKA_API_URL` only when you have a separate REST `/chain-api` endpoint; otherwise scripts use the public API endpoint for those snapshots. `.env` is ignored; committed snapshots redact the actual archive node URL as `GONKA_RPC_URL/...`.
 
 ## Dashboard
 
