@@ -13,6 +13,8 @@ Investigation workspace for Gonka proposal #67, "Kimi Restitution (epochs 265-27
 - `data/public_identity_signals.json` - raw DNS/RDAP/TLS/HTTP public signal snapshot for proposal #67 addresses and related URLs.
 - `data/osint/public_osint_sources.json` - raw public OSINT snapshot for Gonka names, GitHub repository metadata, commits, contributors, and public social/profile candidates.
 - `data/onchain_graph/proposal_67_local_graph.json` - deterministic local graph snapshot built from saved proposal, vote, upstream delegation, and epoch commit data.
+- `data/telegram_evidence.json` - curated short excerpts parsed from ignored Telegram exports under `history/`.
+- `data/voting_end_epochs/` - raw e285-e290 voting-end epoch snapshots fetched from `GONKA_RPC_URL` when available, with public-node fallback recorded in the manifest.
 - `reports/proposal_67_analysis.md` - current summary: recipients, final voters, and why 30k became 946k.
 - `reports/attribution_audit.md` - ranked interested-party audit with evidence caveats.
 - `reports/ranked_parties.csv` - exportable ranked actor/cluster priority list.
@@ -28,6 +30,8 @@ python3 scripts/fetch_proposal_67_data.py
 python3 scripts/fetch_gns_names.py
 python3 scripts/fetch_public_identity_signals.py
 python3 scripts/fetch_public_osint_sources.py
+python3 scripts/parse_telegram_exports.py
+python3 scripts/fetch_voting_end_epoch_data.py
 python3 scripts/build_onchain_graph_snapshot.py
 python3 scripts/analyze_proposal_67.py
 python3 scripts/build_dashboard_data.py
@@ -35,6 +39,7 @@ python3 scripts/build_dashboard_data.py
 
 The fetch steps use public Gonka node APIs and may need network access. Run them only when intentionally refreshing raw snapshots. All analysis and dashboard builds after that use saved local data from `data/` and `upstream/`; they do not query nodes.
 `build_onchain_graph_snapshot.py` is local-only and derives graph evidence from already saved files.
+Set `GONKA_RPC_URL` in a local `.env` file to use an archive node for fetch scripts. `.env` is ignored; committed snapshots redact the actual node URL.
 
 ## Dashboard
 
@@ -55,3 +60,4 @@ The dashboard distinguishes strict public attribution from signal-only grouping:
 - Strict evidence includes public self-declared validator/GNS identity and direct validator-key matches.
 - Signal clusters may include shared inference host, DNS/IP/RDAP/TLS clues, and are shown as infrastructure signals rather than owner attribution.
 - Ranked interested parties are prioritized forensic leads, not accusations. Scores separate public identity confidence, compensation benefit, governance activity, and coordination/infrastructure signals.
+- Telegram evidence and voting-end epoch anomalies are shown as separate evidence classes. Telegram excerpts require corroboration; epoch anomalies prove timing/weight behavior, not ownership by themselves.

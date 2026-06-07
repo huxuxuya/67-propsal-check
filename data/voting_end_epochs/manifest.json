@@ -1,0 +1,46 @@
+{
+  "epochs": [
+    {
+      "epoch": 285,
+      "files": {
+        "epoch_group_data": "e285/epoch_group_data.json"
+      }
+    },
+    {
+      "epoch": 286,
+      "files": {
+        "epoch_group_data": "e286/epoch_group_data.json"
+      }
+    },
+    {
+      "epoch": 287,
+      "files": {
+        "epoch_group_data": "e287/epoch_group_data.json"
+      }
+    },
+    {
+      "epoch": 288,
+      "files": {
+        "epoch_group_data": "e288/epoch_group_data.json"
+      }
+    },
+    {
+      "epoch": 289,
+      "files": {
+        "epoch_group_data": "e289/epoch_group_data.json"
+      }
+    },
+    {
+      "epoch": 290,
+      "files": {
+        "epoch_group_data": "e290/epoch_group_data.json"
+      }
+    }
+  ],
+  "fallbackUsed": true,
+  "source": {
+    "generatedAt": "2026-06-07T17:24:10.656447+00:00",
+    "node": "GONKA_RPC_URL",
+    "scope": "Proposal #67 voting-end epoch window e285-e290"
+  }
+}

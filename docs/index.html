@@ -109,6 +109,12 @@
       <section class="chart-grid">
         <div class="panel wide">
           <div class="panel-head">
+            <h2>Attack Timeline</h2>
+          </div>
+          <div class="chart" id="attackTimelineChart"></div>
+        </div>
+        <div class="panel wide">
+          <div class="panel-head">
             <h2>Compensation by Recipient</h2>
             <div class="segmented" role="tablist">
               <button class="active" data-comp-view="bar">Bar</button>
@@ -164,6 +170,51 @@
       <section class="table-grid">
         <div class="panel table-panel">
           <div class="panel-head">
+            <h2>Hypotheses</h2>
+            <span id="hypothesisRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Hypothesis</th>
+                  <th>Summary</th>
+                  <th>Next check</th>
+                </tr>
+              </thead>
+              <tbody id="hypothesisTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Voting-End Epoch Anomalies</h2>
+            <span id="anomalyRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Score</th>
+                  <th>Address</th>
+                  <th>Label</th>
+                  <th>e287</th>
+                  <th>Prev</th>
+                  <th>Next</th>
+                  <th>Vote</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="anomalyTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="table-grid">
+        <div class="panel table-panel">
+          <div class="panel-head">
             <h2>Ranked Interested Parties</h2>
             <span id="rankedRows">-</span>
           </div>
@@ -203,6 +254,29 @@
                 </tr>
               </thead>
               <tbody id="evidenceTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="table-grid">
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Telegram Evidence</h2>
+            <span id="telegramRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Chat</th>
+                  <th>Author</th>
+                  <th>Addresses</th>
+                  <th>Excerpt</th>
+                </tr>
+              </thead>
+              <tbody id="telegramTable"></tbody>
             </table>
           </div>
         </div>

@@ -24,6 +24,9 @@ const els = {
   sourceType: document.getElementById("sourceTypeFilter"),
   rankedTable: document.getElementById("rankedTable"),
   evidenceTable: document.getElementById("evidenceTable"),
+  hypothesisTable: document.getElementById("hypothesisTable"),
+  anomalyTable: document.getElementById("anomalyTable"),
+  telegramTable: document.getElementById("telegramTable"),
   labelTable: document.getElementById("labelTable"),
   epochTable: document.getElementById("epochTable"),
   recipientTable: document.getElementById("recipientTable"),
@@ -52,6 +55,7 @@ async function loadData() {
 function initCharts() {
   for (const [key, id] of Object.entries({
     compensation: "compensationChart",
+    attackTimeline: "attackTimelineChart",
     waterfall: "waterfallChart",
     epoch: "epochChart",
     heatmap: "heatmapChart",
@@ -249,6 +253,96 @@ function renderTally() {
       data: Object.entries(tally).map(([name, value]) => ({ name: optionLabels[name], value, itemStyle: { color: optionColors[name] } })),
     }],
   }, true);
+}
+
+function renderAttackTimeline() {
+  const phases = state.data.attackNarrative?.phases || [];
+  state.charts.attackTimeline.setOption({
+    grid: { left: 40, right: 24, top: 28, bottom: 90 },
+    tooltip: {
+      formatter: (p) => {
+        const row = phases[p.dataIndex];
+        return `<strong>${escapeHtml(row.label)}</strong><br>${escapeHtml(row.timeOrHeight)}<br>${escapeHtml(row.summary)}`;
+      },
+    },
+    xAxis: { type: "category", data: phases.map((row) => row.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 25 } },
+    yAxis: { type: "value", show: false, min: 0, max: 2 },
+    series: [{
+      type: "scatter",
+      symbolSize: 22,
+      data: phases.map((row, index) => [index, 1, row.confidence]),
+      itemStyle: { color: (p) => phases[p.dataIndex]?.confidence === "high" ? "#79b66a" : "#d7a84f" },
+      label: { show: true, formatter: (p) => phases[p.dataIndex]?.timeOrHeight || "", position: "top", color: "#eef0f2" },
+    }],
+  }, true);
+}
+
+function renderHypotheses() {
+  const query = els.search.value.trim().toLowerCase();
+  const rows = (state.data.hypotheses || []).filter((row) => {
+    if (!query) return true;
+    return [row.id, row.title, row.status, row.summary, row.nextCheck].join(" ").toLowerCase().includes(query);
+  });
+  document.getElementById("hypothesisRows").textContent = `${rows.length} shown`;
+  els.hypothesisTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td><span class="tag ${row.status === "confirmed" ? "good" : row.status === "partially_supported" ? "warn" : ""}">${escapeHtml(row.status)}</span></td>
+      <td>${escapeHtml(row.title)}<br><span class="mono muted">${escapeHtml(row.id)}</span></td>
+      <td>${escapeHtml(row.summary)}</td>
+      <td>${escapeHtml(row.nextCheck || "")}</td>
+    </tr>
+  `).join("");
+}
+
+function renderAnomalyTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const selectedLabel = els.label.value;
+  const rows = (state.data.epochAnomalies || []).filter((row) => {
+    if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
+    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (!query) return true;
+    return [row.address, row.label, row.voteOption, row.status, row.caveat].join(" ").toLowerCase().includes(query);
+  });
+  document.getElementById("anomalyRows").textContent = `${rows.length} shown`;
+  els.anomalyTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td class="num">${fmt.format(row.anomalyScore)}</td>
+      <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
+      <td>${escapeHtml(row.label)}</td>
+      <td class="num">${fmt.format(row.e287Weight)}</td>
+      <td class="num">${fmt.format(row.prevMaxWeight)}</td>
+      <td class="num">${fmt.format(row.nextMaxWeight)}</td>
+      <td>${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}${row.voteHeight ? `<br><span class="mono muted">${row.voteHeight}</span>` : ""}</td>
+      <td><span class="tag ${row.status === "confirmed_window_anomaly" ? "good" : row.status === "partially_supported" ? "warn" : ""}">${escapeHtml(row.status)}</span></td>
+    </tr>
+  `).join("");
+}
+
+function renderTelegramTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const rows = (state.data.telegramEvidence || []).filter((row) => {
+    if (!query) return true;
+    return [
+      row.chat,
+      row.messageId,
+      row.date,
+      row.author,
+      row.excerpt,
+      ...(row.addresses || []),
+      ...(row.urls || []),
+      ...(row.usernames || []),
+    ].join(" ").toLowerCase().includes(query);
+  });
+  document.getElementById("telegramRows").textContent = `${rows.length} shown`;
+  els.telegramTable.innerHTML = rows.slice(0, 300).map((row) => `
+    <tr>
+      <td>${escapeHtml(row.date || "-")}<br><span class="mono muted">${escapeHtml(row.messageId || "")}</span></td>
+      <td>${escapeHtml(row.chat || "-")}</td>
+      <td>${escapeHtml(row.author || "-")}</td>
+      <td>${(row.addresses || []).map((address) => `<button class="row-button mono" data-address="${address.replace("gonkavaloper", "gonka")}">${escapeHtml(address)}</button>`).join("<br>")}</td>
+      <td>${escapeHtml(row.excerpt || "")}</td>
+    </tr>
+  `).join("");
 }
 
 function matchesGlobalEvidenceFilters(row, query) {
@@ -545,6 +639,7 @@ function renderClusterTables() {
 }
 
 function renderAll() {
+  renderAttackTimeline();
   renderCompensationChart();
   renderWaterfall();
   renderEpochChart();
@@ -553,6 +648,9 @@ function renderAll() {
   renderTimeline();
   renderTally();
   renderActorGraph();
+  renderHypotheses();
+  renderAnomalyTable();
+  renderTelegramTable();
   renderRankedTable();
   renderEvidenceTable();
   renderLabelTable();

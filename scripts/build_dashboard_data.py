@@ -392,6 +392,14 @@ def read_public_osint_sources():
     return load_optional_json(DATA / "osint" / "public_osint_sources.json", {})
 
 
+def read_telegram_evidence():
+    return load_optional_json(DATA / "telegram_evidence.json", {"messages": [], "summary": {}})
+
+
+def read_voting_end_epochs():
+    return load_optional_json(DATA / "voting_end_epochs" / "manifest.json", {"epochs": [], "blocks": []})
+
+
 def source_url_for_file(source_file):
     if source_file.startswith("http"):
         return source_file
@@ -801,7 +809,7 @@ def collect_address_labels(recipients, votes, participants, account_labels, cons
     return labels, identity_types
 
 
-def build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources):
+def build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence=None, epoch_anomalies=None):
     claims = []
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_by_address = {row["voter"]: row for row in votes}
@@ -966,6 +974,35 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
             )
         )
 
+    for message in (telegram_evidence or {}).get("messages") or []:
+        for address in message.get("addresses") or [""]:
+            claims.append(
+                make_claim(
+                    address,
+                    message.get("author") or message.get("chat", ""),
+                    "telegram_export_excerpt",
+                    message.get("excerpt", ""),
+                    message.get("sourceFile", "history"),
+                    message.get("confidence", "medium"),
+                    False,
+                    message.get("caveat", "Telegram excerpt requires corroboration."),
+                )
+            )
+
+    for row in epoch_anomalies or []:
+        claims.append(
+            make_claim(
+                row["address"],
+                row["label"],
+                "voting_end_epoch_anomaly",
+                f"e287={row['e287Weight']} prev={row['prevMaxWeight']} next={row['nextMaxWeight']} vote={row['voteOption']}@{row['voteHeight']}",
+                "data/voting_end_epochs/manifest.json",
+                "medium",
+                False,
+                row["caveat"],
+            )
+        )
+
     deduped = {}
     for claim in claims:
         key = (
@@ -1101,8 +1138,12 @@ def build_ranked_parties(actors, claims, identity_graph):
         if "recipient" in row["roles"] and "voter" in row["roles"]:
             governance_score += 8
         governance_score = min(25, governance_score)
+        telegram_score = min(12, sum(1 for claim in row["claims"] if claim["sourceType"] == "telegram_export_excerpt") * 2)
+        epoch_anomaly_score = min(18, sum(1 for claim in row["claims"] if claim["sourceType"] == "voting_end_epoch_anomaly") * 8)
+        vote_timing_score = 6 if any("vote=" in claim["sourceValue"] and "@None" not in claim["sourceValue"] for claim in row["claims"] if claim["sourceType"] == "voting_end_epoch_anomaly") else 0
+        proposal_role_score = 10 if {"proposer", "message_sender"} & row["roles"] else 0
         coordination_score = min(15, max(0, len(row["addresses"]) - 1) * 5 + len(signal_claims) * 0.15)
-        overall = round(identity_score + benefit_score + governance_score + coordination_score, 3)
+        overall = round(identity_score + benefit_score + governance_score + coordination_score + telegram_score + epoch_anomaly_score + vote_timing_score + proposal_role_score, 3)
         top_claims = sorted(
             row["claims"],
             key=lambda claim: (
@@ -1132,6 +1173,10 @@ def build_ranked_parties(actors, claims, identity_graph):
                     "benefit": round(benefit_score, 3),
                     "governance": round(governance_score, 3),
                     "coordination": round(coordination_score, 3),
+                    "telegramAttribution": round(telegram_score, 3),
+                    "epochAnomaly": round(epoch_anomaly_score, 3),
+                    "voteTiming": round(vote_timing_score, 3),
+                    "proposalRole": round(proposal_role_score, 3),
                 },
                 "overallPriority": overall,
                 "confidence": "high" if proof_claims else ("medium" if high_claims or medium_claims else "low"),
@@ -1144,6 +1189,178 @@ def build_ranked_parties(actors, claims, identity_graph):
     for index, row in enumerate(ranked, start=1):
         row["rank"] = index
     return ranked
+
+
+def load_epoch_group_snapshot(epoch):
+    path = DATA / "voting_end_epochs" / f"e{epoch}" / "epoch_group_data.json"
+    if not path.exists():
+        return {}
+    wrapper = load_json(path)
+    payload = wrapper.get("json") or {}
+    return payload.get("epoch_group_data") or payload
+
+
+def epoch_weights(epoch):
+    group = load_epoch_group_snapshot(epoch)
+    rows = {}
+    for item in group.get("validation_weights") or []:
+        address = item.get("member_address")
+        if not address:
+            continue
+        rows[address] = {
+            "weight": int(item.get("weight") or item.get("voting_power") or 0),
+            "raw": item,
+        }
+    return rows
+
+
+def build_epoch_anomalies(votes, recipients, labels_by_address):
+    epochs = [285, 286, 287, 288, 289, 290]
+    weights = {epoch: epoch_weights(epoch) for epoch in epochs}
+    groups = {epoch: load_epoch_group_snapshot(epoch) for epoch in epochs}
+    vote_by_address = {vote["voter"]: vote for vote in votes}
+    recipient_set = {row["address"] for row in recipients}
+    relevant = set().union(*(set(rows) for rows in weights.values() if rows))
+    relevant |= set(vote_by_address)
+    anomalies = []
+    e287_start = int(groups.get(287, {}).get("effective_block_height") or 0)
+    e288_start = int(groups.get(288, {}).get("effective_block_height") or 0)
+    for address in sorted(relevant):
+        row_weights = {f"e{epoch}": weights.get(epoch, {}).get(address, {}).get("weight", 0) for epoch in epochs}
+        e287_weight = row_weights.get("e287", 0)
+        if not e287_weight:
+            continue
+        prev_max = max(row_weights.get("e285", 0), row_weights.get("e286", 0))
+        next_max = max(row_weights.get("e288", 0), row_weights.get("e289", 0), row_weights.get("e290", 0))
+        entered_e287 = prev_max == 0
+        exited_after_e287 = next_max == 0
+        vote = vote_by_address.get(address)
+        vote_height = vote.get("height") if vote else None
+        voted_during_e287 = bool(vote_height and e287_start and (not e288_start or e287_start <= vote_height < e288_start))
+        weight_delta = e287_weight - prev_max
+        anomaly_score = 0
+        anomaly_score += min(35, e287_weight / 3500)
+        anomaly_score += 25 if entered_e287 else 0
+        anomaly_score += 25 if exited_after_e287 else 0
+        anomaly_score += 20 if voted_during_e287 else 0
+        anomaly_score += 10 if vote and vote.get("primaryOption") == "no_with_veto" else 0
+        anomaly_score += 8 if address in recipient_set else 0
+        if e287_weight >= 20_000 or entered_e287 or exited_after_e287 or voted_during_e287:
+            anomalies.append(
+                {
+                    "address": address,
+                    "label": labels_by_address.get(address, "Unknown public owner"),
+                    "weights": row_weights,
+                    "e287Weight": e287_weight,
+                    "prevMaxWeight": prev_max,
+                    "nextMaxWeight": next_max,
+                    "weightDeltaIntoE287": weight_delta,
+                    "enteredE287": entered_e287,
+                    "exitedAfterE287": exited_after_e287,
+                    "votedDuringE287": voted_during_e287,
+                    "voteHeight": vote_height,
+                    "voteOption": vote.get("primaryOption") if vote else "did_not_vote",
+                    "isRecipient": address in recipient_set,
+                    "anomalyScore": round(anomaly_score, 3),
+                    "status": "confirmed_window_anomaly" if entered_e287 and exited_after_e287 and voted_during_e287 else ("partially_supported" if voted_during_e287 or entered_e287 or exited_after_e287 else "context"),
+                    "caveat": "Epoch weight change is operational evidence; owner attribution still requires public identity proof.",
+                }
+            )
+    anomalies.sort(key=lambda row: (-row["anomalyScore"], -row["e287Weight"], row["address"]))
+    return anomalies
+
+
+def build_attack_narrative(proposal, votes, epochs, epoch_anomalies):
+    voting_start = proposal.get("voting_start_time", "")
+    voting_end = proposal.get("voting_end_time", "")
+    return {
+        "title": "Proposal #67 Kimi restitution attack investigation",
+        "phases": [
+            {
+                "id": "damage",
+                "label": "Visible e265 damage",
+                "timeOrHeight": "e265",
+                "summary": "Initial visible attack/damage component was materially smaller than the final restitution proposal.",
+                "confidence": "high",
+            },
+            {
+                "id": "restitution_construction",
+                "label": "Restitution construction",
+                "timeOrHeight": proposal.get("metadata", ""),
+                "summary": "Upstream restitution repository computed compensation for epochs e265-e276.",
+                "confidence": "high",
+            },
+            {
+                "id": "proposal_submission",
+                "label": "Proposal submission",
+                "timeOrHeight": proposal.get("submit_time", ""),
+                "summary": f"Proposal submitted by {proposal.get('proposer', '')}; message sender {proposal.get('messages', [{}])[0].get('sender', '')}.",
+                "confidence": "high",
+            },
+            {
+                "id": "voting",
+                "label": "Voting window",
+                "timeOrHeight": f"{voting_start} to {voting_end}",
+                "summary": f"{len(votes)} final on-chain voters after last-vote-wins consolidation.",
+                "confidence": "high",
+            },
+            {
+                "id": "voting_end_epoch_anomaly",
+                "label": "Voting-end epoch anomaly",
+                "timeOrHeight": "e287",
+                "summary": f"{len(epoch_anomalies)} e287 weight/timing anomalies detected from saved archive-node snapshots.",
+                "confidence": "medium" if epoch_anomalies else "low",
+            },
+            {
+                "id": "post_vote_outcome",
+                "label": "Proposal outcome",
+                "timeOrHeight": proposal.get("status", ""),
+                "summary": "Final aggregate tally passed; per-voter voting power remains unknown unless exact public source is added.",
+                "confidence": "high",
+            },
+        ],
+    }
+
+
+def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal):
+    telegram_rows = telegram_evidence.get("messages") or []
+    e287_vote_anomalies = [row for row in epoch_anomalies if row["votedDuringE287"]]
+    entered_and_exited = [row for row in epoch_anomalies if row["enteredE287"] and row["exitedAfterE287"]]
+    recipient_voters = [row for row in ranked_parties if "recipient" in row["roles"] and "voter" in row["roles"]]
+    return [
+        {
+            "id": "large_weight_node_entered_voting_end_epoch",
+            "title": "Large-weight node around voting-end epoch",
+            "status": "partially_supported" if e287_vote_anomalies else "needs_more_data",
+            "summary": f"{len(e287_vote_anomalies)} voting addresses had e287 timing; {len(entered_and_exited)} entered and exited strictly in the compared window.",
+            "evidenceRefs": [row["address"] for row in epoch_anomalies[:10]],
+            "nextCheck": "Use archive-node snapshots and tx/block metadata to confirm exact join/exit and ownership.",
+        },
+        {
+            "id": "recipient_voters_conflict",
+            "title": "Recipients also voted",
+            "status": "confirmed" if recipient_voters else "refuted",
+            "summary": f"{len(recipient_voters)} ranked parties include both recipient and voter roles.",
+            "evidenceRefs": [row["id"] for row in recipient_voters[:10]],
+            "nextCheck": "Review vote option and public owner proof for each recipient-voter party.",
+        },
+        {
+            "id": "proposal_sender_interest",
+            "title": "Proposal proposer/message sender interest",
+            "status": "confirmed",
+            "summary": f"Proposer {proposal.get('proposer', '')}; message sender {proposal.get('messages', [{}])[0].get('sender', '')}.",
+            "evidenceRefs": [proposal.get("proposer", ""), proposal.get("messages", [{}])[0].get("sender", "")],
+            "nextCheck": "Trace archive-node transaction graph and public identity labels for both addresses.",
+        },
+        {
+            "id": "telegram_identity_link",
+            "title": "Telegram identity links",
+            "status": "partially_supported" if telegram_rows else "needs_more_data",
+            "summary": f"{len(telegram_rows)} Telegram excerpts contain addresses, URLs, or usernames.",
+            "evidenceRefs": [f"{row['chat']}#{row['messageId']}" for row in telegram_rows[:10]],
+            "nextCheck": "Corroborate Telegram excerpts with public on-chain/GNS/GitHub/validator evidence before treating as owner proof.",
+        },
+    ]
 
 
 def write_attribution_reports(ranked_parties, evidence_claims):
@@ -1165,6 +1382,10 @@ def write_attribution_reports(ranked_parties, evidence_claims):
                 "benefit_score",
                 "governance_score",
                 "coordination_score",
+                "telegram_score",
+                "epoch_anomaly_score",
+                "vote_timing_score",
+                "proposal_role_score",
                 "caveats",
             ],
         )
@@ -1184,6 +1405,10 @@ def write_attribution_reports(ranked_parties, evidence_claims):
                     "benefit_score": scores["benefit"],
                     "governance_score": scores["governance"],
                     "coordination_score": scores["coordination"],
+                    "telegram_score": scores.get("telegramAttribution", 0),
+                    "epoch_anomaly_score": scores.get("epochAnomaly", 0),
+                    "vote_timing_score": scores.get("voteTiming", 0),
+                    "proposal_role_score": scores.get("proposalRole", 0),
                     "caveats": " | ".join(row["caveats"]),
                 }
             )
@@ -1238,7 +1463,7 @@ def write_attribution_reports(ranked_parties, evidence_claims):
                 f"- Addresses: {' '.join(row['addresses'])}",
                 f"- Roles: {', '.join(row['roles'])}",
                 f"- Total compensation: {row['totalCompensationGonka']} GONKA",
-                f"- Overall priority: {row['overallPriority']} (identity {scores['identityConfidence']}, benefit {scores['benefit']}, governance {scores['governance']}, coordination {scores['coordination']})",
+                f"- Overall priority: {row['overallPriority']} (identity {scores['identityConfidence']}, benefit {scores['benefit']}, governance {scores['governance']}, coordination {scores['coordination']}, telegram {scores.get('telegramAttribution', 0)}, epoch {scores.get('epochAnomaly', 0)}, timing {scores.get('voteTiming', 0)}, proposal {scores.get('proposalRole', 0)})",
                 f"- Confidence: {row['confidence']}",
                 f"- Caveats: {' | '.join(row['caveats']) if row['caveats'] else 'none'}",
                 "",
@@ -1262,6 +1487,8 @@ def main():
     all_votes, final_votes = read_votes()
     onchain_graph = read_onchain_graph_snapshot()
     osint_sources = read_public_osint_sources()
+    telegram_evidence = read_telegram_evidence()
+    voting_end_epochs = read_voting_end_epochs()
 
     recipient_set = {row["address"] for row in recipients_raw}
     output_total = sum(outputs.values(), Decimal(0))
@@ -1379,8 +1606,11 @@ def main():
         gns_by_address,
     )
     actors = build_actors(proposal, recipients, votes, identity_graph, onchain_graph, labels_by_address, identity_types_by_address)
-    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources)
+    epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
     ranked_parties = build_ranked_parties(actors, evidence_claims, identity_graph)
+    attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
+    hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
     write_attribution_reports(ranked_parties, evidence_claims)
 
     dashboard = {
@@ -1425,6 +1655,9 @@ def main():
             "evidenceClaimsCount": len(evidence_claims),
             "rankedPartiesCount": len(ranked_parties),
             "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
+            "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
+            "epochAnomaliesCount": len(epoch_anomalies),
+            "votingEndEpochSnapshotCount": len(voting_end_epochs.get("epochs") or []),
             "finalVoteAddressCounts": dict(final_vote_counts),
             "recipientVoteAddressCounts": dict(recipient_vote_counts),
             "grcOffchainVote": {"include": 2, "exclude": 6, "abstain": 1, "votersIdentified": False},
@@ -1438,6 +1671,10 @@ def main():
         "actors": actors,
         "evidenceClaims": evidence_claims,
         "rankedParties": ranked_parties,
+        "telegramEvidence": telegram_evidence.get("messages") or [],
+        "epochAnomalies": epoch_anomalies,
+        "hypotheses": hypotheses,
+        "attackNarrative": attack_narrative,
         "notes": [
             "Per-voter voting power is intentionally unknown because no exact public source is included in the snapshots.",
             "Voting-power charts use the final aggregate on-chain tally only.",
@@ -1446,6 +1683,8 @@ def main():
             "GNS .gnk names are read from the saved on-chain CosmWasm contract state snapshot.",
             "Public-social OSINT is limited to linkable public sources such as Gonka names, GitHub, public websites, GNS records, and public profile URLs.",
             "Ranked parties are prioritized interested-party leads, not legal accusations.",
+            "Telegram evidence contains short excerpts from local exports selected by address/URL/username matches; full exports remain ignored under history/.",
+            "Voting-end epoch anomalies are operational timing signals and not ownership proof by themselves.",
             "Node ownership clues include public validator moniker, website, identity, security contact, details, and participant inference URL when present.",
             "Strict clusters use only high-confidence public attribution evidence; signal clusters may include infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate.",
         ],

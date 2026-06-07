@@ -1,0 +1,8 @@
+{
+  "attempts": 3,
+  "error": "HTTPError",
+  "fetchedAt": "2026-06-07T17:24:29.032940+00:00",
+  "json": null,
+  "status": 404,
+  "url": "fallback_public_node/chain-api/productscience/inference/inference/epoch_group_data/290"
+}
