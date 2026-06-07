@@ -1,9 +1,11 @@
 # Telegram Attribution Audit
 
-Local Telegram exports are used as investigation context only. Strong self/operator statements can label dashboard rows, but remain non-public signals unless corroborated by linkable public evidence.
+Local Telegram exports are used as investigation context only. Explicit high-confidence self/operator statements can label dashboard rows. Medium leads are shown with a question mark and remain non-public signals unless corroborated by linkable public evidence.
 
 - Proposal/voter Telegram evidence rows: 27
-- Strong self/operator rows: 3
+- Self/operator rows: 3
+- High-confidence self/operator rows: 2
+- Medium self/operator leads: 1
 
 ## ancapex | Mine from $1, no losses from node failures
 
@@ -41,7 +43,7 @@ Local Telegram exports are used as investigation context only. Strong self/opera
 - Excerpt: Из-за смены коэффициентов у этого участника например confirmation ration 53.21% но он вылетел из эпохи: https://tracker.gonka.vip/?participant=gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 - Caveat: Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.
 
-## http://136.243.110.227:8000
+## A? · http://136.243.110.227:8000
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 18234.887511 GONKA
@@ -50,7 +52,7 @@ Local Telegram exports are used as investigation context only. Strong self/opera
 - Excerpt: Можно по моей ноде отслеживать награды gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
 - Caveat: Telegram author was inherited from the previous export message; self/team ownership language is a strong lead but needs manual verification.
 
-## http://136.243.110.227:8000
+## A? · http://136.243.110.227:8000
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 18234.887511 GONKA
@@ -59,7 +61,7 @@ Local Telegram exports are used as investigation context only. Strong self/opera
 - Excerpt: gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
 - Caveat: Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.
 
-## http://136.243.110.227:8000
+## A? · http://136.243.110.227:8000
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 18234.887511 GONKA
@@ -68,7 +70,7 @@ Local Telegram exports are used as investigation context only. Strong self/opera
 - Excerpt: gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
 - Caveat: Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.
 
-## http://136.243.110.227:8000
+## A? · http://136.243.110.227:8000
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 18234.887511 GONKA
@@ -77,7 +79,7 @@ Local Telegram exports are used as investigation context only. Strong self/opera
 - Excerpt: gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
 - Caveat: Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.
 
-## http://136.243.110.227:8000
+## A? · http://136.243.110.227:8000
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 18234.887511 GONKA

@@ -401,9 +401,9 @@ Top evidence:
 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=25664
 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=38336
 
-## #22 http://136.243.110.227:8000
+## #22 A? · http://136.243.110.227:8000
 
-- Cluster: label:http://136.243.110.227:8000 (label; shared_public_label_only)
+- Cluster: label:A? · http://136.243.110.227:8000 (label; shared_public_label_only)
 - Addresses: gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
 - Roles: epoch_commit_participant, recipient
 - Compensation: 18234.887511 GONKA across 1 recipients

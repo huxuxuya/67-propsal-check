@@ -429,12 +429,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=992
 - epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=14912
 
-### #26 http://136.243.110.227:8000
+### #26 A? · http://136.243.110.227:8000
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Compensation: 18234.887511 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://136.243.110.227:8000 (label)
+- Cluster: label:A? · http://136.243.110.227:8000 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 1)
 - Triage score: 4.559
 - Next actions: enrich beneficiary identity

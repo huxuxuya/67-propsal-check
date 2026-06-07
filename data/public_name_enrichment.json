@@ -5252,7 +5252,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "18234.887511 GONKA",
-          "subject": "http://136.243.110.227:8000"
+          "subject": "A? \u00b7 http://136.243.110.227:8000"
         },
         {
           "address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
@@ -5341,7 +5341,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://136.243.110.227:8000",
-      "label": "http://136.243.110.227:8000",
+      "label": "A? \u00b7 http://136.243.110.227:8000",
       "nextActions": [
         "corroborate beneficiary owner"
       ],

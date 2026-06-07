@@ -1025,33 +1025,40 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
 def apply_investigation_labels(recipients, votes, evidence_claims):
     label_source_types = {"telegram_operator_statement", "telegram_self_or_team_claim"}
     operator_labels = {}
+    priority = {"high": 0, "medium": 1}
     for claim in evidence_claims:
         if claim.get("sourceType") not in label_source_types:
             continue
-        if claim.get("confidence") != "high":
+        confidence = claim.get("confidence", "")
+        if confidence not in priority:
             continue
         address = claim.get("address") or ""
         subject = claim.get("subject") or ""
         if not address or not subject:
             continue
-        operator_labels[address] = {
+        label = {
             "label": subject,
             "sourceType": claim.get("sourceType", ""),
-            "confidence": claim.get("confidence", ""),
+            "confidence": confidence,
             "sourceUrl": claim.get("sourceUrl", ""),
             "caveat": claim.get("caveat", ""),
         }
+        current = operator_labels.get(address)
+        if not current or priority[confidence] < priority.get(current.get("confidence", ""), 9):
+            operator_labels[address] = label
 
     def apply(row, address_key):
         signal = operator_labels.get(row.get(address_key, ""))
         if not signal:
             return
         public_label_value = row.get("publicLabel") or row.get("label") or "Unknown public owner"
+        signal_label = signal["label"] if signal["confidence"] == "high" else f"{signal['label']}?"
         row["publicLabel"] = public_label_value
         row["operatorSignalLabel"] = signal["label"]
+        row["operatorSignalDisplayLabel"] = signal_label
         row["operatorSignal"] = signal
         if signal["label"] not in public_label_value:
-            row["label"] = f"{signal['label']} · {public_label_value}"
+            row["label"] = f"{signal_label} · {public_label_value}"
 
     for row in recipients:
         apply(row, "address")
@@ -2097,12 +2104,16 @@ def write_telegram_attribution_report(rows):
         for row in rows:
             writer.writerow({**row, "roles": " ".join(row["roles"])})
 
-    strong = [row for row in rows if row["sourceType"] in {"telegram_self_or_team_claim", "telegram_operator_statement"}]
+    self_or_operator = [row for row in rows if row["sourceType"] in {"telegram_self_or_team_claim", "telegram_operator_statement"}]
+    high_confidence = [row for row in self_or_operator if row["confidence"] == "high"]
+    medium_leads = [row for row in self_or_operator if row["confidence"] == "medium"]
     with (reports / "telegram_attribution_audit.md").open("w") as f:
         f.write("# Telegram Attribution Audit\n\n")
-        f.write("Local Telegram exports are used as investigation context only. Strong self/operator statements can label dashboard rows, but remain non-public signals unless corroborated by linkable public evidence.\n\n")
+        f.write("Local Telegram exports are used as investigation context only. Explicit high-confidence self/operator statements can label dashboard rows. Medium leads are shown with a question mark and remain non-public signals unless corroborated by linkable public evidence.\n\n")
         f.write(f"- Proposal/voter Telegram evidence rows: {len(rows)}\n")
-        f.write(f"- Strong self/operator rows: {len(strong)}\n\n")
+        f.write(f"- Self/operator rows: {len(self_or_operator)}\n")
+        f.write(f"- High-confidence self/operator rows: {len(high_confidence)}\n")
+        f.write(f"- Medium self/operator leads: {len(medium_leads)}\n\n")
         for row in rows:
             f.write(f"## {row['label']}\n\n")
             f.write(f"- Address: `{row['address']}`\n")

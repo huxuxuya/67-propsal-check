@@ -400,7 +400,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23
 - participant_inference_url (medium, signal): http://178.105.170.135:8000
 
-### http://136.243.110.227:8000
+### A? · http://136.243.110.227:8000
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Roles: recipient; compensation: 18234.887511 GONKA; voting power: 0; vote: did_not_vote
