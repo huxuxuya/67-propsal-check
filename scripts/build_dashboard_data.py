@@ -1437,6 +1437,9 @@ def build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_cl
             {
                 "address": address,
                 "label": recipient.get("label") or vote.get("label") or "Unknown public owner",
+                "publicLabel": recipient.get("publicLabel") or vote.get("publicLabel") or "",
+                "operatorSignalLabel": recipient.get("operatorSignalLabel") or vote.get("operatorSignalLabel") or "",
+                "operatorSignalDisplayLabel": recipient.get("operatorSignalDisplayLabel") or vote.get("operatorSignalDisplayLabel") or "",
                 "isRecipient": is_recipient,
                 "isVoter": is_voter,
                 "recipientVoterOverlap": overlap,

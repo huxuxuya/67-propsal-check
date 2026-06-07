@@ -186,6 +186,15 @@ select {
   height: 520px;
 }
 
+.voter-power-chart {
+  height: 620px;
+}
+
+.compact-table {
+  max-height: 360px;
+  margin-top: 12px;
+}
+
 .segmented {
   display: inline-flex;
   border: 1px solid var(--line);

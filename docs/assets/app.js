@@ -23,6 +23,7 @@ const els = {
   confidence: document.getElementById("confidenceFilter"),
   sourceType: document.getElementById("sourceTypeFilter"),
   benefitPowerTable: document.getElementById("benefitPowerTable"),
+  voterPowerTable: document.getElementById("voterPowerTable"),
   publicNameTable: document.getElementById("publicNameTable"),
   rankedTable: document.getElementById("rankedTable"),
   interestClusterTable: document.getElementById("interestClusterTable"),
@@ -238,13 +239,38 @@ function renderMatrix() {
 }
 
 function renderTimeline() {
-  const votes = state.data.votes;
+  const query = els.search.value.trim().toLowerCase();
+  const selectedLabel = els.label.value;
+  const votes = state.data.votes
+    .filter((vote) => {
+      if (selectedLabel !== "all" && vote.label !== selectedLabel) return false;
+      if (els.vote.value !== "all" && vote.primaryOption !== els.vote.value) return false;
+      if (!query) return true;
+      return textMatch({ ...vote, address: vote.voter }, query);
+    })
+    .sort((a, b) => a.height - b.height || a.label.localeCompare(b.label));
   state.charts.timeline.setOption({
     grid: { left: 150, right: 42, top: 20, bottom: 42 },
-    tooltip: { formatter: (p) => `${votes[p.dataIndex].label}<br>${optionLabels[votes[p.dataIndex].primaryOption]} at height ${votes[p.dataIndex].height}` },
+    tooltip: {
+      formatter: (p) => {
+        const vote = votes[p.dataIndex];
+        return `<strong>${escapeHtml(vote.label)}</strong><br>${escapeHtml(vote.voter)}<br>${escapeHtml(optionLabels[vote.primaryOption] || vote.primaryOption)} at height ${vote.height}<br>governance power ${vote.votingPower == null ? "unknown" : fmt.format(vote.votingPower)}`;
+      },
+    },
     xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Block height", nameTextStyle: { color: "#a7afba" } },
     yAxis: { type: "category", data: votes.map((vote) => vote.label), axisLabel: { color: "#a7afba", width: 140, overflow: "truncate" } },
-    series: [{ type: "scatter", symbolSize: 13, data: votes.map((vote, i) => [vote.height, i]), itemStyle: { color: (p) => optionColors[votes[p.dataIndex].primaryOption] } }],
+    series: [{
+      type: "scatter",
+      symbolSize: (value, params) => votes[params.dataIndex]?.operatorSignalLabel ? 18 : 13,
+      data: votes.map((vote, i) => [vote.height, i]),
+      itemStyle: { color: (p) => optionColors[votes[p.dataIndex].primaryOption] },
+      label: {
+        show: votes.length <= 8,
+        formatter: (p) => String(votes[p.dataIndex]?.label || "").slice(0, 34),
+        position: "right",
+        color: "#eef0f2",
+      },
+    }],
   }, true);
 }
 
@@ -261,12 +287,21 @@ function renderTally() {
   }, true);
 }
 
+function voterDisplayLabel(row) {
+  const parts = [];
+  if (row.operatorSignalLabel) parts.push(row.operatorSignalDisplayLabel || row.operatorSignalLabel);
+  const publicLabel = row.publicLabel || "";
+  if (publicLabel && publicLabel !== row.address && !parts.includes(publicLabel)) parts.push(publicLabel);
+  if (!parts.length) return row.address;
+  return parts.join(" / ");
+}
+
 function renderVoterPowerChart() {
   const rows = (state.data.benefitPowerMatrix || [])
     .filter((row) => row.isVoter)
     .sort((a, b) => (b.votingPower || 0) - (a.votingPower || 0) || a.label.localeCompare(b.label));
   state.charts.voterPower.setOption({
-    grid: { left: 220, right: 34, top: 24, bottom: 42 },
+    grid: { left: 260, right: 44, top: 24, bottom: 42 },
     tooltip: {
       formatter: (p) => {
         const row = rows[p.dataIndex];
@@ -278,7 +313,7 @@ function renderVoterPowerChart() {
       },
     },
     xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
-    yAxis: { type: "category", data: rows.map((row) => row.label), axisLabel: { color: "#a7afba", width: 200, overflow: "truncate" } },
+    yAxis: { type: "category", data: rows.map(voterDisplayLabel), axisLabel: { color: "#a7afba", width: 240, overflow: "break", lineHeight: 15 } },
     series: [{
       type: "bar",
       data: rows.map((row) => row.votingPower || 0),
@@ -286,6 +321,15 @@ function renderVoterPowerChart() {
       label: { show: true, position: "right", color: "#eef0f2", formatter: (p) => fmt.format(p.value) },
     }],
   }, true);
+  els.voterPowerTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td>${escapeHtml(voterDisplayLabel(row))}<br><span class="muted">${escapeHtml(row.label)}</span></td>
+      <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
+      <td><span class="tag" style="border-color:${optionColors[row.voteOption] || "#6d7682"}">${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}</span></td>
+      <td class="num">${fmt.format(row.votingPower || 0)}</td>
+      <td><span class="tag ${row.evidenceBoundary === "public_owner_proof" ? "good" : ""}">${escapeHtml(row.evidenceBoundary || "")}</span><br><span class="muted">proof ${row.proofCount}; high ${row.highConfidenceClaimCount}</span></td>
+    </tr>
+  `).join("");
 }
 
 function renderAttackTimeline() {
