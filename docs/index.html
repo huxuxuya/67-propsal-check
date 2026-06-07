@@ -167,7 +167,7 @@
         </div>
         <div class="panel wide">
           <div class="panel-head">
-            <h2>e287 Entry/Exit Clusters</h2>
+            <h2>e287 Inference Timing Clusters</h2>
           </div>
           <div class="chart" id="entryExitChart"></div>
         </div>
@@ -195,7 +195,7 @@
         </div>
         <div class="panel table-panel">
           <div class="panel-head">
-            <h2>Voting-End Epoch Anomalies</h2>
+            <h2>Voting-End Inference Timing</h2>
             <span id="anomalyRows">-</span>
           </div>
           <div class="table-wrap">
@@ -205,7 +205,7 @@
                   <th>Score</th>
                   <th>Address</th>
                   <th>Label</th>
-                  <th>e287</th>
+                  <th>e287 inference</th>
                   <th>Prev</th>
                   <th>Next</th>
                   <th>Vote</th>
@@ -218,7 +218,7 @@
         </div>
         <div class="panel table-panel">
           <div class="panel-head">
-            <h2>Entry/Exit Clusters</h2>
+            <h2>Inference Timing Clusters</h2>
             <span id="entryExitRows">-</span>
           </div>
           <div class="table-wrap">
@@ -228,8 +228,8 @@
                   <th>Rank</th>
                   <th>Cluster</th>
                   <th>Addresses</th>
-                  <th>e287 weight</th>
-                  <th>Enter/Vote/Exit</th>
+                  <th>e287 inference weight</th>
+                  <th>Inference/Vote Tx</th>
                   <th>Votes</th>
                   <th>Total</th>
                   <th>Evidence boundary</th>
@@ -446,8 +446,9 @@
       </section>
 
       <section class="notes">
-        <h2>Evidence Boundaries</h2>
-        <p>GRC off-chain voters are not identified in the upstream repository. Public labels come from validator metadata, validator-key matches, GNS .gnk names, and participant inference URLs; unknown owners remain marked as unknown. Strict clusters use public self-declared identity evidence. Signal clusters may use infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate and are not private attribution. Per-voter voting power is not estimated.</p>
+        <h2>Methodology Boundaries</h2>
+        <div id="methodologyNotes"></div>
+        <p>GRC off-chain voters are not identified in the upstream repository. Public labels come from validator metadata, validator-key matches, GNS .gnk names, and participant inference URLs; unknown owners remain marked as unknown. Strict clusters use public self-declared identity evidence. Signal clusters may use infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate and are not private attribution. Per-voter governance voting power is not estimated from inference epochs.</p>
       </section>
     </main>
 

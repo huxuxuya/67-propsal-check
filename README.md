@@ -61,3 +61,4 @@ The dashboard distinguishes strict public attribution from signal-only grouping:
 - Signal clusters may include shared inference host, DNS/IP/RDAP/TLS clues, and are shown as infrastructure signals rather than owner attribution.
 - Ranked interested parties are prioritized forensic leads, not accusations. Scores separate public identity confidence, compensation benefit, governance activity, and coordination/infrastructure signals.
 - Telegram evidence and voting-end epoch anomalies are shown as separate evidence classes. Telegram excerpts require corroboration; epoch anomalies prove timing/weight behavior, not ownership by themselves.
+- Governance voting power is not inferred from inference epoch weights. Proposal votes are on-chain governance transactions; e287 validation weights are inference/epoch participation signals only. Per-voter governance power must come from exact historical gov/staking data or remain `unknown`.

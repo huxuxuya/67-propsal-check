@@ -1139,11 +1139,11 @@ def build_ranked_parties(actors, claims, identity_graph):
             governance_score += 8
         governance_score = min(25, governance_score)
         telegram_score = min(12, sum(1 for claim in row["claims"] if claim["sourceType"] == "telegram_export_excerpt") * 2)
-        epoch_anomaly_score = min(18, sum(1 for claim in row["claims"] if claim["sourceType"] == "voting_end_epoch_anomaly") * 8)
-        vote_timing_score = 6 if any("vote=" in claim["sourceValue"] and "@None" not in claim["sourceValue"] for claim in row["claims"] if claim["sourceType"] == "voting_end_epoch_anomaly") else 0
+        operational_timing_score = min(18, sum(1 for claim in row["claims"] if claim["sourceType"] == "voting_end_epoch_anomaly") * 8)
+        inference_vote_overlap_score = 6 if any("vote=" in claim["sourceValue"] and "@None" not in claim["sourceValue"] for claim in row["claims"] if claim["sourceType"] == "voting_end_epoch_anomaly") else 0
         proposal_role_score = 10 if {"proposer", "message_sender"} & row["roles"] else 0
         coordination_score = min(15, max(0, len(row["addresses"]) - 1) * 5 + len(signal_claims) * 0.15)
-        overall = round(identity_score + benefit_score + governance_score + coordination_score + telegram_score + epoch_anomaly_score + vote_timing_score + proposal_role_score, 3)
+        overall = round(identity_score + benefit_score + governance_score + coordination_score + telegram_score + proposal_role_score, 3)
         top_claims = sorted(
             row["claims"],
             key=lambda claim: (
@@ -1159,6 +1159,8 @@ def build_ranked_parties(actors, claims, identity_graph):
             caveats.append("Contains infrastructure/provider signals; do not treat as ownership proof.")
         if "recipient" in row["roles"] and "voter" in row["roles"]:
             caveats.append("Address both received compensation and voted.")
+        if operational_timing_score or inference_vote_overlap_score:
+            caveats.append("e287 inference timing is an operational signal, not governance voting power.")
         ranked.append(
             {
                 "id": row["id"],
@@ -1174,11 +1176,14 @@ def build_ranked_parties(actors, claims, identity_graph):
                     "governance": round(governance_score, 3),
                     "coordination": round(coordination_score, 3),
                     "telegramAttribution": round(telegram_score, 3),
-                    "epochAnomaly": round(epoch_anomaly_score, 3),
-                    "voteTiming": round(vote_timing_score, 3),
+                    "epochAnomaly": round(operational_timing_score, 3),
+                    "operationalTiming": round(operational_timing_score, 3),
+                    "voteTiming": round(inference_vote_overlap_score, 3),
+                    "inferenceVoteOverlap": round(inference_vote_overlap_score, 3),
                     "proposalRole": round(proposal_role_score, 3),
                 },
                 "overallPriority": overall,
+                "operationalPriority": round(overall + operational_timing_score + inference_vote_overlap_score, 3),
                 "confidence": "high" if proof_claims else ("medium" if high_claims or medium_claims else "low"),
                 "topEvidence": top_claims,
                 "caveats": caveats,
@@ -1278,8 +1283,8 @@ def build_epoch_anomalies(votes, recipients, labels_by_address):
                     "e288StartTime": e288_start_time,
                     "isRecipient": address in recipient_set,
                     "anomalyScore": round(anomaly_score, 3),
-                    "status": "confirmed_window_anomaly" if entered_e287 and exited_after_e287 and voted_during_e287 else ("partially_supported" if voted_during_e287 or entered_e287 or exited_after_e287 else "context"),
-                    "caveat": "Epoch weight change is operational evidence; owner attribution still requires public identity proof.",
+                    "status": "operational_enter_vote_exit_signal" if entered_e287 and exited_after_e287 and voted_during_e287 else ("partial_operational_timing_signal" if voted_during_e287 or entered_e287 or exited_after_e287 else "context"),
+                    "caveat": "Inference epoch weight/timing is operational evidence only. It is not governance voting power and does not prove whether a vote was counted.",
                 }
             )
     anomalies.sort(key=lambda row: (-row["anomalyScore"], -row["e287Weight"], row["address"]))
@@ -1341,10 +1346,11 @@ def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity
         group["recipientCount"] += int(row["isRecipient"])
         group["totalCompensationGonka"] += payout
         group["voteCounts"][row["voteOption"]] += 1
-        if row["status"] != "confirmed_window_anomaly":
-            group["caveats"].add("Some addresses are timing/context leads, not fully confirmed enter-vote-exit cases.")
+        if row["status"] != "operational_enter_vote_exit_signal":
+            group["caveats"].add("Some addresses are timing/context leads, not full enter-vote-exit operational cases.")
         if kind != "strict_identity":
             group["caveats"].add("Cluster is not strict public owner proof.")
+        group["caveats"].add("Inference epoch weight is not governance voting power; vote inclusion must be checked through governance tally/staking data.")
         address_claims = sorted(
             claims_by_address.get(address, []),
             key=lambda claim: (
@@ -1413,7 +1419,7 @@ def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity
                 "totalCompensationGonka": round(group["totalCompensationGonka"], 6),
                 "voteCounts": dict(group["voteCounts"]),
                 "topEvidence": group["topEvidence"][:8],
-                "caveats": sorted(group["caveats"]) or ["Operational timing cluster; owner attribution still requires public proof."],
+                "caveats": sorted(group["caveats"]) or ["Operational timing cluster; not governance voting power and owner attribution still requires public proof."],
                 "priorityScore": round(
                     min(45, group["totalE287Weight"] / 3000)
                     + group["enteredCount"] * 8
@@ -1468,16 +1474,16 @@ def build_attack_narrative(proposal, votes, epochs, epoch_anomalies):
             },
             {
                 "id": "voting_end_epoch_anomaly",
-                "label": "Voting-end epoch anomaly",
+                "label": "Voting-end inference timing",
                 "timeOrHeight": f"e287 effective 4428972 {e287_time}".strip(),
-                "summary": f"{len(epoch_anomalies)} e287 weight/timing anomalies detected from saved archive-node snapshots.",
+                "summary": f"{len(epoch_anomalies)} e287 inference weight/timing leads detected. These are not governance voting power and do not prove vote inclusion.",
                 "confidence": "medium" if epoch_anomalies else "low",
             },
             {
                 "id": "post_vote_outcome",
                 "label": "Proposal outcome",
                 "timeOrHeight": proposal.get("status", ""),
-                "summary": "Final aggregate tally passed; per-voter voting power remains unknown unless exact public source is added.",
+                "summary": "Final aggregate tally passed. Per-voter governance voting power remains unknown unless exact historical gov/staking data is added.",
                 "confidence": "high",
             },
         ],
@@ -1494,9 +1500,9 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
             "id": "large_weight_node_entered_voting_end_epoch",
             "title": "Large-weight node around voting-end epoch",
             "status": "partially_supported" if e287_vote_anomalies else "needs_more_data",
-            "summary": f"{len(e287_vote_anomalies)} voting addresses had e287 timing; {len(entered_and_exited)} entered and exited strictly in the compared window.",
+            "summary": f"{len(e287_vote_anomalies)} voting addresses overlap with e287 inference timing; {len(entered_and_exited)} entered and exited strictly in the compared inference window. This does not establish governance vote weight.",
             "evidenceRefs": [row["address"] for row in epoch_anomalies[:10]],
-            "nextCheck": "Use archive-node snapshots and tx/block metadata to confirm exact join/exit and ownership.",
+            "nextCheck": "Use archive-node gov/staking snapshots to compute exact per-voter governance power, then compare separately with inference join/exit signals and ownership evidence.",
         },
         {
             "id": "recipient_voters_conflict",
@@ -1545,8 +1551,8 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                 "governance_score",
                 "coordination_score",
                 "telegram_score",
-                "epoch_anomaly_score",
-                "vote_timing_score",
+                "operational_timing_score",
+                "inference_vote_overlap_score",
                 "proposal_role_score",
                 "caveats",
             ],
@@ -1568,8 +1574,8 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                     "governance_score": scores["governance"],
                     "coordination_score": scores["coordination"],
                     "telegram_score": scores.get("telegramAttribution", 0),
-                    "epoch_anomaly_score": scores.get("epochAnomaly", 0),
-                    "vote_timing_score": scores.get("voteTiming", 0),
+                    "operational_timing_score": scores.get("operationalTiming", scores.get("epochAnomaly", 0)),
+                    "inference_vote_overlap_score": scores.get("inferenceVoteOverlap", scores.get("voteTiming", 0)),
                     "proposal_role_score": scores.get("proposalRole", 0),
                     "caveats": " | ".join(row["caveats"]),
                 }
@@ -1655,9 +1661,9 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                 )
 
         lines = [
-            "# Proposal 67 e287 Entry/Exit Clusters",
+            "# Proposal 67 e287 Inference Timing Clusters",
             "",
-            "This report groups voting-end epoch anomalies by strict public identity cluster, signal cluster, or public label. A cluster is an investigation lead, not owner attribution unless the evidence is explicitly marked as public proof.",
+            "This report groups voting-end inference epoch timing signals by strict public identity cluster, signal cluster, or public label. Inference epoch weight is not governance voting power; a cluster is an investigation lead, not owner attribution unless the evidence is explicitly marked as public proof.",
             "",
         ]
         for row in epoch_entry_exit_clusters[:25]:
@@ -1667,9 +1673,9 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                     "",
                     f"- Cluster: {row['id']} ({row['kind']})",
                     f"- Addresses: {' '.join(row['addresses'])}",
-                    f"- e287 weight: total {row['totalE287Weight']}, max {row['maxE287Weight']}",
-                    f"- Enter/vote/exit counts: {row['enteredCount']} / {row['votedDuringCount']} / {row['exitedCount']}",
-                    f"- Confirmed full enter-vote-exit addresses: {row['confirmedEnterVoteExitCount']}",
+                    f"- e287 inference weight: total {row['totalE287Weight']}, max {row['maxE287Weight']}",
+                    f"- Inference enter / governance vote tx during e287 / inference exit counts: {row['enteredCount']} / {row['votedDuringCount']} / {row['exitedCount']}",
+                    f"- Full operational enter-vote-exit signals: {row['confirmedEnterVoteExitCount']}",
                     f"- Recipients: {row['recipientCount']}; compensation: {row['totalCompensationGonka']} GONKA",
                     f"- Votes: {', '.join(f'{option}={count}' for option, count in row['voteCounts'].items()) or 'none'}",
                     f"- Caveats: {' | '.join(row['caveats'])}",
@@ -1701,7 +1707,7 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                 f"- Addresses: {' '.join(row['addresses'])}",
                 f"- Roles: {', '.join(row['roles'])}",
                 f"- Total compensation: {row['totalCompensationGonka']} GONKA",
-                f"- Overall priority: {row['overallPriority']} (identity {scores['identityConfidence']}, benefit {scores['benefit']}, governance {scores['governance']}, coordination {scores['coordination']}, telegram {scores.get('telegramAttribution', 0)}, epoch {scores.get('epochAnomaly', 0)}, timing {scores.get('voteTiming', 0)}, proposal {scores.get('proposalRole', 0)})",
+                f"- Overall priority: {row['overallPriority']} (identity {scores['identityConfidence']}, benefit {scores['benefit']}, governance {scores['governance']}, coordination {scores['coordination']}, telegram {scores.get('telegramAttribution', 0)}, proposal {scores.get('proposalRole', 0)}); operational priority {row.get('operationalPriority', row['overallPriority'])} (inference timing {scores.get('operationalTiming', scores.get('epochAnomaly', 0))}, inference/vote overlap {scores.get('inferenceVoteOverlap', scores.get('voteTiming', 0))})",
                 f"- Confidence: {row['confidence']}",
                 f"- Caveats: {' | '.join(row['caveats']) if row['caveats'] else 'none'}",
                 "",
@@ -1914,11 +1920,20 @@ def main():
         "telegramEvidence": telegram_evidence.get("messages") or [],
         "epochAnomalies": epoch_anomalies,
         "epochEntryExitClusters": epoch_entry_exit_clusters,
+        "methodology": {
+            "governanceVoteRule": "A vote is evidenced by an on-chain governance vote transaction for proposal #67. A prior vote remains part of the saved vote set unless superseded by a later vote from the same voter under last-vote-wins consolidation.",
+            "governanceVotingPowerRule": "Per-voter governance voting power is not inferred from inference epochs. It must come from exact historical governance/staking data at the chain's tally/snapshot point. Until that data is added, per-voter votingPower remains unknown.",
+            "inferenceEpochRule": "e287 validation_weights are inference/epoch participation weights. They are operational timing signals only and are not used as governance voting power.",
+            "recipientConflictRule": "Recipient-voter conflict is based on address overlap between compensation outputs and final on-chain governance voters; it does not imply the compensation amount affected vote weight.",
+            "identityRule": "Public attribution requires public validator/GNS/metadata/source evidence. Infrastructure, Telegram, and inference timing remain signals unless independently corroborated.",
+        },
         "hypotheses": hypotheses,
         "attackNarrative": attack_narrative,
         "notes": [
             "Per-voter voting power is intentionally unknown because no exact public source is included in the snapshots.",
             "Voting-power charts use the final aggregate on-chain tally only.",
+            "Inference epoch weights are not governance voting power and are not used for tally or per-voter power claims.",
+            "A governance vote transaction can be included even if the same address is not active in a later inference epoch; vote inclusion must be checked through governance data, not inference participation.",
             "GRC off-chain voters are not identified in the upstream repository.",
             "Identity labels come from public validator metadata, validator-key matches, GNS .gnk names, or participant inference URLs.",
             "GNS .gnk names are read from the saved on-chain CosmWasm contract state snapshot.",

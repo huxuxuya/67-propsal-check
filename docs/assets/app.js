@@ -315,7 +315,7 @@ function renderAnomalyTable() {
       <td class="num">${fmt.format(row.prevMaxWeight)}</td>
       <td class="num">${fmt.format(row.nextMaxWeight)}</td>
       <td>${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}${row.voteHeight ? `<br><span class="mono muted">${row.voteHeight}</span>` : ""}${row.voteBlockTime ? `<br><span class="muted">${escapeHtml(row.voteBlockTime)}</span>` : ""}</td>
-      <td><span class="tag ${row.status === "confirmed_window_anomaly" ? "good" : row.status === "partially_supported" ? "warn" : ""}">${escapeHtml(row.status)}</span></td>
+      <td><span class="tag ${row.status === "operational_enter_vote_exit_signal" ? "warn" : row.status === "partial_operational_timing_signal" ? "warn" : ""}">${escapeHtml(row.status)}</span><br><span class="muted">${escapeHtml(row.caveat || "")}</span></td>
     </tr>
   `).join("");
 }
@@ -345,7 +345,7 @@ function renderEntryExitChart() {
     tooltip: {
       formatter: (params) => {
         const row = rows[params.dataIndex];
-        return `${escapeHtml(row.label)}<br>${escapeHtml(row.kind)}<br>e287 weight ${fmt.format(row.totalE287Weight)}<br>${row.confirmedEnterVoteExitCount} confirmed enter/vote/exit`;
+        return `${escapeHtml(row.label)}<br>${escapeHtml(row.kind)}<br>e287 inference weight ${fmt.format(row.totalE287Weight)}<br>${row.confirmedEnterVoteExitCount} operational enter/vote/exit signals<br>Not governance voting power`;
       },
     },
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
@@ -378,8 +378,8 @@ function renderEntryExitTable() {
         <td class="num">${row.rank}<br><span class="muted">${fmt.format(row.priorityScore)}</span></td>
         <td>${escapeHtml(row.label)}<br><span class="tag">${escapeHtml(row.kind)}</span><br><span class="mono muted">${escapeHtml(row.id)}</span></td>
         <td>${addressRows}</td>
-        <td class="num">${fmt.format(row.totalE287Weight)}<br><span class="muted">max ${fmt.format(row.maxE287Weight)}</span></td>
-        <td>${row.enteredCount}/${row.votedDuringCount}/${row.exitedCount}<br><span class="muted">${row.confirmedEnterVoteExitCount} confirmed full path</span></td>
+        <td class="num">${fmt.format(row.totalE287Weight)}<br><span class="muted">max ${fmt.format(row.maxE287Weight)}; not gov power</span></td>
+        <td>${row.enteredCount}/${row.votedDuringCount}/${row.exitedCount}<br><span class="muted">${row.confirmedEnterVoteExitCount} operational full path</span></td>
         <td>${voteText}</td>
         <td class="num">${gonka(row.totalCompensationGonka)}<br><span class="muted">${row.recipientCount} recipients</span></td>
         <td>${topEvidence || "<span class=\"muted\">no public owner proof</span>"}<br><span class="muted">${escapeHtml((row.caveats || []).join(" "))}</span></td>
@@ -541,6 +541,22 @@ function renderEpochTable() {
       <td class="num">${gonka(row.topRecipientGonka)}</td>
     </tr>
   `).join("");
+}
+
+function renderMethodology() {
+  const method = state.data.methodology || {};
+  const rows = [
+    ["Governance vote", method.governanceVoteRule],
+    ["Governance voting power", method.governanceVotingPowerRule],
+    ["Inference epoch weight", method.inferenceEpochRule],
+    ["Recipient-voter conflict", method.recipientConflictRule],
+    ["Identity evidence", method.identityRule],
+  ].filter((row) => row[1]);
+  document.getElementById("methodologyNotes").innerHTML = `
+    <dl class="kv methodology-kv">
+      ${rows.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}
+    </dl>
+  `;
 }
 
 function buildLabelRows(data) {
@@ -727,6 +743,7 @@ function renderAll() {
   renderEvidenceTable();
   renderLabelTable();
   renderEpochTable();
+  renderMethodology();
   renderTables();
   renderClusterTables();
   document.querySelectorAll("[data-address]").forEach((button) => {
@@ -784,12 +801,12 @@ function openDrawer(address) {
       </dl>` : "<p>No final on-chain vote in the saved proposal vote transactions.</p>"}
     </div>
     <div class="drawer-section">
-      <h3>e287 Entry/Exit Cluster</h3>
+      <h3>e287 Inference Timing Cluster</h3>
       ${entryExitClusters.length ? `<dl class="kv">${entryExitClusters.map((cluster) => {
         const item = (cluster.addressRows || []).find((row) => row.address === address) || {};
         const neighbors = (cluster.addresses || []).filter((itemAddress) => itemAddress !== address).slice(0, 8);
-        return `<dt>#${cluster.rank} ${escapeHtml(cluster.kind)}</dt><dd>${escapeHtml(cluster.label)}<br>e287 weight ${fmt.format(item.e287Weight || 0)}, prev ${fmt.format(item.prevMaxWeight || 0)}, next ${fmt.format(item.nextMaxWeight || 0)}<br>enter/vote/exit: ${item.enteredE287 ? "yes" : "no"} / ${item.votedDuringE287 ? "yes" : "no"} / ${item.exitedAfterE287 ? "yes" : "no"}<br>vote ${escapeHtml(optionLabels[item.voteOption] || item.voteOption || "none")} ${item.voteHeight ? `at ${item.voteHeight}` : ""}<br><span class="muted">Neighbors: ${neighbors.length ? neighbors.map(escapeHtml).join(", ") : "none"}</span><br><span class="muted">${escapeHtml((cluster.caveats || []).join(" "))}</span></dd>`;
-      }).join("")}</dl>` : "<p>No e287 entry/exit anomaly cluster for this address.</p>"}
+        return `<dt>#${cluster.rank} ${escapeHtml(cluster.kind)}</dt><dd>${escapeHtml(cluster.label)}<br>e287 inference weight ${fmt.format(item.e287Weight || 0)}, prev ${fmt.format(item.prevMaxWeight || 0)}, next ${fmt.format(item.nextMaxWeight || 0)}<br>inference enter / governance vote tx in e287 / inference exit: ${item.enteredE287 ? "yes" : "no"} / ${item.votedDuringE287 ? "yes" : "no"} / ${item.exitedAfterE287 ? "yes" : "no"}<br>vote tx ${escapeHtml(optionLabels[item.voteOption] || item.voteOption || "none")} ${item.voteHeight ? `at ${item.voteHeight}` : ""}<br><span class="muted">Inference weight is not governance voting power. Neighbors: ${neighbors.length ? neighbors.map(escapeHtml).join(", ") : "none"}</span><br><span class="muted">${escapeHtml((cluster.caveats || []).join(" "))}</span></dd>`;
+      }).join("")}</dl>` : "<p>No e287 inference timing cluster for this address.</p>"}
     </div>
     <div class="drawer-section">
       <h3>GNS Names</h3>
