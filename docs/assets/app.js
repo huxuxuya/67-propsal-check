@@ -23,6 +23,7 @@ const els = {
   confidence: document.getElementById("confidenceFilter"),
   sourceType: document.getElementById("sourceTypeFilter"),
   rankedTable: document.getElementById("rankedTable"),
+  interestClusterTable: document.getElementById("interestClusterTable"),
   evidenceTable: document.getElementById("evidenceTable"),
   hypothesisTable: document.getElementById("hypothesisTable"),
   anomalyTable: document.getElementById("anomalyTable"),
@@ -486,6 +487,51 @@ function renderEvidenceTable() {
   `).join("");
 }
 
+function interestClusterMatches(row, query) {
+  if (!query) return true;
+  return [
+    row.id,
+    row.kind,
+    row.label,
+    row.evidenceBoundary,
+    ...(row.addresses || []),
+    ...(row.roles || []),
+    ...(row.caveats || []),
+  ].join(" ").toLowerCase().includes(query);
+}
+
+function renderInterestClusterTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const selectedLabel = els.label.value;
+  const rows = (state.data.interestClusters || []).filter((row) => {
+    if (!interestClusterMatches(row, query)) return false;
+    if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
+    if (els.confidence.value !== "all") {
+      const hasConfidence = (row.topEvidence || []).some((item) => item.confidence === els.confidence.value);
+      if (!hasConfidence) return false;
+    }
+    if (els.sourceType.value !== "all") {
+      const hasSourceType = (row.topEvidence || []).some((item) => item.sourceType === els.sourceType.value);
+      if (!hasSourceType) return false;
+    }
+    if (els.vote.value !== "all" && !(row.votePowerByOption || {})[els.vote.value] && !(row.voteAddressCounts || {})[els.vote.value]) return false;
+    return true;
+  });
+  document.getElementById("interestClusterRows").textContent = `${rows.length} shown`;
+  els.interestClusterTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td class="num">${row.rank}</td>
+      <td>${escapeHtml(row.label)}<br><span class="muted">${escapeHtml(row.id)} · ${escapeHtml(row.kind)}</span></td>
+      <td>${(row.addresses || []).map((address) => `<button class="row-button mono" data-address="${address}">${escapeHtml(address)}</button>`).join("<br>")}</td>
+      <td class="num">${gonka(row.totalCompensationGonka)}<br><span class="muted">${row.recipientCount} recipients</span></td>
+      <td class="num">${fmt.format(row.totalVotingPower || 0)}<br><span class="muted">${row.voterCount} voters</span></td>
+      <td>${Object.entries(row.votePowerByOption || {}).map(([option, power]) => `<span class="tag">${escapeHtml(optionLabels[option] || option)} ${fmt.format(power)}</span>`).join(" ") || "-"}</td>
+      <td><span class="tag">${escapeHtml(row.evidenceBoundary)}</span><br><span class="muted">proof ${row.proofCount}, signals ${row.signalClaimCount}</span></td>
+      <td>${(row.caveats || []).map(escapeHtml).join("<br>") || "none"}</td>
+    </tr>
+  `).join("");
+}
+
 function renderActorGraph() {
   const ranked = (state.data.rankedParties || []).slice(0, 25);
   const claims = state.data.evidenceClaims || [];
@@ -743,6 +789,7 @@ function renderAll() {
   renderEntryExitTable();
   renderTelegramTable();
   renderRankedTable();
+  renderInterestClusterTable();
   renderEvidenceTable();
   renderLabelTable();
   renderEpochTable();

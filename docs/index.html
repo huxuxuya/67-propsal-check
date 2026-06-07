@@ -267,6 +267,29 @@
         </div>
         <div class="panel table-panel">
           <div class="panel-head">
+            <h2>Interest Clusters</h2>
+            <span id="interestClusterRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Cluster</th>
+                  <th>Addresses</th>
+                  <th>Compensation</th>
+                  <th>Voting power</th>
+                  <th>Vote power split</th>
+                  <th>Boundary</th>
+                  <th>Caveats</th>
+                </tr>
+              </thead>
+              <tbody id="interestClusterTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel table-panel">
+          <div class="panel-head">
             <h2>Evidence Explorer</h2>
             <span id="evidenceRows">-</span>
           </div>
@@ -448,7 +471,7 @@
       <section class="notes">
         <h2>Methodology Boundaries</h2>
         <div id="methodologyNotes"></div>
-        <p>GRC off-chain voters are not identified in the upstream repository. Public labels come from validator metadata, validator-key matches, GNS .gnk names, and participant inference URLs; unknown owners remain marked as unknown. Strict clusters use public self-declared identity evidence. Signal clusters may use infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate and are not private attribution. Per-voter governance voting power is not estimated from inference epochs.</p>
+        <p>GRC off-chain voters are not identified in the upstream repository. Public labels come from validator metadata, validator-key matches, GNS .gnk names, and participant inference URLs; unknown owners remain marked as unknown. Strict clusters use public self-declared identity evidence. Signal clusters may use infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate and are not private attribution. Per-voter governance voting power is computed from archive staking validators and delegations, not estimated from inference epochs.</p>
       </section>
     </main>
 

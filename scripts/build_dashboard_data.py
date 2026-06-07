@@ -1031,6 +1031,7 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
                 "label": label or labels.get(address) or "Unknown public owner",
                 "roles": set(),
                 "totalCompensationGonka": 0,
+                "votingPower": 0,
                 "voteOption": "did_not_vote",
                 "identityType": identity_types.get(address, "unknown"),
                 "strictClusterId": "",
@@ -1051,6 +1052,7 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
         actor = ensure(row["voter"], row["label"])
         actor["roles"].add("voter")
         actor["voteOption"] = row["primaryOption"]
+        actor["votingPower"] = row.get("votingPower") or 0
         actor["identityType"] = row["identityType"]
         actor["strictClusterId"] = row.get("strictClusterId", "")
         actor["signalClusterId"] = row.get("signalClusterId", "")
@@ -1086,6 +1088,7 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
                 **actor,
                 "roles": sorted(actor["roles"]),
                 "totalCompensationGonka": round(actor["totalCompensationGonka"], 6),
+                "votingPower": round(actor["votingPower"], 6),
             }
             for actor in actors.values()
             if actor["address"]
@@ -1198,6 +1201,129 @@ def build_ranked_parties(actors, claims, identity_graph):
     for index, row in enumerate(ranked, start=1):
         row["rank"] = index
     return ranked
+
+
+def build_interest_clusters(actors, evidence_claims, identity_graph):
+    claims_by_address = defaultdict(list)
+    for claim in evidence_claims:
+        if claim.get("address"):
+            claims_by_address[claim["address"]].append(claim)
+
+    strict_ids = {cluster["id"] for cluster in identity_graph.get("strictClusters", [])}
+    signal_ids = {cluster["id"] for cluster in identity_graph.get("signalClusters", [])}
+    grouped = {}
+    for actor in actors:
+        if actor.get("strictClusterId"):
+            group_id = actor["strictClusterId"]
+            kind = "strict_identity"
+        elif actor.get("signalClusterId"):
+            group_id = actor["signalClusterId"]
+            kind = "signal_cluster"
+        else:
+            group_id = f"label:{actor['label']}"
+            kind = "label"
+
+        grouped.setdefault(
+            group_id,
+            {
+                "id": group_id,
+                "kind": kind,
+                "label": actor["label"],
+                "addresses": [],
+                "roles": set(),
+                "identityTypes": set(),
+                "voteAddressCounts": Counter(),
+                "votePowerByOption": defaultdict(float),
+                "totalCompensationGonka": 0,
+                "totalVotingPower": 0,
+                "recipientCount": 0,
+                "voterCount": 0,
+                "recipientVoterCount": 0,
+                "claims": [],
+            },
+        )
+        row = grouped[group_id]
+        row["addresses"].append(actor["address"])
+        row["roles"].update(actor.get("roles", []))
+        row["identityTypes"].add(actor.get("identityType", "unknown"))
+        row["totalCompensationGonka"] += actor.get("totalCompensationGonka") or 0
+        row["totalVotingPower"] += actor.get("votingPower") or 0
+        if "recipient" in actor.get("roles", []):
+            row["recipientCount"] += 1
+        if "voter" in actor.get("roles", []):
+            row["voterCount"] += 1
+            option = actor.get("voteOption", "did_not_vote")
+            row["voteAddressCounts"][option] += 1
+            row["votePowerByOption"][option] += actor.get("votingPower") or 0
+        if "recipient" in actor.get("roles", []) and "voter" in actor.get("roles", []):
+            row["recipientVoterCount"] += 1
+        row["claims"].extend(claims_by_address.get(actor["address"], []))
+
+    clusters = []
+    for row in grouped.values():
+        proof_claims = [claim for claim in row["claims"] if claim.get("isAttributionProof")]
+        high_claims = [claim for claim in row["claims"] if claim.get("confidence") == "high"]
+        signal_claims = [claim for claim in row["claims"] if not claim.get("isAttributionProof")]
+        if proof_claims or row["kind"] == "strict_identity" or row["id"] in strict_ids:
+            evidence_boundary = "public_owner_proof"
+        elif row["kind"] == "signal_cluster" or row["id"] in signal_ids:
+            evidence_boundary = "infrastructure_or_public_signal"
+        else:
+            evidence_boundary = "shared_public_label_only"
+
+        interest_score = (
+            min(45, row["totalCompensationGonka"] / 4000)
+            + min(35, row["totalVotingPower"] / 7000)
+            + (15 if row["recipientVoterCount"] else 0)
+            + min(10, max(0, len(row["addresses"]) - 1) * 2)
+        )
+        top_claims = sorted(
+            row["claims"],
+            key=lambda claim: (
+                {"high": 0, "medium": 1, "low": 2}.get(claim.get("confidence"), 3),
+                not claim.get("isAttributionProof"),
+                claim.get("sourceType", ""),
+            ),
+        )[:6]
+        caveats = []
+        if not proof_claims:
+            caveats.append("No strict public owner proof.")
+        if signal_claims and evidence_boundary != "public_owner_proof":
+            caveats.append("Cluster may be based on infrastructure/public signals, not ownership.")
+        if row["totalVotingPower"] == 0 and row["voterCount"]:
+            caveats.append("Voter addresses in this cluster had zero archive governance voting power.")
+        if row["recipientVoterCount"]:
+            caveats.append("At least one address both received compensation and voted.")
+
+        clusters.append(
+            {
+                "id": row["id"],
+                "kind": row["kind"],
+                "label": row["label"],
+                "addresses": sorted(set(row["addresses"])),
+                "roles": sorted(row["roles"]),
+                "identityTypes": sorted(row["identityTypes"]),
+                "recipientCount": row["recipientCount"],
+                "voterCount": row["voterCount"],
+                "recipientVoterCount": row["recipientVoterCount"],
+                "totalCompensationGonka": round(row["totalCompensationGonka"], 6),
+                "totalVotingPower": round(row["totalVotingPower"], 6),
+                "voteAddressCounts": dict(row["voteAddressCounts"]),
+                "votePowerByOption": {key: round(value, 6) for key, value in sorted(row["votePowerByOption"].items())},
+                "evidenceBoundary": evidence_boundary,
+                "proofCount": len(proof_claims),
+                "highConfidenceClaimCount": len(high_claims),
+                "signalClaimCount": len(signal_claims),
+                "interestScore": round(interest_score, 3),
+                "topEvidence": top_claims,
+                "caveats": caveats,
+            }
+        )
+
+    clusters.sort(key=lambda row: (-row["interestScore"], -row["totalVotingPower"], -row["totalCompensationGonka"], row["label"]))
+    for index, row in enumerate(clusters, start=1):
+        row["rank"] = index
+    return clusters
 
 
 def load_epoch_group_snapshot(epoch):
@@ -1535,7 +1661,7 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
     ]
 
 
-def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None):
+def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None):
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
 
@@ -1617,6 +1743,85 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                     "caveat": row["caveat"],
                 }
             )
+
+    if interest_clusters is not None:
+        with (reports / "interest_clusters.csv").open("w", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "rank",
+                    "cluster_id",
+                    "kind",
+                    "label",
+                    "addresses",
+                    "roles",
+                    "recipient_count",
+                    "voter_count",
+                    "recipient_voter_count",
+                    "total_compensation_gonka",
+                    "total_voting_power",
+                    "vote_power_by_option",
+                    "vote_address_counts",
+                    "evidence_boundary",
+                    "interest_score",
+                    "top_evidence",
+                    "caveats",
+                ],
+            )
+            writer.writeheader()
+            for row in interest_clusters:
+                writer.writerow(
+                    {
+                        "rank": row["rank"],
+                        "cluster_id": row["id"],
+                        "kind": row["kind"],
+                        "label": row["label"],
+                        "addresses": " ".join(row["addresses"]),
+                        "roles": " ".join(row["roles"]),
+                        "recipient_count": row["recipientCount"],
+                        "voter_count": row["voterCount"],
+                        "recipient_voter_count": row["recipientVoterCount"],
+                        "total_compensation_gonka": row["totalCompensationGonka"],
+                        "total_voting_power": row["totalVotingPower"],
+                        "vote_power_by_option": " ".join(f"{option}:{power}" for option, power in row["votePowerByOption"].items()),
+                        "vote_address_counts": " ".join(f"{option}:{count}" for option, count in row["voteAddressCounts"].items()),
+                        "evidence_boundary": row["evidenceBoundary"],
+                        "interest_score": row["interestScore"],
+                        "top_evidence": " | ".join(f"{item['sourceType']}:{item['sourceValue']}:{item['confidence']}" for item in row["topEvidence"]),
+                        "caveats": " | ".join(row["caveats"]),
+                    }
+                )
+
+        lines = [
+            "# Proposal 67 Interest Clusters",
+            "",
+            "Clusters combine compensation, exact archive-derived governance voting power, vote direction, and public evidence boundaries. `public_owner_proof` clusters are stronger; `infrastructure_or_public_signal` and `shared_public_label_only` clusters are investigation leads and must not be treated as ownership proof by themselves.",
+            "",
+        ]
+        for row in interest_clusters[:30]:
+            lines.extend(
+                [
+                    f"## #{row['rank']} {row['label']}",
+                    "",
+                    f"- Cluster: {row['id']} ({row['kind']}; {row['evidenceBoundary']})",
+                    f"- Addresses: {' '.join(row['addresses'])}",
+                    f"- Roles: {', '.join(row['roles']) or 'none'}",
+                    f"- Compensation: {row['totalCompensationGonka']} GONKA across {row['recipientCount']} recipients",
+                    f"- Exact governance voting power: {row['totalVotingPower']} across {row['voterCount']} voters",
+                    f"- Vote power split: {', '.join(f'{option}={power}' for option, power in row['votePowerByOption'].items()) or 'none'}",
+                    f"- Recipient-voter overlap: {row['recipientVoterCount']}",
+                    f"- Interest score: {row['interestScore']}",
+                    f"- Caveats: {' | '.join(row['caveats']) if row['caveats'] else 'none'}",
+                    "",
+                ]
+            )
+            if row["topEvidence"]:
+                lines.append("Top evidence:")
+                for item in row["topEvidence"][:5]:
+                    proof = "proof" if item["isAttributionProof"] else "signal"
+                    lines.append(f"- {item['address']} {item['sourceType']} ({item['confidence']}, {proof}): {item['sourceValue']}")
+                lines.append("")
+        (reports / "interest_clusters.md").write_text("\n".join(lines).rstrip() + "\n")
 
     if epoch_entry_exit_clusters is not None:
         with (reports / "epoch_entry_exit_clusters.csv").open("w", newline="") as f:
@@ -1863,9 +2068,10 @@ def main():
     evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
     epoch_entry_exit_clusters = build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity_graph, evidence_claims)
     ranked_parties = build_ranked_parties(actors, evidence_claims, identity_graph)
+    interest_clusters = build_interest_clusters(actors, evidence_claims, identity_graph)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
-    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters)
+    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters)
 
     dashboard = {
         "metadata": {
@@ -1908,6 +2114,9 @@ def main():
             "actorsCount": len(actors),
             "evidenceClaimsCount": len(evidence_claims),
             "rankedPartiesCount": len(ranked_parties),
+            "interestClustersCount": len(interest_clusters),
+            "interestClustersWithVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0),
+            "interestClustersWithCompensationAndVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0 and row["totalCompensationGonka"] > 0),
             "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
             "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
             "epochAnomaliesCount": len(epoch_anomalies),
@@ -1931,6 +2140,7 @@ def main():
         "actors": actors,
         "evidenceClaims": evidence_claims,
         "rankedParties": ranked_parties,
+        "interestClusters": interest_clusters,
         "telegramEvidence": telegram_evidence.get("messages") or [],
         "epochAnomalies": epoch_anomalies,
         "epochEntryExitClusters": epoch_entry_exit_clusters,
@@ -1945,8 +2155,8 @@ def main():
         "hypotheses": hypotheses,
         "attackNarrative": attack_narrative,
         "notes": [
-            "Per-voter voting power is intentionally unknown because no exact public source is included in the snapshots.",
-            "Voting-power charts use the final aggregate on-chain tally only.",
+            "Per-voter voting power is computed from archive staking validators and delegations at the last pre-end block; the truncated chain-like result matches the final aggregate on-chain tally.",
+            "Voting-power charts use archive-derived per-voter power where available and final aggregate on-chain tally for the proposal-level result.",
             "Inference epoch weights are not governance voting power and are not used for tally or per-voter power claims.",
             "A governance vote transaction can be included even if the same address is not active in a later inference epoch; vote inclusion must be checked through governance data, not inference participation.",
             "GRC off-chain voters are not identified in the upstream repository.",
