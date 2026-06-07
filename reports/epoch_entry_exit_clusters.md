@@ -2,9 +2,9 @@
 
 This report groups voting-end inference epoch timing signals by strict public identity cluster, signal cluster, or public label. Inference epoch weight is not governance voting power; a cluster is an investigation lead, not owner attribution unless the evidence is explicitly marked as public proof.
 
-## #1 Votkon · http://89.169.97.113:8000
+## #1 Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 
-- Cluster: label:Votkon · http://89.169.97.113:8000 (label_group)
+- Cluster: label:Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg (label_group)
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - e287 inference weight: total 92840, max 92840
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 1
@@ -19,9 +19,9 @@ Top evidence:
 - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg compensation_output (high, signal): 73073.708453 GONKA
 - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg matched_validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 
-## #2 http://78.46.89.87:8000
+## #2 gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum
 
-- Cluster: label:http://78.46.89.87:8000 (label_group)
+- Cluster: label:gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum (label_group)
 - Addresses: gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum
 - e287 inference weight: total 113284, max 113284
 - Inference enter / governance vote tx during e287 / inference exit counts: 1 / 1 / 0
@@ -36,9 +36,9 @@ Top evidence:
 - gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum matched_validator_moniker (high, signal): gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk
 - gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum proposal_vote (high, signal): no_with_veto
 
-## #3 http://54.38.118.143:8000
+## #3 gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
 
-- Cluster: label:http://54.38.118.143:8000 (label_group)
+- Cluster: label:gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr (label_group)
 - Addresses: gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
 - e287 inference weight: total 86433, max 86433
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
@@ -53,9 +53,9 @@ Top evidence:
 - gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr compensation_output (high, signal): 52290.195676 GONKA
 - gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr matched_validator_moniker (high, signal): gonkavaloper1gvrrhjmy4w4mayvs2s5l23edj8ertcmt32aj4w
 
-## #4 http://178.105.174.27:8000
+## #4 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 
-- Cluster: label:http://178.105.174.27:8000 (label_group)
+- Cluster: label:gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv (label_group)
 - Addresses: gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 - e287 inference weight: total 57838, max 57838
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 1
@@ -71,9 +71,9 @@ Top evidence:
 - gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv proposal_vote (high, signal): yes
 - gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=14528
 
-## #5 ancapex | Mine from $1, no losses from node failures
+## #5 ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
-- Cluster: label:ancapex | Mine from $1, no losses from node failures (label_group)
+- Cluster: label:ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 (label_group)
 - Addresses: gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 - e287 inference weight: total 28865, max 28865
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
@@ -88,9 +88,9 @@ Top evidence:
 - gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 matched_validator_identity (high, proof): B22258DF68546529
 - gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 matched_validator_moniker (high, proof): ancapex | Mine from $1, no losses from node failures
 
-## #6 http://135.181.56.61:8000
+## #6 gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv
 
-- Cluster: label:http://135.181.56.61:8000 (label_group)
+- Cluster: label:gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv (label_group)
 - Addresses: gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv
 - e287 inference weight: total 23621, max 23621
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
@@ -105,9 +105,9 @@ Top evidence:
 - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv compensation_output (high, signal): 158541.879456 GONKA
 - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv matched_validator_moniker (high, signal): gonkavaloper1qa90tgczc0k5dvk4l5nvlf5y6phgm6mgk2pw9p
 
-## #7 http://94.237.52.191:8000
+## #7 gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj
 
-- Cluster: label:http://94.237.52.191:8000 (label_group)
+- Cluster: label:gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj (label_group)
 - Addresses: gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj
 - e287 inference weight: total 20647, max 20647
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
@@ -122,9 +122,9 @@ Top evidence:
 - gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj matched_validator_moniker (high, signal): gonkavaloper1nmn039cgpkhmkzekpkfz3nkv9tcjckpnf6rr5l
 - gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj proposal_vote (high, signal): yes
 
-## #8 http://148.113.47.235:8000
+## #8 gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
 
-- Cluster: label:http://148.113.47.235:8000 (label_group)
+- Cluster: label:gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt (label_group)
 - Addresses: gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
 - e287 inference weight: total 31217, max 31217
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
@@ -139,9 +139,9 @@ Top evidence:
 - gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt compensation_output (high, signal): 1805.142498 GONKA
 - gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
 
-## #9 http://network002.kaitaku.ai:8000
+## #9 gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0
 
-- Cluster: label:http://network002.kaitaku.ai:8000 (label_group)
+- Cluster: label:gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 (label_group)
 - Addresses: gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0
 - e287 inference weight: total 31063, max 31063
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
@@ -156,9 +156,9 @@ Top evidence:
 - gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 matched_validator_moniker (high, signal): gonkavaloper1d694r00czmq75txghwjcuk07lxvc8d4e2gps2z
 - gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 proposal_vote (high, signal): no_with_veto
 
-## #10 http://network000.kaitaku.ai:8000
+## #10 gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2
 
-- Cluster: label:http://network000.kaitaku.ai:8000 (label_group)
+- Cluster: label:gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 (label_group)
 - Addresses: gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2
 - e287 inference weight: total 25278, max 25278
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0
@@ -173,9 +173,9 @@ Top evidence:
 - gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 compensation_output (high, signal): 11021.18308 GONKA
 - gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 matched_validator_moniker (high, signal): gonkavaloper168rtjfkszuhcggg4dfyse4yh7xn9zwfgrn8588
 
-## #11 http://95.217.35.48:8000
+## #11 gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje
 
-- Cluster: label:http://95.217.35.48:8000 (label_group)
+- Cluster: label:gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje (label_group)
 - Addresses: gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje
 - e287 inference weight: total 8333, max 8333
 - Inference enter / governance vote tx during e287 / inference exit counts: 1 / 0 / 0
@@ -191,9 +191,9 @@ Top evidence:
 - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=6720
 - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=6496
 
-## #12 http://20.171.77.105:8000
+## #12 gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww
 
-- Cluster: label:http://20.171.77.105:8000 (label_group)
+- Cluster: label:gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww (label_group)
 - Addresses: gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww
 - e287 inference weight: total 4420, max 4420
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
@@ -208,9 +208,9 @@ Top evidence:
 - gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww compensation_output (high, signal): 108.366532 GONKA
 - gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww matched_validator_moniker (high, signal): gonkavaloper1cuwejs77gectp3n32wg8q27hlsa4m3hqvpcjer
 
-## #13 http://20.163.111.183:8000
+## #13 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p
 
-- Cluster: label:http://20.163.111.183:8000 (label_group)
+- Cluster: label:gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p (label_group)
 - Addresses: gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p
 - e287 inference weight: total 4295, max 4295
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
@@ -225,9 +225,9 @@ Top evidence:
 - gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p compensation_output (high, signal): 113.864834 GONKA
 - gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p matched_validator_moniker (high, signal): gonkavaloper1fvly5jrewyjmjfgwah3khy9rttq4cqajyeptjv
 
-## #14 http://198.244.228.95:8000
+## #14 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n
 
-- Cluster: label:http://198.244.228.95:8000 (label_group)
+- Cluster: label:gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n (label_group)
 - Addresses: gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n
 - e287 inference weight: total 8230, max 8230
 - Inference enter / governance vote tx during e287 / inference exit counts: 1 / 0 / 0
@@ -243,9 +243,9 @@ Top evidence:
 - gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n epoch_commit_participant (medium, signal): e272 moonshotai/Kimi-K2.6 count=6592
 - gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n epoch_commit_participant (medium, signal): e273 moonshotai/Kimi-K2.6 count=6528
 
-## #15 http://20.88.58.210:8000
+## #15 gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3
 
-- Cluster: label:http://20.88.58.210:8000 (label_group)
+- Cluster: label:gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3 (label_group)
 - Addresses: gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3
 - e287 inference weight: total 645, max 645
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 1 / 0
@@ -260,9 +260,9 @@ Top evidence:
 - gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3 matched_validator_moniker (high, signal): gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu
 - gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3 proposal_vote (high, signal): no_with_veto
 
-## #16 http://35.89.168.230:8000
+## #16 gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239
 
-- Cluster: label:http://35.89.168.230:8000 (label_group)
+- Cluster: label:gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239 (label_group)
 - Addresses: gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239
 - e287 inference weight: total 20495, max 20495
 - Inference enter / governance vote tx during e287 / inference exit counts: 0 / 0 / 0

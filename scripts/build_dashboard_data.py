@@ -318,19 +318,22 @@ def preferred_gns_name(gns_by_address, address):
 
 
 def public_label(address, participant, account_labels, consensus_labels, gns_by_address):
-    if address in account_labels:
+    if address in account_labels and not looks_like_generic_node_label(account_labels[address]):
         return account_labels[address]
     if isinstance(participant, dict):
         validator_key = participant.get("validator_key") or ""
-        if validator_key in consensus_labels:
+        if validator_key in consensus_labels and not looks_like_generic_node_label(consensus_labels[validator_key]):
             return consensus_labels[validator_key]
     gns_name = preferred_gns_name(gns_by_address, address)
     if gns_name:
         return gns_name
-    if isinstance(participant, dict):
-        if participant.get("inference_url"):
-            return participant["inference_url"]
-    return "Unknown public owner"
+    return address
+
+
+def display_label(address, public_name):
+    if not public_name or public_name == address or public_name == "Unknown public owner":
+        return address
+    return f"{public_name} · {address}"
 
 
 def primary_identity_type(evidence_rows):
@@ -809,7 +812,8 @@ def collect_address_labels(recipients, votes, participants, account_labels, cons
         labels[row["voter"]] = row["label"]
         identity_types[row["voter"]] = row["identityType"]
     for address, participant in participants.items():
-        labels.setdefault(address, public_label(address, participant, account_labels, consensus_labels, gns_by_address))
+        public_name = public_label(address, participant, account_labels, consensus_labels, gns_by_address)
+        labels.setdefault(address, display_label(address, public_name))
     return labels, identity_types
 
 
@@ -1048,17 +1052,21 @@ def apply_investigation_labels(recipients, votes, evidence_claims):
             operator_labels[address] = label
 
     def apply(row, address_key):
-        signal = operator_labels.get(row.get(address_key, ""))
+        address = row.get(address_key, "")
+        signal = operator_labels.get(address)
         if not signal:
             return
-        public_label_value = row.get("publicLabel") or row.get("label") or "Unknown public owner"
+        public_label_value = row.get("publicLabel") or address
         signal_label = signal["label"] if signal["confidence"] == "high" else f"{signal['label']}?"
         row["publicLabel"] = public_label_value
         row["operatorSignalLabel"] = signal["label"]
         row["operatorSignalDisplayLabel"] = signal_label
         row["operatorSignal"] = signal
-        if signal["label"] not in public_label_value:
-            row["label"] = f"{signal_label} · {public_label_value}"
+        label_parts = [signal_label]
+        if public_label_value and public_label_value not in {address, signal["label"]}:
+            label_parts.append(public_label_value)
+        label_parts.append(address)
+        row["label"] = " · ".join(label_parts)
 
     for row in recipients:
         apply(row, "address")
@@ -1074,7 +1082,7 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
             actors[address] = {
                 "id": f"address:{address}" if address else "",
                 "address": address,
-                "label": label or labels.get(address) or "Unknown public owner",
+                "label": label or labels.get(address) or address or "Unknown public owner",
                 "roles": set(),
                 "totalCompensationGonka": 0,
                 "votingPower": 0,
@@ -2793,11 +2801,13 @@ def main():
         evidence_rows = evidence_by_address.get(row["address"], [])
         per_epoch = {epoch_key: as_float(value) for epoch_key, value in row["per_epoch"].items()}
         active = participant.get("status") == "ACTIVE" if isinstance(participant, dict) else False
+        public_name = public_label(row["address"], participant, account_labels, consensus_labels, gns_by_address)
         recipients.append(
             {
                 "rank": rank,
                 "address": row["address"],
-                "label": public_label(row["address"], participant, account_labels, consensus_labels, gns_by_address),
+                "label": display_label(row["address"], public_name),
+                "publicLabel": public_name,
                 "gnsNames": gns_by_address.get(row["address"], []),
                 "publicNodeInfo": public_node_info(participant, consensus_metadata),
                 "inferenceUrl": participant.get("inference_url", "") if isinstance(participant, dict) else "",
@@ -2824,10 +2834,12 @@ def main():
         participant = participants.get(vote["voter"]) or {}
         evidence_rows = evidence_by_address.get(vote["voter"], [])
         governance_power = governance_power_by_voter.get(vote["voter"], {})
+        public_name = public_label(vote["voter"], participant, account_labels, consensus_labels, gns_by_address)
         votes.append(
             {
                 "voter": vote["voter"],
-                "label": public_label(vote["voter"], participant, account_labels, consensus_labels, gns_by_address),
+                "label": display_label(vote["voter"], public_name),
+                "publicLabel": public_name,
                 "gnsNames": gns_by_address.get(vote["voter"], []),
                 "publicNodeInfo": public_node_info(participant, consensus_metadata),
                 "isRecipient": vote["voter"] in recipient_set,

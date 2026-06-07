@@ -1754,7 +1754,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "66487.744752 GONKA",
-          "subject": "ancapex | Mine from $1, no losses from node failures"
+          "subject": "ancapex | Mine from $1, no losses from node failures \u00b7 gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09"
         },
         {
           "address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
@@ -1766,7 +1766,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "ancapex | Mine from $1, no losses from node failures"
+          "subject": "ancapex | Mine from $1, no losses from node failures \u00b7 gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09"
         },
         {
           "address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
@@ -1783,7 +1783,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://89.149.242.149:8000",
-      "label": "ancapex | Mine from $1, no losses from node failures",
+      "label": "ancapex | Mine from $1, no losses from node failures \u00b7 gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
       "nextActions": [
         "review recipient-voter conflict"
       ],
@@ -1907,7 +1907,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "Arturs Plisko \u00b7 Hyperfusion"
+          "subject": "Arturs Plisko \u00b7 Hyperfusion \u00b7 gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p"
         },
         {
           "address": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
@@ -1936,7 +1936,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://46.4.101.189:8000",
-      "label": "Arturs Plisko \u00b7 Hyperfusion",
+      "label": "Arturs Plisko \u00b7 Hyperfusion \u00b7 gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2059,7 +2059,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "3018.840187 GONKA",
-          "subject": "gonka-3"
+          "subject": "gonka-3 \u00b7 gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5"
         },
         {
           "address": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
@@ -2088,7 +2088,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "https://node3.gonka.ai",
-      "label": "gonka-3",
+      "label": "gonka-3 \u00b7 gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2187,7 +2187,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1166.439756 GONKA",
-          "subject": "Formula x AI"
+          "subject": "Formula x AI \u00b7 gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra"
         },
         {
           "address": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
@@ -2240,7 +2240,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://162.55.232.115:8000",
-      "label": "Formula x AI",
+      "label": "Formula x AI \u00b7 gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2356,7 +2356,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1025.259358 GONKA",
-          "subject": "gonka-1"
+          "subject": "gonka-1 \u00b7 gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le"
         },
         {
           "address": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
@@ -2385,7 +2385,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://node1.gonka.ai:8000",
-      "label": "gonka-1",
+      "label": "gonka-1 \u00b7 gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2546,7 +2546,7 @@
         "wat.gnk"
       ],
       "inferenceUrl": "",
-      "label": "asd.gnk",
+      "label": "asd.gnk \u00b7 gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2639,7 +2639,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "73073.708453 GONKA",
-          "subject": "Votkon \u00b7 http://89.169.97.113:8000"
+          "subject": "Votkon \u00b7 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
         },
         {
           "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
@@ -2675,7 +2675,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "Votkon \u00b7 http://89.169.97.113:8000"
+          "subject": "Votkon \u00b7 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
         },
         {
           "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
@@ -2728,7 +2728,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://89.169.97.113:8000",
-      "label": "Votkon \u00b7 http://89.169.97.113:8000",
+      "label": "Votkon \u00b7 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -2780,7 +2780,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "52290.195676 GONKA",
-          "subject": "http://54.38.118.143:8000"
+          "subject": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr"
         },
         {
           "address": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
@@ -2816,7 +2816,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "http://54.38.118.143:8000"
+          "subject": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr"
         },
         {
           "address": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
@@ -2869,7 +2869,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://54.38.118.143:8000",
-      "label": "http://54.38.118.143:8000",
+      "label": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -2921,7 +2921,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "11262.520198 GONKA",
-          "subject": "http://178.105.174.27:8000"
+          "subject": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
         },
         {
           "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
@@ -2933,7 +2933,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "http://178.105.174.27:8000"
+          "subject": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
         },
         {
           "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
@@ -3010,7 +3010,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.105.174.27:8000",
-      "label": "http://178.105.174.27:8000",
+      "label": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3055,7 +3055,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1805.142498 GONKA",
-          "subject": "http://148.113.47.235:8000"
+          "subject": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt"
         },
         {
           "address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
@@ -3091,7 +3091,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "http://148.113.47.235:8000"
+          "subject": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt"
         },
         {
           "address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
@@ -3144,7 +3144,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://148.113.47.235:8000",
-      "label": "http://148.113.47.235:8000",
+      "label": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3220,7 +3220,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://network002.kaitaku.ai:8000"
+          "subject": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0"
         },
         {
           "address": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
@@ -3285,7 +3285,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://network002.kaitaku.ai:8000",
-      "label": "http://network002.kaitaku.ai:8000",
+      "label": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -3334,7 +3334,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "11021.18308 GONKA",
-          "subject": "http://network000.kaitaku.ai:8000"
+          "subject": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2"
         },
         {
           "address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
@@ -3370,7 +3370,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://network000.kaitaku.ai:8000"
+          "subject": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2"
         },
         {
           "address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
@@ -3423,7 +3423,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://network000.kaitaku.ai:8000",
-      "label": "http://network000.kaitaku.ai:8000",
+      "label": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3499,7 +3499,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "http://94.237.52.191:8000"
+          "subject": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj"
         },
         {
           "address": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
@@ -3559,12 +3559,12 @@
           "sourceType": "voting_end_epoch_anomaly",
           "sourceUrl": "data/voting_end_epochs/manifest.json",
           "sourceValue": "e287=20647 prev=2725 next=9807 vote=yes@4430417",
-          "subject": "http://94.237.52.191:8000"
+          "subject": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj"
         }
       ],
       "gnsNames": [],
       "inferenceUrl": "http://94.237.52.191:8000",
-      "label": "http://94.237.52.191:8000",
+      "label": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -3613,7 +3613,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1575.513417 GONKA",
-          "subject": "http://148.113.47.71:8000"
+          "subject": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz"
         },
         {
           "address": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
@@ -3649,7 +3649,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "http://148.113.47.71:8000"
+          "subject": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz"
         },
         {
           "address": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
@@ -3702,7 +3702,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://148.113.47.71:8000",
-      "label": "http://148.113.47.71:8000",
+      "label": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3754,7 +3754,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "2392.222959 GONKA",
-          "subject": "http://65.108.198.21:8000"
+          "subject": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx"
         },
         {
           "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
@@ -3790,7 +3790,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://65.108.198.21:8000"
+          "subject": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx"
         },
         {
           "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
@@ -3843,7 +3843,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://65.108.198.21:8000",
-      "label": "http://65.108.198.21:8000",
+      "label": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3919,7 +3919,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://84.32.59.212:8000"
+          "subject": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl"
         },
         {
           "address": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
@@ -3984,7 +3984,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://84.32.59.212:8000",
-      "label": "http://84.32.59.212:8000",
+      "label": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -4057,7 +4057,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://84.32.185.226:8000"
+          "subject": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf"
         },
         {
           "address": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
@@ -4110,7 +4110,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://84.32.185.226:8000",
-      "label": "http://84.32.185.226:8000",
+      "label": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -4159,7 +4159,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "30.990429 GONKA",
-          "subject": "http://69.48.159.137:8000/"
+          "subject": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5"
         },
         {
           "address": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
@@ -4195,7 +4195,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://69.48.159.137:8000/"
+          "subject": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5"
         },
         {
           "address": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
@@ -4248,7 +4248,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://69.48.159.137:8000/",
-      "label": "http://69.48.159.137:8000/",
+      "label": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -4300,7 +4300,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "158541.879456 GONKA",
-          "subject": "http://135.181.56.61:8000"
+          "subject": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv"
         },
         {
           "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
@@ -4389,7 +4389,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://135.181.56.61:8000",
-      "label": "http://135.181.56.61:8000",
+      "label": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4438,7 +4438,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "101147.807219 GONKA",
-          "subject": "http://54.37.131.156:8000"
+          "subject": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu"
         },
         {
           "address": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
@@ -4527,7 +4527,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://54.37.131.156:8000",
-      "label": "http://54.37.131.156:8000",
+      "label": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4569,7 +4569,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "96601.320933 GONKA",
-          "subject": "http://65.21.232.177:8000"
+          "subject": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu"
         },
         {
           "address": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
@@ -4658,7 +4658,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://65.21.232.177:8000",
-      "label": "http://65.21.232.177:8000",
+      "label": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4707,7 +4707,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "79247.555227 GONKA",
-          "subject": "http://57.128.30.101:8000"
+          "subject": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz"
         },
         {
           "address": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
@@ -4796,7 +4796,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://57.128.30.101:8000",
-      "label": "http://57.128.30.101:8000",
+      "label": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4838,7 +4838,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "39809.676543 GONKA",
-          "subject": "http://178.104.95.5:8000"
+          "subject": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6"
         },
         {
           "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
@@ -4927,7 +4927,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.104.95.5:8000",
-      "label": "http://178.104.95.5:8000",
+      "label": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4976,7 +4976,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "33750.579636 GONKA",
-          "subject": "http://95.217.121.189:8000"
+          "subject": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax"
         },
         {
           "address": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
@@ -5065,7 +5065,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://95.217.121.189:8000",
-      "label": "http://95.217.121.189:8000",
+      "label": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5114,7 +5114,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "20610.390028 GONKA",
-          "subject": "http://178.105.170.135:8000"
+          "subject": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau"
         },
         {
           "address": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
@@ -5203,7 +5203,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.105.170.135:8000",
-      "label": "http://178.105.170.135:8000",
+      "label": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5252,7 +5252,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "18234.887511 GONKA",
-          "subject": "A? \u00b7 http://136.243.110.227:8000"
+          "subject": "A? \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5"
         },
         {
           "address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
@@ -5341,7 +5341,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://136.243.110.227:8000",
-      "label": "A? \u00b7 http://136.243.110.227:8000",
+      "label": "A? \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5383,7 +5383,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "17630.158097 GONKA",
-          "subject": "http://94.130.152.246:8000"
+          "subject": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw"
         },
         {
           "address": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
@@ -5472,7 +5472,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://94.130.152.246:8000",
-      "label": "http://94.130.152.246:8000",
+      "label": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5521,7 +5521,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "13958.367773 GONKA",
-          "subject": "http://195.201.192.170:8000"
+          "subject": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y"
         },
         {
           "address": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
@@ -5610,7 +5610,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://195.201.192.170:8000",
-      "label": "http://195.201.192.170:8000",
+      "label": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5659,7 +5659,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "12612.234866 GONKA",
-          "subject": "http://35.89.168.230:8000"
+          "subject": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239"
         },
         {
           "address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
@@ -5748,7 +5748,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://35.89.168.230:8000",
-      "label": "http://35.89.168.230:8000",
+      "label": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5797,7 +5797,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "11688.555563 GONKA",
-          "subject": "http://178.105.172.102:8000"
+          "subject": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw"
         },
         {
           "address": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
@@ -5886,7 +5886,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.105.172.102:8000",
-      "label": "http://178.105.172.102:8000",
+      "label": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5935,7 +5935,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "11366.419254 GONKA",
-          "subject": "http://204.12.168.89:8000"
+          "subject": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9"
         },
         {
           "address": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
@@ -6024,7 +6024,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://204.12.168.89:8000",
-      "label": "http://204.12.168.89:8000",
+      "label": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6073,7 +6073,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "10934.181496 GONKA",
-          "subject": "http://88.99.213.222:8000"
+          "subject": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4"
         },
         {
           "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
@@ -6085,7 +6085,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://88.99.213.222:8000"
+          "subject": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4"
         },
         {
           "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
@@ -6162,7 +6162,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://88.99.213.222:8000",
-      "label": "http://88.99.213.222:8000",
+      "label": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -6207,7 +6207,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "10456.612261 GONKA",
-          "subject": "http://95.217.35.48:8000"
+          "subject": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje"
         },
         {
           "address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
@@ -6296,7 +6296,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://95.217.35.48:8000",
-      "label": "http://95.217.35.48:8000",
+      "label": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6338,7 +6338,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "9768.694504 GONKA",
-          "subject": "http://94.130.143.155:8000"
+          "subject": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds"
         },
         {
           "address": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
@@ -6427,7 +6427,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://94.130.143.155:8000",
-      "label": "http://94.130.143.155:8000",
+      "label": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6476,7 +6476,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "9423.072516 GONKA",
-          "subject": "http://88.198.4.29:8000"
+          "subject": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np"
         },
         {
           "address": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
@@ -6565,7 +6565,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://88.198.4.29:8000",
-      "label": "http://88.198.4.29:8000",
+      "label": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6614,7 +6614,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "8441.669468 GONKA",
-          "subject": "http://136.243.111.105:8000"
+          "subject": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2"
         },
         {
           "address": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
@@ -6703,7 +6703,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://136.243.111.105:8000",
-      "label": "http://136.243.111.105:8000",
+      "label": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6745,7 +6745,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "6820.652574 GONKA",
-          "subject": "http://195.201.83.167:8000"
+          "subject": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d"
         },
         {
           "address": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
@@ -6834,7 +6834,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://195.201.83.167:8000",
-      "label": "http://195.201.83.167:8000",
+      "label": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6883,7 +6883,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "6618.057561 GONKA",
-          "subject": "http://138.201.121.253:8000"
+          "subject": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0"
         },
         {
           "address": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
@@ -6972,7 +6972,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://138.201.121.253:8000",
-      "label": "http://138.201.121.253:8000",
+      "label": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7014,7 +7014,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "5645.801437 GONKA",
-          "subject": "http://57.131.17.61:8000"
+          "subject": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv"
         },
         {
           "address": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
@@ -7050,7 +7050,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "http://57.131.17.61:8000"
+          "subject": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv"
         },
         {
           "address": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
@@ -7103,7 +7103,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://57.131.17.61:8000",
-      "label": "http://57.131.17.61:8000",
+      "label": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -7155,7 +7155,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "5511.598439 GONKA",
-          "subject": "https://gonka.top"
+          "subject": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6"
         },
         {
           "address": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
@@ -7244,7 +7244,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://109.206.182.166:8000",
-      "label": "https://gonka.top",
+      "label": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7300,7 +7300,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "4673.802242 GONKA",
-          "subject": "http://95.217.122.154:8000"
+          "subject": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
         },
         {
           "address": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
@@ -7389,7 +7389,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://95.217.122.154:8000",
-      "label": "http://95.217.122.154:8000",
+      "label": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7431,7 +7431,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "4444.392151 GONKA",
-          "subject": "http://109.206.182.132:8000"
+          "subject": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc"
         },
         {
           "address": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
@@ -7520,7 +7520,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://109.206.182.132:8000",
-      "label": "http://109.206.182.132:8000",
+      "label": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7569,7 +7569,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "4167.200641 GONKA",
-          "subject": "http://159.69.112.72:8000"
+          "subject": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa"
         },
         {
           "address": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
@@ -7658,7 +7658,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://159.69.112.72:8000",
-      "label": "http://159.69.112.72:8000",
+      "label": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7700,7 +7700,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "3396.492512 GONKA",
-          "subject": "http://178.105.166.7:8000"
+          "subject": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu"
         },
         {
           "address": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
@@ -7789,7 +7789,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.105.166.7:8000",
-      "label": "http://178.105.166.7:8000",
+      "label": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7838,7 +7838,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "2731.396085 GONKA",
-          "subject": "http://95.217.47.126:8000"
+          "subject": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws"
         },
         {
           "address": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
@@ -7927,7 +7927,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://95.217.47.126:8000",
-      "label": "http://95.217.47.126:8000",
+      "label": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7976,7 +7976,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "2602.055674 GONKA",
-          "subject": "http://94.130.64.22:8000"
+          "subject": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc"
         },
         {
           "address": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
@@ -8065,7 +8065,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://94.130.64.22:8000",
-      "label": "http://94.130.64.22:8000",
+      "label": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8114,7 +8114,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "2293.694675 GONKA",
-          "subject": "http://gnk.antifreeze.dev:8000"
+          "subject": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg"
         },
         {
           "address": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
@@ -8203,7 +8203,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://gnk.antifreeze.dev:8000",
-      "label": "http://gnk.antifreeze.dev:8000",
+      "label": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8252,7 +8252,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "2034.501081 GONKA",
-          "subject": "http://125.93.200.207:8000"
+          "subject": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq"
         },
         {
           "address": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
@@ -8341,7 +8341,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://125.93.200.207:8000",
-      "label": "http://125.93.200.207:8000",
+      "label": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8383,7 +8383,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1753.409171 GONKA",
-          "subject": "http://198.244.228.95:8000"
+          "subject": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n"
         },
         {
           "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
@@ -8472,7 +8472,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://198.244.228.95:8000",
-      "label": "http://198.244.228.95:8000",
+      "label": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8514,7 +8514,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1017.602508 GONKA",
-          "subject": "http://178.105.165.144:8000"
+          "subject": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x"
         },
         {
           "address": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
@@ -8603,7 +8603,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.105.165.144:8000",
-      "label": "http://178.105.165.144:8000",
+      "label": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8652,7 +8652,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1017.602508 GONKA",
-          "subject": "http://178.105.169.55:8000"
+          "subject": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s"
         },
         {
           "address": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
@@ -8741,7 +8741,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.105.169.55:8000",
-      "label": "http://178.105.169.55:8000",
+      "label": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8790,7 +8790,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1007.974842 GONKA",
-          "subject": "http://178.105.175.114:8000"
+          "subject": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6"
         },
         {
           "address": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
@@ -8879,7 +8879,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.105.175.114:8000",
-      "label": "http://178.105.175.114:8000",
+      "label": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8928,7 +8928,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "521.637815 GONKA",
-          "subject": "http://185.70.186.176:8000"
+          "subject": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3"
         },
         {
           "address": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
@@ -9017,7 +9017,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://185.70.186.176:8000",
-      "label": "http://185.70.186.176:8000",
+      "label": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9066,7 +9066,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "279.015575 GONKA",
-          "subject": "http://202.78.161.246:8000"
+          "subject": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es"
         },
         {
           "address": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
@@ -9155,7 +9155,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://202.78.161.246:8000",
-      "label": "http://202.78.161.246:8000",
+      "label": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9197,7 +9197,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "276.414091 GONKA",
-          "subject": "http://202.78.161.100:8000"
+          "subject": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct"
         },
         {
           "address": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
@@ -9286,7 +9286,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://202.78.161.100:8000",
-      "label": "http://202.78.161.100:8000",
+      "label": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9335,7 +9335,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "113.864834 GONKA",
-          "subject": "http://20.163.111.183:8000"
+          "subject": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p"
         },
         {
           "address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
@@ -9371,7 +9371,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://20.163.111.183:8000"
+          "subject": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p"
         },
         {
           "address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
@@ -9424,7 +9424,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://20.163.111.183:8000",
-      "label": "http://20.163.111.183:8000",
+      "label": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -9476,7 +9476,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "108.366532 GONKA",
-          "subject": "http://20.171.77.105:8000"
+          "subject": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww"
         },
         {
           "address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
@@ -9512,7 +9512,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "http://20.171.77.105:8000"
+          "subject": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww"
         },
         {
           "address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
@@ -9565,7 +9565,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://20.171.77.105:8000",
-      "label": "http://20.171.77.105:8000",
+      "label": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -9617,7 +9617,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "100.56894 GONKA",
-          "subject": "http://64.236.203.236:8000"
+          "subject": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2"
         },
         {
           "address": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
@@ -9682,7 +9682,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://64.236.203.236:8000",
-      "label": "http://64.236.203.236:8000",
+      "label": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9707,459 +9707,6 @@
       "validatorSecurityContact": "",
       "validatorWebsite": "",
       "voteOption": "did_not_vote",
-      "votingPower": 0
-    },
-    {
-      "address": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
-      "bestPublicName": "",
-      "evidenceBoundary": "public_name_or_metadata_signal",
-      "evidenceClaims": [
-        {
-          "address": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
-          "category": "governance",
-          "caveat": "Vote proves governance action by address, not human owner.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "data/proposal_67_tx_search.json",
-          "sourceType": "proposal_vote",
-          "sourceUrl": "data/proposal_67_tx_search.json",
-          "sourceValue": "yes",
-          "subject": "Unknown public owner"
-        }
-      ],
-      "gnsNames": [],
-      "inferenceUrl": "",
-      "label": "Unknown public owner",
-      "nextActions": [
-        "corroborate voter owner"
-      ],
-      "publicNameSources": [],
-      "reverseGnsNames": [],
-      "roles": [
-        "voter"
-      ],
-      "totalCompensationGonka": 0,
-      "validatorDetails": "",
-      "validatorIdentity": "",
-      "validatorMoniker": "",
-      "validatorOperatorAddress": "",
-      "validatorSecurityContact": "",
-      "validatorWebsite": "",
-      "voteOption": "yes",
-      "votingPower": 0
-    },
-    {
-      "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-      "bestPublicName": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
-      "evidenceBoundary": "public_name_or_metadata_signal",
-      "evidenceClaims": [
-        {
-          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-          "category": "public_identity",
-          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "matched_validator_moniker",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
-          "subject": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu"
-        },
-        {
-          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-          "category": "public_identity",
-          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "matched_validator_moniker",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
-          "subject": "public_label:gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu"
-        },
-        {
-          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-          "category": "governance",
-          "caveat": "Vote proves governance action by address, not human owner.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "data/proposal_67_tx_search.json",
-          "sourceType": "proposal_vote",
-          "sourceUrl": "data/proposal_67_tx_search.json",
-          "sourceValue": "no_with_veto",
-          "subject": "http://20.88.58.210:8000"
-        },
-        {
-          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e268/epoch268_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e268/epoch268_commits.json",
-          "sourceValue": "e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=3744",
-          "subject": "0355a66e7fc115014b4d6e7ee5fd9405ffa91f1a8d36cd337a1054265944c215b6"
-        },
-        {
-          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e269/epoch269_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e269/epoch269_commits.json",
-          "sourceValue": "e269 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=4160",
-          "subject": "0355a66e7fc115014b4d6e7ee5fd9405ffa91f1a8d36cd337a1054265944c215b6"
-        },
-        {
-          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e273/epoch273_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e273/epoch273_commits.json",
-          "sourceValue": "e273 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=2048",
-          "subject": "0355a66e7fc115014b4d6e7ee5fd9405ffa91f1a8d36cd337a1054265944c215b6"
-        },
-        {
-          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e274/epoch274_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e274/epoch274_commits.json",
-          "sourceValue": "e274 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1088",
-          "subject": "0355a66e7fc115014b4d6e7ee5fd9405ffa91f1a8d36cd337a1054265944c215b6"
-        },
-        {
-          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
-          "category": "public_infrastructure",
-          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "participant_inference_url",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "http://20.88.58.210:8000",
-          "subject": "http://20.88.58.210:8000"
-        }
-      ],
-      "gnsNames": [],
-      "inferenceUrl": "http://20.88.58.210:8000",
-      "label": "http://20.88.58.210:8000",
-      "nextActions": [
-        "corroborate voter owner"
-      ],
-      "publicNameSources": [
-        {
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "data/validators.json",
-          "sourceType": "validator_moniker",
-          "value": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu"
-        },
-        {
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "data/participants_by_address.json",
-          "sourceType": "participant_inference_url",
-          "value": "http://20.88.58.210:8000"
-        }
-      ],
-      "reverseGnsNames": [],
-      "roles": [
-        "voter"
-      ],
-      "totalCompensationGonka": 0,
-      "validatorDetails": "",
-      "validatorIdentity": "",
-      "validatorMoniker": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
-      "validatorOperatorAddress": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
-      "validatorSecurityContact": "",
-      "validatorWebsite": "",
-      "voteOption": "no_with_veto",
-      "votingPower": 0
-    },
-    {
-      "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-      "bestPublicName": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
-      "evidenceBoundary": "public_name_or_metadata_signal",
-      "evidenceClaims": [
-        {
-          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-          "category": "public_identity",
-          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "matched_validator_moniker",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
-          "subject": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk"
-        },
-        {
-          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-          "category": "public_identity",
-          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "matched_validator_moniker",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
-          "subject": "public_label:gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk"
-        },
-        {
-          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-          "category": "governance",
-          "caveat": "Vote proves governance action by address, not human owner.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "data/proposal_67_tx_search.json",
-          "sourceType": "proposal_vote",
-          "sourceUrl": "data/proposal_67_tx_search.json",
-          "sourceValue": "no_with_veto",
-          "subject": "http://78.46.89.87:8000"
-        },
-        {
-          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-          "category": "public_infrastructure",
-          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "participant_inference_url",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "http://78.46.89.87:8000",
-          "subject": "http://78.46.89.87:8000"
-        },
-        {
-          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-          "category": "public_infrastructure",
-          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "participant_inference_url",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "http://78.46.89.87:8000",
-          "subject": "inference_endpoint:http://78.46.89.87:8000"
-        },
-        {
-          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-          "category": "public_infrastructure",
-          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "data/public_identity_signals.json",
-          "sourceType": "participant_inference_url",
-          "sourceUrl": "data/public_identity_signals.json",
-          "sourceValue": "http://78.46.89.87:8000",
-          "subject": "url:http://78.46.89.87:8000"
-        },
-        {
-          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-          "category": "public_infrastructure",
-          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "data/public_identity_signals.json",
-          "sourceType": "same_inference_host",
-          "sourceUrl": "data/public_identity_signals.json",
-          "sourceValue": "78.46.89.87",
-          "subject": "host:78.46.89.87"
-        },
-        {
-          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
-          "category": "public_identity",
-          "caveat": "Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "history/Gonka Devs/messages17.html",
-          "sourceType": "telegram_address_context",
-          "sourceUrl": "history/Gonka Devs/messages17.html",
-          "sourceValue": "\u0427\u0442\u043e \u0434\u0443\u043c\u0430\u0435\u0442\u0435 \u043f\u0440\u043e \u043a\u0440\u0443\u043f\u043d\u0435\u0439\u0448\u0435\u0433\u043e \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u0430 gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum? \u043f\u0440\u043e (\u043d\u0435)\u0443\u0447\u0435\u0442 \u0435\u0433\u043e \u0433\u043e\u043b\u043e\u0441\u0430 \u0432 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u043d\u0438\u0438?",
-          "subject": "Mykola"
-        }
-      ],
-      "gnsNames": [],
-      "inferenceUrl": "http://78.46.89.87:8000",
-      "label": "http://78.46.89.87:8000",
-      "nextActions": [
-        "corroborate voter owner"
-      ],
-      "publicNameSources": [
-        {
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "data/validators.json",
-          "sourceType": "validator_moniker",
-          "value": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk"
-        },
-        {
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "data/participants_by_address.json",
-          "sourceType": "participant_inference_url",
-          "value": "http://78.46.89.87:8000"
-        }
-      ],
-      "reverseGnsNames": [],
-      "roles": [
-        "voter"
-      ],
-      "totalCompensationGonka": 0,
-      "validatorDetails": "",
-      "validatorIdentity": "",
-      "validatorMoniker": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
-      "validatorOperatorAddress": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
-      "validatorSecurityContact": "",
-      "validatorWebsite": "",
-      "voteOption": "no_with_veto",
-      "votingPower": 0
-    },
-    {
-      "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-      "bestPublicName": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
-      "evidenceBoundary": "public_name_or_metadata_signal",
-      "evidenceClaims": [
-        {
-          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-          "category": "public_identity",
-          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "matched_validator_moniker",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
-          "subject": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm"
-        },
-        {
-          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-          "category": "public_identity",
-          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "docs/data/dashboard.json",
-          "sourceType": "matched_validator_moniker",
-          "sourceUrl": "docs/data/dashboard.json",
-          "sourceValue": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
-          "subject": "public_label:gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm"
-        },
-        {
-          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-          "category": "governance",
-          "caveat": "Vote proves governance action by address, not human owner.",
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "data/proposal_67_tx_search.json",
-          "sourceType": "proposal_vote",
-          "sourceUrl": "data/proposal_67_tx_search.json",
-          "sourceValue": "no_with_veto",
-          "subject": "http://95.216.112.248:8000"
-        },
-        {
-          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e266/epoch266_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e266/epoch266_commits.json",
-          "sourceValue": "e266 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1824",
-          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
-        },
-        {
-          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e267/epoch267_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e267/epoch267_commits.json",
-          "sourceValue": "e267 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1824",
-          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
-        },
-        {
-          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e269/epoch269_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e269/epoch269_commits.json",
-          "sourceValue": "e269 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1824",
-          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
-        },
-        {
-          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e270/epoch270_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e270/epoch270_commits.json",
-          "sourceValue": "e270 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1952",
-          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
-        },
-        {
-          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e271/epoch271_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e271/epoch271_commits.json",
-          "sourceValue": "e271 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1920",
-          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
-        }
-      ],
-      "gnsNames": [],
-      "inferenceUrl": "http://95.216.112.248:8000",
-      "label": "http://95.216.112.248:8000",
-      "nextActions": [
-        "corroborate voter owner"
-      ],
-      "publicNameSources": [
-        {
-          "confidence": "high",
-          "isAttributionProof": false,
-          "sourceFile": "data/validators.json",
-          "sourceType": "validator_moniker",
-          "value": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm"
-        },
-        {
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "data/participants_by_address.json",
-          "sourceType": "participant_inference_url",
-          "value": "http://95.216.112.248:8000"
-        }
-      ],
-      "reverseGnsNames": [],
-      "roles": [
-        "voter"
-      ],
-      "totalCompensationGonka": 0,
-      "validatorDetails": "",
-      "validatorIdentity": "",
-      "validatorMoniker": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
-      "validatorOperatorAddress": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
-      "validatorSecurityContact": "",
-      "validatorWebsite": "",
-      "voteOption": "no_with_veto",
       "votingPower": 0
     },
     {
@@ -10201,7 +9748,7 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "https:/gonka.top"
+          "subject": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6"
         },
         {
           "address": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
@@ -10266,7 +9813,7 @@
       ],
       "gnsNames": [],
       "inferenceUrl": "http://178.105.170.135:8000",
-      "label": "https:/gonka.top",
+      "label": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -10304,6 +9851,459 @@
       "validatorOperatorAddress": "gonkavaloper16r08lhm50zwjddmslfw2344z67r70vqur0um8h",
       "validatorSecurityContact": "",
       "validatorWebsite": "https:/gonka.top",
+      "voteOption": "no_with_veto",
+      "votingPower": 0
+    },
+    {
+      "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+      "bestPublicName": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
+      "evidenceBoundary": "public_name_or_metadata_signal",
+      "evidenceClaims": [
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "category": "public_identity",
+          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "matched_validator_moniker",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
+          "subject": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk"
+        },
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "category": "public_identity",
+          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "matched_validator_moniker",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
+          "subject": "public_label:gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk"
+        },
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "category": "governance",
+          "caveat": "Vote proves governance action by address, not human owner.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/proposal_67_tx_search.json",
+          "sourceType": "proposal_vote",
+          "sourceUrl": "data/proposal_67_tx_search.json",
+          "sourceValue": "no_with_veto",
+          "subject": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum"
+        },
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "category": "public_infrastructure",
+          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "participant_inference_url",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "http://78.46.89.87:8000",
+          "subject": "http://78.46.89.87:8000"
+        },
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "category": "public_infrastructure",
+          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "participant_inference_url",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "http://78.46.89.87:8000",
+          "subject": "inference_endpoint:http://78.46.89.87:8000"
+        },
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "category": "public_infrastructure",
+          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "data/public_identity_signals.json",
+          "sourceType": "participant_inference_url",
+          "sourceUrl": "data/public_identity_signals.json",
+          "sourceValue": "http://78.46.89.87:8000",
+          "subject": "url:http://78.46.89.87:8000"
+        },
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "category": "public_infrastructure",
+          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "data/public_identity_signals.json",
+          "sourceType": "same_inference_host",
+          "sourceUrl": "data/public_identity_signals.json",
+          "sourceValue": "78.46.89.87",
+          "subject": "host:78.46.89.87"
+        },
+        {
+          "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+          "category": "public_identity",
+          "caveat": "Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages17.html",
+          "sourceType": "telegram_address_context",
+          "sourceUrl": "history/Gonka Devs/messages17.html",
+          "sourceValue": "\u0427\u0442\u043e \u0434\u0443\u043c\u0430\u0435\u0442\u0435 \u043f\u0440\u043e \u043a\u0440\u0443\u043f\u043d\u0435\u0439\u0448\u0435\u0433\u043e \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u0430 gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum? \u043f\u0440\u043e (\u043d\u0435)\u0443\u0447\u0435\u0442 \u0435\u0433\u043e \u0433\u043e\u043b\u043e\u0441\u0430 \u0432 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u043d\u0438\u0438?",
+          "subject": "Mykola"
+        }
+      ],
+      "gnsNames": [],
+      "inferenceUrl": "http://78.46.89.87:8000",
+      "label": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+      "nextActions": [
+        "corroborate voter owner"
+      ],
+      "publicNameSources": [
+        {
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/validators.json",
+          "sourceType": "validator_moniker",
+          "value": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk"
+        },
+        {
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "data/participants_by_address.json",
+          "sourceType": "participant_inference_url",
+          "value": "http://78.46.89.87:8000"
+        }
+      ],
+      "reverseGnsNames": [],
+      "roles": [
+        "voter"
+      ],
+      "totalCompensationGonka": 0,
+      "validatorDetails": "",
+      "validatorIdentity": "",
+      "validatorMoniker": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
+      "validatorOperatorAddress": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
+      "validatorSecurityContact": "",
+      "validatorWebsite": "",
+      "voteOption": "no_with_veto",
+      "votingPower": 0
+    },
+    {
+      "address": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
+      "bestPublicName": "",
+      "evidenceBoundary": "public_name_or_metadata_signal",
+      "evidenceClaims": [
+        {
+          "address": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
+          "category": "governance",
+          "caveat": "Vote proves governance action by address, not human owner.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/proposal_67_tx_search.json",
+          "sourceType": "proposal_vote",
+          "sourceUrl": "data/proposal_67_tx_search.json",
+          "sourceValue": "yes",
+          "subject": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2"
+        }
+      ],
+      "gnsNames": [],
+      "inferenceUrl": "",
+      "label": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
+      "nextActions": [
+        "corroborate voter owner"
+      ],
+      "publicNameSources": [],
+      "reverseGnsNames": [],
+      "roles": [
+        "voter"
+      ],
+      "totalCompensationGonka": 0,
+      "validatorDetails": "",
+      "validatorIdentity": "",
+      "validatorMoniker": "",
+      "validatorOperatorAddress": "",
+      "validatorSecurityContact": "",
+      "validatorWebsite": "",
+      "voteOption": "yes",
+      "votingPower": 0
+    },
+    {
+      "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+      "bestPublicName": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
+      "evidenceBoundary": "public_name_or_metadata_signal",
+      "evidenceClaims": [
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "category": "public_identity",
+          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "matched_validator_moniker",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
+          "subject": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu"
+        },
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "category": "public_identity",
+          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "matched_validator_moniker",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
+          "subject": "public_label:gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu"
+        },
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "category": "governance",
+          "caveat": "Vote proves governance action by address, not human owner.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/proposal_67_tx_search.json",
+          "sourceType": "proposal_vote",
+          "sourceUrl": "data/proposal_67_tx_search.json",
+          "sourceValue": "no_with_veto",
+          "subject": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3"
+        },
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e268/epoch268_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e268/epoch268_commits.json",
+          "sourceValue": "e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=3744",
+          "subject": "0355a66e7fc115014b4d6e7ee5fd9405ffa91f1a8d36cd337a1054265944c215b6"
+        },
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e269/epoch269_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e269/epoch269_commits.json",
+          "sourceValue": "e269 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=4160",
+          "subject": "0355a66e7fc115014b4d6e7ee5fd9405ffa91f1a8d36cd337a1054265944c215b6"
+        },
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e273/epoch273_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e273/epoch273_commits.json",
+          "sourceValue": "e273 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=2048",
+          "subject": "0355a66e7fc115014b4d6e7ee5fd9405ffa91f1a8d36cd337a1054265944c215b6"
+        },
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e274/epoch274_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e274/epoch274_commits.json",
+          "sourceValue": "e274 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1088",
+          "subject": "0355a66e7fc115014b4d6e7ee5fd9405ffa91f1a8d36cd337a1054265944c215b6"
+        },
+        {
+          "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+          "category": "public_infrastructure",
+          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "participant_inference_url",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "http://20.88.58.210:8000",
+          "subject": "http://20.88.58.210:8000"
+        }
+      ],
+      "gnsNames": [],
+      "inferenceUrl": "http://20.88.58.210:8000",
+      "label": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+      "nextActions": [
+        "corroborate voter owner"
+      ],
+      "publicNameSources": [
+        {
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/validators.json",
+          "sourceType": "validator_moniker",
+          "value": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu"
+        },
+        {
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "data/participants_by_address.json",
+          "sourceType": "participant_inference_url",
+          "value": "http://20.88.58.210:8000"
+        }
+      ],
+      "reverseGnsNames": [],
+      "roles": [
+        "voter"
+      ],
+      "totalCompensationGonka": 0,
+      "validatorDetails": "",
+      "validatorIdentity": "",
+      "validatorMoniker": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
+      "validatorOperatorAddress": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
+      "validatorSecurityContact": "",
+      "validatorWebsite": "",
+      "voteOption": "no_with_veto",
+      "votingPower": 0
+    },
+    {
+      "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+      "bestPublicName": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
+      "evidenceBoundary": "public_name_or_metadata_signal",
+      "evidenceClaims": [
+        {
+          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "category": "public_identity",
+          "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "matched_validator_moniker",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
+          "subject": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm"
+        },
+        {
+          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "category": "public_identity",
+          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "docs/data/dashboard.json",
+          "sourceType": "matched_validator_moniker",
+          "sourceUrl": "docs/data/dashboard.json",
+          "sourceValue": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
+          "subject": "public_label:gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm"
+        },
+        {
+          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "category": "governance",
+          "caveat": "Vote proves governance action by address, not human owner.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/proposal_67_tx_search.json",
+          "sourceType": "proposal_vote",
+          "sourceUrl": "data/proposal_67_tx_search.json",
+          "sourceValue": "no_with_veto",
+          "subject": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu"
+        },
+        {
+          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e266/epoch266_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e266/epoch266_commits.json",
+          "sourceValue": "e266 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1824",
+          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
+        },
+        {
+          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e267/epoch267_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e267/epoch267_commits.json",
+          "sourceValue": "e267 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1824",
+          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
+        },
+        {
+          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e269/epoch269_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e269/epoch269_commits.json",
+          "sourceValue": "e269 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1824",
+          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
+        },
+        {
+          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e270/epoch270_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e270/epoch270_commits.json",
+          "sourceValue": "e270 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1952",
+          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
+        },
+        {
+          "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e271/epoch271_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e271/epoch271_commits.json",
+          "sourceValue": "e271 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1920",
+          "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
+        }
+      ],
+      "gnsNames": [],
+      "inferenceUrl": "http://95.216.112.248:8000",
+      "label": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+      "nextActions": [
+        "corroborate voter owner"
+      ],
+      "publicNameSources": [
+        {
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/validators.json",
+          "sourceType": "validator_moniker",
+          "value": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm"
+        },
+        {
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "data/participants_by_address.json",
+          "sourceType": "participant_inference_url",
+          "value": "http://95.216.112.248:8000"
+        }
+      ],
+      "reverseGnsNames": [],
+      "roles": [
+        "voter"
+      ],
+      "totalCompensationGonka": 0,
+      "validatorDetails": "",
+      "validatorIdentity": "",
+      "validatorMoniker": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
+      "validatorOperatorAddress": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
+      "validatorSecurityContact": "",
+      "validatorWebsite": "",
       "voteOption": "no_with_veto",
       "votingPower": 0
     }

@@ -13,7 +13,7 @@ This report normalizes public naming sources for proposal #67 addresses. It uses
 
 ## Proposal Addresses With Public Names
 
-### ancapex | Mine from $1, no losses from node failures
+### ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
 - Roles: recipient, voter; compensation: 66487.744752 GONKA; voting power: 28865; vote: no_with_veto
@@ -30,7 +30,7 @@ Public sources:
 - validator_identity (high, proof): B22258DF68546529
 - participant_inference_url (medium, signal): http://89.149.242.149:8000
 
-### Arturs Plisko · Hyperfusion
+### Arturs Plisko · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 
 - Address: `gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p`
 - Roles: voter; compensation: 0 GONKA; voting power: 5395; vote: no_with_veto
@@ -47,7 +47,7 @@ Public sources:
 - validator_identity (high, proof): 7B07CCF42FA50009
 - participant_inference_url (medium, signal): http://46.4.101.189:8000
 
-### gonka-3
+### gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
 
 - Address: `gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5`
 - Roles: recipient; compensation: 3018.840187 GONKA; voting power: 0; vote: did_not_vote
@@ -64,7 +64,7 @@ Public sources:
 - validator_identity (high, proof): 673C81B66A67ED67
 - participant_inference_url (medium, signal): https://node3.gonka.ai
 
-### Formula x AI
+### Formula x AI · gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra
 
 - Address: `gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra`
 - Roles: recipient; compensation: 1166.439756 GONKA; voting power: 0; vote: did_not_vote
@@ -80,7 +80,7 @@ Public sources:
 - validator_website (medium, signal): https://formulaxpool.com
 - participant_inference_url (medium, signal): http://162.55.232.115:8000
 
-### gonka-1
+### gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
 
 - Address: `gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le`
 - Roles: recipient; compensation: 1025.259358 GONKA; voting power: 0; vote: did_not_vote
@@ -97,7 +97,7 @@ Public sources:
 - validator_identity (high, proof): 673C81B66A67ED67
 - participant_inference_url (medium, signal): http://node1.gonka.ai:8000
 
-### asd.gnk
+### asd.gnk · gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 
 - Address: `gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4`
 - Roles: voter; compensation: 0 GONKA; voting power: 0; vote: no_with_veto
@@ -118,7 +118,7 @@ Public sources:
 - gns_name (high, proof): wat.gnk
 - gns_name (high, proof): sosnov.gnk
 
-### Votkon · http://89.169.97.113:8000
+### Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 
 - Address: `gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg`
 - Roles: recipient, voter; compensation: 73073.708453 GONKA; voting power: 92840; vote: yes
@@ -133,7 +133,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9
 - participant_inference_url (medium, signal): http://89.169.97.113:8000
 
-### http://54.38.118.143:8000
+### gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
 
 - Address: `gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr`
 - Roles: recipient, voter; compensation: 52290.195676 GONKA; voting power: 86433; vote: yes
@@ -148,7 +148,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1gvrrhjmy4w4mayvs2s5l23edj8ertcmt32aj4w
 - participant_inference_url (medium, signal): http://54.38.118.143:8000
 
-### http://178.105.174.27:8000
+### gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 
 - Address: `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`
 - Roles: recipient, voter; compensation: 11262.520198 GONKA; voting power: 57838; vote: yes
@@ -162,7 +162,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://178.105.174.27:8000
 
-### http://148.113.47.235:8000
+### gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
 
 - Address: `gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt`
 - Roles: recipient, voter; compensation: 1805.142498 GONKA; voting power: 31217; vote: yes
@@ -177,7 +177,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
 - participant_inference_url (medium, signal): http://148.113.47.235:8000
 
-### http://network002.kaitaku.ai:8000
+### gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0
 
 - Address: `gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0`
 - Roles: voter; compensation: 0 GONKA; voting power: 31063; vote: no_with_veto
@@ -192,7 +192,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1d694r00czmq75txghwjcuk07lxvc8d4e2gps2z
 - participant_inference_url (medium, signal): http://network002.kaitaku.ai:8000
 
-### http://network000.kaitaku.ai:8000
+### gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2
 
 - Address: `gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2`
 - Roles: recipient, voter; compensation: 11021.18308 GONKA; voting power: 25278; vote: no_with_veto
@@ -207,7 +207,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper168rtjfkszuhcggg4dfyse4yh7xn9zwfgrn8588
 - participant_inference_url (medium, signal): http://network000.kaitaku.ai:8000
 
-### http://94.237.52.191:8000
+### gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj
 
 - Address: `gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj`
 - Roles: voter; compensation: 0 GONKA; voting power: 20647; vote: yes
@@ -222,7 +222,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1nmn039cgpkhmkzekpkfz3nkv9tcjckpnf6rr5l
 - participant_inference_url (medium, signal): http://94.237.52.191:8000
 
-### http://148.113.47.71:8000
+### gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz
 
 - Address: `gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz`
 - Roles: recipient, voter; compensation: 1575.513417 GONKA; voting power: 19974; vote: yes
@@ -237,7 +237,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1hwvel7n3zuk6wruefuzc356l9myske9shc8fy0
 - participant_inference_url (medium, signal): http://148.113.47.71:8000
 
-### http://65.108.198.21:8000
+### gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
 
 - Address: `gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx`
 - Roles: recipient, voter; compensation: 2392.222959 GONKA; voting power: 4565; vote: no_with_veto
@@ -252,7 +252,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1zktn8j65wlys8a8e38hqhf4y3x6m4x047s835t
 - participant_inference_url (medium, signal): http://65.108.198.21:8000
 
-### http://84.32.59.212:8000
+### gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl
 
 - Address: `gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl`
 - Roles: voter; compensation: 0 GONKA; voting power: 556; vote: no_with_veto
@@ -267,7 +267,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1qwfrtz9c7kcrfkrrlne2pkcye74mj6ced3h2pj
 - participant_inference_url (medium, signal): http://84.32.59.212:8000
 
-### http://84.32.185.226:8000
+### gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf
 
 - Address: `gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf`
 - Roles: voter; compensation: 0 GONKA; voting power: 490; vote: no_with_veto
@@ -282,7 +282,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1m58jds005cttwq2vt0p7yk6vy2aqg254yq3xky
 - participant_inference_url (medium, signal): http://84.32.185.226:8000
 
-### http://69.48.159.137:8000/
+### gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5
 
 - Address: `gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5`
 - Roles: recipient, voter; compensation: 30.990429 GONKA; voting power: 278; vote: no_with_veto
@@ -297,7 +297,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1gyk0aahvr3qeju4zx0nplfreej6cy4jj28pt0e
 - participant_inference_url (medium, signal): http://69.48.159.137:8000/
 
-### http://135.181.56.61:8000
+### gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv
 
 - Address: `gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv`
 - Roles: recipient; compensation: 158541.879456 GONKA; voting power: 0; vote: did_not_vote
@@ -312,7 +312,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1qa90tgczc0k5dvk4l5nvlf5y6phgm6mgk2pw9p
 - participant_inference_url (medium, signal): http://135.181.56.61:8000
 
-### http://54.37.131.156:8000
+### gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu
 
 - Address: `gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu`
 - Roles: recipient; compensation: 101147.807219 GONKA; voting power: 0; vote: did_not_vote
@@ -326,7 +326,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://54.37.131.156:8000
 
-### http://65.21.232.177:8000
+### gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu
 
 - Address: `gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu`
 - Roles: recipient; compensation: 96601.320933 GONKA; voting power: 0; vote: did_not_vote
@@ -341,7 +341,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1uhqpup9fev3zahlx6n326lp0krznc6uswthag3
 - participant_inference_url (medium, signal): http://65.21.232.177:8000
 
-### http://57.128.30.101:8000
+### gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz
 
 - Address: `gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz`
 - Roles: recipient; compensation: 79247.555227 GONKA; voting power: 0; vote: did_not_vote
@@ -355,7 +355,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://57.128.30.101:8000
 
-### http://178.104.95.5:8000
+### gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6
 
 - Address: `gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6`
 - Roles: recipient; compensation: 39809.676543 GONKA; voting power: 0; vote: did_not_vote
@@ -370,7 +370,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h
 - participant_inference_url (medium, signal): http://178.104.95.5:8000
 
-### http://95.217.121.189:8000
+### gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax
 
 - Address: `gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax`
 - Roles: recipient; compensation: 33750.579636 GONKA; voting power: 0; vote: did_not_vote
@@ -385,7 +385,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1jrgm47v5eg876udmzg6j6glqcsd5x0vkxcjx2t
 - participant_inference_url (medium, signal): http://95.217.121.189:8000
 
-### http://178.105.170.135:8000
+### gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
 
 - Address: `gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau`
 - Roles: recipient; compensation: 20610.390028 GONKA; voting power: 0; vote: did_not_vote
@@ -400,7 +400,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23
 - participant_inference_url (medium, signal): http://178.105.170.135:8000
 
-### A? · http://136.243.110.227:8000
+### A? · gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Roles: recipient; compensation: 18234.887511 GONKA; voting power: 0; vote: did_not_vote
@@ -414,7 +414,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://136.243.110.227:8000
 
-### http://94.130.152.246:8000
+### gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw
 
 - Address: `gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw`
 - Roles: recipient; compensation: 17630.158097 GONKA; voting power: 0; vote: did_not_vote
@@ -429,7 +429,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1yal0ysgzc860zt3y8cds8656tnueusgy8f6tpr
 - participant_inference_url (medium, signal): http://94.130.152.246:8000
 
-### http://195.201.192.170:8000
+### gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y
 
 - Address: `gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y`
 - Roles: recipient; compensation: 13958.367773 GONKA; voting power: 0; vote: did_not_vote
@@ -444,7 +444,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1830lqug50lse998x2lakk4pj5ypfumz5aap9cf
 - participant_inference_url (medium, signal): http://195.201.192.170:8000
 
-### http://35.89.168.230:8000
+### gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239
 
 - Address: `gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239`
 - Roles: recipient; compensation: 12612.234866 GONKA; voting power: 0; vote: did_not_vote
@@ -459,7 +459,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1ujnc662v6g69jm6fgxnr79a2m7ehzeutn55dxg
 - participant_inference_url (medium, signal): http://35.89.168.230:8000
 
-### http://178.105.172.102:8000
+### gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw
 
 - Address: `gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw`
 - Roles: recipient; compensation: 11688.555563 GONKA; voting power: 0; vote: did_not_vote
@@ -474,7 +474,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1007g0ut3u4wjkay9hegqfev4pj90qgexjs8u0r
 - participant_inference_url (medium, signal): http://178.105.172.102:8000
 
-### http://204.12.168.89:8000
+### gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9
 
 - Address: `gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9`
 - Roles: recipient; compensation: 11366.419254 GONKA; voting power: 0; vote: did_not_vote
@@ -489,7 +489,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuq36d8ug
 - participant_inference_url (medium, signal): http://204.12.168.89:8000
 
-### http://88.99.213.222:8000
+### gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 
 - Address: `gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4`
 - Roles: recipient, voter; compensation: 10934.181496 GONKA; voting power: 0; vote: no_with_veto
@@ -503,7 +503,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://88.99.213.222:8000
 
-### http://95.217.35.48:8000
+### gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje
 
 - Address: `gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje`
 - Roles: recipient; compensation: 10456.612261 GONKA; voting power: 0; vote: did_not_vote
@@ -517,7 +517,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://95.217.35.48:8000
 
-### http://94.130.143.155:8000
+### gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds
 
 - Address: `gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds`
 - Roles: recipient; compensation: 9768.694504 GONKA; voting power: 0; vote: did_not_vote
@@ -532,7 +532,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1xwkesaxvdadh9wt9yyladu0r260s7whkrc8v6a
 - participant_inference_url (medium, signal): http://94.130.143.155:8000
 
-### http://88.198.4.29:8000
+### gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np
 
 - Address: `gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np`
 - Roles: recipient; compensation: 9423.072516 GONKA; voting power: 0; vote: did_not_vote
@@ -547,7 +547,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper125n6kr5gvdup0lndfkps7t6rd6592pantrekyv
 - participant_inference_url (medium, signal): http://88.198.4.29:8000
 
-### http://136.243.111.105:8000
+### gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2
 
 - Address: `gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2`
 - Roles: recipient; compensation: 8441.669468 GONKA; voting power: 0; vote: did_not_vote
@@ -561,7 +561,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://136.243.111.105:8000
 
-### http://195.201.83.167:8000
+### gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d
 
 - Address: `gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d`
 - Roles: recipient; compensation: 6820.652574 GONKA; voting power: 0; vote: did_not_vote
@@ -576,7 +576,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper18xeqnspxpg2vncufnjne485rkaagwvz7jh45cq
 - participant_inference_url (medium, signal): http://195.201.83.167:8000
 
-### http://138.201.121.253:8000
+### gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0
 
 - Address: `gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0`
 - Roles: recipient; compensation: 6618.057561 GONKA; voting power: 0; vote: did_not_vote
@@ -590,7 +590,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://138.201.121.253:8000
 
-### http://57.131.17.61:8000
+### gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv
 
 - Address: `gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv`
 - Roles: recipient, voter; compensation: 5645.801437 GONKA; voting power: 0; vote: yes
@@ -605,7 +605,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1scskt6wpnjnumsah6kjphmdu87vjgvcx8nyy3p
 - participant_inference_url (medium, signal): http://57.131.17.61:8000
 
-### https://gonka.top
+### gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6
 
 - Address: `gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6`
 - Roles: recipient; compensation: 5511.598439 GONKA; voting power: 0; vote: did_not_vote
@@ -621,7 +621,7 @@ Public sources:
 - validator_website (medium, signal): https://gonka.top
 - participant_inference_url (medium, signal): http://109.206.182.166:8000
 
-### http://95.217.122.154:8000
+### gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e
 
 - Address: `gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e`
 - Roles: recipient; compensation: 4673.802242 GONKA; voting power: 0; vote: did_not_vote
@@ -635,7 +635,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://95.217.122.154:8000
 
-### http://109.206.182.132:8000
+### gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc
 
 - Address: `gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc`
 - Roles: recipient; compensation: 4444.392151 GONKA; voting power: 0; vote: did_not_vote
@@ -650,7 +650,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper14ljarev2nlzu4ej50vx7ylj2rvg4n20f0qmr84
 - participant_inference_url (medium, signal): http://109.206.182.132:8000
 
-### http://159.69.112.72:8000
+### gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa
 
 - Address: `gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa`
 - Roles: recipient; compensation: 4167.200641 GONKA; voting power: 0; vote: did_not_vote
@@ -664,7 +664,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://159.69.112.72:8000
 
-### http://178.105.166.7:8000
+### gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu
 
 - Address: `gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu`
 - Roles: recipient; compensation: 3396.492512 GONKA; voting power: 0; vote: did_not_vote
@@ -679,7 +679,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1007n977a7uda3pd9m6hftw8xcql0tc2089tun3
 - participant_inference_url (medium, signal): http://178.105.166.7:8000
 
-### http://95.217.47.126:8000
+### gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws
 
 - Address: `gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws`
 - Roles: recipient; compensation: 2731.396085 GONKA; voting power: 0; vote: did_not_vote
@@ -694,7 +694,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1tl5m3vuqsx333v7095ymwjdc4vdk2wd9l5x8ea
 - participant_inference_url (medium, signal): http://95.217.47.126:8000
 
-### http://94.130.64.22:8000
+### gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc
 
 - Address: `gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc`
 - Roles: recipient; compensation: 2602.055674 GONKA; voting power: 0; vote: did_not_vote
@@ -709,7 +709,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper14g78ez2zy08k8sssue483zmfpgd4qut87clch4
 - participant_inference_url (medium, signal): http://94.130.64.22:8000
 
-### http://gnk.antifreeze.dev:8000
+### gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg
 
 - Address: `gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg`
 - Roles: recipient; compensation: 2293.694675 GONKA; voting power: 0; vote: did_not_vote
@@ -724,7 +724,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxqp8vl9
 - participant_inference_url (medium, signal): http://gnk.antifreeze.dev:8000
 
-### http://125.93.200.207:8000
+### gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq
 
 - Address: `gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq`
 - Roles: recipient; compensation: 2034.501081 GONKA; voting power: 0; vote: did_not_vote
@@ -738,7 +738,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://125.93.200.207:8000
 
-### http://198.244.228.95:8000
+### gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n
 
 - Address: `gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n`
 - Roles: recipient; compensation: 1753.409171 GONKA; voting power: 0; vote: did_not_vote
@@ -752,7 +752,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://198.244.228.95:8000
 
-### http://178.105.165.144:8000
+### gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x
 
 - Address: `gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x`
 - Roles: recipient; compensation: 1017.602508 GONKA; voting power: 0; vote: did_not_vote
@@ -767,7 +767,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper10070xwkwv00sulsa7gdfwkgh8w069stkwjckjt
 - participant_inference_url (medium, signal): http://178.105.165.144:8000
 
-### http://178.105.169.55:8000
+### gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s
 
 - Address: `gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s`
 - Roles: recipient; compensation: 1017.602508 GONKA; voting power: 0; vote: did_not_vote
@@ -782,7 +782,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper10075dz43h94zhqu5hwdj3nyjay6v8mzwsphyca
 - participant_inference_url (medium, signal): http://178.105.169.55:8000
 
-### http://178.105.175.114:8000
+### gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6
 
 - Address: `gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6`
 - Roles: recipient; compensation: 1007.974842 GONKA; voting power: 0; vote: did_not_vote
@@ -797,7 +797,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1007lnkyhdh7aq0vjdcdwcerkdh4yy85rcmr2lh
 - participant_inference_url (medium, signal): http://178.105.175.114:8000
 
-### http://185.70.186.176:8000
+### gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3
 
 - Address: `gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3`
 - Roles: recipient; compensation: 521.637815 GONKA; voting power: 0; vote: did_not_vote
@@ -812,7 +812,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfwgau84u
 - participant_inference_url (medium, signal): http://185.70.186.176:8000
 
-### http://202.78.161.246:8000
+### gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es
 
 - Address: `gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es`
 - Roles: recipient; compensation: 279.015575 GONKA; voting power: 0; vote: did_not_vote
@@ -826,7 +826,7 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://202.78.161.246:8000
 
-### http://202.78.161.100:8000
+### gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct
 
 - Address: `gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct`
 - Roles: recipient; compensation: 276.414091 GONKA; voting power: 0; vote: did_not_vote
@@ -841,7 +841,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper14ef2pxjge75gflqftn7m2wy0xv59gq9uy7350x
 - participant_inference_url (medium, signal): http://202.78.161.100:8000
 
-### http://20.163.111.183:8000
+### gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p
 
 - Address: `gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p`
 - Roles: recipient, voter; compensation: 113.864834 GONKA; voting power: 0; vote: no_with_veto
@@ -856,7 +856,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1fvly5jrewyjmjfgwah3khy9rttq4cqajyeptjv
 - participant_inference_url (medium, signal): http://20.163.111.183:8000
 
-### http://20.171.77.105:8000
+### gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww
 
 - Address: `gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww`
 - Roles: recipient, voter; compensation: 108.366532 GONKA; voting power: 0; vote: no_with_veto
@@ -871,7 +871,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1cuwejs77gectp3n32wg8q27hlsa4m3hqvpcjer
 - participant_inference_url (medium, signal): http://20.171.77.105:8000
 
-### http://64.236.203.236:8000
+### gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2
 
 - Address: `gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2`
 - Roles: recipient; compensation: 100.56894 GONKA; voting power: 0; vote: did_not_vote
@@ -885,22 +885,23 @@ Public sources:
 Public sources:
 - participant_inference_url (medium, signal): http://64.236.203.236:8000
 
-### http://20.88.58.210:8000
+### gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6
 
-- Address: `gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3`
+- Address: `gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6`
 - Roles: voter; compensation: 0 GONKA; voting power: 0; vote: no_with_veto
-- Best public name: gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu
+- Best public name: gonkavaloper16r08lhm50zwjddmslfw2344z67r70vqur0um8h
 - Evidence boundary: public_name_or_metadata_signal
 - GNS: none; reverse: none
-- Validator: gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu | no website | identity none | contact none
-- Inference URL: http://20.88.58.210:8000
+- Validator: gonkavaloper16r08lhm50zwjddmslfw2344z67r70vqur0um8h | https:/gonka.top | identity none | contact none
+- Inference URL: http://178.105.170.135:8000
 - Next actions: corroborate voter owner
 
 Public sources:
-- validator_moniker (high, signal): gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu
-- participant_inference_url (medium, signal): http://20.88.58.210:8000
+- validator_moniker (high, signal): gonkavaloper16r08lhm50zwjddmslfw2344z67r70vqur0um8h
+- validator_website (medium, signal): https:/gonka.top
+- participant_inference_url (medium, signal): http://178.105.170.135:8000
 
-### http://78.46.89.87:8000
+### gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum
 
 - Address: `gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum`
 - Roles: voter; compensation: 0 GONKA; voting power: 0; vote: no_with_veto

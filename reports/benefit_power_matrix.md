@@ -4,12 +4,12 @@ This report ranks addresses by combined compensation benefit, exact archive-deri
 
 ## Highest Priority Rows
 
-### #1 Votkon · http://89.169.97.113:8000
+### #1 Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 
 - Address: `gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg`
 - Compensation: 73073.708453 GONKA; governance power: 92840; vote: yes
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:Votkon · http://89.169.97.113:8000 (label)
+- Cluster: label:Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 5)
 - Triage score: 46.531
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
@@ -21,12 +21,12 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - telegram_operator_statement (high, signal): Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда:./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \ --from <your-account-key> \ --node http://node2.gonka.ai:8000/chain-rpc/ \ --chain-id gonka-mainnet \ --keyring-backend file \ --gas auto \ --gas-adjustment 1.3 \ -yЭто топ 1 сегмент по весу...
 
-### #2 ancapex | Mine from $1, no losses from node failures
+### #2 ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
 - Compensation: 66487.744752 GONKA; governance power: 28865; vote: no_with_veto
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:ancapex | Mine from $1, no losses from node failures (label)
+- Cluster: label:ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 (label)
 - Evidence boundary: public_owner_proof (proof 5, high-confidence claims 8)
 - Triage score: 43.746
 - Next actions: review conflict narrative
@@ -38,12 +38,12 @@ Top evidence:
 - matched_validator_moniker (high, proof): ancapex | Mine from $1, no losses from node failures
 - validator_key_match (high, proof): 1MsHbnXp09bUZK/WEJVpwTOiZgKN+P5R7zuXXQUnYDM=
 
-### #3 http://54.38.118.143:8000
+### #3 gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
 
 - Address: `gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr`
 - Compensation: 52290.195676 GONKA; governance power: 86433; vote: yes
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://54.38.118.143:8000 (label)
+- Cluster: label:gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 40.42
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
@@ -55,12 +55,12 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=8512
 
-### #4 http://135.181.56.61:8000
+### #4 gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv
 
 - Address: `gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv`
 - Compensation: 158541.879456 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://135.181.56.61:8000 (label)
+- Cluster: label:gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 39.635
 - Next actions: enrich beneficiary identity
@@ -72,12 +72,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=55552
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=56352
 
-### #5 http://178.105.174.27:8000
+### #5 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 
 - Address: `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`
 - Compensation: 11262.520198 GONKA; governance power: 57838; vote: yes
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://178.105.174.27:8000 (label)
+- Cluster: label:gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 2)
 - Triage score: 26.078
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
@@ -89,12 +89,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e269 moonshotai/Kimi-K2.6 count=7296
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=14880
 
-### #6 http://54.37.131.156:8000
+### #6 gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu
 
 - Address: `gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu`
 - Compensation: 101147.807219 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://54.37.131.156:8000 (label)
+- Cluster: label:gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 1)
 - Triage score: 25.287
 - Next actions: enrich beneficiary identity
@@ -106,12 +106,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=59296
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=153408
 
-### #7 http://65.21.232.177:8000
+### #7 gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu
 
 - Address: `gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu`
 - Compensation: 96601.320933 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://65.21.232.177:8000 (label)
+- Cluster: label:gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 24.15
 - Next actions: enrich beneficiary identity
@@ -123,12 +123,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=68352
 - epoch_commit_participant (medium, signal): e271 moonshotai/Kimi-K2.6 count=59712
 
-### #8 http://network000.kaitaku.ai:8000
+### #8 gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2
 
 - Address: `gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2`
 - Compensation: 11021.18308 GONKA; governance power: 25278; vote: no_with_veto
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://network000.kaitaku.ai:8000 (label)
+- Cluster: label:gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 21.366
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
@@ -140,12 +140,12 @@ Top evidence:
 - proposal_vote (high, signal): no_with_veto
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=10528
 
-### #9 http://148.113.47.235:8000
+### #9 gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
 
 - Address: `gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt`
 - Compensation: 1805.142498 GONKA; governance power: 31217; vote: yes
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://148.113.47.235:8000 (label)
+- Cluster: label:gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 19.911
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
@@ -157,12 +157,12 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=60352
 
-### #10 http://57.128.30.101:8000
+### #10 gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz
 
 - Address: `gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz`
 - Compensation: 79247.555227 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://57.128.30.101:8000 (label)
+- Cluster: label:gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 1)
 - Triage score: 19.812
 - Next actions: enrich beneficiary identity
@@ -174,12 +174,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=85632
 - epoch_commit_participant (medium, signal): e267 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=4096
 
-### #11 http://148.113.47.71:8000
+### #11 gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz
 
 - Address: `gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz`
 - Compensation: 1575.513417 GONKA; governance power: 19974; vote: yes
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://148.113.47.71:8000 (label)
+- Cluster: label:gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 18.247
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
@@ -191,12 +191,12 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=51552
 
-### #12 http://88.99.213.222:8000
+### #12 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 
 - Address: `gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4`
 - Compensation: 10934.181496 GONKA; governance power: 0; vote: no_with_veto
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://88.99.213.222:8000 (label)
+- Cluster: label:gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 2)
 - Triage score: 17.734
 - Next actions: review conflict narrative | enrich beneficiary identity
@@ -208,12 +208,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=39328
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=13536
 
-### #13 http://57.131.17.61:8000
+### #13 gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv
 
 - Address: `gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv`
 - Compensation: 5645.801437 GONKA; governance power: 0; vote: yes
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://57.131.17.61:8000 (label)
+- Cluster: label:gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 16.411
 - Next actions: review conflict narrative | enrich beneficiary identity
@@ -225,12 +225,12 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e275 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=8320
 
-### #14 http://65.108.198.21:8000
+### #14 gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
 
 - Address: `gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx`
 - Compensation: 2392.222959 GONKA; governance power: 4565; vote: no_with_veto
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://65.108.198.21:8000 (label)
+- Cluster: label:gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 16.25
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
@@ -242,12 +242,12 @@ Top evidence:
 - proposal_vote (high, signal): no_with_veto
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=41056
 
-### #15 http://69.48.159.137:8000/
+### #15 gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5
 
 - Address: `gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5`
 - Compensation: 30.990429 GONKA; governance power: 278; vote: no_with_veto
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://69.48.159.137:8000/ (label)
+- Cluster: label:gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 15.047
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
@@ -259,12 +259,12 @@ Top evidence:
 - proposal_vote (high, signal): no_with_veto
 - epoch_commit_participant (medium, signal): e267 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1152
 
-### #16 http://20.163.111.183:8000
+### #16 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p
 
 - Address: `gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p`
 - Compensation: 113.864834 GONKA; governance power: 0; vote: no_with_veto
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://20.163.111.183:8000 (label)
+- Cluster: label:gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 15.028
 - Next actions: review conflict narrative | enrich beneficiary identity
@@ -276,12 +276,12 @@ Top evidence:
 - proposal_vote (high, signal): no_with_veto
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=4000
 
-### #17 http://20.171.77.105:8000
+### #17 gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww
 
 - Address: `gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww`
 - Compensation: 108.366532 GONKA; governance power: 0; vote: no_with_veto
 - Recipient: True; voter: True; overlap: True
-- Cluster: label:http://20.171.77.105:8000 (label)
+- Cluster: label:gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 4)
 - Triage score: 15.027
 - Next actions: review conflict narrative | enrich beneficiary identity
@@ -293,12 +293,12 @@ Top evidence:
 - proposal_vote (high, signal): no_with_veto
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=3872
 
-### #18 http://178.104.95.5:8000
+### #18 gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6
 
 - Address: `gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6`
 - Compensation: 39809.676543 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://178.104.95.5:8000 (label)
+- Cluster: label:gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 9.952
 - Next actions: enrich beneficiary identity
@@ -310,12 +310,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1024
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=57984
 
-### #19 Arturs Plisko · Hyperfusion
+### #19 Arturs Plisko · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 
 - Address: `gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p`
 - Compensation: 0 GONKA; governance power: 5395; vote: no_with_veto
 - Recipient: False; voter: True; overlap: False
-- Cluster: label:Arturs Plisko · Hyperfusion (label)
+- Cluster: label:Arturs Plisko · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p (label)
 - Evidence boundary: public_owner_proof (proof 5, high-confidence claims 8)
 - Triage score: 8.771
 - Next actions: monitor
@@ -327,7 +327,7 @@ Top evidence:
 - matched_validator_moniker (high, proof): Hyperfusion
 - validator_key_match (high, proof): RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI=
 
-### #20 gonka-3
+### #20 gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
 
 - Address: `gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5`
 - Compensation: 3018.840187 GONKA; governance power: 0; vote: did_not_vote
@@ -344,12 +344,12 @@ Top evidence:
 - matched_validator_moniker (high, proof): gonka-3
 - validator_key_match (high, proof): FODVOcIY8RNoGA7WsiNSL6YQ8N4/A5Ox1IyXgc/FmE0=
 
-### #21 http://95.217.121.189:8000
+### #21 gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax
 
 - Address: `gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax`
 - Compensation: 33750.579636 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://95.217.121.189:8000 (label)
+- Cluster: label:gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 8.438
 - Next actions: enrich beneficiary identity
@@ -361,12 +361,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=25664
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=38336
 
-### #22 Formula x AI
+### #22 Formula x AI · gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra
 
 - Address: `gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra`
 - Compensation: 1166.439756 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:Formula x AI (label)
+- Cluster: label:Formula x AI · gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra (label)
 - Evidence boundary: public_owner_proof (proof 3, high-confidence claims 5)
 - Triage score: 8.292
 - Next actions: monitor
@@ -378,7 +378,7 @@ Top evidence:
 - compensation_output (high, signal): 1166.439756 GONKA
 - validator_key_match (high, signal): aVjnIbFCA91pBgh+9efqFNobNu8my/kDn2xZckGkGwk=
 
-### #23 gonka-1
+### #23 gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
 
 - Address: `gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le`
 - Compensation: 1025.259358 GONKA; governance power: 0; vote: did_not_vote
@@ -395,12 +395,12 @@ Top evidence:
 - matched_validator_moniker (high, proof): gonka-1
 - validator_key_match (high, proof): OPwcpfQYOoWDuHKYivRVq5jxrELH0moP5qdznvj3Dps=
 
-### #24 asd.gnk
+### #24 asd.gnk · gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 
 - Address: `gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4`
 - Compensation: 0 GONKA; governance power: 0; vote: no_with_veto
 - Recipient: False; voter: True; overlap: False
-- Cluster: label:asd.gnk (label)
+- Cluster: label:asd.gnk · gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4 (label)
 - Evidence boundary: public_owner_proof (proof 17, high-confidence claims 18)
 - Triage score: 8.0
 - Next actions: monitor
@@ -412,7 +412,7 @@ Top evidence:
 - gns_name (high, proof): its.gnk -> gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 - gns_name (high, proof): may.gnk -> gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 
-### #25 http://178.105.170.135:8000
+### #25 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
 
 - Address: `gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau`
 - Compensation: 20610.390028 GONKA; governance power: 0; vote: did_not_vote
@@ -429,12 +429,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=992
 - epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=14912
 
-### #26 A? · http://136.243.110.227:8000
+### #26 A? · gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Compensation: 18234.887511 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:A? · http://136.243.110.227:8000 (label)
+- Cluster: label:A? · gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 1)
 - Triage score: 4.559
 - Next actions: enrich beneficiary identity
@@ -446,12 +446,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=19040
 - epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=13568
 
-### #27 http://network002.kaitaku.ai:8000
+### #27 gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0
 
 - Address: `gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0`
 - Compensation: 0 GONKA; governance power: 31063; vote: no_with_veto
 - Recipient: False; voter: True; overlap: False
-- Cluster: label:http://network002.kaitaku.ai:8000 (label)
+- Cluster: label:gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 4.438
 - Next actions: prioritize owner attribution
@@ -463,12 +463,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1424
 - epoch_commit_participant (medium, signal): e267 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1424
 
-### #28 http://94.130.152.246:8000
+### #28 gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw
 
 - Address: `gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw`
 - Compensation: 17630.158097 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://94.130.152.246:8000 (label)
+- Cluster: label:gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 4.408
 - Next actions: enrich beneficiary identity
@@ -480,12 +480,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=5664
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=30176
 
-### #29 http://195.201.192.170:8000
+### #29 gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y
 
 - Address: `gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y`
 - Compensation: 13958.367773 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://195.201.192.170:8000 (label)
+- Cluster: label:gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 3.49
 - Next actions: enrich beneficiary identity
@@ -497,12 +497,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=12480
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=12640
 
-### #30 http://35.89.168.230:8000
+### #30 gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239
 
 - Address: `gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239`
 - Compensation: 12612.234866 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://35.89.168.230:8000 (label)
+- Cluster: label:gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 3.153
 - Next actions: enrich beneficiary identity
@@ -514,12 +514,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=7296
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=6784
 
-### #31 http://94.237.52.191:8000
+### #31 gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj
 
 - Address: `gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj`
 - Compensation: 0 GONKA; governance power: 20647; vote: yes
 - Recipient: False; voter: True; overlap: False
-- Cluster: label:http://94.237.52.191:8000 (label)
+- Cluster: label:gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 2.95
 - Next actions: prioritize owner attribution
@@ -531,12 +531,12 @@ Top evidence:
 - participant_inference_url (medium, signal): http://94.237.52.191:8000
 - participant_inference_url (medium, signal): http://94.237.52.191:8000
 
-### #32 http://178.105.172.102:8000
+### #32 gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw
 
 - Address: `gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw`
 - Compensation: 11688.555563 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://178.105.172.102:8000 (label)
+- Cluster: label:gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 2.922
 - Next actions: enrich beneficiary identity
@@ -548,12 +548,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=14464
 - epoch_commit_participant (medium, signal): e269 moonshotai/Kimi-K2.6 count=7008
 
-### #33 http://204.12.168.89:8000
+### #33 gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9
 
 - Address: `gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9`
 - Compensation: 11366.419254 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://204.12.168.89:8000 (label)
+- Cluster: label:gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 2.842
 - Next actions: enrich beneficiary identity
@@ -565,12 +565,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=12384
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=11680
 
-### #34 http://95.217.35.48:8000
+### #34 gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje
 
 - Address: `gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje`
 - Compensation: 10456.612261 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://95.217.35.48:8000 (label)
+- Cluster: label:gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 1)
 - Triage score: 2.614
 - Next actions: enrich beneficiary identity
@@ -582,12 +582,12 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=12352
 - epoch_commit_participant (medium, signal): e272 moonshotai/Kimi-K2.6 count=13344
 
-### #35 http://94.130.143.155:8000
+### #35 gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds
 
 - Address: `gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds`
 - Compensation: 9768.694504 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
-- Cluster: label:http://94.130.143.155:8000 (label)
+- Cluster: label:gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds (label)
 - Evidence boundary: shared_public_label_only (proof 0, high-confidence claims 3)
 - Triage score: 2.442
 - Next actions: enrich beneficiary identity

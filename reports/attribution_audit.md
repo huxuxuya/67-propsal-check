@@ -4,7 +4,7 @@ This report ranks interested parties from committed public snapshots. It is not 
 
 ## Top Ranked Parties
 
-### #1 ancapex | Mine from $1, no losses from node failures
+### #1 ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Addresses: gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 - Roles: epoch_commit_participant, recipient, voter
@@ -20,7 +20,7 @@ Top evidence:
 - matched_validator_moniker (high, proof): ancapex | Mine from $1, no losses from node failures
 - validator_key_match (high, proof): 1MsHbnXp09bUZK/WEJVpwTOiZgKN+P5R7zuXXQUnYDM=
 
-### #2 Votkon · http://89.169.97.113:8000
+### #2 Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - Roles: epoch_commit_participant, operator, recipient, voter
@@ -36,7 +36,7 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - telegram_operator_statement (high, signal): Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда:./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \ --from <your-account-key> \ --node http://node2.gonka.ai:8000/chain-rpc/ \ --chain-id gonka-mainnet \ --keyring-backend file \ --gas auto \ --gas-adjustment 1.3 \ -yЭто топ 1 сегмент по весу...
 
-### #3 http://178.105.170.135:8000
+### #3 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
 
 - Addresses: gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6 gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6
 - Roles: epoch_commit_participant, recipient, voter
@@ -52,7 +52,7 @@ Top evidence:
 - matched_validator_moniker (high, signal): gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23
 - matched_validator_moniker (high, signal): gonkavaloper1wvv656pt2d8x2khcvytqeessck5uzjnx7svq7h
 
-### #4 http://135.181.56.61:8000
+### #4 gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv
 
 - Addresses: gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv
 - Roles: epoch_commit_participant, recipient
@@ -68,7 +68,7 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=55552
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=56352
 
-### #5 http://54.38.118.143:8000
+### #5 gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
 
 - Addresses: gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
 - Roles: epoch_commit_participant, recipient, voter
@@ -84,7 +84,7 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=8512
 
-### #6 Unknown public owner
+### #6 gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
 
 - Addresses: gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
 - Roles: message_sender
@@ -97,7 +97,7 @@ Top evidence:
 - proposal_message_sender (high, signal): /inference.streamvesting.MsgBatchTransferWithVesting
 - telegram_address_context (medium, signal): из вот этого кармана gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
 
-### #7 gonka-3
+### #7 gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
 
 - Addresses: gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
 - Roles: epoch_commit_participant, recipient
@@ -113,7 +113,7 @@ Top evidence:
 - matched_validator_identity (high, proof): 673C81B66A67ED67
 - matched_validator_moniker (high, proof): gonka-3
 
-### #8 Arturs Plisko · Hyperfusion
+### #8 Arturs Plisko · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 
 - Addresses: gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 - Roles: epoch_commit_participant, voter
@@ -129,7 +129,7 @@ Top evidence:
 - matched_validator_moniker (high, proof): Hyperfusion
 - validator_key_match (high, proof): RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI=
 
-### #9 Unknown public owner
+### #9 gonka1nvcwl2c7jxj2h47c56y8dmcmf0tynt5dplzngy
 
 - Addresses: gonka1nvcwl2c7jxj2h47c56y8dmcmf0tynt5dplzngy
 - Roles: proposer
@@ -141,7 +141,7 @@ Top evidence:
 Top evidence:
 - proposal_proposer (high, signal): 67
 
-### #10 http://54.37.131.156:8000
+### #10 gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu
 
 - Addresses: gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu
 - Roles: epoch_commit_participant, recipient
@@ -157,7 +157,7 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=59296
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=153408
 
-### #11 http://network000.kaitaku.ai:8000
+### #11 gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2
 
 - Addresses: gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2
 - Roles: epoch_commit_participant, recipient, voter
@@ -173,7 +173,7 @@ Top evidence:
 - proposal_vote (high, signal): no_with_veto
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=10528
 
-### #12 http://57.128.30.101:8000
+### #12 gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz
 
 - Addresses: gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz
 - Roles: epoch_commit_participant, recipient
@@ -189,7 +189,7 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=85632
 - epoch_commit_participant (medium, signal): e267 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=4096
 
-### #13 http://65.21.232.177:8000
+### #13 gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu
 
 - Addresses: gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu
 - Roles: epoch_commit_participant, recipient
@@ -205,7 +205,7 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=68352
 - epoch_commit_participant (medium, signal): e271 moonshotai/Kimi-K2.6 count=59712
 
-### #14 http://88.99.213.222:8000
+### #14 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 
 - Addresses: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 - Roles: epoch_commit_participant, recipient, voter
@@ -221,7 +221,7 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=39328
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=13536
 
-### #15 http://178.105.174.27:8000
+### #15 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 
 - Addresses: gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 - Roles: epoch_commit_participant, recipient, voter
@@ -237,7 +237,7 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e269 moonshotai/Kimi-K2.6 count=7296
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=14880
 
-### #16 http://65.108.198.21:8000
+### #16 gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
 
 - Addresses: gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
 - Roles: epoch_commit_participant, recipient, voter
@@ -253,7 +253,7 @@ Top evidence:
 - proposal_vote (high, signal): no_with_veto
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=41056
 
-### #17 http://148.113.47.235:8000
+### #17 gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
 
 - Addresses: gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
 - Roles: delegator, epoch_commit_participant, recipient, voter
@@ -269,7 +269,7 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=60352
 
-### #18 http://148.113.47.71:8000
+### #18 gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz
 
 - Addresses: gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz
 - Roles: delegator, epoch_commit_participant, recipient, voter
@@ -285,7 +285,7 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=51552
 
-### #19 asd.gnk
+### #19 asd.gnk · gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 
 - Addresses: gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 - Roles: voter
@@ -301,7 +301,7 @@ Top evidence:
 - gns_name (high, proof): its.gnk -> gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 - gns_name (high, proof): may.gnk -> gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 
-### #20 http://57.131.17.61:8000
+### #20 gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv
 
 - Addresses: gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv
 - Roles: epoch_commit_participant, recipient, voter
