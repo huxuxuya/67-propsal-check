@@ -1,0 +1,382 @@
+{
+  "snapshot_height": 4104861,
+  "kimi_delegators": [
+    {
+      "delegator": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "delegator": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "delegator": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "delegator": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "delegator": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "delegator": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "delegator": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "delegator": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "delegator": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+      "operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    }
+  ],
+  "all_delegations": {
+    "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09": {},
+    "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        },
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        }
+      ]
+    },
+    "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3": {},
+    "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm": {},
+    "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5": {},
+    "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
+          "delegate_to": "gonka1d7p03cu2y2yt3vytq9wlfm6tlz0lfhlgv9h82p"
+        }
+      ]
+    },
+    "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2": {},
+    "gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f": {},
+    "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu": {},
+    "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        }
+      ]
+    },
+    "gonka187tn9y92ur6tu0zf69u94hwl0q77m47y0k36hv": {},
+    "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        }
+      ]
+    },
+    "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        },
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        }
+      ]
+    },
+    "gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel",
+          "delegate_to": "gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f"
+        }
+      ]
+    },
+    "gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj": {},
+    "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
+          "delegate_to": "gonka1duuaqdx06sx8v2dzggltwwmqyuw8lvjkjq7xll"
+        }
+      ]
+    },
+    "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+          "delegate_to": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2"
+        }
+      ]
+    },
+    "gonka1d7p03cu2y2yt3vytq9wlfm6tlz0lfhlgv9h82p": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1d7p03cu2y2yt3vytq9wlfm6tlz0lfhlgv9h82p",
+          "delegate_to": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2"
+        }
+      ]
+    },
+    "gonka1dkl4mah5erqggvhqkpc8j3qs5tyuetgdy552cp": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1dkl4mah5erqggvhqkpc8j3qs5tyuetgdy552cp",
+          "delegate_to": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le"
+        }
+      ]
+    },
+    "gonka1duuaqdx06sx8v2dzggltwwmqyuw8lvjkjq7xll": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1duuaqdx06sx8v2dzggltwwmqyuw8lvjkjq7xll",
+          "delegate_to": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le"
+        }
+      ]
+    },
+    "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e": {},
+    "gonka1famtxh54kad6ylwtm60j6d7h6unpc08d4vdqnk": {},
+    "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+          "delegate_to": "gonka16k03ze5ynkprsd4n6e5uzhthvu9jjk553rauqy"
+        }
+      ]
+    },
+    "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
+          "delegate_to": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra"
+        }
+      ]
+    },
+    "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5": {},
+    "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        },
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        }
+      ]
+    },
+    "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es": {},
+    "gonka1p2lhgng7tcqju7emk989s5fpdr7k2c3ek6h26m": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1p2lhgng7tcqju7emk989s5fpdr7k2c3ek6h26m",
+          "delegate_to": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2"
+        }
+      ]
+    },
+    "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+          "delegate_to": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt"
+        }
+      ]
+    },
+    "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+          "delegate_to": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra"
+        }
+      ]
+    },
+    "gonka1qnj39ysxpzknvrr5dw9rdl7cx5q7dpkwerryrs": {},
+    "gonka1qu9mna5xlvlnw9455ygtjq92wuzkzm237w8l08": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1qu9mna5xlvlnw9455ygtjq92wuzkzm237w8l08",
+          "delegate_to": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le"
+        }
+      ]
+    },
+    "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl": {},
+    "gonka1rcpc45n6zch9qlkn4m3cwngekad89xu8mcr09v": {},
+    "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+          "delegate_to": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+        }
+      ]
+    },
+    "gonka1u4zxypjgcr8khlzefwjr0vwdaj2uzruw2cehj3": {},
+    "gonka1uf5cg7ef0ns6877nl27y0s6rt06cdmn40k5a88": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1uf5cg7ef0ns6877nl27y0s6rt06cdmn40k5a88",
+          "delegate_to": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le"
+        }
+      ]
+    },
+    "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239": {},
+    "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "delegate_to": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le"
+        }
+      ]
+    },
+    "gonka1w29nvdy6caqtrw30whz9h6ghl0xszwh3egndah": {
+      "delegations": [
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1w29nvdy6caqtrw30whz9h6ghl0xszwh3egndah",
+          "delegate_to": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0"
+        }
+      ]
+    },
+    "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        }
+      ]
+    },
+    "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz": {},
+    "gonka1x7zh2277spp7jfqjhv0g5mnezg290xdr4kpfnk": {},
+    "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        }
+      ]
+    },
+    "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le": {},
+    "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw": {
+      "delegations": [
+        {
+          "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+          "delegator": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        },
+        {
+          "model_id": "moonshotai/Kimi-K2.6",
+          "delegator": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
+          "delegate_to": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+        }
+      ]
+    },
+    "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx": {}
+  }
+}

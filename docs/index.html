@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proposal #67 Forensic Dashboard</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="data/dashboard.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Gonka Proposal #67</p>
+        <h1>Kimi Restitution Forensic Dashboard</h1>
+      </div>
+      <div class="status-pill" id="proposalStatus">Loading</div>
+    </header>
+
+    <main>
+      <section class="overview">
+        <article class="metric tall">
+          <span>Total compensation</span>
+          <strong id="totalCompensation">-</strong>
+          <small id="recipientCount">-</small>
+        </article>
+        <article class="metric">
+          <span>Final tally</span>
+          <strong id="finalTally">-</strong>
+          <small>Voting-power aggregate, not per-address estimates</small>
+        </article>
+        <article class="metric">
+          <span>Recipient voters</span>
+          <strong id="recipientVoters">-</strong>
+          <small>Recipients who cast a final on-chain vote</small>
+        </article>
+        <article class="metric emphasis">
+          <span>30k to final proposal</span>
+          <strong id="multiplier">-</strong>
+          <small id="componentSplit">-</small>
+        </article>
+      </section>
+
+      <section class="filters" aria-label="Dashboard filters">
+        <label>
+          Search
+          <input id="searchInput" type="search" placeholder="Address, label, URL, tx hash">
+        </label>
+        <label>
+          Recipient status
+          <select id="statusFilter">
+            <option value="all">All</option>
+          </select>
+        </label>
+        <label>
+          Vote option
+          <select id="voteFilter">
+            <option value="all">All</option>
+          </select>
+        </label>
+        <label>
+          Identity type
+          <select id="identityFilter">
+            <option value="all">All</option>
+          </select>
+        </label>
+        <label>
+          Node state
+          <select id="nodeFilter">
+            <option value="all">All</option>
+            <option value="active">Active node</option>
+            <option value="inactive">Inactive or unknown</option>
+          </select>
+        </label>
+        <label>
+          Top payout
+          <select id="topFilter">
+            <option value="all">All</option>
+            <option value="10">Top 10</option>
+            <option value="25">Top 25</option>
+          </select>
+        </label>
+        <label>
+          Component
+          <select id="componentFilter">
+            <option value="all">All</option>
+          </select>
+        </label>
+        <label>
+          Evidence confidence
+          <select id="confidenceFilter">
+            <option value="all">All</option>
+          </select>
+        </label>
+        <label>
+          Evidence source
+          <select id="sourceTypeFilter">
+            <option value="all">All</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="chart-grid">
+        <div class="panel wide">
+          <div class="panel-head">
+            <h2>Compensation by Recipient</h2>
+            <div class="segmented" role="tablist">
+              <button class="active" data-comp-view="bar">Bar</button>
+              <button data-comp-view="tree">Treemap</button>
+            </div>
+          </div>
+          <div class="chart" id="compensationChart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Attack vs Cap</h2>
+          </div>
+          <div class="chart" id="waterfallChart"></div>
+        </div>
+        <div class="panel wide">
+          <div class="panel-head">
+            <h2>Epoch Compensation Totals</h2>
+          </div>
+          <div class="chart" id="epochChart"></div>
+        </div>
+        <div class="panel wide">
+          <div class="panel-head">
+            <h2>Epoch Heatmap</h2>
+          </div>
+          <div class="chart heatmap" id="heatmapChart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Voter Matrix</h2>
+          </div>
+          <div class="chart" id="matrixChart"></div>
+        </div>
+        <div class="panel wide">
+          <div class="panel-head">
+            <h2>Vote Timeline</h2>
+          </div>
+          <div class="chart" id="timelineChart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Aggregate Voting Power</h2>
+          </div>
+          <div class="chart" id="tallyChart"></div>
+        </div>
+      </section>
+
+      <section class="table-grid">
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Epoch Totals</h2>
+            <span id="epochRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Epoch</th>
+                  <th>Component</th>
+                  <th>Recipients</th>
+                  <th>Total</th>
+                  <th>Share</th>
+                  <th>Top recipient</th>
+                  <th>Top amount</th>
+                </tr>
+              </thead>
+              <tbody id="epochTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Recipients</h2>
+            <span id="recipientRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Address</th>
+                  <th>Public label</th>
+                  <th>Status</th>
+                  <th>Vote</th>
+                  <th>Cluster</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="recipientTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Final Voters</h2>
+            <span id="voteRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Height</th>
+                  <th>Voter</th>
+                  <th>Recipient</th>
+                  <th>Vote</th>
+                  <th>Cluster</th>
+                  <th>Voting power</th>
+                </tr>
+              </thead>
+              <tbody id="voteTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="table-grid">
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Strict Identity Clusters</h2>
+            <span id="strictClusterRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cluster</th>
+                  <th>Public label</th>
+                  <th>Addresses</th>
+                  <th>Recipients</th>
+                  <th>Voters</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="strictClusterTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Signal Clusters</h2>
+            <span id="signalClusterRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cluster</th>
+                  <th>Signal label</th>
+                  <th>Addresses</th>
+                  <th>Weakest</th>
+                  <th>Evidence</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="signalClusterTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes">
+        <h2>Evidence Boundaries</h2>
+        <p>GRC off-chain voters are not identified in the upstream repository. Public labels come from validator metadata, validator-key matches, GNS .gnk names, and participant inference URLs; unknown owners remain marked as unknown. Strict clusters use public self-declared identity evidence. Signal clusters may use infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate and are not private attribution. Per-voter voting power is not estimated.</p>
+      </section>
+    </main>
+
+    <aside class="drawer" id="drawer" aria-hidden="true">
+      <button class="icon-button" id="closeDrawer" aria-label="Close drawer">x</button>
+      <div id="drawerContent"></div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <script src="assets/app.js"></script>
+  </body>
+</html>

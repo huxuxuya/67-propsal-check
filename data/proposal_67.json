@@ -1,0 +1,505 @@
+{
+  "proposal": {
+    "deposit_end_time": "2026-06-04T21:54:51.438833010Z",
+    "expedited": false,
+    "failed_reason": "",
+    "final_tally_result": {
+      "abstain_count": "744",
+      "no_count": "150",
+      "no_with_veto_count": "84623",
+      "yes_count": "319920"
+    },
+    "id": "67",
+    "messages": [
+      {
+        "@type": "/inference.streamvesting.MsgBatchTransferWithVesting",
+        "outputs": [
+          {
+            "amount": [
+              {
+                "amount": "158541879455919",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv"
+          },
+          {
+            "amount": [
+              {
+                "amount": "101147807218599",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu"
+          },
+          {
+            "amount": [
+              {
+                "amount": "96601320933414",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu"
+          },
+          {
+            "amount": [
+              {
+                "amount": "79247555226990",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz"
+          },
+          {
+            "amount": [
+              {
+                "amount": "73073708453292",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+          },
+          {
+            "amount": [
+              {
+                "amount": "66487744752217",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09"
+          },
+          {
+            "amount": [
+              {
+                "amount": "52290195675726",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr"
+          },
+          {
+            "amount": [
+              {
+                "amount": "39809676543013",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6"
+          },
+          {
+            "amount": [
+              {
+                "amount": "33750579636210",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax"
+          },
+          {
+            "amount": [
+              {
+                "amount": "20610390027954",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau"
+          },
+          {
+            "amount": [
+              {
+                "amount": "18234887510983",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5"
+          },
+          {
+            "amount": [
+              {
+                "amount": "17630158097135",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw"
+          },
+          {
+            "amount": [
+              {
+                "amount": "13958367773340",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y"
+          },
+          {
+            "amount": [
+              {
+                "amount": "12612234865692",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239"
+          },
+          {
+            "amount": [
+              {
+                "amount": "11688555563236",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw"
+          },
+          {
+            "amount": [
+              {
+                "amount": "11366419253907",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9"
+          },
+          {
+            "amount": [
+              {
+                "amount": "11262520197774",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+          },
+          {
+            "amount": [
+              {
+                "amount": "11021183080111",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2"
+          },
+          {
+            "amount": [
+              {
+                "amount": "10934181496134",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4"
+          },
+          {
+            "amount": [
+              {
+                "amount": "10456612261496",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje"
+          },
+          {
+            "amount": [
+              {
+                "amount": "9768694504061",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds"
+          },
+          {
+            "amount": [
+              {
+                "amount": "9423072516255",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np"
+          },
+          {
+            "amount": [
+              {
+                "amount": "8441669467829",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2"
+          },
+          {
+            "amount": [
+              {
+                "amount": "6820652573831",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d"
+          },
+          {
+            "amount": [
+              {
+                "amount": "6618057560512",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0"
+          },
+          {
+            "amount": [
+              {
+                "amount": "5645801436758",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv"
+          },
+          {
+            "amount": [
+              {
+                "amount": "5511598438612",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6"
+          },
+          {
+            "amount": [
+              {
+                "amount": "4673802241961",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e"
+          },
+          {
+            "amount": [
+              {
+                "amount": "4444392150972",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc"
+          },
+          {
+            "amount": [
+              {
+                "amount": "4167200640617",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa"
+          },
+          {
+            "amount": [
+              {
+                "amount": "3396492511794",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu"
+          },
+          {
+            "amount": [
+              {
+                "amount": "3018840187451",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5"
+          },
+          {
+            "amount": [
+              {
+                "amount": "2731396085272",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws"
+          },
+          {
+            "amount": [
+              {
+                "amount": "2602055673919",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc"
+          },
+          {
+            "amount": [
+              {
+                "amount": "2392222959397",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx"
+          },
+          {
+            "amount": [
+              {
+                "amount": "2293694674600",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg"
+          },
+          {
+            "amount": [
+              {
+                "amount": "2034501080557",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq"
+          },
+          {
+            "amount": [
+              {
+                "amount": "1805142497891",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt"
+          },
+          {
+            "amount": [
+              {
+                "amount": "1753409171279",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n"
+          },
+          {
+            "amount": [
+              {
+                "amount": "1575513416778",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz"
+          },
+          {
+            "amount": [
+              {
+                "amount": "1166439755518",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra"
+          },
+          {
+            "amount": [
+              {
+                "amount": "1025259358283",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le"
+          },
+          {
+            "amount": [
+              {
+                "amount": "1017602508283",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x"
+          },
+          {
+            "amount": [
+              {
+                "amount": "1017602508283",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s"
+          },
+          {
+            "amount": [
+              {
+                "amount": "1007974841606",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6"
+          },
+          {
+            "amount": [
+              {
+                "amount": "521637814838",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3"
+          },
+          {
+            "amount": [
+              {
+                "amount": "279015575378",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es"
+          },
+          {
+            "amount": [
+              {
+                "amount": "276414090986",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct"
+          },
+          {
+            "amount": [
+              {
+                "amount": "113864833864",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p"
+          },
+          {
+            "amount": [
+              {
+                "amount": "108366531966",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww"
+          },
+          {
+            "amount": [
+              {
+                "amount": "100568940182",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2"
+          },
+          {
+            "amount": [
+              {
+                "amount": "30990428883",
+                "denom": "ngonka"
+              }
+            ],
+            "recipient": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5"
+          }
+        ],
+        "sender": "gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33",
+        "vesting_epochs": "160"
+      }
+    ],
+    "metadata": "https://github.com/votkon/gonka-kimi-restitution",
+    "proposer": "gonka1nvcwl2c7jxj2h47c56y8dmcmf0tynt5dplzngy",
+    "status": "PROPOSAL_STATUS_PASSED",
+    "submit_time": "2026-06-03T21:54:51.438833010Z",
+    "summary": "Distribute restitution for Kimi operators across epochs 265-276. Epochs 265-266: external attack causing CPoC degradation and nonce exclusion. Epochs 267-276: ComputeGroupCap systematic underpayment due to attack-induced N-1 weight collapse. Total: 946,509.93 GNK to 53 addresses.",
+    "title": "Kimi Restitution (epochs 265-276)",
+    "total_deposit": [
+      {
+        "amount": "25250000",
+        "denom": "ngonka"
+      }
+    ],
+    "voting_end_time": "2026-06-05T22:09:02.699803591Z",
+    "voting_start_time": "2026-06-03T22:09:02.699803591Z"
+  }
+}

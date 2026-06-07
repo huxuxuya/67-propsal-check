@@ -1,0 +1,2021 @@
+{
+  "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x": {
+    "address": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
+    "inference_url": "http://178.105.165.144:8000",
+    "join_height": "4150711",
+    "join_time": "1779196927068",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "9ITQrTD4+v1F1/Fek4Vs6dMgfrB531NZPdUT3xyshew=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s": {
+    "address": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
+    "inference_url": "http://178.105.169.55:8000",
+    "join_height": "4150730",
+    "join_time": "1779197025871",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "LbTujch/FxdTVX7D2bpHOQ8YcqAxP3OzxCd/DRdOlnY=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau": {
+    "address": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 11,
+    "index": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+    "inference_url": "http://178.105.170.135:8000",
+    "join_height": "4132596",
+    "join_time": "1779102695101",
+    "last_inference_time": "1779184858402",
+    "status": "ACTIVE",
+    "validator_key": "4kijUhbQy233nyoBmKVFpQUVRBTfsEyp8gTEIF+nP8s=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv": {
+    "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+    "inference_url": "http://178.105.174.27:8000",
+    "join_height": "4132613",
+    "join_time": "1779102782047",
+    "last_inference_time": "1779140555741",
+    "status": "INACTIVE",
+    "validator_key": "tpe7BLcggZjebLowWzBPv7N9525XYz419oXnLSmXQsU=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw": {
+    "address": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 6,
+    "index": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+    "inference_url": "http://178.105.172.102:8000",
+    "join_height": "4132628",
+    "join_time": "1779102857438",
+    "last_inference_time": "1779141813729",
+    "status": "ACTIVE",
+    "validator_key": "pHEv48qVzqwwOihAorSoXk2p43LZEbjpaCIdDcSfIhU=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6": {
+    "address": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
+    "inference_url": "http://178.105.175.114:8000",
+    "join_height": "4150700",
+    "join_time": "1779196870435",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "Hbny6VRx4Q22P1sg3/2U8XsTjrR2vd+46q3Wt3KisNI=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu": {
+    "address": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 3,
+    "index": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
+    "inference_url": "http://178.105.166.7:8000",
+    "join_height": "4132642",
+    "join_time": "1779102930829",
+    "last_inference_time": "1779136631042",
+    "status": "ACTIVE",
+    "validator_key": "mC+j4vWPkEvVOeKZiS0g9mHf7fthh/QphsSarOXHNoQ=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09": {
+    "address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 12,
+    "index": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+    "inference_url": "http://89.149.242.149:8000",
+    "join_height": "1916596",
+    "join_time": "1767006889501",
+    "last_inference_time": "1779185319831",
+    "status": "ACTIVE",
+    "validator_key": "1MsHbnXp09bUZK/WEJVpwTOiZgKN+P5R7zuXXQUnYDM=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np": {
+    "address": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+    "inference_url": "http://88.198.4.29:8000",
+    "join_height": "3124014",
+    "join_time": "1773682879183",
+    "last_inference_time": "1777853116116",
+    "status": "ACTIVE",
+    "validator_key": "kPU5JJEHWoFKVDIH14BAPFTZ53ZtviVh0+obouI+29s=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra": {
+    "address": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 84,
+    "index": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+    "inference_url": "http://162.55.232.115:8000",
+    "join_height": "3165412",
+    "join_time": "1773906416445",
+    "last_inference_time": "1779185308358",
+    "status": "ACTIVE",
+    "validator_key": "aVjnIbFCA91pBgh+9efqFNobNu8my/kDn2xZckGkGwk=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3": {
+    "address": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
+    "inference_url": "http://185.70.186.176:8000",
+    "join_height": "1534348",
+    "join_time": "1764597022935",
+    "last_inference_time": "1772334686648",
+    "status": "INACTIVE",
+    "validator_key": "2zWRKuHGC+MrsJ+W+47OlH2QdkIlhRrGhIsuhi8pxH0=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct": {
+    "address": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+    "inference_url": "http://202.78.161.100:8000",
+    "join_height": "4103929",
+    "join_time": "1778956337031",
+    "last_inference_time": "0",
+    "status": "INACTIVE",
+    "validator_key": "GCao3YpgMg81Nu6FNYnDMM7HRDV4m+rqx/7CN/wyW20=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc": {
+    "address": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
+    "inference_url": "http://94.130.64.22:8000",
+    "join_height": "3546389",
+    "join_time": "1775975253206",
+    "last_inference_time": "1777853144348",
+    "status": "INACTIVE",
+    "validator_key": "5DylomF9i1rXheCe2hpJriKmNSivPduMb61kEfes5JI=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc": {
+    "address": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 17,
+    "index": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
+    "inference_url": "http://109.206.182.132:8000",
+    "join_height": "3046425",
+    "join_time": "1773257770348",
+    "last_inference_time": "1777853207237",
+    "status": "ACTIVE",
+    "validator_key": "2ZGXg4LQJj/HVZOgKkq+J+KGfiFNzKS741jA7b8mGyo=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5": {
+    "address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+    "inference_url": "http://136.243.110.227:8000",
+    "join_height": "3105739",
+    "join_time": "1773583659495",
+    "last_inference_time": "1779141511814",
+    "status": "INACTIVE",
+    "validator_key": "6BDRPJxMQTIk9FLj5bG0fdHErhxQbGXz1CZ6ZjODm4c=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq": {
+    "address": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 27,
+    "index": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
+    "inference_url": "http://125.93.200.207:8000",
+    "join_height": "0",
+    "join_time": "1755848273",
+    "last_inference_time": "1779132314878",
+    "status": "ACTIVE",
+    "validator_key": "iSKrf2j5GcRLjorA5M56q48FhH/Th8UuLrUtK8yfUnI=",
+    "weight": 1,
+    "worker_public_key": ""
+  },
+  "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2": {
+    "address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 11,
+    "index": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+    "inference_url": "http://network000.kaitaku.ai:8000",
+    "join_height": "2615330",
+    "join_time": "1770894723737",
+    "last_inference_time": "1779185103392",
+    "status": "ACTIVE",
+    "validator_key": "LzNKlnifk3ZYNzcXFrBlgGBEpq40CK8feQ5JrPTDaTw=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6": {
+    "address": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
+    "inference_url": "http://178.105.170.135:8000",
+    "join_height": "4346446",
+    "join_time": "1780230278893",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "FvAsN2Sc+YZfg33rDThYAM4jIMe1Rfp4wBicLRtPApM=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu": {
+    "address": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+    "inference_url": "http://54.37.131.156:8000",
+    "join_height": "3271330",
+    "join_time": "1774478365159",
+    "last_inference_time": "1779185345577",
+    "status": "INACTIVE",
+    "validator_key": "rB+hJFf6cFjQ3INgLZKmhp3aMbLH/oTXnd2AR+SRy00=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y": {
+    "address": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
+    "inference_url": "http://195.201.192.170:8000",
+    "join_height": "3263035",
+    "join_time": "1774432190490",
+    "last_inference_time": "1777830482142",
+    "status": "INACTIVE",
+    "validator_key": "av1bnJY70xgdl1U+YhpS9vbTQ91c+Ccz6rjUTydXCDQ=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d": {
+    "address": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 3,
+    "index": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
+    "inference_url": "http://195.201.83.167:8000",
+    "join_height": "3263041",
+    "join_time": "1774432222023",
+    "last_inference_time": "1777852715266",
+    "status": "ACTIVE",
+    "validator_key": "vbe7yPqtUXVSMMsVEeCymO1afLftmS2CqGL7w80f0gA=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2": {
+    "address": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
+    "inference_url": "http://136.243.111.105:8000",
+    "join_height": "1929543",
+    "join_time": "1767091919950",
+    "last_inference_time": "1779141573768",
+    "status": "INACTIVE",
+    "validator_key": "GqSr7nwAJsd5fXQhHlXDR05XAkMDzchXcuy/t6QoTj8=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9": {
+    "address": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
+    "inference_url": "http://204.12.168.89:8000",
+    "join_height": "3949014",
+    "join_time": "1778158596469",
+    "last_inference_time": "1779138871501",
+    "status": "INACTIVE",
+    "validator_key": "zLN1+DxVcpypQAhacU5koUnfxQC9nf5QkELolDWBaiM=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n": {
+    "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+    "inference_url": "http://198.244.228.95:8000",
+    "join_height": "1679651",
+    "join_time": "1765477393148",
+    "last_inference_time": "1766822153458",
+    "status": "ACTIVE",
+    "validator_key": "6RhBO1uyNVHqjZ9peqPrFG1eUy05GWFGve1XsqTew00=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww": {
+    "address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+    "inference_url": "http://20.171.77.105:8000",
+    "join_height": "4085025",
+    "join_time": "1778860022824",
+    "last_inference_time": "1779183876529",
+    "status": "ACTIVE",
+    "validator_key": "Bc2OoCDhmgJA91W2IY5D7biIDjqB1m70NKQU7m7jHRI=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0": {
+    "address": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 11,
+    "index": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+    "inference_url": "http://network002.kaitaku.ai:8000",
+    "join_height": "2745390",
+    "join_time": "1771618170179",
+    "last_inference_time": "1779184732188",
+    "status": "ACTIVE",
+    "validator_key": "BKn8ihjC7qa2bBqLkvg/CaG0bp2PUXZCTAOibTz4DL4=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e": {
+    "address": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
+    "inference_url": "http://95.217.122.154:8000",
+    "join_height": "1946278",
+    "join_time": "1767196914508",
+    "last_inference_time": "1779119432615",
+    "status": "ACTIVE",
+    "validator_key": "1ilXHcm6sWXBvaVhGUjjwPFzr+xbDEqPFwjoHipj+/Y=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p": {
+    "address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+    "inference_url": "http://20.163.111.183:8000",
+    "join_height": "3874126",
+    "join_time": "1777756092352",
+    "last_inference_time": "1779183810115",
+    "status": "ACTIVE",
+    "validator_key": "Gn7+pffyrAdOSKHCNrlHbcWTfAF3KQgAUYMkMqmGTEY=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr": {
+    "address": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 21,
+    "index": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
+    "inference_url": "http://54.38.118.143:8000",
+    "join_height": "4132749",
+    "join_time": "1779103481580",
+    "last_inference_time": "1779185126595",
+    "status": "ACTIVE",
+    "validator_key": "Gw5wjfmpdfIuPMaULbUNvukmB7wSF/A7Qwuhha+ssB4=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5": {
+    "address": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 12,
+    "index": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+    "inference_url": "http://69.48.159.137:8000/",
+    "join_height": "2935255",
+    "join_time": "1772660778227",
+    "last_inference_time": "1779184946502",
+    "status": "ACTIVE",
+    "validator_key": "22Hk1nISJrCk+HwWu2ahvvMAvC+AuyDhaMsM4kkZm8E=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz": {
+    "address": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 54,
+    "index": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+    "inference_url": "http://148.113.47.71:8000",
+    "join_height": "3623161",
+    "join_time": "1776389399722",
+    "last_inference_time": "1779185345577",
+    "status": "ACTIVE",
+    "validator_key": "8hnMZgDeWgRcP/cfoOVS6x7wJ/9zQnbP9twQpLvFwwE=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6": {
+    "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+    "inference_url": "http://178.104.95.5:8000",
+    "join_height": "3996809",
+    "join_time": "1778406311836",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "yk6psIaYStHmC4Wbxa8IqaIwATFJNCbOh+Fi900QHSM=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax": {
+    "address": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 8,
+    "index": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
+    "inference_url": "http://95.217.121.189:8000",
+    "join_height": "3882833",
+    "join_time": "1777805173144",
+    "last_inference_time": "1779141276875",
+    "status": "ACTIVE",
+    "validator_key": "zO845PKuI+nE8lGAjlwKdUngQ3mvHAy6qf7C8w5jlrY=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum": {
+    "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 2,
+    "index": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+    "inference_url": "http://78.46.89.87:8000",
+    "join_height": "4424391",
+    "join_time": "1780649678322",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "EKjIeL5EL11oIwOUYgb9uWpyMcZZ/Dj7iJ9XiQuXZXY=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5": {
+    "address": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 112,
+    "index": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
+    "inference_url": "https://node3.gonka.ai",
+    "join_height": "0",
+    "join_time": "1755848273",
+    "last_inference_time": "1777692445197",
+    "status": "ACTIVE",
+    "validator_key": "FODVOcIY8RNoGA7WsiNSL6YQ8N4/A5Ox1IyXgc/FmE0=",
+    "weight": 1,
+    "worker_public_key": ""
+  },
+  "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa": {
+    "address": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
+    "inference_url": "http://159.69.112.72:8000",
+    "join_height": "1795068",
+    "join_time": "1766171094275",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "jZbLe7zjEfW8GlxzV75Ac/rkEQO4UGsMu0bKw0oDYDA=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf": {
+    "address": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 4,
+    "index": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
+    "inference_url": "http://84.32.185.226:8000",
+    "join_height": "4250684",
+    "join_time": "1779719235471",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "5qj8k5lvrO4TlHmKLlgnmQY6QQuBFjPA0/bJPA/BUYE=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2": {
+    "error": "HTTP Error 404: Not Found"
+  },
+  "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0": {
+    "address": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
+    "inference_url": "http://138.201.121.253:8000",
+    "join_height": "3546389",
+    "join_time": "1775975253206",
+    "last_inference_time": "1777185619108",
+    "status": "INACTIVE",
+    "validator_key": "tkhGBwYXf1U9/gd3Ky8h6DTMztQo6ajhqvoj1b2ihO8=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es": {
+    "address": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
+    "inference_url": "http://202.78.161.246:8000",
+    "join_height": "1750841",
+    "join_time": "1765902588637",
+    "last_inference_time": "1777853201591",
+    "status": "INACTIVE",
+    "validator_key": "ZKBf4FypxxzMWqpiHjAwxNfVKu+HF9/grP7MLdzUNhQ=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3": {
+    "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+    "inference_url": "http://20.88.58.210:8000",
+    "join_height": "4131113",
+    "join_time": "1779095075425",
+    "last_inference_time": "1779184932557",
+    "status": "ACTIVE",
+    "validator_key": "Yni+i2dJZRyTIYxq8fbkXocIAIWQDzt+0+wbhRArwmg=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj": {
+    "address": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 4,
+    "index": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
+    "inference_url": "http://94.237.52.191:8000",
+    "join_height": "4395152",
+    "join_time": "1780492407929",
+    "last_inference_time": "0",
+    "status": "ACTIVE",
+    "validator_key": "GS0Cn9uYKd9xrPK1VEnwKWg6DS97aFGDB+3OdGgdLv8=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg": {
+    "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 9,
+    "index": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+    "inference_url": "http://89.169.97.113:8000",
+    "join_height": "3406592",
+    "join_time": "1775215641406",
+    "last_inference_time": "1779141152470",
+    "status": "ACTIVE",
+    "validator_key": "0tn+MYrCviYUO3mYYPXRYXfpXk3yaY04SVMZV6BewyQ=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4": {
+    "error": "HTTP Error 404: Not Found"
+  },
+  "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv": {
+    "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 22,
+    "index": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+    "inference_url": "http://135.181.56.61:8000",
+    "join_height": "3882246",
+    "join_time": "1777801877028",
+    "last_inference_time": "1779183507048",
+    "status": "ACTIVE",
+    "validator_key": "D34hhUrgETtsKcAvPCX33o1xCf5ntb+9y9ZT/NHKBqQ=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl": {
+    "address": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 12,
+    "index": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
+    "inference_url": "http://84.32.59.212:8000",
+    "join_height": "2502068",
+    "join_time": "1770285812134",
+    "last_inference_time": "1779185095062",
+    "status": "ACTIVE",
+    "validator_key": "if9OZ66R/D2xm9hBDKb+jGHeNTE25muzb+1SxsP38A0=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv": {
+    "address": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
+    "inference_url": "http://57.131.17.61:8000",
+    "join_height": "4206213",
+    "join_time": "1779486854879",
+    "last_inference_time": "0",
+    "status": "INACTIVE",
+    "validator_key": "scXG40oXdZ2NLMIo29SNPEeFRaG/PhKWE8qfnceqWiY=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt": {
+    "address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 16,
+    "index": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+    "inference_url": "http://148.113.47.235:8000",
+    "join_height": "3408317",
+    "join_time": "1775224969731",
+    "last_inference_time": "1779185251614",
+    "status": "ACTIVE",
+    "validator_key": "fkjx5zO682KEA2IGHteNGtWbEOeArd3Hc3GFThJhv5U=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws": {
+    "address": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
+    "inference_url": "http://95.217.47.126:8000",
+    "join_height": "3546389",
+    "join_time": "1775975253206",
+    "last_inference_time": "1777853127294",
+    "status": "INACTIVE",
+    "validator_key": "ss8SH5gzrVLH1Aqsc/LJkSosSGtYZPDgpklmM7YTLpY=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg": {
+    "address": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 9,
+    "index": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+    "inference_url": "http://gnk.antifreeze.dev:8000",
+    "join_height": "3036862",
+    "join_time": "1773206021944",
+    "last_inference_time": "1779185333948",
+    "status": "ACTIVE",
+    "validator_key": "1lTDgkHP4xflr3onskHMNWHtKeNqzjWNhfHxKlxFhxA=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2": {
+    "address": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 1,
+    "index": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+    "inference_url": "http://64.236.203.236:8000",
+    "join_height": "3812617",
+    "join_time": "1777412133908",
+    "last_inference_time": "1777853258862",
+    "status": "ACTIVE",
+    "validator_key": "R7QI5MWFxyKstkx4Vc6z1n0eqKQmbMlQYJfvM1vYTWM=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu": {
+    "address": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 3,
+    "index": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
+    "inference_url": "http://65.21.232.177:8000",
+    "join_height": "3882819",
+    "join_time": "1777805094523",
+    "last_inference_time": "1777853292892",
+    "status": "ACTIVE",
+    "validator_key": "V/fMGO04MyxmHungpP0I58gUi4u5W8f3ag+ZK8aZQHk=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239": {
+    "address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 12,
+    "index": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+    "inference_url": "http://35.89.168.230:8000",
+    "join_height": "1732015",
+    "join_time": "1765789058670",
+    "last_inference_time": "1779140855216",
+    "status": "ACTIVE",
+    "validator_key": "UJT9l+NwWiwTKLBZQ6BUzjMSnPzMB/bHEgyhWUmoXy0=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu": {
+    "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 34,
+    "index": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+    "inference_url": "http://95.216.112.248:8000",
+    "join_height": "3843344",
+    "join_time": "1777581843464",
+    "last_inference_time": "1779184846594",
+    "status": "ACTIVE",
+    "validator_key": "BSqH9nNh6Jh9N3gnod2dQyjnmpRjk1DeAfUalwOy+44=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje": {
+    "address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 2,
+    "index": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+    "inference_url": "http://95.217.35.48:8000",
+    "join_height": "2903499",
+    "join_time": "1772485696665",
+    "last_inference_time": "1777853212877",
+    "status": "ACTIVE",
+    "validator_key": "sOVko6g5IPDTUPdpKXc97wWPIHZmO9Glcna52/o8KKY=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4": {
+    "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+    "inference_url": "http://88.99.213.222:8000",
+    "join_height": "3331306",
+    "join_time": "1774802002926",
+    "last_inference_time": "1779123553458",
+    "status": "INACTIVE",
+    "validator_key": "OfKVYsD0+faRz5v5khWarI4jRSaieuyijvnRiTwveWk=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz": {
+    "address": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 10,
+    "index": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
+    "inference_url": "http://57.128.30.101:8000",
+    "join_height": "3190769",
+    "join_time": "1774043016147",
+    "last_inference_time": "1779184689092",
+    "status": "ACTIVE",
+    "validator_key": "U/mcexq1x+hWf0GXuyFonYS9aej4OJgcYiHjy+ye1Cs=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6": {
+    "address": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 3,
+    "index": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
+    "inference_url": "http://109.206.182.166:8000",
+    "join_height": "3191431",
+    "join_time": "1774046566654",
+    "last_inference_time": "1777830936902",
+    "status": "ACTIVE",
+    "validator_key": "UPvz2yI1wACw+ZnjhYaAxHssgwmlEYGo9vwDR5zh2tc=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds": {
+    "address": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 3,
+    "index": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
+    "inference_url": "http://94.130.143.155:8000",
+    "join_height": "3138267",
+    "join_time": "1773760703020",
+    "last_inference_time": "1777853292892",
+    "status": "ACTIVE",
+    "validator_key": "vDnKWWwXq38nRzDmwiS9L6p3BEeT6iLsad7zrGNFqUE=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le": {
+    "address": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 77,
+    "index": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
+    "inference_url": "http://node1.gonka.ai:8000",
+    "join_height": "0",
+    "join_time": "1755848273",
+    "last_inference_time": "1779184826670",
+    "status": "ACTIVE",
+    "validator_key": "OPwcpfQYOoWDuHKYivRVq5jxrELH0moP5qdznvj3Dps=",
+    "weight": 1,
+    "worker_public_key": ""
+  },
+  "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw": {
+    "address": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 5,
+    "index": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
+    "inference_url": "http://94.130.152.246:8000",
+    "join_height": "3376833",
+    "join_time": "1775052983439",
+    "last_inference_time": "1777853298640",
+    "status": "ACTIVE",
+    "validator_key": "dK6r1yjQTeC2uimK+elYUMEQ4Yrm5rc8oeR1aKkMRxg=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p": {
+    "address": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 16,
+    "index": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
+    "inference_url": "http://46.4.101.189:8000",
+    "join_height": "1390248",
+    "join_time": "1763733346164",
+    "last_inference_time": "1779185351425",
+    "status": "ACTIVE",
+    "validator_key": "RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx": {
+    "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 6,
+    "index": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+    "inference_url": "http://65.108.198.21:8000",
+    "join_height": "2769589",
+    "join_time": "1771750787840",
+    "last_inference_time": "1779185240068",
+    "status": "ACTIVE",
+    "validator_key": "iJ2Hy/GCpLUltiyIZzRlo98qX0/XktJt+ZjrQAd+fxI=",
+    "weight": -1,
+    "worker_public_key": ""
+  }
+}

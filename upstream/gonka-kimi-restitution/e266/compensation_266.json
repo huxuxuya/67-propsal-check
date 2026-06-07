@@ -1,0 +1,324 @@
+{
+  "epoch": 266,
+  "epoch_theoretical_reward_ngonka": 284797192935274,
+  "epoch_theoretical_reward_gonka": 284797.1929352749,
+  "total_reconstructed_weight": 1079697.9577088912,
+  "total_epoch_weight_on_chain": 335159,
+  "model_weight_factors": {
+    "moonshotai/Kimi-K2.6": 1.2620856201975852,
+    "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": 0.3593
+  },
+  "delegation_params": {
+    "no_participation_penalty": 0.15,
+    "delegation_share": 0.05,
+    "net_extra_penalty": 0.1,
+    "snapshot_height": 4104861
+  },
+  "eligibility_note": "Unlike e267-e276, zero-reward nonce submitters are included. In e266 the attack was still active and unpatched \u2014 zero rewards is evidence of being attacked out of the epoch, not of failure.",
+  "excluded_operators": [
+    "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+    "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
+    "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
+    "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
+    "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+    "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+    "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+    "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
+    "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw"
+  ],
+  "nonce_compensation": {
+    "affected_participants": 18,
+    "total_ngonka": 183605741811967,
+    "total_gonka": 183605.741811967,
+    "entries": [
+      {
+        "address": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+        "reconstructed_weight": 214919.08362327114,
+        "fair_share_ngonka": 56690254239262,
+        "fair_share_gonka": 56690.25423926223,
+        "actual_rewards_ngonka": 14350368017242,
+        "actual_rewards_gonka": 14350.368017242,
+        "compensation_ngonka": 42339886222020,
+        "compensation_gonka": 42339.88622202023
+      },
+      {
+        "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "reconstructed_weight": 113567.51244785951,
+        "fair_share_ngonka": 29956256305629,
+        "fair_share_gonka": 29956.256305629515,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 29956256305629,
+        "compensation_gonka": 29956.256305629515
+      },
+      {
+        "address": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
+        "reconstructed_weight": 109684.57982875963,
+        "fair_share_ngonka": 28932036242619,
+        "fair_share_gonka": 28932.03624261943,
+        "actual_rewards_ngonka": 2148136567242,
+        "actual_rewards_gonka": 2148.136567242,
+        "compensation_ngonka": 26783899675377,
+        "compensation_gonka": 26783.89967537743
+      },
+      {
+        "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "reconstructed_weight": 72610.30990120747,
+        "fair_share_ngonka": 19152775357568,
+        "fair_share_gonka": 19152.775357568866,
+        "actual_rewards_ngonka": 239625993655,
+        "actual_rewards_gonka": 239.625993655,
+        "compensation_ngonka": 18913149363913,
+        "compensation_gonka": 18913.149363913868
+      },
+      {
+        "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+        "reconstructed_weight": 70111.38037321625,
+        "fair_share_ngonka": 18493620535765,
+        "fair_share_gonka": 18493.62053576559,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 18493620535765,
+        "compensation_gonka": 18493.62053576559
+      },
+      {
+        "address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+        "reconstructed_weight": 64214.916355653135,
+        "fair_share_ngonka": 16938281481490,
+        "fair_share_gonka": 16938.281481490372,
+        "actual_rewards_ngonka": 5869987107005,
+        "actual_rewards_gonka": 5869.987107005,
+        "compensation_ngonka": 11068294374485,
+        "compensation_gonka": 11068.294374485373
+      },
+      {
+        "address": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
+        "reconstructed_weight": 32390.165356750826,
+        "fair_share_ngonka": 8543711791292,
+        "fair_share_gonka": 8543.711791292628,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 8543711791292,
+        "compensation_gonka": 8543.711791292628
+      },
+      {
+        "address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+        "reconstructed_weight": 28109.170933040616,
+        "fair_share_ngonka": 7414493025859,
+        "fair_share_gonka": 7414.493025859935,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 7414493025859,
+        "compensation_gonka": 7414.493025859935
+      },
+      {
+        "address": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
+        "reconstructed_weight": 16275.856158068058,
+        "fair_share_ngonka": 4293161910088,
+        "fair_share_gonka": 4293.16191008844,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 4293161910088,
+        "compensation_gonka": 4293.16191008844
+      },
+      {
+        "address": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
+        "reconstructed_weight": 15629.668320526895,
+        "fair_share_ngonka": 4122713794551,
+        "fair_share_gonka": 4122.7137945514305,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 4122713794551,
+        "compensation_gonka": 4122.7137945514305
+      },
+      {
+        "address": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
+        "reconstructed_weight": 9589.427509110868,
+        "fair_share_ngonka": 2529450034569,
+        "fair_share_gonka": 2529.450034569229,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 2529450034569,
+        "compensation_gonka": 2529.450034569229
+      },
+      {
+        "address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+        "reconstructed_weight": 8198.508188803513,
+        "fair_share_ngonka": 2162560465875,
+        "fair_share_gonka": 2162.5604658758148,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 2162560465875,
+        "compensation_gonka": 2162.5604658758148
+      },
+      {
+        "address": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
+        "reconstructed_weight": 7673.480570801318,
+        "fair_share_ngonka": 2024071372001,
+        "fair_share_gonka": 2024.0713720019942,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 2024071372001,
+        "compensation_gonka": 2024.0713720019942
+      },
+      {
+        "address": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+        "reconstructed_weight": 7633.093830954996,
+        "fair_share_ngonka": 2013418364780,
+        "fair_share_gonka": 2013.4183647809311,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 2013418364780,
+        "compensation_gonka": 2013.4183647809311
+      },
+      {
+        "address": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
+        "reconstructed_weight": 7148.452952799123,
+        "fair_share_ngonka": 1885582278128,
+        "fair_share_gonka": 1885.5822781281736,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 1885582278128,
+        "compensation_gonka": 1885.5822781281736
+      },
+      {
+        "address": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
+        "reconstructed_weight": 1977.5872,
+        "fair_share_ngonka": 521637814838,
+        "fair_share_gonka": 521.6378148383823,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 521637814838,
+        "compensation_gonka": 521.6378148383823
+      },
+      {
+        "address": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
+        "reconstructed_weight": 1057.7792,
+        "fair_share_ngonka": 279015575378,
+        "fair_share_gonka": 279.01557537866955,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 279015575378,
+        "compensation_gonka": 279.01557537866955
+      },
+      {
+        "address": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+        "reconstructed_weight": 988.7936,
+        "fair_share_ngonka": 260818907419,
+        "fair_share_gonka": 260.81890741919113,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 260818907419,
+        "compensation_gonka": 260.81890741919113
+      }
+    ]
+  },
+  "delegation_compensation": {
+    "affected_delegators": 9,
+    "total_ngonka": 5092727156782,
+    "total_gonka": 5092.727156782,
+    "entries": [
+      {
+        "address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 18057,
+        "reconstructed_original_weight": 21243.53,
+        "extra_weight_lost": 2124.35,
+        "actual_rewards_ngonka": 15325866743189,
+        "actual_rewards_gonka": 15325.866743189,
+        "compensation_ngonka": 1805142497891,
+        "compensation_gonka": 1805.1424978916098
+      },
+      {
+        "address": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 15760,
+        "reconstructed_original_weight": 18541.18,
+        "extra_weight_lost": 1854.12,
+        "actual_rewards_ngonka": 13391864042618,
+        "actual_rewards_gonka": 13391.864042618,
+        "compensation_ngonka": 1575513416778,
+        "compensation_gonka": 1575.5134167786325
+      },
+      {
+        "address": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 11668,
+        "reconstructed_original_weight": 13727.06,
+        "extra_weight_lost": 1372.71,
+        "actual_rewards_ngonka": 7997729972660,
+        "actual_rewards_gonka": 7997.72997266,
+        "compensation_ngonka": 1166439755518,
+        "compensation_gonka": 1166.4397555185972
+      },
+      {
+        "address": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 1763,
+        "reconstructed_original_weight": 2074.12,
+        "extra_weight_lost": 207.41,
+        "actual_rewards_ngonka": 1498087329133,
+        "actual_rewards_gonka": 1498.087329133,
+        "compensation_ngonka": 176245568133,
+        "compensation_gonka": 176.24556813329502
+      },
+      {
+        "address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 1139,
+        "reconstructed_original_weight": 1340.0,
+        "extra_weight_lost": 134.0,
+        "actual_rewards_ngonka": 878628643405,
+        "actual_rewards_gonka": 878.628643405,
+        "compensation_ngonka": 113864833864,
+        "compensation_gonka": 113.86483386490245
+      },
+      {
+        "address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 1084,
+        "reconstructed_original_weight": 1275.29,
+        "extra_weight_lost": 127.53,
+        "actual_rewards_ngonka": 863333367214,
+        "actual_rewards_gonka": 863.333367214,
+        "compensation_ngonka": 108366531966,
+        "compensation_gonka": 108.36653196624606
+      },
+      {
+        "address": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 1006,
+        "reconstructed_original_weight": 1183.53,
+        "extra_weight_lost": 118.35,
+        "actual_rewards_ngonka": 843789403192,
+        "actual_rewards_gonka": 843.789403192,
+        "compensation_ngonka": 100568940182,
+        "compensation_gonka": 100.56894018269699
+      },
+      {
+        "address": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 310,
+        "reconstructed_original_weight": 364.71,
+        "extra_weight_lost": 36.47,
+        "actual_rewards_ngonka": 256620744979,
+        "actual_rewards_gonka": 256.620744979,
+        "compensation_ngonka": 30990428883,
+        "compensation_gonka": 30.990428883336048
+      },
+      {
+        "address": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+        "excluded_operator": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "chain_weight_post_penalty": 156,
+        "reconstructed_original_weight": 183.53,
+        "extra_weight_lost": 18.35,
+        "actual_rewards_ngonka": 0,
+        "actual_rewards_gonka": 0.0,
+        "compensation_ngonka": 15595183567,
+        "compensation_gonka": 15.595183567098145
+      }
+    ]
+  },
+  "grand_total_ngonka": 188698468968749,
+  "grand_total_gonka": 188698.468968749
+}

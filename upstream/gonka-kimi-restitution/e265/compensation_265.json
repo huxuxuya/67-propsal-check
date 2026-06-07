@@ -1,0 +1,51 @@
+{
+  "epoch": 265,
+  "cpoc_cutoff_height": 4103170,
+  "epoch_theoretical_reward_ngonka": 284932503735690,
+  "epoch_theoretical_reward_gonka": 284932.50373569014,
+  "total_epoch_weight": 904177,
+  "affected_participants": 3,
+  "total_compensation_ngonka": 30592104861828,
+  "total_compensation_gonka": 30592.104861828,
+  "compensation": [
+    {
+      "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+      "weight": 66311,
+      "cw_healthy": 66311,
+      "cw_end": 323,
+      "cw_drop_pct": 99.51,
+      "correct_reward_ngonka": 20896527179100,
+      "correct_reward_gonka": 20896.527179100274,
+      "actual_rewards_ngonka": 0,
+      "actual_rewards_gonka": 0.0,
+      "compensation_ngonka": 20896527179100,
+      "compensation_gonka": 20896.527179100274
+    },
+    {
+      "address": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+      "weight": 189884,
+      "cw_healthy": 186719,
+      "cw_end": 172607,
+      "cw_drop_pct": 7.56,
+      "correct_reward_ngonka": 59837978116395,
+      "correct_reward_gonka": 59837.97811639511,
+      "actual_rewards_ngonka": 54393492283376,
+      "actual_rewards_gonka": 54393.492283376,
+      "compensation_ngonka": 5444485833019,
+      "compensation_gonka": 5444.485833019109
+    },
+    {
+      "address": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
+      "weight": 13490,
+      "cw_healthy": 7031,
+      "cw_end": 0,
+      "cw_drop_pct": 100.0,
+      "correct_reward_ngonka": 4251091849709,
+      "correct_reward_gonka": 4251.091849709138,
+      "actual_rewards_ngonka": 0,
+      "actual_rewards_gonka": 0.0,
+      "compensation_ngonka": 4251091849709,
+      "compensation_gonka": 4251.091849709138
+    }
+  ]
+}
