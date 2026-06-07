@@ -1,0 +1,489 @@
+{
+  "archiveGovVotes": [
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "0.380100000000000000"
+        },
+        {
+          "option": "no",
+          "weight": "0.005200000000000000"
+        },
+        {
+          "option": "abstain",
+          "weight": "0.025800000000000000"
+        },
+        {
+          "option": "no_with_veto",
+          "weight": "0.588900000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2"
+    },
+    {
+      "options": [
+        {
+          "option": "yes",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2"
+    },
+    {
+      "options": [
+        {
+          "option": "no_with_veto",
+          "weight": "1.000000000000000000"
+        }
+      ],
+      "proposalId": 67,
+      "voter": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf"
+    }
+  ],
+  "perVoterPower": [
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    },
+    {
+      "reason": "Archive gov Votes stores vote options, not per-voter power. Aggregate TallyResult is exact; historical REST gov/staking probes failed; chain-specific voting-power calculator/API is still required.",
+      "voter": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+      "votingPower": null,
+      "votingPowerSource": "unknown"
+    }
+  ],
+  "summary": {
+    "apiSource": "http://node1.gonka.ai:8000",
+    "archiveGovProposalCode": 0,
+    "archiveGovTallyCode": 0,
+    "archiveGovVotesCode": 0,
+    "archiveSource": "GONKA_RPC_URL",
+    "archiveStakingValidatorsCode": 0,
+    "dashboardProbeStatus": {
+      "error": "",
+      "status": 200
+    },
+    "decodedGovVotesAfterEndCount": 0,
+    "decodedGovVotesBeforeEndCount": 24,
+    "decodedGovVotesCount": 24,
+    "decodedTally": {
+      "abstain": 744,
+      "no": 150,
+      "no_with_veto": 84623,
+      "yes": 319920
+    },
+    "decodedTallyAfterEnd": {
+      "abstain": 744,
+      "no": 150,
+      "no_with_veto": 84623,
+      "yes": 319920
+    },
+    "decodedTallyAfterEndMatchesFinalTally": true,
+    "decodedTallyMatchesFinalTally": true,
+    "finalTally": {
+      "abstain": 744,
+      "no": 150,
+      "no_with_veto": 84623,
+      "yes": 319920
+    },
+    "firstBlockAfterVotingEnd": {
+      "hash": "778E80DD4497EA3EF81671C829B7EE619D3A46132A44E0AAE9F4DC1F9AF2C15E",
+      "height": 4433309,
+      "time": "2026-06-05T22:09:03.332831118Z"
+    },
+    "generatedAt": "2026-06-07T18:06:49.653861+00:00",
+    "govVotesMatchTxSearchVoters": true,
+    "historicalRestAvailable": false,
+    "lastBlockBeforeVotingEnd": {
+      "hash": "319A3003D8FB628B82EA65D8C27B0A08B3DCDF18F15F01A0AC869C2313C308B8",
+      "height": 4433308,
+      "time": "2026-06-05T22:08:57.716062379Z"
+    },
+    "perVoterPowerReason": "Exact aggregate tally and gov vote set are available from archive abci_query. Exact per-voter governance power is not exposed in gov Votes/TallyResult and was not derived from inference epoch weights.",
+    "perVoterPowerStatus": "unknown",
+    "proposalId": 67,
+    "restProbeStatuses": {
+      "governance_pricing": {
+        "error": "",
+        "status": 200
+      },
+      "proposal_4433308": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "proposal_4433309": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "validators_4433308": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "validators_4433309": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "votes_4433308": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "votes_4433309": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "votes_latest": {
+        "error": "",
+        "status": 200
+      }
+    },
+    "txSearchUniqueVotersCount": 24,
+    "votingEndTime": "2026-06-05T22:09:02.699803591Z"
+  }
+}

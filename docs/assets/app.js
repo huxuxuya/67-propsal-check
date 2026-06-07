@@ -545,9 +545,12 @@ function renderEpochTable() {
 
 function renderMethodology() {
   const method = state.data.methodology || {};
+  const gov = state.data.governancePowerEvidence?.summary || {};
   const rows = [
     ["Governance vote", method.governanceVoteRule],
     ["Governance voting power", method.governanceVotingPowerRule],
+    ["Voting-end boundary", gov.lastBlockBeforeVotingEnd ? `Last block before voting end: ${gov.lastBlockBeforeVotingEnd.height} at ${gov.lastBlockBeforeVotingEnd.time}; first block after: ${gov.firstBlockAfterVotingEnd?.height} at ${gov.firstBlockAfterVotingEnd?.time}.` : ""],
+    ["Archive gov evidence", gov.decodedGovVotesCount ? `Archive abci_query decoded ${gov.decodedGovVotesBeforeEndCount ?? gov.decodedGovVotesCount} gov votes at the last pre-end block and ${gov.decodedGovVotesAfterEndCount ?? "unknown"} votes at the first post-end block; aggregate tally matches final proposal tally: ${gov.decodedTallyMatchesFinalTally ? "yes" : "no"}; per-voter power status: ${gov.perVoterPowerStatus || "unknown"}.` : ""],
     ["Inference epoch weight", method.inferenceEpochRule],
     ["Recipient-voter conflict", method.recipientConflictRule],
     ["Identity evidence", method.identityRule],
@@ -662,7 +665,7 @@ function renderTables() {
       <td>${row.isRecipient ? "Yes" : "No"}</td>
       <td>${escapeHtml(row.finalVoteOptions.map((item) => `${optionLabels[item.option]} ${fmt.format(item.weight * 100)}%`).join(", "))}</td>
       <td>${escapeHtml(row.strictClusterId || row.signalClusterId || "-")}</td>
-      <td>unknown</td>
+      <td>${row.votingPower == null ? "unknown" : fmt.format(row.votingPower)}<br><span class="muted">${escapeHtml(row.votingPowerReason || row.votingPowerSource || "")}</span></td>
     </tr>
   `).join("");
 
@@ -797,7 +800,7 @@ function openDrawer(address) {
         <dt>Final vote</dt><dd>${escapeHtml(vote.finalVoteOptions.map((item) => `${optionLabels[item.option]} ${fmt.format(item.weight * 100)}%`).join(", "))}</dd>
         <dt>Height</dt><dd>${vote.height}</dd>
         <dt>Tx hash</dt><dd class="mono">${escapeHtml(vote.txHash)}</dd>
-        <dt>Voting power</dt><dd>unknown</dd>
+        <dt>Voting power</dt><dd>${vote.votingPower == null ? "unknown" : fmt.format(vote.votingPower)}<br><span class="muted">${escapeHtml(vote.votingPowerReason || vote.votingPowerSource || "")}</span></dd>
       </dl>` : "<p>No final on-chain vote in the saved proposal vote transactions.</p>"}
     </div>
     <div class="drawer-section">

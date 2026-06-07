@@ -400,6 +400,10 @@ def read_voting_end_epochs():
     return load_optional_json(DATA / "voting_end_epochs" / "manifest.json", {"epochs": [], "blocks": []})
 
 
+def read_governance_power_evidence():
+    return load_optional_json(DATA / "governance_power_67" / "governance_power_67.json", {"summary": {}, "archiveGovVotes": [], "perVoterPower": []})
+
+
 def source_url_for_file(source_file):
     if source_file.startswith("http"):
         return source_file
@@ -1733,6 +1737,7 @@ def main():
     osint_sources = read_public_osint_sources()
     telegram_evidence = read_telegram_evidence()
     voting_end_epochs = read_voting_end_epochs()
+    governance_power_evidence = read_governance_power_evidence()
 
     recipient_set = {row["address"] for row in recipients_raw}
     output_total = sum(outputs.values(), Decimal(0))
@@ -1797,10 +1802,13 @@ def main():
             }
         )
 
+    governance_power_by_voter = {row["voter"]: row for row in governance_power_evidence.get("perVoterPower", [])}
+    governance_power_summary = governance_power_evidence.get("summary", {})
     votes = []
     for vote in final_votes:
         participant = participants.get(vote["voter"]) or {}
         evidence_rows = evidence_by_address.get(vote["voter"], [])
+        governance_power = governance_power_by_voter.get(vote["voter"], {})
         votes.append(
             {
                 "voter": vote["voter"],
@@ -1812,8 +1820,9 @@ def main():
                 "primaryOption": max(vote["options"], key=lambda item: item["weight"])["option"],
                 "txHash": vote["txHash"],
                 "height": vote["height"],
-                "votingPower": None,
-                "votingPowerSource": "unknown",
+                "votingPower": governance_power.get("votingPower"),
+                "votingPowerSource": governance_power.get("votingPowerSource", "unknown"),
+                "votingPowerReason": governance_power.get("reason", governance_power_summary.get("perVoterPowerReason", "")),
                 "identityType": primary_identity_type(evidence_rows),
             }
         )
@@ -1904,6 +1913,11 @@ def main():
             "epochAnomaliesCount": len(epoch_anomalies),
             "epochEntryExitClusterCount": len(epoch_entry_exit_clusters),
             "votingEndEpochSnapshotCount": len(voting_end_epochs.get("epochs") or []),
+            "governanceArchiveVotesCount": governance_power_summary.get("decodedGovVotesCount", 0),
+            "governanceArchiveTallyMatchesFinal": governance_power_summary.get("decodedTallyMatchesFinalTally", False),
+            "governancePerVoterPowerStatus": governance_power_summary.get("perVoterPowerStatus", "unknown"),
+            "votingEndLastBlockBefore": governance_power_summary.get("lastBlockBeforeVotingEnd", {}),
+            "votingEndFirstBlockAfter": governance_power_summary.get("firstBlockAfterVotingEnd", {}),
             "finalVoteAddressCounts": dict(final_vote_counts),
             "recipientVoteAddressCounts": dict(recipient_vote_counts),
             "grcOffchainVote": {"include": 2, "exclude": 6, "abstain": 1, "votersIdentified": False},
@@ -1920,9 +1934,10 @@ def main():
         "telegramEvidence": telegram_evidence.get("messages") or [],
         "epochAnomalies": epoch_anomalies,
         "epochEntryExitClusters": epoch_entry_exit_clusters,
+        "governancePowerEvidence": governance_power_evidence,
         "methodology": {
             "governanceVoteRule": "A vote is evidenced by an on-chain governance vote transaction for proposal #67. A prior vote remains part of the saved vote set unless superseded by a later vote from the same voter under last-vote-wins consolidation.",
-            "governanceVotingPowerRule": "Per-voter governance voting power is not inferred from inference epochs. It must come from exact historical governance/staking data at the chain's tally/snapshot point. Until that data is added, per-voter votingPower remains unknown.",
+            "governanceVotingPowerRule": "Per-voter governance voting power is not inferred from inference epochs. Archive abci_query confirms the exact gov vote set and aggregate TallyResult, but gov Votes does not expose per-voter power. Until a chain-specific voting-power calculator/API is added, per-voter votingPower remains unknown.",
             "inferenceEpochRule": "e287 validation_weights are inference/epoch participation weights. They are operational timing signals only and are not used as governance voting power.",
             "recipientConflictRule": "Recipient-voter conflict is based on address overlap between compensation outputs and final on-chain governance voters; it does not imply the compensation amount affected vote weight.",
             "identityRule": "Public attribution requires public validator/GNS/metadata/source evidence. Infrastructure, Telegram, and inference timing remain signals unless independently corroborated.",

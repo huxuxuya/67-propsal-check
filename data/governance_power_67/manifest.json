@@ -1,0 +1,103 @@
+{
+  "rawFiles": [
+    "raw/abci_4433308_proposal.json",
+    "raw/abci_4433308_tally.json",
+    "raw/abci_4433308_validators.json",
+    "raw/abci_4433308_votes.json",
+    "raw/abci_4433309_proposal.json",
+    "raw/abci_4433309_tally.json",
+    "raw/abci_4433309_validators.json",
+    "raw/abci_4433309_votes.json",
+    "raw/block_4433308.json",
+    "raw/block_4433309.json",
+    "raw/dashboard_gov_67_html.json",
+    "raw/rest_probes.json"
+  ],
+  "summary": {
+    "apiSource": "http://node1.gonka.ai:8000",
+    "archiveGovProposalCode": 0,
+    "archiveGovTallyCode": 0,
+    "archiveGovVotesCode": 0,
+    "archiveSource": "GONKA_RPC_URL",
+    "archiveStakingValidatorsCode": 0,
+    "dashboardProbeStatus": {
+      "error": "",
+      "status": 200
+    },
+    "decodedGovVotesAfterEndCount": 0,
+    "decodedGovVotesBeforeEndCount": 24,
+    "decodedGovVotesCount": 24,
+    "decodedTally": {
+      "abstain": 744,
+      "no": 150,
+      "no_with_veto": 84623,
+      "yes": 319920
+    },
+    "decodedTallyAfterEnd": {
+      "abstain": 744,
+      "no": 150,
+      "no_with_veto": 84623,
+      "yes": 319920
+    },
+    "decodedTallyAfterEndMatchesFinalTally": true,
+    "decodedTallyMatchesFinalTally": true,
+    "finalTally": {
+      "abstain": 744,
+      "no": 150,
+      "no_with_veto": 84623,
+      "yes": 319920
+    },
+    "firstBlockAfterVotingEnd": {
+      "hash": "778E80DD4497EA3EF81671C829B7EE619D3A46132A44E0AAE9F4DC1F9AF2C15E",
+      "height": 4433309,
+      "time": "2026-06-05T22:09:03.332831118Z"
+    },
+    "generatedAt": "2026-06-07T18:06:49.653861+00:00",
+    "govVotesMatchTxSearchVoters": true,
+    "historicalRestAvailable": false,
+    "lastBlockBeforeVotingEnd": {
+      "hash": "319A3003D8FB628B82EA65D8C27B0A08B3DCDF18F15F01A0AC869C2313C308B8",
+      "height": 4433308,
+      "time": "2026-06-05T22:08:57.716062379Z"
+    },
+    "perVoterPowerReason": "Exact aggregate tally and gov vote set are available from archive abci_query. Exact per-voter governance power is not exposed in gov Votes/TallyResult and was not derived from inference epoch weights.",
+    "perVoterPowerStatus": "unknown",
+    "proposalId": 67,
+    "restProbeStatuses": {
+      "governance_pricing": {
+        "error": "",
+        "status": 200
+      },
+      "proposal_4433308": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "proposal_4433309": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "validators_4433308": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "validators_4433309": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "votes_4433308": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "votes_4433309": {
+        "error": "HTTPError",
+        "status": 500
+      },
+      "votes_latest": {
+        "error": "",
+        "status": 200
+      }
+    },
+    "txSearchUniqueVotersCount": 24,
+    "votingEndTime": "2026-06-05T22:09:02.699803591Z"
+  }
+}
