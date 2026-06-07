@@ -23,6 +23,7 @@ const els = {
   confidence: document.getElementById("confidenceFilter"),
   sourceType: document.getElementById("sourceTypeFilter"),
   benefitPowerTable: document.getElementById("benefitPowerTable"),
+  publicNameTable: document.getElementById("publicNameTable"),
   rankedTable: document.getElementById("rankedTable"),
   interestClusterTable: document.getElementById("interestClusterTable"),
   evidenceTable: document.getElementById("evidenceTable"),
@@ -575,6 +576,54 @@ function renderBenefitPowerTable() {
   `).join("");
 }
 
+function publicNameMatches(row, query) {
+  if (!query) return true;
+  return [
+    row.address,
+    row.label,
+    row.bestPublicName,
+    row.voteOption,
+    row.evidenceBoundary,
+    row.validatorOperatorAddress,
+    row.validatorMoniker,
+    row.validatorWebsite,
+    row.validatorIdentity,
+    row.validatorSecurityContact,
+    row.inferenceUrl,
+    ...(row.roles || []),
+    ...(row.gnsNames || []),
+    ...(row.reverseGnsNames || []),
+    ...(row.nextActions || []),
+    ...(row.publicNameSources || []).map((item) => `${item.sourceType} ${item.value}`),
+  ].filter(Boolean).join(" ").toLowerCase().includes(query);
+}
+
+function renderPublicNameTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const selectedLabel = els.label.value;
+  const rows = (state.data.publicNameEnrichment?.rows || []).filter((row) => {
+    if (!publicNameMatches(row, query)) return false;
+    if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
+    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (els.confidence.value !== "all" && !(row.publicNameSources || []).some((item) => item.confidence === els.confidence.value)) return false;
+    if (els.sourceType.value !== "all" && !(row.publicNameSources || []).some((item) => item.sourceType === els.sourceType.value)) return false;
+    return true;
+  });
+  document.getElementById("publicNameRows").textContent = `${rows.length} shown`;
+  els.publicNameTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
+      <td>${escapeHtml(row.label)}</td>
+      <td>${escapeHtml(row.bestPublicName || "none")}<br><span class="muted">${escapeHtml((row.reverseGnsNames || []).join(", ") || (row.gnsNames || []).join(", ") || "no GNS")}</span></td>
+      <td>${(row.roles || []).map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</td>
+      <td class="num">${gonka(row.totalCompensationGonka || 0)}<br><span class="muted">power ${fmt.format(row.votingPower || 0)} · ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}</span></td>
+      <td><span class="tag ${row.evidenceBoundary === "public_owner_proof" ? "good" : row.evidenceBoundary === "unknown_public_owner" ? "warn" : ""}">${escapeHtml(row.evidenceBoundary)}</span></td>
+      <td>${(row.publicNameSources || []).slice(0, 5).map((item) => `<span class="tag">${escapeHtml(item.sourceType)}: ${escapeHtml(String(item.value).slice(0, 52))}</span>`).join(" ") || "-"}</td>
+      <td>${(row.nextActions || []).map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join(" ")}</td>
+    </tr>
+  `).join("");
+}
+
 function renderActorGraph() {
   const ranked = (state.data.rankedParties || []).slice(0, 25);
   const claims = state.data.evidenceClaims || [];
@@ -832,6 +881,7 @@ function renderAll() {
   renderEntryExitTable();
   renderTelegramTable();
   renderBenefitPowerTable();
+  renderPublicNameTable();
   renderRankedTable();
   renderInterestClusterTable();
   renderEvidenceTable();

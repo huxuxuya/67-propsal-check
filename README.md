@@ -12,6 +12,7 @@ Investigation workspace for Gonka proposal #67, "Kimi Restitution (epochs 265-27
 - `data/gns_names_by_address.json` - decoded `.gnk` names, reverse names, records, and names grouped by address.
 - `data/public_identity_signals.json` - raw DNS/RDAP/TLS/HTTP public signal snapshot for proposal #67 addresses and related URLs.
 - `data/osint/public_osint_sources.json` - raw public OSINT snapshot for Gonka names, GitHub repository metadata, commits, contributors, and public social/profile candidates.
+- `data/public_name_enrichment.json` - normalized public naming index for proposal #67 addresses from GNS, validator metadata, inference URLs, and evidence claims.
 - `data/onchain_graph/proposal_67_local_graph.json` - deterministic local graph snapshot built from saved proposal, vote, upstream delegation, and epoch commit data.
 - `data/telegram_evidence.json` - curated short excerpts parsed from ignored Telegram exports under `history/`.
 - `data/voting_end_epochs/` - raw e285-e290 voting-end epoch snapshots and archive block snapshots, with public-node fallback recorded in the manifest.
@@ -19,6 +20,8 @@ Investigation workspace for Gonka proposal #67, "Kimi Restitution (epochs 265-27
 - `reports/attribution_audit.md` - ranked interested-party audit with evidence caveats.
 - `reports/ranked_parties.csv` - exportable ranked actor/cluster priority list.
 - `reports/evidence_claims.csv` - exportable evidence claims with source, confidence, and proof/signal boundary.
+- `reports/public_name_enrichment.md` / `reports/public_name_enrichment.csv` - public name and metadata attribution queue for proposal #67 addresses.
+- `reports/public_name_groups.csv` - grouped public name/source values, useful for shared operator/domain/contact review.
 - `reports/proposal_67_recipients.csv` - all non-zero compensation recipients with public participant metadata.
 - `reports/proposal_67_final_votes.csv` - final per-address vote after last-vote-wins consolidation.
 - `data/` - raw on-chain and participant JSON snapshots used by the report and dashboard.

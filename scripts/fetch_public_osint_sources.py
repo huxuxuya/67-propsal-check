@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import re
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -52,6 +53,18 @@ def extract_candidate_links(text):
     return [link.rstrip(").,;") for link in links if any(host in link.lower() for host in social_hosts)]
 
 
+def extract_static_assets(text):
+    paths = sorted(set(re.findall(r'<script[^>]+src="([^"]+\.js)"', text) + re.findall(r'<link[^>]+href="([^"]+\.css)"', text)))
+    urls = []
+    for path in paths:
+        urls.append(urllib.parse.urljoin(GONKA_NAMES_URL, path))
+    return urls
+
+
+def extract_public_routes(text):
+    return sorted(set(re.findall(r'"/(?:names|network/participants|participants|address/[^"]*)"', text)))
+
+
 def write_json(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
@@ -78,9 +91,27 @@ def main():
             "headers": gonka_names["headers"],
             "bodyPath": "data/osint/gonka_names/gonka_names.html",
             "candidateSocialLinks": extract_candidate_links(gonka_names["body"]),
+            "staticAssets": extract_static_assets(gonka_names["body"]),
+            "savedAssets": [],
         }
         (OUT / "gonka_names").mkdir(parents=True, exist_ok=True)
         (OUT / "gonka_names" / "gonka_names.html").write_text(gonka_names["body"])
+        for asset_url in snapshot["gonkaNames"]["staticAssets"]:
+            if not asset_url.endswith(".js"):
+                continue
+            asset = fetch_text(asset_url, timeout=45)
+            filename = asset_url.rsplit("/", 1)[-1]
+            rel_path = f"data/osint/gonka_names/{filename}"
+            (OUT / "gonka_names" / filename).write_text(asset["body"])
+            snapshot["gonkaNames"]["savedAssets"].append(
+                {
+                    "url": asset_url,
+                    "status": asset["status"],
+                    "bodyPath": rel_path,
+                    "candidateSocialLinks": extract_candidate_links(asset["body"]),
+                    "publicRoutes": extract_public_routes(asset["body"]),
+                }
+            )
     except Exception as exc:
         snapshot["errors"].append({"source": GONKA_NAMES_URL, "error": str(exc)})
 
@@ -97,6 +128,8 @@ def main():
 
     for section in [snapshot.get("gonkaNames", {})]:
         snapshot["publicSocialCandidates"].extend(section.get("candidateSocialLinks") or [])
+        for asset in section.get("savedAssets") or []:
+            snapshot["publicSocialCandidates"].extend(asset.get("candidateSocialLinks") or [])
     for response in snapshot["github"].values():
         body = response.get("body", "")
         snapshot["publicSocialCandidates"].extend(extract_candidate_links(body))

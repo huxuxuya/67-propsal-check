@@ -1406,6 +1406,208 @@ def build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_cl
     return rows
 
 
+def build_public_name_enrichment(recipients, votes, identity_evidence, evidence_claims, gns_by_address):
+    vote_by_address = {row["voter"]: row for row in votes}
+    recipient_by_address = {row["address"]: row for row in recipients}
+    claims_by_address = defaultdict(list)
+    for claim in evidence_claims:
+        if claim.get("address"):
+            claims_by_address[claim["address"]].append(claim)
+
+    evidence_by_address = defaultdict(list)
+    for item in identity_evidence:
+        evidence_by_address[item["address"]].append(item)
+
+    addresses = sorted(set(recipient_by_address) | set(vote_by_address))
+    rows = []
+    for address in addresses:
+        recipient = recipient_by_address.get(address, {})
+        vote = vote_by_address.get(address, {})
+        node_info = recipient.get("publicNodeInfo") or vote.get("publicNodeInfo") or {}
+        matched_validator = node_info.get("matchedValidator") or {}
+        gns_names = gns_by_address.get(address) or []
+        reverse_names = sorted(item["fullName"] for item in gns_names if item.get("reverse"))
+        all_gns_names = sorted(item["fullName"] for item in gns_names)
+        public_name_sources = []
+
+        for name in gns_names:
+            public_name_sources.append(
+                {
+                    "sourceType": "gns_name",
+                    "value": name["fullName"],
+                    "confidence": "high",
+                    "isAttributionProof": True,
+                    "sourceFile": "data/gns_names_by_address.json",
+                }
+            )
+            for record_key, record in (name.get("records") or {}).items():
+                public_name_sources.append(
+                    {
+                        "sourceType": f"gns_record_{record_key}",
+                        "value": str(record.get("value", "")),
+                        "confidence": "medium",
+                        "isAttributionProof": False,
+                        "sourceFile": "data/gns_names_by_address.json",
+                    }
+                )
+
+        for field, source_type, confidence, proof in [
+            ("moniker", "validator_moniker", "high", True),
+            ("website", "validator_website", "medium", False),
+            ("identity", "validator_identity", "high", True),
+            ("securityContact", "validator_security_contact", "high", True),
+            ("details", "validator_details", "medium", False),
+        ]:
+            value = matched_validator.get(field)
+            if value:
+                public_name_sources.append(
+                    {
+                        "sourceType": source_type,
+                        "value": value,
+                        "confidence": confidence,
+                        "isAttributionProof": proof and public_owner_proof(source_type, value, matched_validator.get("label", "")),
+                        "sourceFile": "data/validators.json",
+                    }
+                )
+
+        if node_info.get("inferenceUrl"):
+            public_name_sources.append(
+                {
+                    "sourceType": "participant_inference_url",
+                    "value": node_info["inferenceUrl"],
+                    "confidence": "medium",
+                    "isAttributionProof": False,
+                    "sourceFile": "data/participants_by_address.json",
+                }
+            )
+
+        proof_claims = [claim for claim in claims_by_address.get(address, []) if claim.get("isAttributionProof")]
+        high_claims = [claim for claim in claims_by_address.get(address, []) if claim.get("confidence") == "high"]
+        if proof_claims or any(source["isAttributionProof"] for source in public_name_sources):
+            evidence_boundary = "public_owner_proof"
+        elif public_name_sources or high_claims:
+            evidence_boundary = "public_name_or_metadata_signal"
+        else:
+            evidence_boundary = "unknown_public_owner"
+
+        best_public_name = ""
+        for source_type in ["gns_name", "validator_moniker", "validator_identity", "validator_security_contact", "validator_website", "participant_inference_url"]:
+            best_public_name = next((source["value"] for source in public_name_sources if source["sourceType"] == source_type), "")
+            if best_public_name:
+                break
+
+        next_actions = []
+        if evidence_boundary == "unknown_public_owner":
+            next_actions.append("find public name source")
+        if vote and recipient:
+            next_actions.append("review recipient-voter conflict")
+        if vote and not proof_claims:
+            next_actions.append("corroborate voter owner")
+        if recipient and not proof_claims:
+            next_actions.append("corroborate beneficiary owner")
+        if not reverse_names and all_gns_names:
+            next_actions.append("check non-reverse GNS names")
+        if not next_actions:
+            next_actions.append("archive as public proof")
+
+        rows.append(
+            {
+                "address": address,
+                "label": recipient.get("label") or vote.get("label") or "Unknown public owner",
+                "bestPublicName": best_public_name,
+                "roles": sorted([role for role, present in {"recipient": bool(recipient), "voter": bool(vote)}.items() if present]),
+                "totalCompensationGonka": round(recipient.get("totalGonka") or 0, 6),
+                "votingPower": round(vote.get("votingPower") or 0, 6),
+                "voteOption": vote.get("primaryOption", "did_not_vote"),
+                "gnsNames": all_gns_names,
+                "reverseGnsNames": reverse_names,
+                "validatorOperatorAddress": matched_validator.get("operatorAddress", ""),
+                "validatorMoniker": matched_validator.get("moniker", ""),
+                "validatorWebsite": matched_validator.get("website", ""),
+                "validatorIdentity": matched_validator.get("identity", ""),
+                "validatorSecurityContact": matched_validator.get("securityContact", ""),
+                "validatorDetails": matched_validator.get("details", ""),
+                "inferenceUrl": node_info.get("inferenceUrl", ""),
+                "evidenceBoundary": evidence_boundary,
+                "publicNameSources": public_name_sources,
+                "evidenceClaims": sorted(
+                    claims_by_address.get(address, []),
+                    key=lambda claim: (
+                        {"high": 0, "medium": 1, "low": 2}.get(claim.get("confidence"), 3),
+                        not claim.get("isAttributionProof"),
+                        claim.get("sourceType", ""),
+                    ),
+                )[:8],
+                "nextActions": next_actions,
+            }
+        )
+
+    rows.sort(
+        key=lambda row: (
+            row["evidenceBoundary"] != "public_owner_proof",
+            row["evidenceBoundary"] == "unknown_public_owner",
+            -row["votingPower"],
+            -row["totalCompensationGonka"],
+            row["label"],
+        )
+    )
+
+    groups = {}
+    for row in rows:
+        for source in row["publicNameSources"]:
+            value = source["value"]
+            if not value:
+                continue
+            key = (source["sourceType"], value)
+            groups.setdefault(
+                key,
+                {
+                    "sourceType": source["sourceType"],
+                    "value": value,
+                    "confidence": source["confidence"],
+                    "isAttributionProof": source["isAttributionProof"],
+                    "sourceFile": source["sourceFile"],
+                    "addresses": [],
+                    "totalCompensationGonka": 0,
+                    "totalVotingPower": 0,
+                    "votePowerByOption": defaultdict(float),
+                },
+            )
+            group = groups[key]
+            group["addresses"].append(row["address"])
+            group["totalCompensationGonka"] += row["totalCompensationGonka"]
+            group["totalVotingPower"] += row["votingPower"]
+            if row["votingPower"]:
+                group["votePowerByOption"][row["voteOption"]] += row["votingPower"]
+
+    grouped_sources = []
+    for group in groups.values():
+        grouped_sources.append(
+            {
+                **group,
+                "addresses": sorted(set(group["addresses"])),
+                "totalCompensationGonka": round(group["totalCompensationGonka"], 6),
+                "totalVotingPower": round(group["totalVotingPower"], 6),
+                "votePowerByOption": {key: round(value, 6) for key, value in sorted(group["votePowerByOption"].items())},
+            }
+        )
+    grouped_sources.sort(key=lambda row: (-len(row["addresses"]), -row["totalCompensationGonka"], -row["totalVotingPower"], row["sourceType"], row["value"]))
+
+    summary = {
+        "proposalAddressCount": len(rows),
+        "proposalAddressesWithAnyPublicName": sum(1 for row in rows if row["publicNameSources"]),
+        "proposalAddressesWithPublicOwnerProof": sum(1 for row in rows if row["evidenceBoundary"] == "public_owner_proof"),
+        "proposalAddressesWithGns": sum(1 for row in rows if row["gnsNames"]),
+        "proposalAddressesWithReverseGns": sum(1 for row in rows if row["reverseGnsNames"]),
+        "gnsSnapshotAddressCount": len(gns_by_address),
+        "gnsSnapshotNameCount": sum(len(names) for names in gns_by_address.values()),
+        "publicNameGroupCount": len(grouped_sources),
+        "publicNameGroupsWithMultipleProposalAddresses": sum(1 for row in grouped_sources if len(row["addresses"]) > 1),
+    }
+
+    return {"summary": summary, "rows": rows, "groups": grouped_sources}
+
+
 def load_epoch_group_snapshot(epoch):
     path = DATA / "voting_end_epochs" / f"e{epoch}" / "epoch_group_data.json"
     if not path.exists():
@@ -1767,7 +1969,7 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
     ]
 
 
-def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None, benefit_power_matrix=None):
+def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None, benefit_power_matrix=None, public_name_enrichment=None):
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
 
@@ -1849,6 +2051,153 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                     "caveat": row["caveat"],
                 }
             )
+
+    if public_name_enrichment is not None:
+        with (reports / "public_name_enrichment.csv").open("w", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "address",
+                    "label",
+                    "best_public_name",
+                    "roles",
+                    "total_compensation_gonka",
+                    "voting_power",
+                    "vote_option",
+                    "evidence_boundary",
+                    "gns_names",
+                    "reverse_gns_names",
+                    "validator_operator_address",
+                    "validator_moniker",
+                    "validator_website",
+                    "validator_identity",
+                    "validator_security_contact",
+                    "inference_url",
+                    "public_name_sources",
+                    "next_actions",
+                ],
+            )
+            writer.writeheader()
+            for row in public_name_enrichment["rows"]:
+                writer.writerow(
+                    {
+                        "address": row["address"],
+                        "label": row["label"],
+                        "best_public_name": row["bestPublicName"],
+                        "roles": " ".join(row["roles"]),
+                        "total_compensation_gonka": row["totalCompensationGonka"],
+                        "voting_power": row["votingPower"],
+                        "vote_option": row["voteOption"],
+                        "evidence_boundary": row["evidenceBoundary"],
+                        "gns_names": " ".join(row["gnsNames"]),
+                        "reverse_gns_names": " ".join(row["reverseGnsNames"]),
+                        "validator_operator_address": row["validatorOperatorAddress"],
+                        "validator_moniker": row["validatorMoniker"],
+                        "validator_website": row["validatorWebsite"],
+                        "validator_identity": row["validatorIdentity"],
+                        "validator_security_contact": row["validatorSecurityContact"],
+                        "inference_url": row["inferenceUrl"],
+                        "public_name_sources": " | ".join(f"{item['sourceType']}:{item['value']}:{item['confidence']}" for item in row["publicNameSources"]),
+                        "next_actions": " | ".join(row["nextActions"]),
+                    }
+                )
+
+        with (reports / "public_name_groups.csv").open("w", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "source_type",
+                    "value",
+                    "confidence",
+                    "is_attribution_proof",
+                    "addresses",
+                    "address_count",
+                    "total_compensation_gonka",
+                    "total_voting_power",
+                    "vote_power_by_option",
+                    "source_file",
+                ],
+            )
+            writer.writeheader()
+            for row in public_name_enrichment["groups"]:
+                writer.writerow(
+                    {
+                        "source_type": row["sourceType"],
+                        "value": row["value"],
+                        "confidence": row["confidence"],
+                        "is_attribution_proof": row["isAttributionProof"],
+                        "addresses": " ".join(row["addresses"]),
+                        "address_count": len(row["addresses"]),
+                        "total_compensation_gonka": row["totalCompensationGonka"],
+                        "total_voting_power": row["totalVotingPower"],
+                        "vote_power_by_option": " ".join(f"{option}:{power}" for option, power in row["votePowerByOption"].items()),
+                        "source_file": row["sourceFile"],
+                    }
+                )
+
+        summary = public_name_enrichment["summary"]
+        lines = [
+            "# Proposal 67 Public Name Enrichment",
+            "",
+            "This report normalizes public naming sources for proposal #67 addresses. It uses saved snapshots only: GNS `.gnk` contract state, validator metadata, participant inference URLs, and previously built evidence claims. A public name is an attribution lead unless `evidence_boundary` is `public_owner_proof`.",
+            "",
+            "## Summary",
+            "",
+            f"- Proposal addresses reviewed: {summary['proposalAddressCount']}",
+            f"- Proposal addresses with any public name/metadata signal: {summary['proposalAddressesWithAnyPublicName']}",
+            f"- Proposal addresses with public owner proof: {summary['proposalAddressesWithPublicOwnerProof']}",
+            f"- Proposal addresses with GNS names: {summary['proposalAddressesWithGns']} ({summary['proposalAddressesWithReverseGns']} reverse)",
+            f"- Saved GNS snapshot: {summary['gnsSnapshotNameCount']} names across {summary['gnsSnapshotAddressCount']} addresses",
+            f"- Public name/source groups in proposal set: {summary['publicNameGroupCount']}; multi-address groups: {summary['publicNameGroupsWithMultipleProposalAddresses']}",
+            "",
+            "## Proposal Addresses With Public Names",
+            "",
+        ]
+        named_rows = [row for row in public_name_enrichment["rows"] if row["publicNameSources"]]
+        for row in named_rows[:60]:
+            lines.extend(
+                [
+                    f"### {row['label']}",
+                    "",
+                    f"- Address: `{row['address']}`",
+                    f"- Roles: {', '.join(row['roles'])}; compensation: {row['totalCompensationGonka']} GONKA; voting power: {row['votingPower']}; vote: {row['voteOption']}",
+                    f"- Best public name: {row['bestPublicName'] or 'none'}",
+                    f"- Evidence boundary: {row['evidenceBoundary']}",
+                    f"- GNS: {', '.join(row['gnsNames']) or 'none'}; reverse: {', '.join(row['reverseGnsNames']) or 'none'}",
+                    f"- Validator: {row['validatorMoniker'] or 'none'} | {row['validatorWebsite'] or 'no website'} | identity {row['validatorIdentity'] or 'none'} | contact {row['validatorSecurityContact'] or 'none'}",
+                    f"- Inference URL: {row['inferenceUrl'] or 'none'}",
+                    f"- Next actions: {' | '.join(row['nextActions'])}",
+                    "",
+                ]
+            )
+            lines.append("Public sources:")
+            for source in row["publicNameSources"][:8]:
+                proof = "proof" if source["isAttributionProof"] else "signal"
+                lines.append(f"- {source['sourceType']} ({source['confidence']}, {proof}): {source['value']}")
+            lines.append("")
+
+        lines.extend(["## Shared Public Name/Metadata Groups", ""])
+        for row in public_name_enrichment["groups"][:40]:
+            proof = "proof" if row["isAttributionProof"] else "signal"
+            lines.extend(
+                [
+                    f"### {row['sourceType']}: {row['value']}",
+                    "",
+                    f"- Boundary: {row['confidence']} {proof}; addresses: {len(row['addresses'])}",
+                    f"- Compensation: {row['totalCompensationGonka']} GONKA; voting power: {row['totalVotingPower']}",
+                    f"- Vote power: {', '.join(f'{option}={power}' for option, power in row['votePowerByOption'].items()) or 'none'}",
+                    f"- Addresses: {' '.join(row['addresses'])}",
+                    f"- Source file: {row['sourceFile']}",
+                    "",
+                ]
+            )
+
+        unknown_rows = [row for row in public_name_enrichment["rows"] if row["evidenceBoundary"] == "unknown_public_owner"]
+        lines.extend(["## Still Missing Public Names", ""])
+        for row in sorted(unknown_rows, key=lambda item: (-item["votingPower"], -item["totalCompensationGonka"], item["address"]))[:40]:
+            lines.append(f"- `{row['address']}` {row['label']} | roles={','.join(row['roles'])} | comp={row['totalCompensationGonka']} | power={row['votingPower']} | actions={' | '.join(row['nextActions'])}")
+
+        (reports / "public_name_enrichment.md").write_text("\n".join(lines).rstrip() + "\n")
 
     if benefit_power_matrix is not None:
         with (reports / "benefit_power_matrix.csv").open("w", newline="") as f:
@@ -2376,9 +2725,11 @@ def main():
     ranked_parties = build_ranked_parties(actors, evidence_claims, identity_graph)
     interest_clusters = build_interest_clusters(actors, evidence_claims, identity_graph)
     benefit_power_matrix = build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_claims)
+    public_name_enrichment = build_public_name_enrichment(recipients, votes, identity_evidence, evidence_claims, gns_by_address)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
-    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters, benefit_power_matrix)
+    (DATA / "public_name_enrichment.json").write_text(json.dumps(public_name_enrichment, indent=2, sort_keys=True) + "\n")
+    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters, benefit_power_matrix, public_name_enrichment)
 
     dashboard = {
         "metadata": {
@@ -2427,6 +2778,12 @@ def main():
             "benefitPowerMatrixCount": len(benefit_power_matrix),
             "benefitPowerOverlapCount": sum(1 for row in benefit_power_matrix if row["recipientVoterOverlap"]),
             "benefitPowerPublicProofOverlapCount": sum(1 for row in benefit_power_matrix if row["recipientVoterOverlap"] and row["evidenceBoundary"] == "public_owner_proof"),
+            "publicNameEnrichmentAddressCount": public_name_enrichment["summary"]["proposalAddressCount"],
+            "publicNameEnrichmentSignalCount": public_name_enrichment["summary"]["proposalAddressesWithAnyPublicName"],
+            "publicNameEnrichmentOwnerProofCount": public_name_enrichment["summary"]["proposalAddressesWithPublicOwnerProof"],
+            "publicNameEnrichmentGnsCount": public_name_enrichment["summary"]["proposalAddressesWithGns"],
+            "publicNameEnrichmentGroupCount": public_name_enrichment["summary"]["publicNameGroupCount"],
+            "publicNameEnrichmentMultiAddressGroupCount": public_name_enrichment["summary"]["publicNameGroupsWithMultipleProposalAddresses"],
             "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
             "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
             "epochAnomaliesCount": len(epoch_anomalies),
@@ -2452,6 +2809,7 @@ def main():
         "rankedParties": ranked_parties,
         "interestClusters": interest_clusters,
         "benefitPowerMatrix": benefit_power_matrix,
+        "publicNameEnrichment": public_name_enrichment,
         "telegramEvidence": telegram_evidence.get("messages") or [],
         "epochAnomalies": epoch_anomalies,
         "epochEntryExitClusters": epoch_entry_exit_clusters,
