@@ -182,6 +182,10 @@ select {
   height: 430px;
 }
 
+.graph-chart {
+  height: 520px;
+}
+
 .segmented {
   display: inline-flex;
   border: 1px solid var(--line);
@@ -266,6 +270,20 @@ td.num {
   color: var(--muted);
   background: var(--panel-2);
   white-space: nowrap;
+}
+
+.tag.good {
+  border-color: rgba(121, 182, 106, 0.5);
+  color: var(--good);
+}
+
+.tag.warn {
+  border-color: rgba(215, 168, 79, 0.5);
+  color: var(--warn);
+}
+
+.muted {
+  color: var(--muted);
 }
 
 .notes {

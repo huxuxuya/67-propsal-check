@@ -22,6 +22,8 @@ const els = {
   component: document.getElementById("componentFilter"),
   confidence: document.getElementById("confidenceFilter"),
   sourceType: document.getElementById("sourceTypeFilter"),
+  rankedTable: document.getElementById("rankedTable"),
+  evidenceTable: document.getElementById("evidenceTable"),
   labelTable: document.getElementById("labelTable"),
   epochTable: document.getElementById("epochTable"),
   recipientTable: document.getElementById("recipientTable"),
@@ -56,6 +58,7 @@ function initCharts() {
     matrix: "matrixChart",
     timeline: "timelineChart",
     tally: "tallyChart",
+    actorGraph: "actorGraphChart",
   })) {
     state.charts[key] = echarts.init(document.getElementById(id));
   }
@@ -77,8 +80,8 @@ function setupFilters(data) {
   fillSelect(els.identity, [...new Set([...data.recipients, ...data.votes].map((row) => row.identityType))].sort());
   fillSelect(els.label, buildLabelRows(data).map((row) => row.label));
   fillSelect(els.component, [...new Set(data.recipients.map((row) => row.componentSource))].sort());
-  fillSelect(els.confidence, [...new Set((data.identityGraph?.edges || []).map((edge) => edge.confidence))].sort());
-  fillSelect(els.sourceType, [...new Set((data.identityGraph?.edges || []).map((edge) => edge.sourceType))].sort());
+  fillSelect(els.confidence, [...new Set([...(data.identityGraph?.edges || []), ...(data.evidenceClaims || [])].map((edge) => edge.confidence))].filter(Boolean).sort());
+  fillSelect(els.sourceType, [...new Set([...(data.identityGraph?.edges || []), ...(data.evidenceClaims || [])].map((edge) => edge.sourceType))].filter(Boolean).sort());
   [els.search, els.status, els.vote, els.identity, els.label, els.node, els.top, els.component, els.confidence, els.sourceType].forEach((el) => {
     el.addEventListener("input", applyFilters);
     el.addEventListener("change", applyFilters);
@@ -244,6 +247,118 @@ function renderTally() {
       radius: ["45%", "72%"],
       label: { color: "#eef0f2", formatter: "{b}\n{d}%" },
       data: Object.entries(tally).map(([name, value]) => ({ name: optionLabels[name], value, itemStyle: { color: optionColors[name] } })),
+    }],
+  }, true);
+}
+
+function matchesGlobalEvidenceFilters(row, query) {
+  if (els.confidence.value !== "all" && row.confidence !== els.confidence.value) return false;
+  if (els.sourceType.value !== "all" && row.sourceType !== els.sourceType.value) return false;
+  if (!query) return true;
+  return [
+    row.address,
+    row.subject,
+    row.category,
+    row.sourceType,
+    row.sourceValue,
+    row.confidence,
+    row.caveat,
+  ].filter(Boolean).join(" ").toLowerCase().includes(query);
+}
+
+function rankedMatches(row, query) {
+  if (els.label.value !== "all" && row.label !== els.label.value) return false;
+  if (els.confidence.value !== "all" && row.confidence !== els.confidence.value) return false;
+  if (els.vote.value !== "all" && !Object.keys(row.voteCounts || {}).includes(els.vote.value)) return false;
+  if (!query) return true;
+  return [
+    row.label,
+    row.confidence,
+    ...(row.addresses || []),
+    ...(row.roles || []),
+    ...(row.identityTypes || []),
+    ...(row.caveats || []),
+  ].join(" ").toLowerCase().includes(query);
+}
+
+function renderRankedTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const rows = (state.data.rankedParties || []).filter((row) => rankedMatches(row, query));
+  document.getElementById("rankedRows").textContent = `${rows.length} shown`;
+  els.rankedTable.innerHTML = rows.slice(0, 100).map((row) => `
+    <tr>
+      <td class="num">${row.rank}</td>
+      <td>${escapeHtml(row.label)}<br><span class="muted">${escapeHtml(row.identityTypes.join(", "))}</span></td>
+      <td>${row.roles.map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</td>
+      <td>${row.addresses.map((address) => `<button class="row-button mono" data-address="${address}">${escapeHtml(address)}</button>`).join("<br>")}</td>
+      <td class="num">${gonka(row.totalCompensationGonka)}</td>
+      <td class="num">${fmt.format(row.overallPriority)}</td>
+      <td><span class="tag ${row.confidence === "high" ? "good" : row.confidence === "medium" ? "warn" : ""}">${escapeHtml(row.confidence)}</span></td>
+      <td>${row.caveats.map((item) => `<span class="muted">${escapeHtml(item)}</span>`).join("<br>")}</td>
+    </tr>
+  `).join("");
+}
+
+function renderEvidenceTable() {
+  const query = els.search.value.trim().toLowerCase();
+  const selectedLabel = els.label.value;
+  const labelAddresses = selectedLabel === "all"
+    ? null
+    : new Set((state.data.actors || []).filter((actor) => actor.label === selectedLabel).map((actor) => actor.address));
+  const rows = (state.data.evidenceClaims || []).filter((row) => {
+    if (labelAddresses && row.address && !labelAddresses.has(row.address)) return false;
+    return matchesGlobalEvidenceFilters(row, query);
+  });
+  document.getElementById("evidenceRows").textContent = `${rows.length} shown`;
+  els.evidenceTable.innerHTML = rows.slice(0, 300).map((row) => `
+    <tr>
+      <td>${escapeHtml(row.subject || "-")}</td>
+      <td>${row.address ? `<button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button>` : "<span class=\"muted\">repo/social</span>"}</td>
+      <td><span class="tag">${escapeHtml(row.category)}</span></td>
+      <td>${escapeHtml(row.sourceType)}<br><span class="mono muted">${escapeHtml(row.sourceUrl)}</span></td>
+      <td>${escapeHtml(row.sourceValue)}</td>
+      <td><span class="tag ${row.isAttributionProof ? "good" : ""}">${row.isAttributionProof ? "proof" : "signal"}</span> <span class="tag">${escapeHtml(row.confidence)}</span></td>
+    </tr>
+  `).join("");
+}
+
+function renderActorGraph() {
+  const ranked = (state.data.rankedParties || []).slice(0, 25);
+  const claims = state.data.evidenceClaims || [];
+  const nodes = [];
+  const links = [];
+  const seen = new Set();
+  const addNode = (id, name, category, value = 10) => {
+    if (seen.has(id)) return;
+    seen.add(id);
+    nodes.push({ id, name, category, value, symbolSize: Math.max(12, Math.min(46, value)) });
+  };
+  ranked.forEach((party) => {
+    addNode(party.id, `#${party.rank} ${party.label}`, "party", 18 + party.overallPriority / 3);
+    party.addresses.forEach((address) => {
+      const addressId = `address:${address}`;
+      addNode(addressId, address, "address", 14);
+      links.push({ source: party.id, target: addressId, value: "contains" });
+      claims.filter((claim) => claim.address === address).slice(0, 5).forEach((claim) => {
+        const claimId = `${claim.sourceType}:${claim.sourceValue}`.slice(0, 180);
+        addNode(claimId, claim.sourceValue || claim.sourceType, claim.isAttributionProof ? "proof" : "signal", claim.isAttributionProof ? 18 : 11);
+        links.push({ source: addressId, target: claimId, value: claim.sourceType });
+      });
+    });
+  });
+  state.charts.actorGraph.setOption({
+    tooltip: { formatter: (p) => p.dataType === "edge" ? `${p.data.source}<br>${escapeHtml(p.data.value)}<br>${p.data.target}` : escapeHtml(p.data.name) },
+    legend: [{ data: ["party", "address", "proof", "signal"], textStyle: { color: "#a7afba" } }],
+    series: [{
+      type: "graph",
+      layout: "force",
+      roam: true,
+      categories: ["party", "address", "proof", "signal"].map((name) => ({ name })),
+      data: nodes,
+      links,
+      label: { show: true, color: "#eef0f2", formatter: (p) => String(p.data.name).slice(0, 42) },
+      lineStyle: { color: "source", opacity: 0.45 },
+      force: { repulsion: 160, edgeLength: 90 },
     }],
   }, true);
 }
@@ -437,6 +552,9 @@ function renderAll() {
   renderMatrix();
   renderTimeline();
   renderTally();
+  renderActorGraph();
+  renderRankedTable();
+  renderEvidenceTable();
   renderLabelTable();
   renderEpochTable();
   renderTables();
@@ -450,6 +568,9 @@ function openDrawer(address) {
   const recipient = state.data.recipients.find((row) => row.address === address);
   const vote = state.data.votes.find((row) => row.voter === address);
   const evidence = state.data.identityEvidence.filter((row) => row.address === address);
+  const evidenceClaims = (state.data.evidenceClaims || []).filter((row) => row.address === address);
+  const actor = (state.data.actors || []).find((row) => row.address === address);
+  const rankedParty = (state.data.rankedParties || []).find((row) => (row.addresses || []).includes(address));
   const nodeInfo = recipient?.publicNodeInfo || vote?.publicNodeInfo || {};
   const matchedValidator = nodeInfo.matchedValidator || {};
   const gnsNames = recipient?.gnsNames || vote?.gnsNames || [];
@@ -462,6 +583,16 @@ function openDrawer(address) {
   els.drawerContent.innerHTML = `
     <h2>${escapeHtml(label)}</h2>
     <p class="mono">${escapeHtml(address)}</p>
+    <div class="drawer-section">
+      <h3>Actor Priority</h3>
+      ${actor ? `<dl class="kv">
+        <dt>Roles</dt><dd>${actor.roles.map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</dd>
+        <dt>Ranked party</dt><dd>${rankedParty ? `#${rankedParty.rank} ${escapeHtml(rankedParty.label)}` : "not ranked"}</dd>
+        <dt>Priority</dt><dd>${rankedParty ? fmt.format(rankedParty.overallPriority) : "none"}</dd>
+        <dt>Confidence</dt><dd>${rankedParty ? escapeHtml(rankedParty.confidence) : "none"}</dd>
+        <dt>Caveats</dt><dd>${rankedParty?.caveats?.length ? rankedParty.caveats.map(escapeHtml).join("<br>") : "none"}</dd>
+      </dl>` : "<p>No actor roles for this address.</p>"}
+    </div>
     <div class="drawer-section">
       <h3>Payout</h3>
       ${recipient ? `<dl class="kv">
@@ -506,6 +637,10 @@ function openDrawer(address) {
     <div class="drawer-section">
       <h3>Public Identity Evidence</h3>
       ${evidence.length ? `<dl class="kv">${evidence.map((row) => `<dt>${escapeHtml(row.sourceType)}</dt><dd>${escapeHtml(row.sourceValue)} <span class="tag">${escapeHtml(row.confidence)}</span></dd>`).join("")}</dl>` : "<p>Unknown public owner.</p>"}
+    </div>
+    <div class="drawer-section">
+      <h3>Evidence Claims</h3>
+      ${evidenceClaims.length ? `<dl class="kv">${evidenceClaims.slice(0, 80).map((row) => `<dt>${escapeHtml(row.sourceType)}</dt><dd>${escapeHtml(row.sourceValue)} <span class="tag">${escapeHtml(row.confidence)}</span> <span class="tag">${row.isAttributionProof ? "proof" : "signal"}</span><br><span class="muted">${escapeHtml(row.caveat || "")}</span></dd>`).join("")}</dl>` : "<p>No evidence claims for this address.</p>"}
     </div>
     <div class="drawer-section">
       <h3>Evidence Graph Edges</h3>

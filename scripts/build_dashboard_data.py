@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import csv
 import json
+import re
 from collections import Counter, defaultdict
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
@@ -377,6 +378,68 @@ def read_public_identity_signals():
     return load_json(path)
 
 
+def load_optional_json(path, default):
+    if not path.exists():
+        return default
+    return load_json(path)
+
+
+def read_onchain_graph_snapshot():
+    return load_optional_json(DATA / "onchain_graph" / "proposal_67_local_graph.json", {})
+
+
+def read_public_osint_sources():
+    return load_optional_json(DATA / "osint" / "public_osint_sources.json", {})
+
+
+def source_url_for_file(source_file):
+    if source_file.startswith("http"):
+        return source_file
+    if source_file.startswith("upstream/gonka-kimi-restitution/"):
+        rel = source_file.removeprefix("upstream/gonka-kimi-restitution/")
+        return f"https://github.com/votkon/gonka-kimi-restitution/blob/main/{rel}"
+    if source_file.startswith("data/osint/"):
+        return source_file
+    if source_file.startswith("data/") or source_file.startswith("docs/") or source_file.startswith("reports/"):
+        return source_file
+    return source_file
+
+
+def normalize_claim_value(value):
+    if value is None:
+        return ""
+    return str(value).strip()
+
+
+def evidence_category(source_type):
+    if source_type in {"proposal_proposer", "proposal_message_sender", "proposal_vote", "proposal_output"}:
+        return "governance"
+    if source_type in {"compensation_output", "upstream_delegation", "epoch_commit_participant"}:
+        return "financial_or_epoch_activity"
+    if "github" in source_type or "social" in source_type or source_type.startswith("gonka_names"):
+        return "public_social"
+    if source_type in {"same_ip_prefix", "same_asn", "same_tls_cert", "dns_resolves_to"}:
+        return "infrastructure_signal"
+    if "host" in source_type or "url" in source_type or "website" in source_type:
+        return "public_infrastructure"
+    return "public_identity"
+
+
+def make_claim(address, subject, source_type, source_value, source_file, confidence="medium", proof=False, caveat=""):
+    return {
+        "address": address,
+        "subject": subject or address,
+        "category": evidence_category(source_type),
+        "sourceType": source_type,
+        "sourceValue": normalize_claim_value(source_value),
+        "sourceFile": source_file,
+        "sourceUrl": source_url_for_file(source_file),
+        "confidence": confidence,
+        "isAttributionProof": bool(proof),
+        "caveat": caveat,
+    }
+
+
 def edge_policy(source_type):
     strict = {
         "validator_key_match",
@@ -417,6 +480,28 @@ def entity_id(entity_type, value):
     return f"{entity_type}:{value}"
 
 
+def looks_like_generic_node_label(value):
+    value = (value or "").strip().lower()
+    if not value:
+        return True
+    if value.startswith(("http://", "https://", "http:/", "https:/", "gonkavaloper", "gonka1")):
+        return True
+    if re.fullmatch(r"\d{1,3}(\.\d{1,3}){3}(:\d+)?/?", value):
+        return True
+    return False
+
+
+def public_owner_proof(source_type, source_value, resolved_name=""):
+    value = resolved_name or source_value
+    if source_type in {"matched_validator_identity", "validator_identity", "matched_validator_security_contact", "validator_security_contact", "gns_name", "gns_reverse"}:
+        return True
+    if source_type in {"matched_validator_moniker", "validator_moniker"}:
+        return not looks_like_generic_node_label(value)
+    if source_type == "validator_key_match":
+        return not looks_like_generic_node_label(resolved_name)
+    return False
+
+
 def add_entity(entities, entity_type, value, label=None, metadata=None):
     if not value:
         return ""
@@ -435,6 +520,7 @@ def add_edge(edges, source, target, source_type, source_value, source_file, conf
     if not source or not target or source == target:
         return
     default_confidence, default_proof = edge_policy(source_type)
+    default_proof = default_proof and public_owner_proof(source_type, source_value)
     edges.append(
         {
             "source": source,
@@ -697,12 +783,485 @@ def build_identity_graph(recipients, votes, identity_evidence, gns_by_address):
     }
 
 
+def address_from_edge_node(value):
+    return value.replace("address:", "") if value.startswith("address:") else ""
+
+
+def collect_address_labels(recipients, votes, participants, account_labels, consensus_labels, gns_by_address):
+    labels = {}
+    identity_types = {}
+    for row in recipients:
+        labels[row["address"]] = row["label"]
+        identity_types[row["address"]] = row["identityType"]
+    for row in votes:
+        labels[row["voter"]] = row["label"]
+        identity_types[row["voter"]] = row["identityType"]
+    for address, participant in participants.items():
+        labels.setdefault(address, public_label(address, participant, account_labels, consensus_labels, gns_by_address))
+    return labels, identity_types
+
+
+def build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources):
+    claims = []
+    recipient_by_address = {row["address"]: row for row in recipients}
+    vote_by_address = {row["voter"]: row for row in votes}
+
+    for row in recipients:
+        claims.append(
+            make_claim(
+                row["address"],
+                row["label"],
+                "compensation_output",
+                f"{row['totalGonka']} GONKA",
+                "data/proposal_67.json",
+                "high",
+                False,
+                "On-chain proposal output proves beneficiary address and amount, not human owner.",
+            )
+        )
+    for row in votes:
+        claims.append(
+            make_claim(
+                row["voter"],
+                row["label"],
+                "proposal_vote",
+                row["primaryOption"],
+                "data/proposal_67_tx_search.json",
+                "high",
+                False,
+                "Vote proves governance action by address, not human owner.",
+            )
+        )
+
+    proposer = proposal.get("proposer", "")
+    message_sender = proposal.get("messages", [{}])[0].get("sender", "")
+    if proposer:
+        claims.append(
+            make_claim(
+                proposer,
+                proposer,
+                "proposal_proposer",
+                proposal.get("id", "67"),
+                "data/proposal_67.json",
+                "high",
+                False,
+                "Proposal proposer is a governance actor and should be reviewed as an interested party.",
+            )
+        )
+    if message_sender:
+        claims.append(
+            make_claim(
+                message_sender,
+                message_sender,
+                "proposal_message_sender",
+                proposal.get("messages", [{}])[0].get("@type", ""),
+                "data/proposal_67.json",
+                "high",
+                False,
+                "Message sender is the address authorizing the proposal message, not necessarily the final human owner.",
+            )
+        )
+
+    for item in identity_evidence:
+        claims.append(
+            make_claim(
+                item["address"],
+                item.get("resolvedName") or item["address"],
+                item["sourceType"],
+                item["sourceValue"],
+                "docs/data/dashboard.json",
+                item.get("confidence", "medium"),
+                public_owner_proof(item["sourceType"], item["sourceValue"], item.get("resolvedName", "")),
+                "Public self-declared metadata when proof=true; otherwise a public label/signal.",
+            )
+        )
+
+    relevant_addresses = {row["address"] for row in recipients} | {row["voter"] for row in votes}
+    relevant_addresses |= {proposer, message_sender} - {""}
+    for edge in identity_graph.get("edges", []):
+        address = address_from_edge_node(edge["source"]) or address_from_edge_node(edge["target"])
+        if not address or address not in relevant_addresses:
+            continue
+        claims.append(
+            make_claim(
+                address,
+                edge["target"] if edge["source"].startswith("address:") else edge["source"],
+                edge["sourceType"],
+                edge["sourceValue"],
+                edge["sourceFile"],
+                edge.get("confidence", "medium"),
+                edge.get("isAttributionProof", False) and public_owner_proof(edge["sourceType"], edge["sourceValue"]),
+                "Graph edge; infrastructure/provider edges are signals only.",
+            )
+        )
+
+    for row in (onchain_graph.get("delegations") or []):
+        if row["delegator"] in relevant_addresses or row["operator"] in relevant_addresses:
+            claims.append(
+                make_claim(
+                    row["delegator"],
+                    row["operator"],
+                    "upstream_delegation",
+                    f"{row['delegator']} -> {row['operator']}",
+                    row.get("sourceFile", "upstream/gonka-kimi-restitution/e266/epoch266_kimi_delegators.json"),
+                    "medium",
+                    False,
+                    "Delegation links economic/operational relationship, not common ownership.",
+                )
+            )
+    for row in (onchain_graph.get("epochCommits") or []):
+        participant = row.get("participant", "")
+        if participant not in relevant_addresses:
+            continue
+        claims.append(
+            make_claim(
+                participant,
+                row.get("hexPubKey") or participant,
+                "epoch_commit_participant",
+                f"e{row.get('epoch')} {row.get('modelId')} count={row.get('count')}",
+                row.get("sourceFile", "upstream/gonka-kimi-restitution"),
+                "medium",
+                False,
+                "Epoch commit activity links an address to model participation and public key usage.",
+            )
+        )
+
+    github = (osint_sources.get("github") or {})
+    for source_name, response in github.items():
+        payload = response.get("json")
+        if not payload:
+            continue
+        rows = payload if isinstance(payload, list) else [payload]
+        for item in rows:
+            if not isinstance(item, dict):
+                continue
+            login = (item.get("author") or {}).get("login") or item.get("login") or (item.get("owner") or {}).get("login")
+            html_url = (item.get("author") or {}).get("html_url") or item.get("html_url") or ""
+            if not login and not html_url:
+                continue
+            claims.append(
+                make_claim(
+                    "",
+                    login or html_url,
+                    f"github_{source_name}",
+                    html_url or login,
+                    response.get("url", "https://github.com/votkon/gonka-kimi-restitution"),
+                    "medium",
+                    False,
+                    "GitHub actor is connected to the public restitution repository, not directly to an on-chain address unless another edge links them.",
+                )
+            )
+
+    for link in osint_sources.get("publicSocialCandidates") or []:
+        claims.append(
+            make_claim(
+                "",
+                link,
+                "public_social_candidate",
+                link,
+                "data/osint/public_osint_sources.json",
+                "low",
+                False,
+                "Public social/profile URL candidate requires manual review or a stronger linking edge.",
+            )
+        )
+
+    deduped = {}
+    for claim in claims:
+        key = (
+            claim["address"],
+            claim["subject"],
+            claim["sourceType"],
+            claim["sourceValue"],
+            claim["sourceFile"],
+        )
+        deduped[key] = claim
+    return sorted(deduped.values(), key=lambda row: (row["address"], row["category"], row["sourceType"], row["sourceValue"]))
+
+
+def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, labels, identity_types):
+    actors = {}
+
+    def ensure(address, label=None):
+        if address not in actors:
+            actors[address] = {
+                "id": f"address:{address}" if address else "",
+                "address": address,
+                "label": label or labels.get(address) or "Unknown public owner",
+                "roles": set(),
+                "totalCompensationGonka": 0,
+                "voteOption": "did_not_vote",
+                "identityType": identity_types.get(address, "unknown"),
+                "strictClusterId": "",
+                "signalClusterId": "",
+            }
+        return actors[address]
+
+    for row in recipients:
+        actor = ensure(row["address"], row["label"])
+        actor["roles"].add("recipient")
+        actor["totalCompensationGonka"] += row["totalGonka"]
+        actor["voteOption"] = row["voteOption"]
+        actor["identityType"] = row["identityType"]
+        actor["strictClusterId"] = row.get("strictClusterId", "")
+        actor["signalClusterId"] = row.get("signalClusterId", "")
+
+    for row in votes:
+        actor = ensure(row["voter"], row["label"])
+        actor["roles"].add("voter")
+        actor["voteOption"] = row["primaryOption"]
+        actor["identityType"] = row["identityType"]
+        actor["strictClusterId"] = row.get("strictClusterId", "")
+        actor["signalClusterId"] = row.get("signalClusterId", "")
+
+    proposer = proposal.get("proposer", "")
+    sender = proposal.get("messages", [{}])[0].get("sender", "")
+    if proposer:
+        ensure(proposer).get("roles").add("proposer")
+    if sender:
+        ensure(sender).get("roles").add("message_sender")
+
+    for row in (onchain_graph.get("delegations") or []):
+        if row.get("delegator"):
+            ensure(row["delegator"]).get("roles").add("delegator")
+        if row.get("operator"):
+            ensure(row["operator"]).get("roles").add("operator")
+    for row in (onchain_graph.get("epochCommits") or []):
+        if row.get("participant"):
+            ensure(row["participant"]).get("roles").add("epoch_commit_participant")
+
+    for cluster in identity_graph.get("strictClusters", []):
+        for address in cluster.get("addresses", []):
+            if address in actors:
+                actors[address]["strictClusterId"] = cluster["id"]
+    for cluster in identity_graph.get("signalClusters", []):
+        for address in cluster.get("addresses", []):
+            if address in actors:
+                actors[address]["signalClusterId"] = cluster["id"]
+
+    return sorted(
+        [
+            {
+                **actor,
+                "roles": sorted(actor["roles"]),
+                "totalCompensationGonka": round(actor["totalCompensationGonka"], 6),
+            }
+            for actor in actors.values()
+            if actor["address"]
+        ],
+        key=lambda row: (-row["totalCompensationGonka"], row["address"]),
+    )
+
+
+def build_ranked_parties(actors, claims, identity_graph):
+    claims_by_address = defaultdict(list)
+    for claim in claims:
+        if claim["address"]:
+            claims_by_address[claim["address"]].append(claim)
+
+    grouped = {}
+    for actor in actors:
+        cluster = actor.get("strictClusterId") or actor.get("signalClusterId") or actor["address"]
+        grouped.setdefault(
+            cluster,
+            {
+                "id": cluster,
+                "label": actor["label"],
+                "addresses": [],
+                "roles": set(),
+                "totalCompensationGonka": 0,
+                "voteCounts": Counter(),
+                "identityTypes": set(),
+                "claims": [],
+            },
+        )
+        row = grouped[cluster]
+        row["addresses"].append(actor["address"])
+        row["roles"].update(actor["roles"])
+        row["totalCompensationGonka"] += actor["totalCompensationGonka"]
+        row["voteCounts"][actor.get("voteOption", "did_not_vote")] += 1
+        row["identityTypes"].add(actor.get("identityType", "unknown"))
+        row["claims"].extend(claims_by_address.get(actor["address"], []))
+
+    ranked = []
+    for row in grouped.values():
+        proof_claims = [claim for claim in row["claims"] if claim["isAttributionProof"]]
+        high_claims = [claim for claim in row["claims"] if claim["confidence"] == "high"]
+        medium_claims = [claim for claim in row["claims"] if claim["confidence"] == "medium"]
+        signal_claims = [claim for claim in row["claims"] if not claim["isAttributionProof"]]
+        identity_score = 25 if proof_claims else (14 if high_claims else (7 if medium_claims else 0))
+        benefit_score = min(35, row["totalCompensationGonka"] / 5000)
+        governance_score = 0
+        if "proposer" in row["roles"]:
+            governance_score += 18
+        if "message_sender" in row["roles"]:
+            governance_score += 18
+        if "voter" in row["roles"]:
+            governance_score += 8
+        if "recipient" in row["roles"] and "voter" in row["roles"]:
+            governance_score += 8
+        governance_score = min(25, governance_score)
+        coordination_score = min(15, max(0, len(row["addresses"]) - 1) * 5 + len(signal_claims) * 0.15)
+        overall = round(identity_score + benefit_score + governance_score + coordination_score, 3)
+        top_claims = sorted(
+            row["claims"],
+            key=lambda claim: (
+                {"high": 0, "medium": 1, "low": 2}.get(claim["confidence"], 3),
+                not claim["isAttributionProof"],
+                claim["sourceType"],
+            ),
+        )[:5]
+        caveats = []
+        if not proof_claims:
+            caveats.append("No strict public owner proof.")
+        if any(claim["category"] == "infrastructure_signal" for claim in row["claims"]):
+            caveats.append("Contains infrastructure/provider signals; do not treat as ownership proof.")
+        if "recipient" in row["roles"] and "voter" in row["roles"]:
+            caveats.append("Address both received compensation and voted.")
+        ranked.append(
+            {
+                "id": row["id"],
+                "label": row["label"],
+                "addresses": sorted(row["addresses"]),
+                "roles": sorted(row["roles"]),
+                "identityTypes": sorted(row["identityTypes"]),
+                "totalCompensationGonka": round(row["totalCompensationGonka"], 6),
+                "voteCounts": dict(row["voteCounts"]),
+                "scoreComponents": {
+                    "identityConfidence": round(identity_score, 3),
+                    "benefit": round(benefit_score, 3),
+                    "governance": round(governance_score, 3),
+                    "coordination": round(coordination_score, 3),
+                },
+                "overallPriority": overall,
+                "confidence": "high" if proof_claims else ("medium" if high_claims or medium_claims else "low"),
+                "topEvidence": top_claims,
+                "caveats": caveats,
+            }
+        )
+
+    ranked.sort(key=lambda row: (-row["overallPriority"], -row["totalCompensationGonka"], row["label"]))
+    for index, row in enumerate(ranked, start=1):
+        row["rank"] = index
+    return ranked
+
+
+def write_attribution_reports(ranked_parties, evidence_claims):
+    reports = ROOT / "reports"
+    reports.mkdir(exist_ok=True)
+
+    with (reports / "ranked_parties.csv").open("w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "rank",
+                "label",
+                "addresses",
+                "roles",
+                "total_gonka",
+                "overall_priority",
+                "confidence",
+                "identity_score",
+                "benefit_score",
+                "governance_score",
+                "coordination_score",
+                "caveats",
+            ],
+        )
+        writer.writeheader()
+        for row in ranked_parties:
+            scores = row["scoreComponents"]
+            writer.writerow(
+                {
+                    "rank": row["rank"],
+                    "label": row["label"],
+                    "addresses": " ".join(row["addresses"]),
+                    "roles": " ".join(row["roles"]),
+                    "total_gonka": row["totalCompensationGonka"],
+                    "overall_priority": row["overallPriority"],
+                    "confidence": row["confidence"],
+                    "identity_score": scores["identityConfidence"],
+                    "benefit_score": scores["benefit"],
+                    "governance_score": scores["governance"],
+                    "coordination_score": scores["coordination"],
+                    "caveats": " | ".join(row["caveats"]),
+                }
+            )
+
+    with (reports / "evidence_claims.csv").open("w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "address",
+                "subject",
+                "category",
+                "source_type",
+                "source_value",
+                "confidence",
+                "is_attribution_proof",
+                "source_file",
+                "source_url",
+                "caveat",
+            ],
+        )
+        writer.writeheader()
+        for row in evidence_claims:
+            writer.writerow(
+                {
+                    "address": row["address"],
+                    "subject": row["subject"],
+                    "category": row["category"],
+                    "source_type": row["sourceType"],
+                    "source_value": row["sourceValue"],
+                    "confidence": row["confidence"],
+                    "is_attribution_proof": row["isAttributionProof"],
+                    "source_file": row["sourceFile"],
+                    "source_url": row["sourceUrl"],
+                    "caveat": row["caveat"],
+                }
+            )
+
+    lines = [
+        "# Proposal 67 Attribution Audit",
+        "",
+        "This report ranks interested parties from committed public snapshots. It is not a legal accusation; weak infrastructure signals are explicitly separated from owner attribution proof.",
+        "",
+        "## Top Ranked Parties",
+        "",
+    ]
+    for row in ranked_parties[:20]:
+        scores = row["scoreComponents"]
+        lines.extend(
+            [
+                f"### #{row['rank']} {row['label']}",
+                "",
+                f"- Addresses: {' '.join(row['addresses'])}",
+                f"- Roles: {', '.join(row['roles'])}",
+                f"- Total compensation: {row['totalCompensationGonka']} GONKA",
+                f"- Overall priority: {row['overallPriority']} (identity {scores['identityConfidence']}, benefit {scores['benefit']}, governance {scores['governance']}, coordination {scores['coordination']})",
+                f"- Confidence: {row['confidence']}",
+                f"- Caveats: {' | '.join(row['caveats']) if row['caveats'] else 'none'}",
+                "",
+            ]
+        )
+        if row["topEvidence"]:
+            lines.append("Top evidence:")
+            for claim in row["topEvidence"]:
+                proof = "proof" if claim["isAttributionProof"] else "signal"
+                lines.append(f"- {claim['sourceType']} ({claim['confidence']}, {proof}): {claim['sourceValue']}")
+            lines.append("")
+
+    (reports / "attribution_audit.md").write_text("\n".join(lines).rstrip() + "\n")
+
+
 def main():
     DOCS_DATA.mkdir(parents=True, exist_ok=True)
     recipients_raw = read_aggregate_compensation()
     proposal, outputs = read_proposal()
     participants, account_labels, consensus_labels, consensus_metadata, gns_by_address, evidence_by_address = read_public_metadata()
     all_votes, final_votes = read_votes()
+    onchain_graph = read_onchain_graph_snapshot()
+    osint_sources = read_public_osint_sources()
 
     recipient_set = {row["address"] for row in recipients_raw}
     output_total = sum(outputs.values(), Decimal(0))
@@ -811,6 +1370,19 @@ def main():
         row["strictClusterId"] = strict_cluster_by_address.get(row["voter"], "")
         row["signalClusterId"] = signal_cluster_by_address.get(row["voter"], "")
 
+    labels_by_address, identity_types_by_address = collect_address_labels(
+        recipients,
+        votes,
+        participants,
+        account_labels,
+        consensus_labels,
+        gns_by_address,
+    )
+    actors = build_actors(proposal, recipients, votes, identity_graph, onchain_graph, labels_by_address, identity_types_by_address)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources)
+    ranked_parties = build_ranked_parties(actors, evidence_claims, identity_graph)
+    write_attribution_reports(ranked_parties, evidence_claims)
+
     dashboard = {
         "metadata": {
             "generatedFrom": "committed snapshots",
@@ -849,6 +1421,10 @@ def main():
             "identityGraphEdgesCount": len(identity_graph["edges"]),
             "strictClustersCount": len(identity_graph["strictClusters"]),
             "signalClustersCount": len(identity_graph["signalClusters"]),
+            "actorsCount": len(actors),
+            "evidenceClaimsCount": len(evidence_claims),
+            "rankedPartiesCount": len(ranked_parties),
+            "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
             "finalVoteAddressCounts": dict(final_vote_counts),
             "recipientVoteAddressCounts": dict(recipient_vote_counts),
             "grcOffchainVote": {"include": 2, "exclude": 6, "abstain": 1, "votersIdentified": False},
@@ -859,12 +1435,17 @@ def main():
         "epochs": epoch_summary,
         "identityEvidence": identity_evidence,
         "identityGraph": identity_graph,
+        "actors": actors,
+        "evidenceClaims": evidence_claims,
+        "rankedParties": ranked_parties,
         "notes": [
             "Per-voter voting power is intentionally unknown because no exact public source is included in the snapshots.",
             "Voting-power charts use the final aggregate on-chain tally only.",
             "GRC off-chain voters are not identified in the upstream repository.",
             "Identity labels come from public validator metadata, validator-key matches, GNS .gnk names, or participant inference URLs.",
             "GNS .gnk names are read from the saved on-chain CosmWasm contract state snapshot.",
+            "Public-social OSINT is limited to linkable public sources such as Gonka names, GitHub, public websites, GNS records, and public profile URLs.",
+            "Ranked parties are prioritized interested-party leads, not legal accusations.",
             "Node ownership clues include public validator moniker, website, identity, security contact, details, and participant inference URL when present.",
             "Strict clusters use only high-confidence public attribution evidence; signal clusters may include infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate.",
         ],
