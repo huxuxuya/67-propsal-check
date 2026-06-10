@@ -266,7 +266,7 @@ function renderCompensationChart() {
     return;
   }
   const maxPower = Math.max(...rows.map((row) => row.votingPower || 0), 0);
-  const rowLabel = (row) => `${actorShortLabel(row)}  #${row.rank}\n${shortAddress(row.address)}`;
+  const rowLabel = (row) => `${actorShortLabel(row)} #${row.rank}  ${shortAddress(row.address)}`;
   state.charts.compensation.setOption({
     legend: { top: 4, data: voteOptions.map((option) => optionLabels[option]), textStyle: { color: "#a7afba" } },
     grid: { left: 238, right: 72, top: 42, bottom: 32 },
@@ -278,7 +278,7 @@ function renderCompensationChart() {
       },
     }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
-    yAxis: { type: "category", inverse: true, data: rows.map(rowLabel), axisLabel: { color: "#a7afba", width: 220, overflow: "truncate", lineHeight: 14 } },
+    yAxis: { type: "category", inverse: true, data: rows.map(rowLabel), axisLabel: { align: "left", margin: 232, color: "#a7afba", width: 220, overflow: "truncate" } },
     series: [
       ...voteOptions.map((option) => ({
         name: optionLabels[option],
