@@ -336,6 +336,74 @@ def display_label(address, public_name):
     return f"{public_name} · {address}"
 
 
+def short_actor_label(address, display):
+    display = display or address
+    suffix = f" · {address}"
+    if display.endswith(suffix):
+        return display[: -len(suffix)]
+    return display if display and display != address else address
+
+
+def canonical_actor_for_address(address, row, claims):
+    display = row.get("label") or address
+    public_name = row.get("publicLabel") or ""
+    operator_signal = row.get("operatorSignalLabel") or ""
+    operator_signal_display = row.get("operatorSignalDisplayLabel") or operator_signal
+    proof_claims = [claim for claim in claims if claim.get("isAttributionProof")]
+    high_claims = [claim for claim in claims if claim.get("confidence") == "high"]
+    infrastructure_claims = [
+        claim
+        for claim in claims
+        if claim.get("category") == "infrastructure_signal"
+        or claim.get("sourceType") in {"participant_inference_url", "same_inference_host", "same_ip_prefix", "same_asn", "same_tls_cert"}
+    ]
+
+    if operator_signal:
+        short_label = operator_signal_display
+        label_source = row.get("operatorSignal", {}).get("sourceType", "telegram_operator_signal")
+    else:
+        short_label = short_actor_label(address, display)
+        if public_name and public_name != address:
+            label_source = row.get("identityType") or "public_metadata"
+        else:
+            label_source = "address"
+
+    if proof_claims:
+        boundary = "public_owner_proof"
+    elif infrastructure_claims and not high_claims and not (public_name and public_name != address):
+        boundary = "infrastructure_signal"
+    elif high_claims or public_name and public_name != address:
+        boundary = "public_identity_signal"
+    else:
+        boundary = "unknown"
+
+    return {
+        "address": address,
+        "displayLabel": display,
+        "shortLabel": short_label,
+        "publicName": public_name if public_name != address else "",
+        "labelSource": label_source,
+        "identityBoundary": boundary,
+        "claimCount": len(claims),
+        "proofCount": len(proof_claims),
+        "highConfidenceClaimCount": len(high_claims),
+    }
+
+
+def apply_canonical_actor_fields(rows, address_key, canonical_by_address):
+    for row in rows:
+        address = row.get(address_key, "")
+        actor = canonical_by_address.get(address)
+        if not actor:
+            continue
+        row["actorDisplayLabel"] = actor["displayLabel"]
+        row["actorShortLabel"] = actor["shortLabel"]
+        row["publicName"] = actor["publicName"]
+        row["labelSource"] = actor["labelSource"]
+        row["identityBoundary"] = actor["identityBoundary"]
+        row["label"] = actor["displayLabel"]
+
+
 def primary_identity_type(evidence_rows):
     if not evidence_rows:
         return "unknown"
@@ -1146,6 +1214,11 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
                 "votingPower": 0,
                 "voteOption": "did_not_vote",
                 "identityType": identity_types.get(address, "unknown"),
+                "actorDisplayLabel": label or labels.get(address) or address or "Unknown public owner",
+                "actorShortLabel": short_actor_label(address, label or labels.get(address) or address or "Unknown public owner"),
+                "publicName": "",
+                "labelSource": "address",
+                "identityBoundary": "unknown",
                 "strictClusterId": "",
                 "signalClusterId": "",
             }
@@ -1157,6 +1230,11 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
         actor["totalCompensationGonka"] += row["totalGonka"]
         actor["voteOption"] = row["voteOption"]
         actor["identityType"] = row["identityType"]
+        actor["actorDisplayLabel"] = row.get("actorDisplayLabel", actor["label"])
+        actor["actorShortLabel"] = row.get("actorShortLabel", short_actor_label(row["address"], actor["actorDisplayLabel"]))
+        actor["publicName"] = row.get("publicName", "")
+        actor["labelSource"] = row.get("labelSource", "")
+        actor["identityBoundary"] = row.get("identityBoundary", "")
         actor["strictClusterId"] = row.get("strictClusterId", "")
         actor["signalClusterId"] = row.get("signalClusterId", "")
 
@@ -1166,6 +1244,11 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
         actor["voteOption"] = row["primaryOption"]
         actor["votingPower"] = row.get("votingPower") or 0
         actor["identityType"] = row["identityType"]
+        actor["actorDisplayLabel"] = row.get("actorDisplayLabel", actor["label"])
+        actor["actorShortLabel"] = row.get("actorShortLabel", short_actor_label(row["voter"], actor["actorDisplayLabel"]))
+        actor["publicName"] = row.get("publicName", "")
+        actor["labelSource"] = row.get("labelSource", "")
+        actor["identityBoundary"] = row.get("identityBoundary", "")
         actor["strictClusterId"] = row.get("strictClusterId", "")
         actor["signalClusterId"] = row.get("signalClusterId", "")
 
@@ -1223,6 +1306,10 @@ def build_ranked_parties(actors, claims, identity_graph):
             {
                 "id": cluster,
                 "label": actor["label"],
+                "actorDisplayLabel": actor.get("actorDisplayLabel", actor["label"]),
+                "actorShortLabel": actor.get("actorShortLabel", actor["label"]),
+                "identityBoundary": actor.get("identityBoundary", ""),
+                "labelSource": actor.get("labelSource", ""),
                 "addresses": [],
                 "roles": set(),
                 "totalCompensationGonka": 0,
@@ -1291,6 +1378,10 @@ def build_ranked_parties(actors, claims, identity_graph):
             {
                 "id": row["id"],
                 "label": row["label"],
+                "actorDisplayLabel": row.get("actorDisplayLabel", row["label"]),
+                "actorShortLabel": row.get("actorShortLabel", row["label"]),
+                "identityBoundary": row.get("identityBoundary", ""),
+                "labelSource": row.get("labelSource", ""),
                 "addresses": sorted(row["addresses"]),
                 "roles": sorted(row["roles"]),
                 "identityTypes": sorted(row["identityTypes"]),
@@ -1339,8 +1430,7 @@ def build_interest_clusters(actors, evidence_claims, identity_graph):
             group_id = actor["signalClusterId"]
             kind = "signal_cluster"
         else:
-            group_id = f"label:{actor['label']}"
-            kind = "label"
+            continue
 
         grouped.setdefault(
             group_id,
@@ -1348,6 +1438,10 @@ def build_interest_clusters(actors, evidence_claims, identity_graph):
                 "id": group_id,
                 "kind": kind,
                 "label": actor["label"],
+                "actorDisplayLabel": actor.get("actorDisplayLabel", actor["label"]),
+                "actorShortLabel": actor.get("actorShortLabel", actor["label"]),
+                "identityBoundary": actor.get("identityBoundary", ""),
+                "labelSource": actor.get("labelSource", ""),
                 "addresses": [],
                 "roles": set(),
                 "identityTypes": set(),
@@ -1419,6 +1513,10 @@ def build_interest_clusters(actors, evidence_claims, identity_graph):
                 "id": row["id"],
                 "kind": row["kind"],
                 "label": row["label"],
+                "actorDisplayLabel": row.get("actorDisplayLabel", row["label"]),
+                "actorShortLabel": row.get("actorShortLabel", row["label"]),
+                "identityBoundary": row.get("identityBoundary", evidence_boundary),
+                "labelSource": row.get("labelSource", ""),
                 "addresses": sorted(set(row["addresses"])),
                 "roles": sorted(row["roles"]),
                 "identityTypes": sorted(row["identityTypes"]),
@@ -1495,6 +1593,10 @@ def build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_cl
             {
                 "address": address,
                 "label": recipient.get("label") or vote.get("label") or "Unknown public owner",
+                "actorDisplayLabel": recipient.get("actorDisplayLabel") or vote.get("actorDisplayLabel") or recipient.get("label") or vote.get("label") or "Unknown public owner",
+                "actorShortLabel": recipient.get("actorShortLabel") or vote.get("actorShortLabel") or recipient.get("label") or vote.get("label") or address,
+                "identityBoundary": recipient.get("identityBoundary") or vote.get("identityBoundary") or evidence_boundary,
+                "labelSource": recipient.get("labelSource") or vote.get("labelSource") or "",
                 "publicLabel": recipient.get("publicLabel") or vote.get("publicLabel") or "",
                 "operatorSignalLabel": recipient.get("operatorSignalLabel") or vote.get("operatorSignalLabel") or "",
                 "operatorSignalDisplayLabel": recipient.get("operatorSignalDisplayLabel") or vote.get("operatorSignalDisplayLabel") or "",
@@ -1636,6 +1738,10 @@ def build_public_name_enrichment(recipients, votes, identity_evidence, evidence_
             {
                 "address": address,
                 "label": recipient.get("label") or vote.get("label") or "Unknown public owner",
+                "actorDisplayLabel": recipient.get("actorDisplayLabel") or vote.get("actorDisplayLabel") or recipient.get("label") or vote.get("label") or "Unknown public owner",
+                "actorShortLabel": recipient.get("actorShortLabel") or vote.get("actorShortLabel") or recipient.get("label") or vote.get("label") or address,
+                "identityBoundary": recipient.get("identityBoundary") or vote.get("identityBoundary") or evidence_boundary,
+                "labelSource": recipient.get("labelSource") or vote.get("labelSource") or "",
                 "bestPublicName": best_public_name,
                 "roles": sorted([role for role, present in {"recipient": bool(recipient), "voter": bool(vote)}.items() if present]),
                 "totalCompensationGonka": round(recipient.get("totalGonka") or 0, 6),
@@ -1851,8 +1957,10 @@ def build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity
     groups = {}
     for row in epoch_anomalies:
         address = row["address"]
-        group_id = strict_by_address.get(address) or signal_by_address.get(address) or f"label:{row['label']}"
-        kind = "strict_identity" if strict_by_address.get(address) else ("signal_cluster" if signal_by_address.get(address) else "label_group")
+        group_id = strict_by_address.get(address) or signal_by_address.get(address)
+        if not group_id:
+            continue
+        kind = "strict_identity" if strict_by_address.get(address) else "signal_cluster"
         group = groups.setdefault(
             group_id,
             {
@@ -2238,7 +2346,7 @@ def write_voting_power_window_report(voting_power_window):
             f.write(f"- {row['label']} `{row['voter']}`: vote={row['primaryOption']} tx_height={row['height']} start_power={row['startVotingPower']} end_power={row['endVotingPower']} status={row['windowPowerStatus']}\n")
 
 
-def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None, benefit_power_matrix=None, public_name_enrichment=None):
+def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None, benefit_power_matrix=None, public_name_enrichment=None, epoch_anomalies=None):
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
 
@@ -2681,7 +2789,7 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
         lines = [
             "# Proposal 67 e287 Inference Timing Clusters",
             "",
-            "This report groups voting-end inference epoch timing signals by strict public identity cluster, signal cluster, or public label. Inference epoch weight is not governance voting power; a cluster is an investigation lead, not owner attribution unless the evidence is explicitly marked as public proof.",
+            "This report groups voting-end inference epoch timing signals only when multiple addresses share strict public identity or signal-cluster evidence. Single-address timing cases remain timing leads, not clusters. Inference epoch weight is not governance voting power; a cluster is an investigation lead, not owner attribution unless the evidence is explicitly marked as public proof.",
             "",
         ]
         for row in epoch_entry_exit_clusters[:25]:
@@ -2710,32 +2818,36 @@ def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_
                 lines.append("")
         (reports / "epoch_entry_exit_clusters.md").write_text("\n".join(lines).rstrip() + "\n")
 
-        reconciliation_rows = []
+        cluster_by_address = {}
         for cluster in epoch_entry_exit_clusters:
-            for row in cluster.get("addressRows", []):
-                reconciliation_rows.append(
-                    {
-                        "rank": cluster["rank"],
-                        "cluster_id": cluster["id"],
-                        "cluster_label": cluster["label"],
-                        "address": row["address"],
-                        "label": row["label"],
-                        "entered_e287": row["enteredE287"],
-                        "voted_during_e287": row["votedDuringE287"],
-                        "exited_after_e287": row["exitedAfterE287"],
-                        "full_enter_vote_exit": row["enteredE287"] and row["votedDuringE287"] and row["exitedAfterE287"],
-                        "e287_weight": row["e287Weight"],
-                        "prev_max_weight": row["prevMaxWeight"],
-                        "next_max_weight": row["nextMaxWeight"],
-                        "vote_option": row["voteOption"],
-                        "vote_height": row["voteHeight"],
-                        "governance_voting_power": row.get("governanceVotingPower", 0),
-                        "governance_voting_power_source": row.get("governanceVotingPowerSource", ""),
-                        "is_recipient": row["isRecipient"],
-                        "total_compensation_gonka": row["totalCompensationGonka"],
-                        "status": row["status"],
-                    }
-                )
+            for address in cluster.get("addresses", []):
+                cluster_by_address[address] = cluster
+        reconciliation_rows = []
+        for row in epoch_anomalies or []:
+            cluster = cluster_by_address.get(row["address"], {})
+            reconciliation_rows.append(
+                {
+                    "rank": cluster.get("rank", ""),
+                    "cluster_id": cluster.get("id", "single-address timing lead"),
+                    "cluster_label": cluster.get("label", ""),
+                    "address": row["address"],
+                    "label": row["label"],
+                    "entered_e287": row["enteredE287"],
+                    "voted_during_e287": row["votedDuringE287"],
+                    "exited_after_e287": row["exitedAfterE287"],
+                    "full_enter_vote_exit": row["enteredE287"] and row["votedDuringE287"] and row["exitedAfterE287"],
+                    "e287_weight": row["e287Weight"],
+                    "prev_max_weight": row["prevMaxWeight"],
+                    "next_max_weight": row["nextMaxWeight"],
+                    "vote_option": row["voteOption"],
+                    "vote_height": row["voteHeight"],
+                    "governance_voting_power": row.get("governanceVotingPower", 0),
+                    "governance_voting_power_source": row.get("governanceVotingPowerSource", ""),
+                    "is_recipient": row["isRecipient"],
+                    "total_compensation_gonka": row.get("totalCompensationGonka", 0),
+                    "status": row["status"],
+                }
+            )
         reconciliation_rows.sort(
             key=lambda row: (
                 not row["full_enter_vote_exit"],
@@ -3010,6 +3122,25 @@ def main():
     actors = build_actors(proposal, recipients, votes, identity_graph, onchain_graph, labels_by_address, identity_types_by_address)
     epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
     evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
+    epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
+    claims_by_address = defaultdict(list)
+    for claim in evidence_claims:
+        if claim.get("address"):
+            claims_by_address[claim["address"]].append(claim)
+    row_by_address = {row["address"]: row for row in actors}
+    for row in recipients:
+        row_by_address[row["address"]] = {**row_by_address.get(row["address"], {}), **row}
+    for row in votes:
+        row_by_address[row["voter"]] = {**row_by_address.get(row["voter"], {}), **row, "address": row["voter"]}
+    canonical_actors = [
+        canonical_actor_for_address(address, row, claims_by_address.get(address, []))
+        for address, row in sorted(row_by_address.items())
+    ]
+    canonical_by_address = {row["address"]: row for row in canonical_actors}
+    apply_canonical_actor_fields(recipients, "address", canonical_by_address)
+    apply_canonical_actor_fields(votes, "voter", canonical_by_address)
+    apply_canonical_actor_fields(actors, "address", canonical_by_address)
     epoch_entry_exit_clusters = build_epoch_entry_exit_clusters(epoch_anomalies, recipients, votes, identity_graph, evidence_claims)
     ranked_parties = build_ranked_parties(actors, evidence_claims, identity_graph)
     interest_clusters = build_interest_clusters(actors, evidence_claims, identity_graph)
@@ -3020,7 +3151,7 @@ def main():
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
     (DATA / "public_name_enrichment.json").write_text(json.dumps(public_name_enrichment, indent=2, sort_keys=True) + "\n")
-    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters, benefit_power_matrix, public_name_enrichment)
+    write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters, benefit_power_matrix, public_name_enrichment, epoch_anomalies)
     write_telegram_attribution_report(telegram_attribution_audit)
     write_voting_power_window_report(voting_power_window)
 
@@ -3066,6 +3197,7 @@ def main():
             "evidenceClaimsCount": len(evidence_claims),
             "rankedPartiesCount": len(ranked_parties),
             "interestClustersCount": len(interest_clusters),
+            "canonicalActorsCount": len(canonical_actors),
             "interestClustersWithVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0),
             "interestClustersWithCompensationAndVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0 and row["totalCompensationGonka"] > 0),
             "benefitPowerMatrixCount": len(benefit_power_matrix),
@@ -3104,6 +3236,7 @@ def main():
         "epochs": epoch_summary,
         "identityEvidence": identity_evidence,
         "identityGraph": identity_graph,
+        "canonicalActors": canonical_actors,
         "actors": actors,
         "evidenceClaims": evidence_claims,
         "rankedParties": ranked_parties,

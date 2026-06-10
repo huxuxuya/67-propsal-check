@@ -1680,6 +1680,8 @@
   ],
   "rows": [
     {
+      "actorDisplayLabel": "ancapex | Mine from $1, no losses from node failures \u00b7 gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+      "actorShortLabel": "ancapex | Mine from $1, no losses from node failures",
       "address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
       "bestPublicName": "ancapex | Mine from $1, no losses from node failures",
       "evidenceBoundary": "public_owner_proof",
@@ -1782,8 +1784,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_owner_proof",
       "inferenceUrl": "http://89.149.242.149:8000",
       "label": "ancapex | Mine from $1, no losses from node failures \u00b7 gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+      "labelSource": "validator_key_match",
       "nextActions": [
         "review recipient-voter conflict"
       ],
@@ -1833,6 +1837,8 @@
       "votingPower": 28865
     },
     {
+      "actorDisplayLabel": "Arturs Plisko \u00b7 Hyperfusion \u00b7 gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
+      "actorShortLabel": "Arturs Plisko",
       "address": "gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
       "bestPublicName": "Hyperfusion",
       "evidenceBoundary": "public_owner_proof",
@@ -1935,8 +1941,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_owner_proof",
       "inferenceUrl": "http://46.4.101.189:8000",
       "label": "Arturs Plisko \u00b7 Hyperfusion \u00b7 gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
+      "labelSource": "telegram_self_or_team_claim",
       "nextActions": [
         "archive as public proof"
       ],
@@ -1985,6 +1993,8 @@
       "votingPower": 5395
     },
     {
+      "actorDisplayLabel": "gonka-3 \u00b7 gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
+      "actorShortLabel": "gonka-3",
       "address": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
       "bestPublicName": "gonka-3",
       "evidenceBoundary": "public_owner_proof",
@@ -2087,8 +2097,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_owner_proof",
       "inferenceUrl": "https://node3.gonka.ai",
       "label": "gonka-3 \u00b7 gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
+      "labelSource": "validator_key_match",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2137,6 +2149,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "Formula x AI \u00b7 gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+      "actorShortLabel": "Formula x AI",
       "address": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
       "bestPublicName": "Formula x AI",
       "evidenceBoundary": "public_owner_proof",
@@ -2239,8 +2253,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_owner_proof",
       "inferenceUrl": "http://162.55.232.115:8000",
       "label": "Formula x AI \u00b7 gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+      "labelSource": "validator_key_match",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2282,6 +2298,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka-1 \u00b7 gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
+      "actorShortLabel": "gonka-1",
       "address": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
       "bestPublicName": "gonka-1",
       "evidenceBoundary": "public_owner_proof",
@@ -2384,8 +2402,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_owner_proof",
       "inferenceUrl": "http://node1.gonka.ai:8000",
       "label": "gonka-1 \u00b7 gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
+      "labelSource": "validator_key_match",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2434,6 +2454,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "asd.gnk \u00b7 gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4",
+      "actorShortLabel": "asd.gnk",
       "address": "gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4",
       "bestPublicName": "asd.gnk",
       "evidenceBoundary": "public_owner_proof",
@@ -2545,8 +2567,10 @@
         "was.gnk",
         "wat.gnk"
       ],
+      "identityBoundary": "public_owner_proof",
       "inferenceUrl": "",
       "label": "asd.gnk \u00b7 gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4",
+      "labelSource": "gns_name",
       "nextActions": [
         "archive as public proof"
       ],
@@ -2625,6 +2649,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "Votkon \u00b7 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+      "actorShortLabel": "Votkon",
       "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
       "bestPublicName": "gonkavaloper1q5xt54wncgzk7dxv9x64uln68455g83wq96ml9",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -2727,8 +2753,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://89.169.97.113:8000",
       "label": "Votkon \u00b7 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+      "labelSource": "telegram_operator_statement",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -2766,6 +2794,8 @@
       "votingPower": 92840
     },
     {
+      "actorDisplayLabel": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
+      "actorShortLabel": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
       "address": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
       "bestPublicName": "gonkavaloper1gvrrhjmy4w4mayvs2s5l23edj8ertcmt32aj4w",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -2868,8 +2898,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://54.38.118.143:8000",
       "label": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -2907,6 +2939,8 @@
       "votingPower": 86433
     },
     {
+      "actorDisplayLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "actorShortLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
       "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
       "bestPublicName": "http://178.105.174.27:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3009,8 +3043,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.174.27:8000",
       "label": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3041,6 +3077,8 @@
       "votingPower": 57838
     },
     {
+      "actorDisplayLabel": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+      "actorShortLabel": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
       "address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
       "bestPublicName": "gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3143,8 +3181,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://148.113.47.235:8000",
       "label": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3182,6 +3222,8 @@
       "votingPower": 31217
     },
     {
+      "actorDisplayLabel": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+      "actorShortLabel": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
       "address": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
       "bestPublicName": "gonkavaloper1d694r00czmq75txghwjcuk07lxvc8d4e2gps2z",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3284,8 +3326,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://network002.kaitaku.ai:8000",
       "label": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -3320,6 +3364,8 @@
       "votingPower": 31063
     },
     {
+      "actorDisplayLabel": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+      "actorShortLabel": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
       "address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
       "bestPublicName": "gonkavaloper168rtjfkszuhcggg4dfyse4yh7xn9zwfgrn8588",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3422,8 +3468,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://network000.kaitaku.ai:8000",
       "label": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3461,6 +3509,8 @@
       "votingPower": 25278
     },
     {
+      "actorDisplayLabel": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
+      "actorShortLabel": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
       "address": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
       "bestPublicName": "gonkavaloper1nmn039cgpkhmkzekpkfz3nkv9tcjckpnf6rr5l",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3563,8 +3613,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://94.237.52.191:8000",
       "label": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -3599,6 +3651,8 @@
       "votingPower": 20647
     },
     {
+      "actorDisplayLabel": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+      "actorShortLabel": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
       "address": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
       "bestPublicName": "gonkavaloper1hwvel7n3zuk6wruefuzc356l9myske9shc8fy0",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3701,8 +3755,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://148.113.47.71:8000",
       "label": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3740,6 +3796,8 @@
       "votingPower": 19974
     },
     {
+      "actorDisplayLabel": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+      "actorShortLabel": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
       "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
       "bestPublicName": "gonkavaloper1zktn8j65wlys8a8e38hqhf4y3x6m4x047s835t",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3842,8 +3900,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://65.108.198.21:8000",
       "label": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3881,6 +3941,8 @@
       "votingPower": 4565
     },
     {
+      "actorDisplayLabel": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
+      "actorShortLabel": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
       "address": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
       "bestPublicName": "gonkavaloper1qwfrtz9c7kcrfkrrlne2pkcye74mj6ced3h2pj",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3983,8 +4045,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://84.32.59.212:8000",
       "label": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -4019,6 +4083,8 @@
       "votingPower": 556
     },
     {
+      "actorDisplayLabel": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
+      "actorShortLabel": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
       "address": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
       "bestPublicName": "gonkavaloper1m58jds005cttwq2vt0p7yk6vy2aqg254yq3xky",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -4109,8 +4175,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://84.32.185.226:8000",
       "label": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -4145,6 +4213,8 @@
       "votingPower": 490
     },
     {
+      "actorDisplayLabel": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+      "actorShortLabel": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
       "address": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
       "bestPublicName": "gonkavaloper1gyk0aahvr3qeju4zx0nplfreej6cy4jj28pt0e",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -4247,8 +4317,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://69.48.159.137:8000/",
       "label": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -4286,6 +4358,8 @@
       "votingPower": 278
     },
     {
+      "actorDisplayLabel": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+      "actorShortLabel": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
       "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
       "bestPublicName": "gonkavaloper1qa90tgczc0k5dvk4l5nvlf5y6phgm6mgk2pw9p",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -4388,8 +4462,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://135.181.56.61:8000",
       "label": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4424,6 +4500,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+      "actorShortLabel": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
       "address": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
       "bestPublicName": "http://54.37.131.156:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -4526,8 +4604,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://54.37.131.156:8000",
       "label": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4555,6 +4635,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
+      "actorShortLabel": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
       "address": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
       "bestPublicName": "gonkavaloper1uhqpup9fev3zahlx6n326lp0krznc6uswthag3",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -4657,8 +4739,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://65.21.232.177:8000",
       "label": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4693,6 +4777,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
+      "actorShortLabel": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
       "address": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
       "bestPublicName": "http://57.128.30.101:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -4795,8 +4881,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://57.128.30.101:8000",
       "label": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4824,6 +4912,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+      "actorShortLabel": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
       "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
       "bestPublicName": "gonkavaloper1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -4926,8 +5016,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.104.95.5:8000",
       "label": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -4962,6 +5054,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
+      "actorShortLabel": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
       "address": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
       "bestPublicName": "gonkavaloper1jrgm47v5eg876udmzg6j6glqcsd5x0vkxcjx2t",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5064,8 +5158,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.217.121.189:8000",
       "label": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5100,6 +5196,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+      "actorShortLabel": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
       "address": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
       "bestPublicName": "gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5202,8 +5300,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.170.135:8000",
       "label": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5238,6 +5338,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "A? \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+      "actorShortLabel": "A?",
       "address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
       "bestPublicName": "http://136.243.110.227:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5340,8 +5442,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://136.243.110.227:8000",
       "label": "A? \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+      "labelSource": "telegram_self_or_team_claim",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5369,6 +5473,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
+      "actorShortLabel": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
       "address": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
       "bestPublicName": "gonkavaloper1yal0ysgzc860zt3y8cds8656tnueusgy8f6tpr",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5471,8 +5577,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://94.130.152.246:8000",
       "label": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5507,6 +5615,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
+      "actorShortLabel": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
       "address": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
       "bestPublicName": "gonkavaloper1830lqug50lse998x2lakk4pj5ypfumz5aap9cf",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5609,8 +5719,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://195.201.192.170:8000",
       "label": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5645,6 +5757,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+      "actorShortLabel": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
       "address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
       "bestPublicName": "gonkavaloper1ujnc662v6g69jm6fgxnr79a2m7ehzeutn55dxg",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5747,8 +5861,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://35.89.168.230:8000",
       "label": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5783,6 +5899,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+      "actorShortLabel": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
       "address": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
       "bestPublicName": "gonkavaloper1007g0ut3u4wjkay9hegqfev4pj90qgexjs8u0r",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5885,8 +6003,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.172.102:8000",
       "label": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5921,6 +6041,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
+      "actorShortLabel": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
       "address": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
       "bestPublicName": "gonkavaloper1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuq36d8ug",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6023,8 +6145,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://204.12.168.89:8000",
       "label": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6059,6 +6183,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+      "actorShortLabel": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
       "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
       "bestPublicName": "http://88.99.213.222:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6161,8 +6287,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://88.99.213.222:8000",
       "label": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -6193,6 +6321,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+      "actorShortLabel": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
       "address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
       "bestPublicName": "http://95.217.35.48:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6295,8 +6425,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.217.35.48:8000",
       "label": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6324,6 +6456,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
+      "actorShortLabel": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
       "address": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
       "bestPublicName": "gonkavaloper1xwkesaxvdadh9wt9yyladu0r260s7whkrc8v6a",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6426,8 +6560,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://94.130.143.155:8000",
       "label": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6462,6 +6598,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+      "actorShortLabel": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
       "address": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
       "bestPublicName": "gonkavaloper125n6kr5gvdup0lndfkps7t6rd6592pantrekyv",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6564,8 +6702,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://88.198.4.29:8000",
       "label": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6600,6 +6740,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
+      "actorShortLabel": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
       "address": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
       "bestPublicName": "http://136.243.111.105:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6702,8 +6844,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://136.243.111.105:8000",
       "label": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6731,6 +6875,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
+      "actorShortLabel": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
       "address": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
       "bestPublicName": "gonkavaloper18xeqnspxpg2vncufnjne485rkaagwvz7jh45cq",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6833,8 +6979,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://195.201.83.167:8000",
       "label": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6869,6 +7017,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
+      "actorShortLabel": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
       "address": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
       "bestPublicName": "http://138.201.121.253:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6971,8 +7121,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://138.201.121.253:8000",
       "label": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7000,6 +7152,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
+      "actorShortLabel": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
       "address": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
       "bestPublicName": "gonkavaloper1scskt6wpnjnumsah6kjphmdu87vjgvcx8nyy3p",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -7102,8 +7256,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://57.131.17.61:8000",
       "label": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -7141,6 +7297,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
+      "actorShortLabel": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
       "address": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
       "bestPublicName": "gonkavaloper1wvv656pt2d8x2khcvytqeessck5uzjnx7svq7h",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -7243,8 +7401,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://109.206.182.166:8000",
       "label": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7286,6 +7446,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
+      "actorShortLabel": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
       "address": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
       "bestPublicName": "http://95.217.122.154:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -7388,8 +7550,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.217.122.154:8000",
       "label": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7417,6 +7581,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
+      "actorShortLabel": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
       "address": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
       "bestPublicName": "gonkavaloper14ljarev2nlzu4ej50vx7ylj2rvg4n20f0qmr84",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -7519,8 +7685,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://109.206.182.132:8000",
       "label": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7555,6 +7723,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
+      "actorShortLabel": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
       "address": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
       "bestPublicName": "http://159.69.112.72:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -7657,8 +7827,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://159.69.112.72:8000",
       "label": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7686,6 +7858,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
+      "actorShortLabel": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
       "address": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
       "bestPublicName": "gonkavaloper1007n977a7uda3pd9m6hftw8xcql0tc2089tun3",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -7788,8 +7962,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.166.7:8000",
       "label": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7824,6 +8000,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
+      "actorShortLabel": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
       "address": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
       "bestPublicName": "gonkavaloper1tl5m3vuqsx333v7095ymwjdc4vdk2wd9l5x8ea",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -7926,8 +8104,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.217.47.126:8000",
       "label": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -7962,6 +8142,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
+      "actorShortLabel": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
       "address": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
       "bestPublicName": "gonkavaloper14g78ez2zy08k8sssue483zmfpgd4qut87clch4",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -8064,8 +8246,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://94.130.64.22:8000",
       "label": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8100,6 +8284,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+      "actorShortLabel": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
       "address": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
       "bestPublicName": "gonkavaloper1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxqp8vl9",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -8202,8 +8388,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://gnk.antifreeze.dev:8000",
       "label": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8238,6 +8426,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
+      "actorShortLabel": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
       "address": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
       "bestPublicName": "http://125.93.200.207:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -8340,8 +8530,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://125.93.200.207:8000",
       "label": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8369,6 +8561,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+      "actorShortLabel": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
       "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
       "bestPublicName": "http://198.244.228.95:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -8471,8 +8665,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://198.244.228.95:8000",
       "label": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8500,6 +8696,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
+      "actorShortLabel": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
       "address": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
       "bestPublicName": "gonkavaloper10070xwkwv00sulsa7gdfwkgh8w069stkwjckjt",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -8602,8 +8800,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.165.144:8000",
       "label": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8638,6 +8838,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
+      "actorShortLabel": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
       "address": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
       "bestPublicName": "gonkavaloper10075dz43h94zhqu5hwdj3nyjay6v8mzwsphyca",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -8740,8 +8942,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.169.55:8000",
       "label": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8776,6 +8980,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
+      "actorShortLabel": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
       "address": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
       "bestPublicName": "gonkavaloper1007lnkyhdh7aq0vjdcdwcerkdh4yy85rcmr2lh",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -8878,8 +9084,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.175.114:8000",
       "label": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -8914,6 +9122,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
+      "actorShortLabel": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
       "address": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
       "bestPublicName": "gonkavaloper13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfwgau84u",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -9016,8 +9226,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://185.70.186.176:8000",
       "label": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9052,6 +9264,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
+      "actorShortLabel": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
       "address": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
       "bestPublicName": "http://202.78.161.246:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -9154,8 +9368,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://202.78.161.246:8000",
       "label": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9183,6 +9399,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+      "actorShortLabel": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
       "address": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
       "bestPublicName": "gonkavaloper14ef2pxjge75gflqftn7m2wy0xv59gq9uy7350x",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -9285,8 +9503,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://202.78.161.100:8000",
       "label": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9321,6 +9541,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+      "actorShortLabel": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
       "address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
       "bestPublicName": "gonkavaloper1fvly5jrewyjmjfgwah3khy9rttq4cqajyeptjv",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -9423,8 +9645,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://20.163.111.183:8000",
       "label": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -9462,6 +9686,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+      "actorShortLabel": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
       "address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
       "bestPublicName": "gonkavaloper1cuwejs77gectp3n32wg8q27hlsa4m3hqvpcjer",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -9564,8 +9790,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://20.171.77.105:8000",
       "label": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+      "labelSource": "address",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -9603,6 +9831,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+      "actorShortLabel": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
       "address": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
       "bestPublicName": "http://64.236.203.236:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -9681,8 +9911,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://64.236.203.236:8000",
       "label": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+      "labelSource": "address",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9710,6 +9942,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
+      "actorShortLabel": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
       "address": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
       "bestPublicName": "gonkavaloper16r08lhm50zwjddmslfw2344z67r70vqur0um8h",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -9812,8 +10046,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.170.135:8000",
       "label": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -9855,6 +10091,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+      "actorShortLabel": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
       "address": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
       "bestPublicName": "gonkavaloper1kvmerzu64094dt9t62ea0cp75larh39urzw2tk",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -9957,8 +10195,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://78.46.89.87:8000",
       "label": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -9993,6 +10233,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
+      "actorShortLabel": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
       "address": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
       "bestPublicName": "",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -10011,8 +10253,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "",
       "label": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -10032,6 +10276,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+      "actorShortLabel": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
       "address": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
       "bestPublicName": "gonkavaloper1naxyjmun6kl23htjdujwd6c5z5avgwapvr2wpu",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -10134,8 +10380,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://20.88.58.210:8000",
       "label": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
@@ -10170,6 +10418,8 @@
       "votingPower": 0
     },
     {
+      "actorDisplayLabel": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+      "actorShortLabel": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
       "address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
       "bestPublicName": "gonkavaloper14n4p8wfa03rhmy4agc560k4a3zafavakr2kukm",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -10272,8 +10522,10 @@
         }
       ],
       "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.216.112.248:8000",
       "label": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+      "labelSource": "address",
       "nextActions": [
         "corroborate voter owner"
       ],
