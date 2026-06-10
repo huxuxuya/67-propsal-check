@@ -40,7 +40,6 @@ const els = {
   voteTable: document.getElementById("voteTable"),
   strictClusterTable: document.getElementById("strictClusterTable"),
   signalClusterTable: document.getElementById("signalClusterTable"),
-  matrixStats: document.getElementById("matrixStats"),
   drawer: document.getElementById("drawer"),
   drawerContent: document.getElementById("drawerContent"),
   scrim: document.getElementById("scrim"),
@@ -107,6 +106,7 @@ function initCharts() {
     epoch: "epochChart",
     heatmap: "heatmapChart",
     matrix: "matrixChart",
+    matrixStats: "matrixStats",
     timeline: "timelineChart",
     tally: "tallyChart",
     voterPower: "voterPowerChart",
@@ -327,41 +327,25 @@ function renderMatrix() {
   const byKey = new Map(rows.map((row) => [`${row.recipientStatus}:${row.voteOption}`, row]));
   const emptyRow = { addressCount: 0, totalCompensationGonka: 0, votingPower: 0 };
   const getRow = (recipientStatus, voteOption) => byKey.get(`${recipientStatus}:${voteOption}`) || emptyRow;
-  const rewardedFlows = [
-    { key: "yes", source: "Yes", color: optionColors.yes, row: getRow("recipient", "yes") },
-    { key: "no_with_veto", source: "No with veto", color: optionColors.no_with_veto, row: getRow("recipient", "no_with_veto") },
-    { key: "did_not_vote", source: "Did not vote", color: optionColors.did_not_vote, row: getRow("recipient", "did_not_vote") },
+  const rewardFlows = [
+    { voteOption: "yes", source: "Yes", target: "Received reward", color: optionColors.yes, row: getRow("recipient", "yes") },
+    { voteOption: "no_with_veto", source: "No with veto", target: "Received reward", color: optionColors.no_with_veto, row: getRow("recipient", "no_with_veto") },
+    { voteOption: "did_not_vote", source: "Did not vote", target: "Received reward", color: optionColors.did_not_vote, row: getRow("recipient", "did_not_vote") },
   ];
-  const notRewardedRows = [
-    { key: "yes", label: "Not rewarded yes", color: optionColors.yes, row: getRow("non_recipient", "yes") },
-    { key: "no_with_veto", label: "Not rewarded veto", color: optionColors.no_with_veto, row: getRow("non_recipient", "no_with_veto") },
+  const powerFlows = [
+    { voteOption: "yes", source: "Received reward", target: "Yes", color: optionColors.yes, row: getRow("recipient", "yes") },
+    { voteOption: "no_with_veto", source: "Received reward", target: "No with veto", color: optionColors.no_with_veto, row: getRow("recipient", "no_with_veto") },
+    { voteOption: "yes", source: "No reward", target: "Yes", color: optionColors.yes, row: getRow("non_recipient", "yes") },
+    { voteOption: "no_with_veto", source: "No reward", target: "No with veto", color: optionColors.no_with_veto, row: getRow("non_recipient", "no_with_veto") },
   ];
-  const maxPower = Math.max(...notRewardedRows.map((item) => item.row.votingPower || 0), 1);
-  if (els.matrixStats) {
-    els.matrixStats.innerHTML = [
-      `<div class="reward-flow-card"><h3>Voted but not rewarded</h3><small>These voters have 0 GONKA in the reward flow, so they are shown by governance power here.</small></div>`,
-      ...notRewardedRows.map((item) => {
-        const row = item.row;
-        const width = Math.max(4, ((row.votingPower || 0) / maxPower) * 100);
-        return `<div class="reward-flow-card">
-          <h3 style="color:${item.color}">${escapeHtml(item.label)}</h3>
-          <div class="reward-flow-kpis">
-            <div><span>Power</span><strong>${compact.format(row.votingPower || 0)}</strong></div>
-            <div><span>Addresses</span><strong>${fmt.format(row.addressCount || 0)}</strong></div>
-            <div><span>Reward</span><strong>${gonka(row.totalCompensationGonka || 0)}</strong></div>
-          </div>
-          <div class="power-bar"><i style="width:${width}%;background:${item.color}"></i></div>
-        </div>`;
-      }),
-    ].join("");
-  }
   state.charts.matrix.setOption({
+    title: { text: "Reward amount", left: 8, top: 2, textStyle: { color: "#a7afba", fontSize: 12, fontWeight: 600 } },
     tooltip: chartTooltip({
       trigger: "item",
       formatter: (item) => {
         const row = item.data?.row || {};
         if (item.dataType === "edge") {
-          return `<strong>${escapeHtml(item.data.source)} -> ${escapeHtml(item.data.target)}</strong><br>${gonka(item.data.value || 0)} reward amount<br>${fmt.format(row.addressCount || 0)} addresses<br>${fmt.format(row.votingPower || 0)} governance power`;
+          return `<strong>${escapeHtml(item.data.source)} -> ${escapeHtml(item.data.target)}</strong><br>${gonka(item.data.value || 0)} reward amount<br>${fmt.format(row.addressCount || 0)} addresses<br>${fmt.format(row.votingPower || 0)} governance voting power`;
         }
         return `<strong>${escapeHtml(item.name)}</strong><br>Flow width = received GONKA`;
       },
@@ -380,15 +364,58 @@ function renderMatrix() {
       itemStyle: { borderColor: "#101114", borderWidth: 1 },
       lineStyle: { color: "source", opacity: 0.5, curveness: 0.45 },
       data: [
-        ...rewardedFlows.map((flow) => ({ name: flow.source, itemStyle: { color: flow.color } })),
+        { name: "Yes", itemStyle: { color: optionColors.yes } },
+        { name: "No with veto", itemStyle: { color: optionColors.no_with_veto } },
+        { name: "Did not vote", itemStyle: { color: optionColors.did_not_vote } },
         { name: "Received reward", itemStyle: { color: "#d7a84f" } },
       ],
-      links: rewardedFlows
+      links: rewardFlows
         .filter((flow) => (flow.row.totalCompensationGonka || 0) > 0)
         .map((flow) => ({
           source: flow.source,
-          target: "Received reward",
+          target: flow.target,
           value: flow.row.totalCompensationGonka || 0,
+          row: flow.row,
+        })),
+    }],
+  }, true);
+  state.charts.matrixStats.setOption({
+    title: { text: "Governance voting power", right: 8, top: 2, textStyle: { color: "#a7afba", fontSize: 12, fontWeight: 600 } },
+    tooltip: chartTooltip({
+      trigger: "item",
+      formatter: (item) => {
+        const row = item.data?.row || {};
+        if (item.dataType === "edge") {
+          return `<strong>${escapeHtml(item.data.source)} -> ${escapeHtml(item.data.target)}</strong><br>${fmt.format(item.data.value || 0)} governance voting power<br>${fmt.format(row.addressCount || 0)} addresses<br>${gonka(row.totalCompensationGonka || 0)} reward amount`;
+        }
+        return `<strong>${escapeHtml(item.name)}</strong><br>Flow width = governance voting power`;
+      },
+    }),
+    series: [{
+      type: "sankey",
+      left: 18,
+      right: 8,
+      top: 24,
+      bottom: 24,
+      nodeWidth: 16,
+      nodeGap: 16,
+      draggable: false,
+      emphasis: { focus: "adjacency" },
+      label: { color: "#eef0f2", fontSize: 12 },
+      itemStyle: { borderColor: "#101114", borderWidth: 1 },
+      lineStyle: { color: "target", opacity: 0.5, curveness: 0.45 },
+      data: [
+        { name: "Received reward", itemStyle: { color: "#d7a84f" } },
+        { name: "No reward", itemStyle: { color: "#6d7682" } },
+        { name: "Yes", itemStyle: { color: optionColors.yes } },
+        { name: "No with veto", itemStyle: { color: optionColors.no_with_veto } },
+      ],
+      links: powerFlows
+        .filter((flow) => (flow.row.votingPower || 0) > 0)
+        .map((flow) => ({
+          source: flow.source,
+          target: flow.target,
+          value: flow.row.votingPower || 0,
           row: flow.row,
         })),
     }],
