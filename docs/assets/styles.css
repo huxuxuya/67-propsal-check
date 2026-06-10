@@ -190,6 +190,10 @@ select {
   height: 380px;
 }
 
+.compensation-chart {
+  height: 640px;
+}
+
 .reward-flow-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

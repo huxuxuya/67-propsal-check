@@ -65,6 +65,11 @@ function actorShortLabel(row) {
   return row?.actorShortLabel || actorLabel(row);
 }
 
+function shortAddress(address) {
+  if (!address) return "";
+  return `${address.slice(0, 10)}...${address.slice(-6)}`;
+}
+
 function identityBoundary(row) {
   return row?.identityBoundary || row?.evidenceBoundary || "unknown";
 }
@@ -261,9 +266,10 @@ function renderCompensationChart() {
     return;
   }
   const maxPower = Math.max(...rows.map((row) => row.votingPower || 0), 0);
+  const rowLabel = (row) => `${actorShortLabel(row)}  #${row.rank}\n${shortAddress(row.address)}`;
   state.charts.compensation.setOption({
     legend: { top: 4, data: voteOptions.map((option) => optionLabels[option]), textStyle: { color: "#a7afba" } },
-    grid: { left: 154, right: 72, top: 42, bottom: 32 },
+    grid: { left: 238, right: 72, top: 42, bottom: 32 },
     tooltip: chartTooltip({
       trigger: "axis",
       formatter: (params) => {
@@ -272,7 +278,7 @@ function renderCompensationChart() {
       },
     }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
-    yAxis: { type: "category", data: rows.map((row) => `#${row.rank} ${actorShortLabel(row)}`), axisLabel: { color: "#a7afba", width: 140, overflow: "truncate" } },
+    yAxis: { type: "category", inverse: true, data: rows.map(rowLabel), axisLabel: { color: "#a7afba", width: 220, overflow: "truncate", lineHeight: 14 } },
     series: [
       ...voteOptions.map((option) => ({
         name: optionLabels[option],
