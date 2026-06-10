@@ -93,6 +93,29 @@ def build_epoch_summary(recipients_raw, total):
     return epochs
 
 
+def read_epoch_reward_claims():
+    path = DATA / "epoch_reward_claims.json"
+    if not path.exists():
+        return {}
+    rows = load_json(path).get("rows", [])
+    claims = defaultdict(dict)
+    for row in rows:
+        address = row.get("address")
+        epoch = row.get("epoch")
+        if not address or not epoch:
+            continue
+        claims[address][f"e{epoch}"] = {
+            "claimed": bool(row.get("claimed")),
+            "rewardedGonka": float(row.get("rewardedGonka") or 0),
+            "earnedGonka": float(row.get("earnedGonka") or 0),
+            "inferenceCount": int(row.get("inferenceCount") or 0),
+            "missedRequests": int(row.get("missedRequests") or 0),
+            "validatedInferences": int(row.get("validatedInferences") or 0),
+            "invalidatedInferences": int(row.get("invalidatedInferences") or 0),
+        }
+    return claims
+
+
 def read_proposal():
     proposal = load_json(DATA / "proposal_67.json")["proposal"]
     outputs = {}
@@ -3427,6 +3450,7 @@ def main():
     telegram_evidence = read_telegram_evidence()
     voting_end_epochs = read_voting_end_epochs()
     governance_power_evidence = read_governance_power_evidence()
+    epoch_reward_claims = read_epoch_reward_claims()
 
     recipient_set = {row["address"] for row in recipients_raw}
     output_total = sum(outputs.values(), Decimal(0))
@@ -3484,6 +3508,7 @@ def main():
                 "attackE265E266Gonka": as_float(row["attack"]),
                 "capE267E276Gonka": as_float(row["cap"]),
                 "perEpoch": per_epoch,
+                "claimedRewardByEpoch": epoch_reward_claims.get(row["address"], {}),
                 "onchainOutputGonka": as_float(outputs[row["address"]]),
                 "componentSource": "mixed" if row["attack"] and row["cap"] else ("attack_e265_e266" if row["attack"] else "cap_e267_e276"),
                 "voteOption": max(votes_by_address[row["address"]]["options"], key=lambda item: item["weight"])["option"]
