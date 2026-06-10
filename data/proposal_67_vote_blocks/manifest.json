@@ -1,0 +1,199 @@
+{
+  "blocks": [
+    {
+      "error": "",
+      "file": "blocks/block_4401130.json",
+      "height": 4401130,
+      "status": 200,
+      "time": "2026-06-03T22:11:19.792010412Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4401160.json",
+      "height": 4401160,
+      "status": 200,
+      "time": "2026-06-03T22:14:02.979539434Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4401505.json",
+      "height": 4401505,
+      "status": 200,
+      "time": "2026-06-03T22:44:56.668551045Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4404760.json",
+      "height": 4404760,
+      "status": 200,
+      "time": "2026-06-04T03:36:38.543877237Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4406961.json",
+      "height": 4406961,
+      "status": 200,
+      "time": "2026-06-04T06:54:04.127294676Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4406963.json",
+      "height": 4406963,
+      "status": 200,
+      "time": "2026-06-04T06:54:12.355252638Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4406965.json",
+      "height": 4406965,
+      "status": 200,
+      "time": "2026-06-04T06:54:23.677853495Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4412026.json",
+      "height": 4412026,
+      "status": 200,
+      "time": "2026-06-04T14:27:45.583774333Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4412030.json",
+      "height": 4412030,
+      "status": 200,
+      "time": "2026-06-04T14:28:08.074256724Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4413730.json",
+      "height": 4413730,
+      "status": 200,
+      "time": "2026-06-04T17:00:29.155519062Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4413853.json",
+      "height": 4413853,
+      "status": 200,
+      "time": "2026-06-04T17:11:31.001574445Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4413855.json",
+      "height": 4413855,
+      "status": 200,
+      "time": "2026-06-04T17:11:39.220296149Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4414864.json",
+      "height": 4414864,
+      "status": 200,
+      "time": "2026-06-04T18:41:58.344042872Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4416171.json",
+      "height": 4416171,
+      "status": 200,
+      "time": "2026-06-04T20:38:58.807542774Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4422937.json",
+      "height": 4422937,
+      "status": 200,
+      "time": "2026-06-05T06:44:34.617991434Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4422941.json",
+      "height": 4422941,
+      "status": 200,
+      "time": "2026-06-05T06:44:53.812428133Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4424881.json",
+      "height": 4424881,
+      "status": 200,
+      "time": "2026-06-05T09:38:34.637543844Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4426002.json",
+      "height": 4426002,
+      "status": 200,
+      "time": "2026-06-05T11:18:51.208681813Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4426014.json",
+      "height": 4426014,
+      "status": 200,
+      "time": "2026-06-05T11:19:55.498247216Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4426629.json",
+      "height": 4426629,
+      "status": 200,
+      "time": "2026-06-05T12:14:53.456658267Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4429375.json",
+      "height": 4429375,
+      "status": 200,
+      "time": "2026-06-05T16:20:27.860444182Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4429647.json",
+      "height": 4429647,
+      "status": 200,
+      "time": "2026-06-05T16:44:35.416685664Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4430015.json",
+      "height": 4430015,
+      "status": 200,
+      "time": "2026-06-05T17:17:10.255325351Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4430200.json",
+      "height": 4430200,
+      "status": 200,
+      "time": "2026-06-05T17:33:35.1076372Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4430201.json",
+      "height": 4430201,
+      "status": 200,
+      "time": "2026-06-05T17:33:40.72496972Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4430202.json",
+      "height": 4430202,
+      "status": 200,
+      "time": "2026-06-05T17:33:46.307415502Z"
+    },
+    {
+      "error": "",
+      "file": "blocks/block_4430417.json",
+      "height": 4430417,
+      "status": 200,
+      "time": "2026-06-05T17:52:46.886362077Z"
+    }
+  ],
+  "rpcFallbackUsed": false,
+  "source": {
+    "generatedAt": "2026-06-10T15:51:32.608257+00:00",
+    "rpcNode": "GONKA_RPC_URL",
+    "scope": "Proposal #67 governance vote transaction block times"
+  }
+}

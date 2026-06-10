@@ -112,6 +112,22 @@ def extract_attr(events, event_type, key):
     return None
 
 
+def saved_block_time(height):
+    if not height:
+        return ""
+    for path in [
+        DATA / "proposal_67_vote_blocks" / "blocks" / f"block_{height}.json",
+        DATA / "voting_end_epochs" / "blocks" / f"block_{height}.json",
+    ]:
+        if not path.exists():
+            continue
+        try:
+            return load_json(path)["json"]["result"]["block"]["header"]["time"]
+        except Exception:
+            continue
+    return ""
+
+
 def read_votes():
     raw = load_json(DATA / "proposal_67_tx_search.json")
     all_votes = []
@@ -136,6 +152,7 @@ def read_votes():
             "txHash": tx["hash"],
             "options": options,
         }
+        row["blockTime"] = saved_block_time(row["height"])
         all_votes.append(row)
         if voter not in latest or (row["height"], row["index"]) >= (
             latest[voter]["height"],
@@ -2199,6 +2216,130 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
     ]
 
 
+def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomalies, summary, attack_narrative):
+    recipient_by_address = {row["address"]: row for row in recipients}
+    vote_options = ["yes", "no", "abstain", "no_with_veto"]
+    vote_matrix = []
+    for recipient_status, is_recipient in [("recipient", True), ("non-recipient", False)]:
+        for option in vote_options:
+            matching = [vote for vote in votes if vote["isRecipient"] == is_recipient and vote["primaryOption"] == option]
+            vote_matrix.append(
+                {
+                    "recipientStatus": recipient_status,
+                    "voteOption": option,
+                    "addressCount": len(matching),
+                    "votingPower": round(sum(vote.get("votingPower") or 0 for vote in matching), 6),
+                }
+            )
+
+    compensation_components = []
+    for row in recipients:
+        vote = next((vote for vote in votes if vote["voter"] == row["address"]), {})
+        compensation_components.append(
+            {
+                "address": row["address"],
+                "actorDisplayLabel": row.get("actorDisplayLabel", row["label"]),
+                "actorShortLabel": row.get("actorShortLabel", row["label"]),
+                "identityBoundary": row.get("identityBoundary", ""),
+                "rank": row["rank"],
+                "attackE265E266Gonka": row["attackE265E266Gonka"],
+                "capE267E276Gonka": row["capE267E276Gonka"],
+                "totalGonka": row["totalGonka"],
+                "voteOption": row.get("voteOption", "did_not_vote"),
+                "votingPower": vote.get("votingPower") or 0,
+                "recipientVoterOverlap": bool(vote),
+            }
+        )
+
+    timing_leads = []
+    for row in epoch_anomalies:
+        recipient = recipient_by_address.get(row["address"], {})
+        timing_leads.append(
+            {
+                "address": row["address"],
+                "actorDisplayLabel": row.get("actorDisplayLabel") or row["label"],
+                "actorShortLabel": row.get("actorShortLabel") or short_actor_label(row["address"], row["label"]),
+                "identityBoundary": row.get("identityBoundary", recipient.get("identityBoundary", "")),
+                "anomalyScore": row["anomalyScore"],
+                "prevMaxWeight": row["prevMaxWeight"],
+                "e287Weight": row["e287Weight"],
+                "nextMaxWeight": row["nextMaxWeight"],
+                "enteredE287": row["enteredE287"],
+                "votedDuringE287": row["votedDuringE287"],
+                "exitedAfterE287": row["exitedAfterE287"],
+                "voteOption": row["voteOption"],
+                "voteHeight": row["voteHeight"],
+                "voteBlockTime": row["voteBlockTime"],
+                "governanceVotingPower": row.get("governanceVotingPower", 0),
+                "isRecipient": row["isRecipient"],
+                "totalCompensationGonka": recipient.get("totalGonka", 0),
+                "status": row["status"],
+                "caveat": row.get("caveat", ""),
+            }
+        )
+
+    event_timeline = []
+    for phase in attack_narrative.get("phases", []):
+        event_timeline.append({**phase, "time": ""})
+    event_times = {
+        "proposal_submission": proposal.get("submit_time", ""),
+        "voting": proposal.get("voting_start_time", ""),
+        "post_vote_outcome": proposal.get("voting_end_time", ""),
+        "voting_end_epoch_anomaly": block_time(4_428_972),
+    }
+    if votes:
+        event_times["first_vote"] = min((vote.get("blockTime") or "" for vote in votes if vote.get("blockTime")), default="")
+        event_times["last_vote"] = max((vote.get("blockTime") or "" for vote in votes if vote.get("blockTime")), default="")
+        event_timeline.extend(
+            [
+                {
+                    "id": "first_vote",
+                    "label": "First final vote",
+                    "timeOrHeight": event_times["first_vote"],
+                    "time": event_times["first_vote"],
+                    "summary": "Earliest final voter transaction in the saved last-vote-wins set.",
+                    "confidence": "high",
+                },
+                {
+                    "id": "last_vote",
+                    "label": "Last final vote",
+                    "timeOrHeight": event_times["last_vote"],
+                    "time": event_times["last_vote"],
+                    "summary": "Latest final voter transaction in the saved last-vote-wins set.",
+                    "confidence": "high",
+                },
+            ]
+        )
+    for event in event_timeline:
+        event["time"] = event.get("time") or event_times.get(event["id"], "")
+
+    tally_by_option = []
+    vote_counts = Counter(vote["primaryOption"] for vote in votes)
+    recipient_power = defaultdict(float)
+    for vote in votes:
+        if vote["isRecipient"]:
+            recipient_power[vote["primaryOption"]] += vote.get("votingPower") or 0
+    for option in vote_options:
+        power = summary["finalTally"].get(option, 0)
+        tally_by_option.append(
+            {
+                "voteOption": option,
+                "votingPower": power,
+                "addressCount": vote_counts.get(option, 0),
+                "recipientVotingPower": round(recipient_power.get(option, 0), 6),
+            }
+        )
+
+    return {
+        "voteMatrixPower": vote_matrix,
+        "compensationComponents": compensation_components,
+        "timingLeads": sorted(timing_leads, key=lambda row: (-row["anomalyScore"], -row["e287Weight"], row["address"])),
+        "eventTimeline": event_timeline,
+        "tallyByOption": tally_by_option,
+        "epochTotals": epochs,
+    }
+
+
 def build_telegram_attribution_audit(recipients, votes, evidence_claims):
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_by_address = {row["voter"]: row for row in votes}
@@ -3067,6 +3208,7 @@ def main():
                 "primaryOption": max(vote["options"], key=lambda item: item["weight"])["option"],
                 "txHash": vote["txHash"],
                 "height": vote["height"],
+                "blockTime": vote.get("blockTime", ""),
                 "votingPower": governance_power.get("votingPower"),
                 "votingPowerSource": governance_power.get("votingPowerSource", "unknown"),
                 "votingPowerReason": governance_power.get("reason", governance_power_summary.get("perVoterPowerReason", "")),
@@ -3155,6 +3297,71 @@ def main():
     write_telegram_attribution_report(telegram_attribution_audit)
     write_voting_power_window_report(voting_power_window)
 
+    dashboard_summary = {
+        "totalCompensationGonka": as_float(aggregate_total),
+        "proposalOutputTotalGonka": as_float(output_total),
+        "recipientsCount": len(recipients),
+        "finalTally": {
+            "yes": int(final_tally["yes_count"]),
+            "no": int(final_tally["no_count"]),
+            "abstain": int(final_tally["abstain_count"]),
+            "no_with_veto": int(final_tally["no_with_veto_count"]),
+        },
+        "attackE265E266Gonka": as_float(attack_total),
+        "capE267E276Gonka": as_float(cap_total),
+        "epochCount": len(epoch_summary),
+        "visibleDamageE265Gonka": as_float(VISIBLE_DAMAGE_E265),
+        "visibleDamageToFinalMultiplier": as_float(aggregate_total / VISIBLE_DAMAGE_E265),
+        "voteTransactionsCount": len(all_votes),
+        "uniqueVotersCount": len(final_votes),
+        "recipientVotersCount": sum(1 for vote in final_votes if vote["voter"] in recipient_set),
+        "nonRecipientVotersCount": sum(1 for vote in final_votes if vote["voter"] not in recipient_set),
+        "recipientsWithGnsNamesCount": sum(1 for row in recipients if row["gnsNames"]),
+        "votersWithGnsNamesCount": sum(1 for row in votes if row["gnsNames"]),
+        "addressesWithGnsNamesInSnapshot": len(gns_by_address),
+        "identityGraphEntitiesCount": len(identity_graph["entities"]),
+        "identityGraphEdgesCount": len(identity_graph["edges"]),
+        "strictClustersCount": len(identity_graph["strictClusters"]),
+        "signalClustersCount": len(identity_graph["signalClusters"]),
+        "actorsCount": len(actors),
+        "evidenceClaimsCount": len(evidence_claims),
+        "rankedPartiesCount": len(ranked_parties),
+        "interestClustersCount": len(interest_clusters),
+        "canonicalActorsCount": len(canonical_actors),
+        "interestClustersWithVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0),
+        "interestClustersWithCompensationAndVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0 and row["totalCompensationGonka"] > 0),
+        "benefitPowerMatrixCount": len(benefit_power_matrix),
+        "benefitPowerOverlapCount": sum(1 for row in benefit_power_matrix if row["recipientVoterOverlap"]),
+        "benefitPowerPublicProofOverlapCount": sum(1 for row in benefit_power_matrix if row["recipientVoterOverlap"] and row["evidenceBoundary"] == "public_owner_proof"),
+        "publicNameEnrichmentAddressCount": public_name_enrichment["summary"]["proposalAddressCount"],
+        "publicNameEnrichmentSignalCount": public_name_enrichment["summary"]["proposalAddressesWithAnyPublicName"],
+        "publicNameEnrichmentOwnerProofCount": public_name_enrichment["summary"]["proposalAddressesWithPublicOwnerProof"],
+        "publicNameEnrichmentGnsCount": public_name_enrichment["summary"]["proposalAddressesWithGns"],
+        "publicNameEnrichmentGroupCount": public_name_enrichment["summary"]["publicNameGroupCount"],
+        "publicNameEnrichmentMultiAddressGroupCount": public_name_enrichment["summary"]["publicNameGroupsWithMultipleProposalAddresses"],
+        "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
+        "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
+        "epochAnomaliesCount": len(epoch_anomalies),
+        "epochEntryExitClusterCount": len(epoch_entry_exit_clusters),
+        "votingEndEpochSnapshotCount": len(voting_end_epochs.get("epochs") or []),
+        "governanceArchiveVotesCount": governance_power_summary.get("decodedGovVotesCount", 0),
+        "governanceArchiveTallyMatchesFinal": governance_power_summary.get("decodedTallyMatchesFinalTally", False),
+        "governancePerVoterPowerStatus": governance_power_summary.get("perVoterPowerStatus", "unknown"),
+        "votingStartLastBlockBefore": governance_power_summary.get("lastBlockBeforeVotingStart", {}),
+        "votingStartFirstBlockAfter": governance_power_summary.get("firstBlockAfterVotingStart", {}),
+        "votingEndLastBlockBefore": governance_power_summary.get("lastBlockBeforeVotingEnd", {}),
+        "votingEndFirstBlockAfter": governance_power_summary.get("firstBlockAfterVotingEnd", {}),
+        "votersWithStartVotingPowerCount": governance_power_summary.get("votersWithStartVotingPowerCount", 0),
+        "votersWithEndVotingPowerCount": governance_power_summary.get("votersWithEndVotingPowerCount", 0),
+        "votersZeroAtStartAndEndCount": governance_power_summary.get("votersZeroAtStartAndEndCount", 0),
+        "votersPowerAtStartOnlyCount": governance_power_summary.get("votersPowerAtStartOnlyCount", 0),
+        "votersPowerAtEndOnlyCount": governance_power_summary.get("votersPowerAtEndOnlyCount", 0),
+        "finalVoteAddressCounts": dict(final_vote_counts),
+        "recipientVoteAddressCounts": dict(recipient_vote_counts),
+        "grcOffchainVote": {"include": 2, "exclude": 6, "abstain": 1, "votersIdentified": False},
+    }
+    chart_data = build_dashboard_chart_data(proposal, recipients, votes, epoch_summary, epoch_anomalies, dashboard_summary, attack_narrative)
+
     dashboard = {
         "metadata": {
             "generatedFrom": "committed snapshots",
@@ -3167,69 +3374,8 @@ def main():
             "votingStartTime": proposal["voting_start_time"],
             "votingEndTime": proposal["voting_end_time"],
         },
-        "summary": {
-            "totalCompensationGonka": as_float(aggregate_total),
-            "proposalOutputTotalGonka": as_float(output_total),
-            "recipientsCount": len(recipients),
-            "finalTally": {
-                "yes": int(final_tally["yes_count"]),
-                "no": int(final_tally["no_count"]),
-                "abstain": int(final_tally["abstain_count"]),
-                "no_with_veto": int(final_tally["no_with_veto_count"]),
-            },
-            "attackE265E266Gonka": as_float(attack_total),
-            "capE267E276Gonka": as_float(cap_total),
-            "epochCount": len(epoch_summary),
-            "visibleDamageE265Gonka": as_float(VISIBLE_DAMAGE_E265),
-            "visibleDamageToFinalMultiplier": as_float(aggregate_total / VISIBLE_DAMAGE_E265),
-            "voteTransactionsCount": len(all_votes),
-            "uniqueVotersCount": len(final_votes),
-            "recipientVotersCount": sum(1 for vote in final_votes if vote["voter"] in recipient_set),
-            "nonRecipientVotersCount": sum(1 for vote in final_votes if vote["voter"] not in recipient_set),
-            "recipientsWithGnsNamesCount": sum(1 for row in recipients if row["gnsNames"]),
-            "votersWithGnsNamesCount": sum(1 for row in votes if row["gnsNames"]),
-            "addressesWithGnsNamesInSnapshot": len(gns_by_address),
-            "identityGraphEntitiesCount": len(identity_graph["entities"]),
-            "identityGraphEdgesCount": len(identity_graph["edges"]),
-            "strictClustersCount": len(identity_graph["strictClusters"]),
-            "signalClustersCount": len(identity_graph["signalClusters"]),
-            "actorsCount": len(actors),
-            "evidenceClaimsCount": len(evidence_claims),
-            "rankedPartiesCount": len(ranked_parties),
-            "interestClustersCount": len(interest_clusters),
-            "canonicalActorsCount": len(canonical_actors),
-            "interestClustersWithVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0),
-            "interestClustersWithCompensationAndVotingPowerCount": sum(1 for row in interest_clusters if row["totalVotingPower"] > 0 and row["totalCompensationGonka"] > 0),
-            "benefitPowerMatrixCount": len(benefit_power_matrix),
-            "benefitPowerOverlapCount": sum(1 for row in benefit_power_matrix if row["recipientVoterOverlap"]),
-            "benefitPowerPublicProofOverlapCount": sum(1 for row in benefit_power_matrix if row["recipientVoterOverlap"] and row["evidenceBoundary"] == "public_owner_proof"),
-            "publicNameEnrichmentAddressCount": public_name_enrichment["summary"]["proposalAddressCount"],
-            "publicNameEnrichmentSignalCount": public_name_enrichment["summary"]["proposalAddressesWithAnyPublicName"],
-            "publicNameEnrichmentOwnerProofCount": public_name_enrichment["summary"]["proposalAddressesWithPublicOwnerProof"],
-            "publicNameEnrichmentGnsCount": public_name_enrichment["summary"]["proposalAddressesWithGns"],
-            "publicNameEnrichmentGroupCount": public_name_enrichment["summary"]["publicNameGroupCount"],
-            "publicNameEnrichmentMultiAddressGroupCount": public_name_enrichment["summary"]["publicNameGroupsWithMultipleProposalAddresses"],
-            "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
-            "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
-            "epochAnomaliesCount": len(epoch_anomalies),
-            "epochEntryExitClusterCount": len(epoch_entry_exit_clusters),
-            "votingEndEpochSnapshotCount": len(voting_end_epochs.get("epochs") or []),
-            "governanceArchiveVotesCount": governance_power_summary.get("decodedGovVotesCount", 0),
-            "governanceArchiveTallyMatchesFinal": governance_power_summary.get("decodedTallyMatchesFinalTally", False),
-            "governancePerVoterPowerStatus": governance_power_summary.get("perVoterPowerStatus", "unknown"),
-            "votingStartLastBlockBefore": governance_power_summary.get("lastBlockBeforeVotingStart", {}),
-            "votingStartFirstBlockAfter": governance_power_summary.get("firstBlockAfterVotingStart", {}),
-            "votingEndLastBlockBefore": governance_power_summary.get("lastBlockBeforeVotingEnd", {}),
-            "votingEndFirstBlockAfter": governance_power_summary.get("firstBlockAfterVotingEnd", {}),
-            "votersWithStartVotingPowerCount": governance_power_summary.get("votersWithStartVotingPowerCount", 0),
-            "votersWithEndVotingPowerCount": governance_power_summary.get("votersWithEndVotingPowerCount", 0),
-            "votersZeroAtStartAndEndCount": governance_power_summary.get("votersZeroAtStartAndEndCount", 0),
-            "votersPowerAtStartOnlyCount": governance_power_summary.get("votersPowerAtStartOnlyCount", 0),
-            "votersPowerAtEndOnlyCount": governance_power_summary.get("votersPowerAtEndOnlyCount", 0),
-            "finalVoteAddressCounts": dict(final_vote_counts),
-            "recipientVoteAddressCounts": dict(recipient_vote_counts),
-            "grcOffchainVote": {"include": 2, "exclude": 6, "abstain": 1, "votersIdentified": False},
-        },
+        "summary": dashboard_summary,
+        "chartData": chart_data,
         "recipients": recipients,
         "votes": votes,
         "voteTimeline": votes,

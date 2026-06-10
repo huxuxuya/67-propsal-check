@@ -16,6 +16,7 @@ Investigation workspace for Gonka proposal #67, "Kimi Restitution (epochs 265-27
 - `data/onchain_graph/proposal_67_local_graph.json` - deterministic local graph snapshot built from saved proposal, vote, upstream delegation, and epoch commit data.
 - `data/telegram_evidence.json` - curated short excerpts parsed from ignored Telegram exports under `history/`.
 - `data/voting_end_epochs/` - raw e285-e290 voting-end epoch snapshots and archive block snapshots, with public-node fallback recorded in the manifest.
+- `data/proposal_67_vote_blocks/` - raw archive block snapshots for proposal #67 governance vote transaction heights, used for the vote timeline.
 - `reports/proposal_67_analysis.md` - current summary: recipients, final voters, and why 30k became 946k.
 - `reports/attribution_audit.md` - ranked interested-party audit with evidence caveats.
 - `reports/ranked_parties.csv` - exportable ranked actor/cluster priority list.
@@ -30,6 +31,7 @@ Investigation workspace for Gonka proposal #67, "Kimi Restitution (epochs 265-27
 
 ```bash
 python3 scripts/fetch_proposal_67_data.py
+python3 scripts/fetch_proposal_67_vote_block_times.py
 python3 scripts/fetch_gns_names.py
 python3 scripts/fetch_public_identity_signals.py
 python3 scripts/fetch_public_osint_sources.py

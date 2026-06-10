@@ -1,0 +1,302 @@
+{
+  "attempts": 1,
+  "error": "",
+  "fetchedAt": "2026-06-10T15:51:36.136241+00:00",
+  "json": {
+    "id": -1,
+    "jsonrpc": "2.0",
+    "result": {
+      "block": {
+        "data": {
+          "txs": [
+            "CqgCCpUCCh0vY29zbW9zLmF1dGh6LnYxYmV0YTEuTXNnRXhlYxLzAQosZ29ua2ExcDh0dWduZnI5cHR5Njg5aHE2azJ5djltOGtqYTRoZG50ZmwzZmcSwgEKKi9pbmZlcmVuY2UuaW5mZXJlbmNlLk1zZ1N1Ym1pdEhhcmR3YXJlRGlmZhKTAQosZ29ua2Exbm1uMDM5Y2dwa2hta3pla3BrZnozbmt2OXRjamNrcG40Nmp5cmoSYwoLcy1tbC1wcm9jLTIQBBoWTWluaU1heEFJL01pbmlNYXgtTTIuNyIgChxOVklESUEgSDEwMCA4MEdCIEhCTTMgfCA3OUdCEAQqCzEwMC42Ny4xLjkzMgQ4MDgwOgUwLjIuMCABKgwIzImM0QYQ04DwnQIShgEKTgpGCh8vY29zbW9zLmNyeXB0by5zZWNwMjU2azEuUHViS2V5EiMKIQOr7pNr4WCvXVb1Xk+w7dXTFV0ahBnfDoV+6Qi0TfObIhIECgIIARI0EICU69wDIixnb25rYTFubW4wMzljZ3BraG1remVrcGtmejNua3Y5dGNqY2twbjQ2anlyahpAfXG6ICrZj1vfHX63J38NoU8f9fNmwRtCxQh9nql69acDOAtT6j3sdbDisxdoremiLSQzMzRy1bkUOifnRiJbDg==",
+            "Cs4BCrsBCh4vY29zbW9zLmdvdi52MS5Nc2dWb3RlV2VpZ2h0ZWQSmAEIQxIsZ29ua2ExMG1tZGphdTRkbmo4a3JzN3NoN3Q3NjM1dHRubXE5dTN2cWd6MDkaGAgBEhQwLjM4MDEwMDAwMDAwMDAwMDAwMBoYCAMSFDAuMDA1MjAwMDAwMDAwMDAwMDAwGhgIAhIUMC4wMjU4MDAwMDAwMDAwMDAwMDAaGAgEEhQwLjU4ODkwMDAwMDAwMDAwMDAwMCABKgwI1YmM0QYQ6M6h8gISVgpOCkYKHy9jb3Ntb3MuY3J5cHRvLnNlY3AyNTZrMS5QdWJLZXkSIwohA+tWkucZjlOYzHgHVSuU1n1sdzzfXDKo0LETvQy0RNOFEgQKAggBEgQQgIl6GkDF8d8l/HMD8x9Ll0Y3tnqEV7yotrycX9NbtQv+o7mzIgZGuH4T/1iaKLswkDcu4jXh09XKCUC+qdBSQbw4k8L1"
+          ]
+        },
+        "evidence": {
+          "evidence": []
+        },
+        "header": {
+          "app_hash": "5F6060EEAB6684D078428CAAF7507E422C327E3220058D3B613CA7A7D863F877",
+          "chain_id": "gonka-mainnet",
+          "consensus_hash": "048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F",
+          "data_hash": "7B736FFF0F60689E21EAAE2B81B0FC75D120FC693FFF0A5E87C7BD6297319BD0",
+          "evidence_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+          "height": "4430015",
+          "last_block_id": {
+            "hash": "D92113CEEAB320A1047C79B6B8603C47E84E0EA7EEB6678B583CD7FA850F6D0E",
+            "parts": {
+              "hash": "019CD1DAC4BDB92ECBA6C4B9671333AE099628B086730C15B02E26106D376C87",
+              "total": 1
+            }
+          },
+          "last_commit_hash": "461ABBDE64BAE0BFA1E1B338E49F46A71491D035D744B62C6A5C6C5A29DB3546",
+          "last_results_hash": "7FC2548665FDEC1D1B740089A2D6E2ED646B82041D8D9ECD6F8CFA8397C5A158",
+          "next_validators_hash": "60092D5EC42D5289B3E7CC92C93B60032472544CC62DE1D730E90041DA4DF3FD",
+          "proposer_address": "E905B9F8C1C2BC79F0267D42135588F0A31C2895",
+          "time": "2026-06-05T17:17:10.255325351Z",
+          "validators_hash": "60092D5EC42D5289B3E7CC92C93B60032472544CC62DE1D730E90041DA4DF3FD",
+          "version": {
+            "block": "11"
+          }
+        },
+        "last_commit": {
+          "block_id": {
+            "hash": "D92113CEEAB320A1047C79B6B8603C47E84E0EA7EEB6678B583CD7FA850F6D0E",
+            "parts": {
+              "hash": "019CD1DAC4BDB92ECBA6C4B9671333AE099628B086730C15B02E26106D376C87",
+              "total": 1
+            }
+          },
+          "height": "4430014",
+          "round": 0,
+          "signatures": [
+            {
+              "block_id_flag": 2,
+              "signature": "xSP/OG/wueOMRcmWbkb51RNZ3Q8FzplzGRAVxPLY9Nf6G6ELTDuP735KsL2e1auYtlMHtdHiCeD8n4IrX7HNBQ==",
+              "timestamp": "2026-06-05T17:17:10.234730816Z",
+              "validator_address": "85F2441F0CE2CB3084B48589CA3824444747A7BD"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "rZU5AqpSzR7xmXv4UlJAyejri8wbqFrzqLF6pUoUMDp316O3qRjVq/rH8Xc6TJehSzpRYtj+nKHjAaFtRxErBA==",
+              "timestamp": "2026-06-05T17:17:10.260224164Z",
+              "validator_address": "E905B9F8C1C2BC79F0267D42135588F0A31C2895"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "fNAl7dnxs/381Ru1kkRW1zMO/mJyuPTgAGiQejDDtLHy1MBRwK2HkP0tWD/YaVV92RKg38qBVpEZ/0DBrNjnCw==",
+              "timestamp": "2026-06-05T17:17:10.258615347Z",
+              "validator_address": "139ECB529EDB0BCDF45C583D4DC2FDC95F66B1E8"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "bhv1BXPNqXoW9OPHqWcrjQk0BTDVp0tYiAezkMCOz9IshchkHNwXRNVtG9z+FL5E78v62f9uVQlcHabkFme2AA==",
+              "timestamp": "2026-06-05T17:17:10.235596802Z",
+              "validator_address": "32AF6CCC1F5C023A30E954E61F06B0BAD8838067"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "cZQ0H8yM20Hegs1DhBRapr6xk7uzoG3Zuk0dQvWUP6IRI8koEmtDQVfdWS5zdW56lemo5KCLF5Qs8q4zL83CDA==",
+              "timestamp": "2026-06-05T17:17:10.213063369Z",
+              "validator_address": "DC5C5FF1D8FEF209750C860793127AA70A2D2131"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "VxNTiFRh6Ne6d/3CdrCwAc3BoIxayT0muzm/8m280ZGo6VOJpTb93fAFuLoTixM8TShcmtjn2rPQ5F07CQdYDA==",
+              "timestamp": "2026-06-05T17:17:10.250978332Z",
+              "validator_address": "68EEC58232A77F591169F6CBCBD985BC9CA26001"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "fqmqwrc/aP0SitAbCqugHa8D9+ckK0bMfGgfZZHwYsRqOiVJUw4qxBPvni9spuqBlSMw8oqfvNObNTiNU28iDA==",
+              "timestamp": "2026-06-05T17:17:10.30567899Z",
+              "validator_address": "3BA5CB7FA272BAD3DE600F55C8ACA899565A93F3"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "JgTDtwqkApQeKmkzVH4aen2s9W8RGTm8Luyn9i9j+6FMEDKGp5Wf7OnsIzF630HsB45ilFHvCAR7ABRcvgKJBw==",
+              "timestamp": "2026-06-05T17:17:10.237183143Z",
+              "validator_address": "C93A4DB48F4F63620808BC8148B002BC8E30551F"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "HZ7Zfjho7Ne2EARqMwc/hO8Ft6Bcviv4Eb8Hyuch7XzulglpMNV7SdQ6QtumiVg8TkENZLWb3iRoAv6ii7WzAw==",
+              "timestamp": "2026-06-05T17:17:10.256046369Z",
+              "validator_address": "E2529FCEF638F4D5D9F69B515C64D58B366D71FA"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "NapelfyjkcVgjj4NqrkY10ryQ1Qx2OeqDfqoGSFmLwKm3YwbkTTL8szFhfQYSRTn3+R0JTLNtD8/BazCRE+DBA==",
+              "timestamp": "2026-06-05T17:17:10.254406409Z",
+              "validator_address": "0769B2D600320790CDF310CC3A7E2A1288029004"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "MvMFHvqZOqQ9GKtWaNWANsv6jWnMqSoUMV4DJ06qkcZ3iie71gsRFZC/Lizj+vGutAF6eBVqu+6wSK5naffkAw==",
+              "timestamp": "2026-06-05T17:17:10.2928027Z",
+              "validator_address": "E71AE6E5F14383D7C589A8FBCEA3A3CD92FC958C"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "RzvKrBlOPQ7OYOfmmyyzz4m4acwJc2CfnebDrYlh/i0LN7mlmU2KWNWSIcPVhVpCwT0qNVKYvTfnqVjSUDzaAg==",
+              "timestamp": "2026-06-05T17:17:10.283611728Z",
+              "validator_address": "C18B0E0E4D32BE6916C92E72FCE28147E989DAF7"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "sdQXZjFLfl6A+tWNwxggNkliFxpIlH3oInpQ9Z0chw3mDIP+A4/eAZBVUkg5xo6gFAZe/rZrTSOnVndKxAX7CQ==",
+              "timestamp": "2026-06-05T17:17:10.293847428Z",
+              "validator_address": "102BA071A94201BFA4223DE976C250CFF52437E7"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "l5PN6f/wr7QllqeUVBXdRi2jtgOby1Qajb9NiC0D1e1OKHkehd6tB0XWDGoSbTbegqSFbAV8M+ySM3sV/IUFAw==",
+              "timestamp": "2026-06-05T17:17:10.380332293Z",
+              "validator_address": "24E423865A168199689359D7F4E18ACD8EA1AC41"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "se/k+e2vA+/6wKhUxpj4RrSGp51OraezcZ3JwQaXz1aapyOIg8LtiEZtyuc3epFsuJvlFBay8Pt1UCZ8Cd5fCg==",
+              "timestamp": "2026-06-05T17:17:10.346278749Z",
+              "validator_address": "102A2226DEC17F13C67109EE20EEC68D7C1627A3"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "IP+PPil6A9293aFoCne4HrkZ7qYfDmy1hKGCpUPulz+pzguKyhH/T/jhn6k74Q/NiEdSyRvn8FUehQdNJZXsDA==",
+              "timestamp": "2026-06-05T17:17:10.257410919Z",
+              "validator_address": "4235D0006E66B2684158211FD201CE63FF26E745"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "EtayfxH7VBADa9/eOameDdzw2BkpU+POeuUvr73AOV6HwPSKhwlYKOM+Pe9TPhNgYVsvOXpIYf8aKhwkEdi6Dw==",
+              "timestamp": "2026-06-05T17:17:10.260045635Z",
+              "validator_address": "FD6F854C1A374EF30971CB1D9E4E86E35B9E8A41"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "4Tm1f+F5xQAh6LBNuGAmbV+mBFgGQTp6OqYFlYkrTU2jFPgBZNQUZuY1SAHLxGD4NLTWwz5F15HtEmTlDbXKDg==",
+              "timestamp": "2026-06-05T17:17:10.245073295Z",
+              "validator_address": "48047B18774912C2880354A14E6F852F2FA07D7E"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "81OrP0iVy9s/rcCPkoPg+2kjuQ62jUumJemwJbR0js0HaQ9jtaBqOkVKIl4+r+sPBWLfuS6n37kG1GXfoljHDA==",
+              "timestamp": "2026-06-05T17:17:10.256633572Z",
+              "validator_address": "1A6CE284DA14A3741C11DBFBD7F7C3C9B7672F52"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "/q8IGh20fmmuxWVneu/l1fHLFAcW+nlrZGnXYO1HDnEyD2w+B0TjJy2dRqOa4ZU1uiB//Y9oZev+Wxv02ivZDw==",
+              "timestamp": "2026-06-05T17:17:10.25263367Z",
+              "validator_address": "CF1F5081C32B78BF2ABB05C8E669205A413A189A"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "37DUaL2B7RRjx2A8DbY4+eZUbQVNP6/bGDZny54gfhvhJqIxyG+JaeeFC5YUpJXG9PtubGDtUE8TKfZVQy47Dg==",
+              "timestamp": "2026-06-05T17:17:10.255325351Z",
+              "validator_address": "7F8A29794C9262EDE57E586DFA0E0FC58BB4350D"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "xIjVARCt1sihS6Lk98FqxRgSK4H5ysyCJgHomvsE5FBqIybVkGXeDaf4CSuN/xoe4OzN7l6rkzqVoE/1J0dADw==",
+              "timestamp": "2026-06-05T17:17:10.270018962Z",
+              "validator_address": "6AE1F0C23B9433F46D7038F6EB81380DDF36F87D"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "16i4OPlMbRuEHGCBpMn30pLUGD5aLf8rDbYbjdiBGx1xhYVCnYjPY3ymPFauzF1sujJGHRsHnk4R6WwqHr2JBQ==",
+              "timestamp": "2026-06-05T17:17:10.288952761Z",
+              "validator_address": "78B8C76461DE196863A15FF58A47A54586A620AE"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "paYjN6ax1JBZBY09XbbRpNMzf98a9x7kYqJA1GSrZCKn02XmoGVcXumzf1Rl2/jt47CylJF1SKQValjVu3tNCQ==",
+              "timestamp": "2026-06-05T17:18:01.620866088Z",
+              "validator_address": "FEEF97AF438CF0381D10C6F6D790103D16EEDCFC"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "AvhCOKzms8xPuHJiXxwgtLuvVwXmkptguh0zRjsqGxLsdy6CIGMeukhoP0mLqfyOOKvoXTKfCS1KPwxBMMJJAQ==",
+              "timestamp": "2026-06-05T17:17:10.197844437Z",
+              "validator_address": "A1228EC268FC0F70366957A9D9CF2862081D2382"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "uDLYJ+iezx1sH2lnmMLjgmtawQz/SRXHgQ6uJd+e4stybjGhAV0KheD+xYjR8kpcqPmjFDe13fz9NVoRFWeODw==",
+              "timestamp": "2026-06-05T17:17:10.26964972Z",
+              "validator_address": "DC8247918088AFF773D3BE69AEA1FCEC50E0A732"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "uTNMIxaXJDeqZnCd+ClL/2jF5zor5jDi397KZC6V+Dnf5//xVlBUK6d/omt1XB3g4AulNTLJiLFBpKrNB8rrDw==",
+              "timestamp": "2026-06-05T17:17:10.2387485Z",
+              "validator_address": "101C55D488C4B00BAEB89DAFBEBE18CCD841D93B"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "iEhhhgM/LcMXirgeoiwbN6q+Iqw0KKggXLnbdwJmkPmXhrRnpseJWWpBqcvvUyTkx0O41D3zWPzAIgLM/ZN3DQ==",
+              "timestamp": "2026-06-05T17:17:10.250146593Z",
+              "validator_address": "1122C711475A57D537107A617F8675326801403C"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "aRCZXQLshyhsKePvLFWDFpR52UQl8zCObhnXS9wvwYIP45uWTt2BoHvANAHQhLR3O5XtNuriQ3na0gGnoEz7Cw==",
+              "timestamp": "2026-06-05T17:18:09.123516351Z",
+              "validator_address": "768D19EE9CEB377CEEE34EB22D51675F3FAF95AF"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "e6OMJeSMtGi3KA40MoFH0QQWUfvSdkezzM/abT1jwJJ1Ag1q/DeqS1QPnmwVg9k6cIJZXl+0LpDWva8FK2czCA==",
+              "timestamp": "2026-06-05T17:17:10.237206104Z",
+              "validator_address": "C687366363F71FE2BE188F681EC47A96AC3839D9"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "QKPe6pIjkiYi7Etl+4ElYrgPY255Bn275ZRElbftQJWvw7t7jYIDkdat6VWRdvC0oMCPBcnd4kHC4HiEmuwMBQ==",
+              "timestamp": "2026-06-05T17:17:10.224846067Z",
+              "validator_address": "BD10044BF6CE546E986799A65F1DAC621A0ACA7D"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "5u3vay52WBo7gxvzK/R7GOH4JdeNxMu9Ji/9wLlUpUbQ7Qp4badiw/jwSGUD76SEMIImqU3psgq/EUIwfgYEAg==",
+              "timestamp": "2026-06-05T17:17:10.251695765Z",
+              "validator_address": "F171A3E5136A4E980551350A9EE592DF1B382DED"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "s4goQ2yMAkwhSzdNl/cQUKDDY/xJFUKAuzC0nVioB88fPqvikYsgxrQaSMaluhhyXfmFszoTNo8WSeP9A3gLBA==",
+              "timestamp": "2026-06-05T17:17:10.293406017Z",
+              "validator_address": "DF04B29653F664BDAC7DE851D52BDD5C8E205822"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "1dbA8as0R+IBzMNZHi8gg7ppdY05ChwRmfvGUGjbqrvxsJ4AhTB7CxiBZxsUpTUSsdwhmcnfVl3FsvoIMuLqCA==",
+              "timestamp": "2026-06-05T17:17:10.286176139Z",
+              "validator_address": "786C674FCDEF4515B65AA746CC82A666941144B1"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "sHkxvjo+wnGxfKI51wSsppdzoiUuuTozgfJlttIPzbklSKtjnSL4/NIFErAGkc9qGVpD96RbS+6gGIVhBlx3CQ==",
+              "timestamp": "2026-06-05T17:17:10.286567988Z",
+              "validator_address": "A6DF691ECEF43EACE07FFFE91AFD79B0F6D801E7"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "vaGOnE+b26rxdB7oiHF7NP2W4A7G1fetUl/Tet+j3IoA7nbaoKUtNl03bAzObu5P00N4tyPyIa0GWpDr07sJCQ==",
+              "timestamp": "2026-06-05T17:17:10.329186923Z",
+              "validator_address": "13CCD46D7FF3BB4945A2FBC450A948B5A1C89EB9"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "dpVPEE3Wrh3yO1T79dcaelprQ3/FMmbjR5/BuJZUqGCN/4WTzCvhyZKGPVaelW1bGLAY1KWPwFbDG9w9C1WiAA==",
+              "timestamp": "2026-06-05T17:17:10.299624751Z",
+              "validator_address": "1DB36BC3637BD1A66623BBFA4C146D4284DA1588"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "4vEq4XSlXIr1UZBiZbYgx+IUlcWT+/G5+/fU+sMxcwNKlK84mLoF+DoFTKsYxU4nmdDehCaJsBEC2mz8JL5fCg==",
+              "timestamp": "2026-06-05T17:17:10.362769154Z",
+              "validator_address": "AE626234DE285AF758A9ED6749ED919B3E4D51D9"
+            },
+            {
+              "block_id_flag": 2,
+              "signature": "GMgN3gbbHvNJCu5HnVs2TahWiv9RlgR1KR4MlQUF9Az2SlQYtPYhvC7RMnq7ay6J912SUm1qZsrM1v22O8uiBQ==",
+              "timestamp": "2026-06-05T17:17:10.250008921Z",
+              "validator_address": "405A13F69D77190B2E38F25A1C97A69297EF7EB9"
+            }
+          ]
+        }
+      },
+      "block_id": {
+        "hash": "C8A7F870DB9D6F2D0221CA92AEEDEDCEB31395D159B02261A35118D537FE059A",
+        "parts": {
+          "hash": "FF06EA20BEAE19DD1B69E8FA186AD00D18B438FC99DF926A8EAA3E1A575AAB3B",
+          "total": 1
+        }
+      }
+    }
+  },
+  "status": 200,
+  "url": "GONKA_RPC_URL/block?height=4430015"
+}
