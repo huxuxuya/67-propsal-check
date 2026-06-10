@@ -2298,7 +2298,9 @@ def cpoc_columns_for_epoch(epoch, manifest_epochs):
                 "type": "cpoc",
                 "checkpointIndex": index,
                 "height": checkpoint.get("height"),
+                "blockTime": checkpoint.get("blockTime") or "",
                 "file": checkpoint.get("file"),
+                "fallback": not bool(checkpoint.get("file")),
             }
         )
     return columns
@@ -2425,6 +2427,7 @@ def build_participant_epoch_timeline(recipients, votes):
                     "snapshot": column["phase"],
                     "checkpointIndex": column.get("checkpointIndex"),
                     "height": column.get("height"),
+                    "blockTime": column.get("blockTime") or "",
                     "fallback": bool(column.get("fallback")),
                     "state": state,
                     "weight": weight,

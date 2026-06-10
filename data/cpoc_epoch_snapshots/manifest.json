@@ -1,0 +1,55 @@
+{
+  "epochs": [
+    {
+      "checkpoints": [
+        {
+          "height": 4089970,
+          "index": 0,
+          "kind": "start"
+        },
+        {
+          "blockTime": "2026-05-15T23:12:38.049503299Z",
+          "height": 4090250,
+          "index": 1,
+          "kind": "cpoc"
+        },
+        {
+          "blockTime": "2026-05-15T23:23:04.887284237Z",
+          "height": 4090371,
+          "index": 2,
+          "kind": "cpoc"
+        },
+        {
+          "blockTime": "2026-05-16T07:18:59.634470073Z",
+          "height": 4095963,
+          "index": 3,
+          "kind": "cpoc"
+        },
+        {
+          "blockTime": "2026-05-16T11:49:56.983231496Z",
+          "height": 4099160,
+          "index": 4,
+          "kind": "cpoc"
+        },
+        {
+          "blockTime": "2026-05-16T17:29:07.824615184Z",
+          "height": 4103171,
+          "index": 5,
+          "kind": "cpoc"
+        }
+      ],
+      "endHeight": 4105360,
+      "epoch": 265,
+      "startHeight": 4089970
+    }
+  ],
+  "generatedAt": "2026-06-10T17:34:08.503008+00:00",
+  "source": {
+    "binary": null,
+    "configuredHeights": false,
+    "heightSource": "events",
+    "rpcNode": "http://204.12.168.157:26657",
+    "scanStep": 100,
+    "snapshotsFetched": false
+  }
+}

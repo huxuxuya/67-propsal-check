@@ -4,6 +4,8 @@ import json
 import os
 import shutil
 import subprocess
+import urllib.parse
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -22,14 +24,16 @@ def load_json(path):
         return json.load(f)
 
 
-def inferenced_binary():
+def inferenced_binary(required=False):
     configured = os.environ.get("INFERENCED_BINARY")
     if configured:
         return configured
     found = shutil.which("inferenced")
     if found:
         return found
-    raise SystemExit("inferenced binary not found; set INFERENCED_BINARY=/path/to/inferenced")
+    if required:
+        raise SystemExit("inferenced binary not found; set INFERENCED_BINARY=/path/to/inferenced")
+    return None
 
 
 def load_upstream_epoch_group(epoch, snapshot=""):
@@ -58,6 +62,14 @@ def epoch_bounds(epoch):
     return start, end
 
 
+def epoch_group_id(epoch):
+    group = load_upstream_epoch_group(epoch, "healthy" if epoch == 265 else "")
+    group_id = group.get("epoch_group_id")
+    if not group_id:
+        raise SystemExit(f"Cannot determine epoch_group_id for epoch {epoch}")
+    return str(group_id)
+
+
 def configured_heights():
     path = DATA / "cpoc_checkpoint_heights.json"
     if not path.exists():
@@ -83,6 +95,57 @@ def run_query(binary, rpc, epoch, height):
     ]
     result = subprocess.run(cmd, check=True, capture_output=True, text=True)
     return json.loads(result.stdout)
+
+
+def rpc_get_json(rpc, path, params):
+    url = f"{rpc.rstrip('/')}/{path.lstrip('/')}?{urllib.parse.urlencode(params)}"
+    with urllib.request.urlopen(url, timeout=30) as response:
+        return json.load(response)
+
+
+def block_search(rpc, query, page=1, per_page=100):
+    return rpc_get_json(
+        rpc,
+        "block_search",
+        {
+            "query": json.dumps(query),
+            "page": str(page),
+            "per_page": str(per_page),
+        },
+    )
+
+
+def discover_event_heights(rpc, epoch, start, end):
+    group_id = epoch_group_id(epoch)
+    query = (
+        f"cosmos.group.v1.EventUpdateGroup.group_id='\"{group_id}\"' "
+        f"AND block.height >= {start} AND block.height <= {end}"
+    )
+    heights = []
+    page = 1
+    total_count = None
+    while total_count is None or len(heights) < total_count:
+        payload = block_search(rpc, query, page=page, per_page=100)
+        if payload.get("error"):
+            raise RuntimeError(payload["error"])
+        result = payload.get("result") or {}
+        total_count = int(result.get("total_count") or 0)
+        blocks = result.get("blocks") or []
+        if not blocks:
+            break
+        for block in blocks:
+            header = ((block.get("block") or {}).get("header") or {})
+            height = int(header.get("height") or 0)
+            if height:
+                heights.append(
+                    {
+                        "height": height,
+                        "time": header.get("time") or "",
+                    }
+                )
+        page += 1
+    unique = {row["height"]: row for row in heights}
+    return [unique[height] for height in sorted(unique)]
 
 
 def unwrap_epoch_group(payload):
@@ -168,51 +231,64 @@ def main():
         description="Fetch archive-node epoch group snapshots for every observed CPoC checkpoint."
     )
     parser.add_argument("--epochs", nargs="+", type=int, default=DEFAULT_EPOCHS)
+    parser.add_argument("--height-source", choices=["events", "scan", "configured"], default="events")
     parser.add_argument("--scan-step", type=int, default=100)
     parser.add_argument("--node", default=gonka_rpc_url())
+    parser.add_argument("--require-snapshots", action="store_true")
     args = parser.parse_args()
 
     if args.scan_step < 1:
         raise SystemExit("--scan-step must be >= 1")
 
-    binary = inferenced_binary()
+    binary = inferenced_binary(required=args.require_snapshots or args.height_source == "scan")
     configured = configured_heights()
     manifest = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "source": {
             "rpcNode": args.node,
             "binary": binary,
+            "heightSource": args.height_source,
             "scanStep": args.scan_step,
             "configuredHeights": bool(configured),
+            "snapshotsFetched": bool(binary),
         },
         "epochs": [],
     }
 
     for epoch in args.epochs:
         start, end = epoch_bounds(epoch)
-        if epoch in configured:
-            heights = configured[epoch]
-            if start not in heights:
-                heights = [start, *heights]
-            heights = sorted(set(heights))
+        event_rows = []
+        if args.height_source == "configured":
+            heights = configured.get(epoch, [])
+            if not heights:
+                raise SystemExit(f"No configured CPoC heights for epoch {epoch}")
+            event_rows = [{"height": height, "time": ""} for height in heights]
+        elif args.height_source == "events":
+            event_rows = discover_event_heights(args.node, epoch, start, end)
+            heights = [row["height"] for row in event_rows]
         else:
             heights = discover_heights(binary, args.node, epoch, start, end, args.scan_step)
+            event_rows = [{"height": height, "time": ""} for height in heights[1:]]
 
         epoch_dir = OUT / f"e{epoch}"
         cache = {}
-        entries = []
-        for index, height in enumerate(heights):
-            payload = fetch_at_height(binary, args.node, epoch, height, cache)
-            filename = f"start_{height}.json" if index == 0 else f"cpoc_{index:02d}_{height}.json"
-            path = write_snapshot(epoch_dir, filename, payload)
-            entries.append(
-                {
-                    "index": index,
-                    "height": height,
-                    "file": str(path.relative_to(OUT)),
-                    "kind": "start" if index == 0 else "cpoc",
-                }
-            )
+        entries = [{"index": 0, "height": start, "kind": "start"}]
+        if binary:
+            path = write_snapshot(epoch_dir, f"start_{start}.json", fetch_at_height(binary, args.node, epoch, start, cache))
+            entries[0]["file"] = str(path.relative_to(OUT))
+        for index, row in enumerate(event_rows, start=1):
+            height = row["height"]
+            entry = {
+                "index": index,
+                "height": height,
+                "blockTime": row.get("time") or "",
+                "kind": "cpoc",
+            }
+            if binary:
+                payload = fetch_at_height(binary, args.node, epoch, height, cache)
+                path = write_snapshot(epoch_dir, f"cpoc_{index:02d}_{height}.json", payload)
+                entry["file"] = str(path.relative_to(OUT))
+            entries.append(entry)
 
         manifest["epochs"].append(
             {
