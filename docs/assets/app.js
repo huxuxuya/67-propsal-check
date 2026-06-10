@@ -388,7 +388,8 @@ function renderHeatmap() {
     const reward = row.claimedRewardByEpoch?.[epoch] || {};
     const claimedReward = reward.rewardedGonka || 0;
     const share = row.totalGonka ? (raw / row.totalGonka) * 100 : 0;
-    values.push([x, y, share, raw, row.address, claimedReward, reward.claimed ? 1 : 0, reward.earnedGonka || 0]);
+    const compensationRatio = raw > 0 && claimedReward > 0 ? Math.min(1.5, raw / claimedReward) : 0;
+    values.push([x, y, compensationRatio, raw, row.address, claimedReward, reward.claimed ? 1 : 0, reward.earnedGonka || 0, share]);
   }));
   state.charts.heatmap.setOption({
     tooltip: chartTooltip({ formatter: (p) => {
@@ -397,11 +398,12 @@ function renderHeatmap() {
       const claimedReward = p.value[5] || 0;
       const rewardClaimed = Boolean(p.value[6]);
       const earnedReward = p.value[7] || 0;
-      const share = p.value[2] || 0;
+      const share = p.value[8] || 0;
+      const ratio = p.value[2] || 0;
       const epoch = epochByKey.get(epochs[p.value[0]]) || {};
       const epochShare = epoch.totalGonka ? (raw / epoch.totalGonka) * 100 : 0;
       const rewardDelta = claimedReward - raw;
-      return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address)}<br>max observed weight ${fmt.format(maxTimelineWeight(row.address))}<br>${epochs[p.value[0]]}<br>compensation ${gonka(raw)}<br>claimed reward ${gonka(claimedReward)} · ${rewardClaimed ? "claimed" : "not claimed / no summary"}<br>earned reward ${gonka(earnedReward)}<br>claimed minus compensation ${gonka(rewardDelta)}<br>${fmt.format(share)}% of this recipient total<br>${fmt.format(epochShare)}% of epoch total<br>recipient total ${gonka(row?.totalGonka || 0)}`;
+      return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address)}<br>max observed weight ${fmt.format(maxTimelineWeight(row.address))}<br>${epochs[p.value[0]]}<br>compensation ${gonka(raw)}<br>claimed reward ${gonka(claimedReward)} · ${rewardClaimed ? "claimed" : "not claimed / no summary"}<br>compensation / claimed reward ${fmt.format(ratio * 100)}%<br>earned reward ${gonka(earnedReward)}<br>claimed minus compensation ${gonka(rewardDelta)}<br>${fmt.format(share)}% of this recipient total<br>${fmt.format(epochShare)}% of epoch total<br>recipient total ${gonka(row?.totalGonka || 0)}`;
     } }),
     grid: { left: 250, right: 24, top: 24, bottom: 42 },
     xAxis: { type: "category", data: epochs, axisLabel: { color: "#a7afba" } },
@@ -411,20 +413,35 @@ function renderHeatmap() {
       data: rows.map((row) => `${shortAddress(row.address)}  ${actorShortLabel(row)}`),
       axisLabel: { align: "left", margin: 242, color: "#a7afba", width: 230, overflow: "truncate" },
     },
-    visualMap: { min: 0, max: 100, dimension: 2, calculable: true, orient: "horizontal", left: "center", bottom: 4, text: ["recipient share", "0"], textStyle: { color: "#a7afba" }, inRange: { color: ["#222831", "#4db7a8", "#d7a84f"] } },
+    visualMap: {
+      min: 0,
+      max: 1,
+      dimension: 2,
+      calculable: true,
+      orient: "horizontal",
+      left: "center",
+      bottom: 4,
+      text: [">= claimed reward", "0"],
+      textStyle: { color: "#a7afba" },
+      inRange: { color: ["#222831", "#355c7d", "#4db7a8", "#d7a84f", "#d9655f"] },
+    },
     series: [{
       type: "heatmap",
       data: values,
       encode: { x: 0, y: 1, value: 2 },
-      label: {
-        show: true,
-        color: "#eef0f2",
-        fontSize: 10,
-        lineHeight: 12,
-        formatter: (p) => {
+      itemStyle: {
+        borderColor: (p) => {
           const compensation = p.value[3] || 0;
-          if (!compensation) return "";
-          return `C ${compact.format(compensation)}\nR ${compact.format(p.value[5] || 0)}`;
+          const claimedReward = p.value[5] || 0;
+          if (!compensation) return "#101114";
+          if (!claimedReward) return "#6d7682";
+          return compensation / claimedReward >= 0.5 ? "#eef0f2" : "#38404a";
+        },
+        borderWidth: (p) => {
+          const compensation = p.value[3] || 0;
+          const claimedReward = p.value[5] || 0;
+          if (!compensation || !claimedReward) return 1;
+          return compensation / claimedReward >= 0.5 ? 2 : 1;
         },
       },
     }],
