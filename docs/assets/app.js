@@ -631,6 +631,12 @@ function renderAttackTimeline() {
   );
   const metricValue = (cell) => state.timelineMetric === "reward" ? (cell.rewardGonka || 0) : (cell.weight || 0);
   const cellColor = (cell) => {
+    if (cell.columnType === "cpoc") {
+      if (cell.state === "confirmed") return "rgba(121, 182, 106, 0.82)";
+      if (cell.state === "cpoc_degraded") return "rgba(215, 168, 79, 0.84)";
+      if (cell.state === "cpoc_failed") return "rgba(217, 101, 95, 0.9)";
+      return "rgba(34, 40, 49, 0.78)";
+    }
     const strength = Math.sqrt(metricValue(cell) / maxMetric);
     const alpha = Math.max(0.2, Math.min(0.92, 0.22 + strength * 0.7));
     if (cell.state === "dropped") return "rgba(217, 101, 95, 0.86)";
@@ -660,10 +666,10 @@ function renderAttackTimeline() {
         const row = p.data?.row || {};
         const cell = p.data?.cell || {};
         const modelText = p.data?.model ? `<br>${p.data.model.toUpperCase()} commits ${fmt.format(p.value[2] || 0)}` : "";
-        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}<br>${escapeHtml(cell.columnKey || "")} · ${escapeHtml(cell.state || "")}<br>weight ${fmt.format(cell.weight || 0)}<br>reward ${gonka(cell.rewardGonka || 0)}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
+        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}<br>${escapeHtml(cell.columnKey || "")} · ${escapeHtml(cell.state || "")}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
       },
     }),
-    xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0 } },
+    xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },
     yAxis: { type: "category", data: yLabels, axisLabel: { color: "#a7afba", width: 160, overflow: "truncate" } },
     dataZoom: [
       { type: "inside", yAxisIndex: 0, filterMode: "none" },

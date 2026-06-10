@@ -2239,6 +2239,31 @@ def upstream_epoch_weights(epoch, snapshot=""):
     return weights
 
 
+def load_cpoc_epoch_group(epoch, phase):
+    path = DATA / "cpoc_epoch_snapshots" / f"e{epoch}" / f"{phase}.json"
+    if path.exists():
+        wrapper = load_json(path)
+        payload = wrapper.get("json") or {}
+        return payload.get("epoch_group_data") or payload
+    if epoch == 265:
+        return load_upstream_epoch_group(epoch, "healthy" if phase == "start" else "end")
+    return load_upstream_epoch_group(epoch)
+
+
+def cpoc_epoch_weights(epoch, phase):
+    group = load_cpoc_epoch_group(epoch, phase)
+    weights = {}
+    for item in group.get("validation_weights") or []:
+        address = item.get("member_address")
+        if not address:
+            continue
+        weights[address] = {
+            "weight": int(item.get("weight") or item.get("voting_power") or 0),
+            "confirmationWeight": int(item.get("confirmation_weight") or 0),
+        }
+    return weights
+
+
 def model_bucket(model_id):
     value = (model_id or "").lower()
     if "qwen" in value:
@@ -2268,16 +2293,14 @@ def upstream_epoch_model_activity(epoch):
 
 
 def build_participant_epoch_timeline(recipients, votes):
-    columns = [
-        {"key": "e265_healthy", "label": "e265 healthy", "epoch": 265, "snapshot": "healthy"},
-        {"key": "e265_end", "label": "e265 end", "epoch": 265, "snapshot": "end"},
-    ] + [
-        {"key": f"e{epoch}", "label": f"e{epoch}", "epoch": epoch, "snapshot": ""}
-        for epoch in range(266, 277)
-    ]
-    weight_by_column = {
-        column["key"]: upstream_epoch_weights(column["epoch"], column["snapshot"])
-        for column in columns
+    columns = []
+    for epoch in EPOCHS:
+        columns.append({"key": f"e{epoch}_weight", "label": f"e{epoch} W", "epoch": epoch, "phase": "start", "type": "weight"})
+        columns.append({"key": f"e{epoch}_cpoc", "label": f"e{epoch} CPoC", "epoch": epoch, "phase": "cpoc", "type": "cpoc"})
+    weights_by_epoch_phase = {
+        (epoch, phase): cpoc_epoch_weights(epoch, phase)
+        for epoch in EPOCHS
+        for phase in ["start", "cpoc"]
     }
     activity_by_epoch = {epoch: upstream_epoch_model_activity(epoch) for epoch in EPOCHS}
     vote_by_address = {vote["voter"]: vote for vote in votes}
@@ -2292,36 +2315,58 @@ def build_participant_epoch_timeline(recipients, votes):
         cells = []
         for index, column in enumerate(columns):
             epoch = column["epoch"]
-            weight = weight_by_column[column["key"]].get(address, 0)
-            reward = 0 if column["key"] == "e265_healthy" else recipient.get("perEpoch", {}).get(f"e{epoch}", 0)
+            start_row = weights_by_epoch_phase[(epoch, "start")].get(address, {})
+            cpoc_row = weights_by_epoch_phase[(epoch, "cpoc")].get(address, {})
+            current_row = start_row if column["type"] == "weight" else cpoc_row
+            weight = current_row.get("weight", 0)
+            start_weight = start_row.get("weight", 0)
+            confirmation_weight = current_row.get("confirmationWeight", 0)
+            reward = recipient.get("perEpoch", {}).get(f"e{epoch}", 0)
             activity = activity_by_epoch.get(epoch, {}).get(address, {})
-            if weight > 0:
-                state = "returned" if seen_active and previous_weight == 0 else "active"
-                seen_active = True
-            elif previous_weight > 0:
-                state = "dropped"
-            elif seen_active:
-                state = "missing_after_active"
+            if column["type"] == "cpoc":
+                ratio = (confirmation_weight / start_weight) if start_weight else 0
+                if start_weight <= 0:
+                    state = "no_epoch_weight"
+                elif confirmation_weight <= 0:
+                    state = "cpoc_failed"
+                elif ratio < 0.5:
+                    state = "cpoc_degraded"
+                else:
+                    state = "confirmed"
             else:
-                state = "no_weight"
+                if weight > 0:
+                    state = "returned" if seen_active and previous_weight == 0 else "active"
+                    seen_active = True
+                elif previous_weight > 0:
+                    state = "dropped"
+                elif seen_active:
+                    state = "missing_after_active"
+                else:
+                    state = "no_weight"
             max_weight = max(max_weight, weight)
             max_reward = max(max_reward, reward or 0)
             cells.append(
                 {
                     "x": index,
                     "columnKey": column["key"],
+                    "columnType": column["type"],
                     "epoch": epoch,
-                    "snapshot": column["snapshot"],
+                    "snapshot": column["phase"],
                     "state": state,
                     "weight": weight,
+                    "startWeight": start_weight,
+                    "confirmationWeight": confirmation_weight,
+                    "confirmationRatio": round((confirmation_weight / start_weight) if start_weight else 0, 6),
+                    "confirmed": state == "confirmed",
                     "rewardGonka": round(reward or 0, 6),
-                    "qwenCount": activity.get("qwenCount", 0),
-                    "kimiCount": activity.get("kimiCount", 0),
-                    "otherCount": activity.get("otherCount", 0),
-                    "totalCommitCount": activity.get("totalCommitCount", 0),
+                    "qwenCount": activity.get("qwenCount", 0) if column["type"] == "weight" else 0,
+                    "kimiCount": activity.get("kimiCount", 0) if column["type"] == "weight" else 0,
+                    "otherCount": activity.get("otherCount", 0) if column["type"] == "weight" else 0,
+                    "totalCommitCount": activity.get("totalCommitCount", 0) if column["type"] == "weight" else 0,
                 }
             )
-            previous_weight = weight
+            if column["type"] == "weight":
+                previous_weight = weight
         rows.append(
             {
                 "address": address,
