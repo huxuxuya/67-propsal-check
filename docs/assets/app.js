@@ -287,46 +287,114 @@ function renderEpochChart() {
 function renderHeatmap() {
   const rows = state.filteredRecipients.slice(0, 30);
   const epochs = Array.from({ length: 12 }, (_, i) => `e${265 + i}`);
+  const epochByKey = new Map((state.data.epochs || []).map((row) => [row.key, row]));
   const values = [];
   rows.forEach((row, y) => epochs.forEach((epoch, x) => {
     const raw = row.perEpoch[epoch] || 0;
-    values.push([x, y, raw ? Math.log10(raw + 1) : 0, raw, row.address]);
+    const share = row.totalGonka ? (raw / row.totalGonka) * 100 : 0;
+    values.push([x, y, share, raw, row.address]);
   }));
   state.charts.heatmap.setOption({
     tooltip: { formatter: (p) => {
       const row = rows[p.value[1]];
       const raw = p.value[3] || 0;
-      const share = row?.totalGonka ? (raw / row.totalGonka) * 100 : 0;
-      return `${actorLabel(row)}<br>${epochs[p.value[0]]}: ${gonka(raw)}<br>${fmt.format(share)}% of recipient total`;
+      const share = p.value[2] || 0;
+      const epoch = epochByKey.get(epochs[p.value[0]]) || {};
+      const epochShare = epoch.totalGonka ? (raw / epoch.totalGonka) * 100 : 0;
+      return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${epochs[p.value[0]]}: ${gonka(raw)}<br>${fmt.format(share)}% of this recipient total<br>${fmt.format(epochShare)}% of epoch total<br>recipient total ${gonka(row?.totalGonka || 0)}`;
     } },
     grid: { left: 150, right: 24, top: 24, bottom: 42 },
     xAxis: { type: "category", data: epochs, axisLabel: { color: "#a7afba" } },
     yAxis: { type: "category", data: rows.map((row) => `#${row.rank} ${actorShortLabel(row)}`), axisLabel: { color: "#a7afba", width: 140, overflow: "truncate" } },
-    visualMap: { min: 0, max: Math.max(...values.map((v) => v[2]), 1), calculable: true, orient: "horizontal", left: "center", bottom: 4, textStyle: { color: "#a7afba" }, inRange: { color: ["#222831", "#4db7a8", "#d7a84f"] } },
-    series: [{ type: "heatmap", data: values }],
+    visualMap: { min: 0, max: 100, dimension: 2, calculable: true, orient: "horizontal", left: "center", bottom: 4, text: ["recipient share", "0"], textStyle: { color: "#a7afba" }, inRange: { color: ["#222831", "#4db7a8", "#d7a84f"] } },
+    series: [{ type: "heatmap", data: values, encode: { x: 0, y: 1, value: 2 } }],
   }, true);
 }
 
 function renderMatrix() {
-  const options = ["yes", "no", "abstain", "no_with_veto"];
-  const groups = ["recipient", "non-recipient"];
   const rows = state.data.chartData?.voteMatrixPower || [];
   const byKey = new Map(rows.map((row) => [`${row.recipientStatus}:${row.voteOption}`, row]));
-  const maxPower = Math.max(...rows.map((row) => row.votingPower || 0), 1);
+  const emptyRow = { addressCount: 0, totalCompensationGonka: 0, votingPower: 0 };
+  const getRow = (recipientStatus, voteOption) => byKey.get(`${recipientStatus}:${voteOption}`) || emptyRow;
+  const lanes = ["Reward amount", "Governance voting power"];
+  const segmentDefs = [
+    {
+      name: "Rewarded yes",
+      color: optionColors.yes,
+      recipientStatus: "recipient",
+      voteOption: "yes",
+      laneValues: ["totalCompensationGonka", "votingPower"],
+    },
+    {
+      name: "Rewarded veto",
+      color: optionColors.no_with_veto,
+      recipientStatus: "recipient",
+      voteOption: "no_with_veto",
+      laneValues: ["totalCompensationGonka", "votingPower"],
+    },
+    {
+      name: "Rewarded no vote",
+      color: optionColors.did_not_vote,
+      recipientStatus: "recipient",
+      voteOption: "did_not_vote",
+      laneValues: ["totalCompensationGonka", null],
+    },
+    {
+      name: "Not rewarded yes",
+      color: optionColors.yes,
+      opacity: 0.48,
+      recipientStatus: "non_recipient",
+      voteOption: "yes",
+      laneValues: [null, "votingPower"],
+    },
+    {
+      name: "Not rewarded veto",
+      color: optionColors.no_with_veto,
+      opacity: 0.48,
+      recipientStatus: "non_recipient",
+      voteOption: "no_with_veto",
+      laneValues: [null, "votingPower"],
+    },
+  ];
+  const series = segmentDefs.map((segment) => ({
+    name: segment.name,
+    type: "bar",
+    stack: "weight",
+    data: lanes.map((lane, laneIndex) => {
+      const valueKey = segment.laneValues[laneIndex];
+      const row = getRow(segment.recipientStatus, segment.voteOption);
+      return {
+        value: valueKey ? (row[valueKey] || 0) : 0,
+        row,
+        lane,
+        valueKey,
+        voteOption: segment.voteOption,
+        recipientStatus: segment.recipientStatus,
+        itemStyle: { color: segment.color || "#6d7682", opacity: segment.opacity || 1 },
+      };
+    }),
+    label: {
+      show: true,
+      color: "#eef0f2",
+      formatter: (p) => p.value ? compact.format(p.value) : "",
+    },
+  }));
   state.charts.matrix.setOption({
-    tooltip: { formatter: (p) => {
-      const row = byKey.get(`${groups[p.value[1]]}:${options[p.value[0]]}`) || {};
-      return `${groups[p.value[1]]} / ${optionLabels[options[p.value[0]]]}<br>${fmt.format(row.votingPower || 0)} governance power<br>${row.addressCount || 0} voters`;
-    } },
-    grid: { left: 110, right: 20, top: 24, bottom: 42 },
-    xAxis: { type: "category", data: options.map((item) => optionLabels[item]), axisLabel: { color: "#a7afba", interval: 0, rotate: 20 } },
-    yAxis: { type: "category", data: groups, axisLabel: { color: "#a7afba" } },
-    visualMap: { min: 0, max: maxPower, show: false, inRange: { color: ["#252a32", "#4db7a8"] } },
-    series: [{
-      type: "heatmap",
-      data: groups.flatMap((g, y) => options.map((o, x) => [x, y, byKey.get(`${g}:${o}`)?.votingPower || 0])),
-      label: { show: true, color: "#eef0f2", formatter: (p) => compact.format(p.value[2]) },
-    }],
+    legend: { top: 0, textStyle: { color: "#a7afba" } },
+    tooltip: {
+      formatter: (items) => {
+        const item = Array.isArray(items) ? items[0] : items;
+        const data = item.data || {};
+        const row = data.row || {};
+        const metric = data.valueKey === "totalCompensationGonka" ? "reward weight" : "governance power";
+        const rewardStatus = data.recipientStatus === "recipient" ? "rewarded" : "not rewarded";
+        return `${data.lane} / ${rewardStatus} / ${optionLabels[data.voteOption]}<br>${compact.format(item.value || 0)} ${metric}<br>${fmt.format(row.addressCount || 0)} addresses<br>${gonka(row.totalCompensationGonka || 0)} compensation<br>${fmt.format(row.votingPower || 0)} governance power`;
+      },
+    },
+    grid: { left: 118, right: 22, top: 38, bottom: 42 },
+    xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) }, name: "Weight by lane", nameTextStyle: { color: "#a7afba" } },
+    yAxis: { type: "category", data: lanes, axisLabel: { color: "#a7afba" } },
+    series,
   }, true);
 }
 

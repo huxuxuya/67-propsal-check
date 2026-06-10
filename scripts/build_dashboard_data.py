@@ -2219,16 +2219,30 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
 def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomalies, summary, attack_narrative):
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_options = ["yes", "no", "abstain", "no_with_veto"]
+    vote_by_address = {vote["voter"]: vote for vote in votes}
+    vote_matrix_groups = defaultdict(lambda: {"addresses": [], "totalCompensationGonka": 0, "votingPower": 0})
+    for address in sorted(set(recipient_by_address) | set(vote_by_address)):
+        recipient = recipient_by_address.get(address)
+        vote = vote_by_address.get(address)
+        recipient_status = "recipient" if recipient else "non_recipient"
+        vote_option = vote["primaryOption"] if vote else "did_not_vote"
+        group = vote_matrix_groups[(recipient_status, vote_option)]
+        group["addresses"].append(address)
+        group["totalCompensationGonka"] += recipient.get("totalGonka", 0) if recipient else 0
+        group["votingPower"] += vote.get("votingPower") or 0 if vote else 0
+
     vote_matrix = []
-    for recipient_status, is_recipient in [("recipient", True), ("non-recipient", False)]:
-        for option in vote_options:
-            matching = [vote for vote in votes if vote["isRecipient"] == is_recipient and vote["primaryOption"] == option]
+    for recipient_status in ["recipient", "non_recipient"]:
+        for option in [*vote_options, "did_not_vote"]:
+            group = vote_matrix_groups[(recipient_status, option)]
             vote_matrix.append(
                 {
                     "recipientStatus": recipient_status,
                     "voteOption": option,
-                    "addressCount": len(matching),
-                    "votingPower": round(sum(vote.get("votingPower") or 0 for vote in matching), 6),
+                    "addressCount": len(group["addresses"]),
+                    "totalCompensationGonka": round(group["totalCompensationGonka"], 6),
+                    "votingPower": round(group["votingPower"], 6),
+                    "addresses": group["addresses"],
                 }
             )
 
