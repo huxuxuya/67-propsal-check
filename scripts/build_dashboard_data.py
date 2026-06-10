@@ -2216,6 +2216,131 @@ def build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposa
     ]
 
 
+def load_upstream_epoch_group(epoch, snapshot=""):
+    if epoch == 265 and snapshot:
+        path = UPSTREAM / "e265" / f"epoch265_group_data_{snapshot}.json"
+    else:
+        path = UPSTREAM / f"e{epoch}" / f"epoch{epoch}_group_data.json"
+    if not path.exists():
+        return {}
+    payload = load_json(path)
+    if isinstance(payload, list):
+        payload = payload[0] if payload else {}
+    return payload.get("epoch_group_data") or payload
+
+
+def upstream_epoch_weights(epoch, snapshot=""):
+    group = load_upstream_epoch_group(epoch, snapshot)
+    weights = {}
+    for item in group.get("validation_weights") or []:
+        address = item.get("member_address")
+        if address:
+            weights[address] = int(item.get("weight") or item.get("voting_power") or 0)
+    return weights
+
+
+def model_bucket(model_id):
+    value = (model_id or "").lower()
+    if "qwen" in value:
+        return "qwen"
+    if "kimi" in value or "moonshot" in value:
+        return "kimi"
+    return "other"
+
+
+def upstream_epoch_model_activity(epoch):
+    path = UPSTREAM / f"e{epoch}" / f"epoch{epoch}_commits.json"
+    if not path.exists():
+        return {}
+    payload = load_json(path)
+    commits = payload.get("commits") if isinstance(payload, dict) else payload
+    activity = defaultdict(lambda: {"qwenCount": 0, "kimiCount": 0, "otherCount": 0, "totalCommitCount": 0})
+    for item in commits or []:
+        address = item.get("participant_address") or item.get("participant")
+        if not address:
+            continue
+        count = int(item.get("count") or 0)
+        bucket = model_bucket(item.get("model_id"))
+        key = {"qwen": "qwenCount", "kimi": "kimiCount"}.get(bucket, "otherCount")
+        activity[address][key] += count
+        activity[address]["totalCommitCount"] += count
+    return activity
+
+
+def build_participant_epoch_timeline(recipients, votes):
+    columns = [
+        {"key": "e265_healthy", "label": "e265 healthy", "epoch": 265, "snapshot": "healthy"},
+        {"key": "e265_end", "label": "e265 end", "epoch": 265, "snapshot": "end"},
+    ] + [
+        {"key": f"e{epoch}", "label": f"e{epoch}", "epoch": epoch, "snapshot": ""}
+        for epoch in range(266, 277)
+    ]
+    weight_by_column = {
+        column["key"]: upstream_epoch_weights(column["epoch"], column["snapshot"])
+        for column in columns
+    }
+    activity_by_epoch = {epoch: upstream_epoch_model_activity(epoch) for epoch in EPOCHS}
+    vote_by_address = {vote["voter"]: vote for vote in votes}
+    rows = []
+    max_weight = 0
+    max_reward = 0
+    for recipient in sorted(recipients, key=lambda row: (-row["totalGonka"], row["address"])):
+        address = recipient["address"]
+        vote = vote_by_address.get(address, {})
+        seen_active = False
+        previous_weight = 0
+        cells = []
+        for index, column in enumerate(columns):
+            epoch = column["epoch"]
+            weight = weight_by_column[column["key"]].get(address, 0)
+            reward = 0 if column["key"] == "e265_healthy" else recipient.get("perEpoch", {}).get(f"e{epoch}", 0)
+            activity = activity_by_epoch.get(epoch, {}).get(address, {})
+            if weight > 0:
+                state = "returned" if seen_active and previous_weight == 0 else "active"
+                seen_active = True
+            elif previous_weight > 0:
+                state = "dropped"
+            elif seen_active:
+                state = "missing_after_active"
+            else:
+                state = "no_weight"
+            max_weight = max(max_weight, weight)
+            max_reward = max(max_reward, reward or 0)
+            cells.append(
+                {
+                    "x": index,
+                    "columnKey": column["key"],
+                    "epoch": epoch,
+                    "snapshot": column["snapshot"],
+                    "state": state,
+                    "weight": weight,
+                    "rewardGonka": round(reward or 0, 6),
+                    "qwenCount": activity.get("qwenCount", 0),
+                    "kimiCount": activity.get("kimiCount", 0),
+                    "otherCount": activity.get("otherCount", 0),
+                    "totalCommitCount": activity.get("totalCommitCount", 0),
+                }
+            )
+            previous_weight = weight
+        rows.append(
+            {
+                "address": address,
+                "actorDisplayLabel": recipient.get("actorDisplayLabel", recipient.get("label", address)),
+                "actorShortLabel": recipient.get("actorShortLabel", recipient.get("label", address)),
+                "rank": recipient["rank"],
+                "totalCompensationGonka": recipient["totalGonka"],
+                "voteOption": recipient.get("voteOption", "did_not_vote"),
+                "governanceVotingPower": vote.get("votingPower") or 0,
+                "cells": cells,
+            }
+        )
+    return {
+        "columns": columns,
+        "rows": rows,
+        "summary": {"maxWeight": max_weight, "maxRewardGonka": round(max_reward, 6)},
+    }
+
+
 def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomalies, summary, attack_narrative):
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_options = ["yes", "no", "abstain", "no_with_veto"]
@@ -2347,6 +2472,7 @@ def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomal
     return {
         "voteMatrixPower": vote_matrix,
         "compensationComponents": compensation_components,
+        "participantEpochTimeline": build_participant_epoch_timeline(recipients, votes),
         "timingLeads": sorted(timing_leads, key=lambda row: (-row["anomalyScore"], -row["e287Weight"], row["address"])),
         "eventTimeline": event_timeline,
         "tallyByOption": tally_by_option,

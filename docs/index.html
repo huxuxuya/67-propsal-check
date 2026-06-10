@@ -109,9 +109,20 @@
       <section class="chart-grid">
         <div class="panel wide">
           <div class="panel-head">
-            <h2>Forensic Event Timeline</h2>
+            <h2>Participant Epoch Timeline</h2>
+            <div class="segmented-group">
+              <div class="segmented" role="tablist">
+                <button class="active" data-timeline-model="all">All</button>
+                <button data-timeline-model="qwen">Qwen</button>
+                <button data-timeline-model="kimi">Kimi</button>
+              </div>
+              <div class="segmented" role="tablist">
+                <button class="active" data-timeline-metric="weight">Weight</button>
+                <button data-timeline-metric="reward">Reward</button>
+              </div>
+            </div>
           </div>
-          <div class="chart" id="attackTimelineChart"></div>
+          <div class="chart forensic-timeline-chart" id="attackTimelineChart"></div>
         </div>
         <div class="panel wide">
           <div class="panel-head">

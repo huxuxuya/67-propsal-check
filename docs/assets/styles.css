@@ -213,6 +213,10 @@ select {
   height: 520px;
 }
 
+.forensic-timeline-chart {
+  height: 940px;
+}
+
 .compact-table {
   max-height: 360px;
   margin-top: 12px;
@@ -223,6 +227,13 @@ select {
   border: 1px solid var(--line);
   border-radius: 8px;
   overflow: hidden;
+}
+
+.segmented-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
 .segmented button {
@@ -463,6 +474,14 @@ a {
   .chart,
   .heatmap {
     height: 360px;
+  }
+
+  .forensic-timeline-chart {
+    height: 620px;
+  }
+
+  .segmented-group {
+    justify-content: flex-start;
   }
 
   .reward-flow-layout {

@@ -9,6 +9,8 @@ const state = {
   data: null,
   filteredRecipients: [],
   compensationView: "bar",
+  timelineModel: "all",
+  timelineMetric: "weight",
   charts: {},
 };
 
@@ -145,6 +147,20 @@ function setupFilters(data) {
       state.compensationView = button.dataset.compView;
       document.querySelectorAll("[data-comp-view]").forEach((item) => item.classList.toggle("active", item === button));
       renderCompensationChart();
+    });
+  });
+  document.querySelectorAll("[data-timeline-model]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.timelineModel = button.dataset.timelineModel;
+      document.querySelectorAll("[data-timeline-model]").forEach((item) => item.classList.toggle("active", item === button));
+      renderAttackTimeline();
+    });
+  });
+  document.querySelectorAll("[data-timeline-metric]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.timelineMetric = button.dataset.timelineMetric;
+      document.querySelectorAll("[data-timeline-metric]").forEach((item) => item.classList.toggle("active", item === button));
+      renderAttackTimeline();
     });
   });
 }
@@ -603,84 +619,82 @@ function renderWindowPowerChart() {
 }
 
 function renderAttackTimeline() {
-  const phases = (state.data.chartData?.eventTimeline || state.data.attackNarrative?.phases || [])
-    .filter((row) => row.time || row.timeOrHeight);
-  const lanes = ["Compensation", "Governance", "Inference timing"];
-  const laneIndex = (row) => {
-    const text = `${row.label || ""} ${row.summary || ""} ${row.timeOrHeight || ""}`.toLowerCase();
-    if (text.includes("e287") || text.includes("inference")) return 2;
-    if (text.includes("damage") || text.includes("restitution")) return 0;
-    return 1;
+  const timeline = state.data.chartData?.participantEpochTimeline;
+  if (!timeline) return;
+  const filtered = new Set(state.filteredRecipients.map((row) => row.address));
+  const rows = timeline.rows.filter((row) => filtered.has(row.address));
+  const columns = timeline.columns || [];
+  const yLabels = rows.map((row) => `#${row.rank} ${actorShortLabel(row)}`);
+  const maxMetric = Math.max(
+    1,
+    ...rows.flatMap((row) => row.cells.map((cell) => state.timelineMetric === "reward" ? (cell.rewardGonka || 0) : (cell.weight || 0))),
+  );
+  const metricValue = (cell) => state.timelineMetric === "reward" ? (cell.rewardGonka || 0) : (cell.weight || 0);
+  const cellColor = (cell) => {
+    const strength = Math.sqrt(metricValue(cell) / maxMetric);
+    const alpha = Math.max(0.2, Math.min(0.92, 0.22 + strength * 0.7));
+    if (cell.state === "dropped") return "rgba(217, 101, 95, 0.86)";
+    if (cell.state === "missing_after_active") return "rgba(217, 101, 95, 0.28)";
+    if (cell.state === "returned") return `rgba(215, 168, 79, ${alpha})`;
+    if (cell.state === "active") return `rgba(77, 183, 168, ${alpha})`;
+    return "rgba(34, 40, 49, 0.78)";
   };
-  const parseTimes = (row) => {
-    const matches = String(row.timeOrHeight || "").match(/\d{4}-\d{2}-\d{2}T[0-9:.]+Z/g) || [];
-    const start = Date.parse(row.time || matches[0] || "");
-    const end = matches.length > 1 ? Date.parse(matches[1]) : null;
-    return { start: Number.isNaN(start) ? null : start, end: end && !Number.isNaN(end) ? end : null };
-  };
-  const datedStarts = phases.map(parseTimes).map((item) => item.start).filter(Boolean);
-  const minTime = Math.min(...datedStarts);
-  const maxTime = Math.max(...datedStarts, ...phases.map(parseTimes).map((item) => item.end).filter(Boolean));
-  const span = Math.max(maxTime - minTime, 24 * 60 * 60 * 1000);
-  let staticIndex = 0;
-  const intervals = [];
-  const markers = [];
-  phases.forEach((row, index) => {
-    const lane = laneIndex(row);
-    const { start, end } = parseTimes(row);
-    if (start && end && end > start) {
-      intervals.push({ value: [start, end, lane, index], row });
-      return;
-    }
-    const time = start || (minTime - span * (0.16 - staticIndex++ * 0.035));
-    markers.push({ value: [time, lane, index], row, staticEvent: !start });
-  });
+  const heatmapData = rows.flatMap((row, y) => row.cells.map((cell, x) => ({
+    value: [x, y, metricValue(cell)],
+    row,
+    cell,
+    itemStyle: { color: cellColor(cell), borderColor: "#101114", borderWidth: 1 },
+  })));
+  const markerData = (model) => rows.flatMap((row, y) => row.cells.map((cell, x) => {
+    const count = model === "qwen" ? cell.qwenCount : cell.kimiCount;
+    if (!count) return null;
+    return { value: [x, y, count], row, cell, model };
+  }).filter(Boolean));
+  const showQwen = state.timelineModel === "all" || state.timelineModel === "qwen";
+  const showKimi = state.timelineModel === "all" || state.timelineModel === "kimi";
   state.charts.attackTimeline.setOption({
-    grid: { left: 124, right: 28, top: 30, bottom: 54 },
+    legend: { top: 4, data: ["epoch weight/reward state", "Qwen commits", "Kimi commits"], textStyle: { color: "#a7afba" } },
+    grid: { left: 170, right: 28, top: 44, bottom: 54 },
     tooltip: chartTooltip({
       formatter: (p) => {
-        const row = p.data?.row || phases[p.value?.[2]];
-        return `<strong>${escapeHtml(row.label)}</strong><br>${escapeHtml(formatTime(row.time) || row.timeOrHeight)}<br>${escapeHtml(row.summary)}`;
+        const row = p.data?.row || {};
+        const cell = p.data?.cell || {};
+        const modelText = p.data?.model ? `<br>${p.data.model.toUpperCase()} commits ${fmt.format(p.value[2] || 0)}` : "";
+        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}<br>${escapeHtml(cell.columnKey || "")} · ${escapeHtml(cell.state || "")}<br>weight ${fmt.format(cell.weight || 0)}<br>reward ${gonka(cell.rewardGonka || 0)}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
       },
     }),
-    xAxis: { type: "time", min: minTime - span * 0.2, max: maxTime + span * 0.06, axisLabel: { color: "#a7afba", formatter: (value) => formatTime(value).slice(5, 16) } },
-    yAxis: { type: "category", data: lanes, axisLabel: { color: "#a7afba" } },
+    xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0 } },
+    yAxis: { type: "category", data: yLabels, axisLabel: { color: "#a7afba", width: 160, overflow: "truncate" } },
+    dataZoom: [
+      { type: "inside", yAxisIndex: 0, filterMode: "none" },
+      { type: "slider", yAxisIndex: 0, right: 4, width: 14, filterMode: "none", textStyle: { color: "#a7afba" } },
+    ],
     series: [
       {
-        name: "interval",
-        type: "custom",
-        data: intervals,
-        renderItem: (params, api) => {
-          const start = api.coord([api.value(0), api.value(2)]);
-          const end = api.coord([api.value(1), api.value(2)]);
-          const height = 18;
-          return {
-            type: "rect",
-            shape: echarts.graphic.clipRectByRect(
-              { x: start[0], y: start[1] - height / 2, width: Math.max(end[0] - start[0], 2), height },
-              { x: params.coordSys.x, y: params.coordSys.y, width: params.coordSys.width, height: params.coordSys.height },
-            ),
-            style: { fill: "rgba(215, 168, 79, 0.55)", stroke: "#d7a84f", lineWidth: 1 },
-          };
-        },
+        name: "epoch weight/reward state",
+        type: "heatmap",
+        data: heatmapData,
+        label: { show: false },
       },
-      {
-        name: "event",
+      showQwen && {
+        name: "Qwen commits",
         type: "scatter",
-        symbolSize: (value, p) => p.data.staticEvent ? 14 : 18,
-        data: markers,
-        itemStyle: {
-          color: (p) => {
-            const lane = laneIndex(p.data.row || {});
-            return lane === 0 ? "#d9655f" : lane === 2 ? "#5da9e9" : "#d7a84f";
-          },
-          borderColor: "#101114",
-          borderWidth: 1,
-        },
-        label: { show: true, formatter: (p) => p.data.row?.label || "", position: "top", color: "#eef0f2", fontSize: 11 },
-        labelLayout: { hideOverlap: true },
+        symbol: "circle",
+        symbolSize: (value) => Math.max(5, Math.min(18, 4 + Math.sqrt(value[2] || 0) / 70)),
+        symbolOffset: showKimi ? [-7, 0] : [0, 0],
+        data: markerData("qwen"),
+        itemStyle: { color: "#5da9e9", borderColor: "#101114", borderWidth: 1 },
       },
-    ],
+      showKimi && {
+        name: "Kimi commits",
+        type: "scatter",
+        symbol: "diamond",
+        symbolSize: (value) => Math.max(5, Math.min(18, 4 + Math.sqrt(value[2] || 0) / 70)),
+        symbolOffset: showQwen ? [7, 0] : [0, 0],
+        data: markerData("kimi"),
+        itemStyle: { color: "#8f7ad3", borderColor: "#101114", borderWidth: 1 },
+      },
+    ].filter(Boolean),
   }, true);
 }
 
