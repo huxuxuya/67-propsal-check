@@ -597,12 +597,17 @@ function voterDisplayLabel(row) {
   return actorShortLabel(row);
 }
 
+function voterAxisLabel(row) {
+  const address = row.address || row.voter || "";
+  return `${shortAddress(address)}  ${actorShortLabel(row)}`;
+}
+
 function renderVoterPowerChart() {
   const rows = (state.data.benefitPowerMatrix || [])
     .filter((row) => row.isVoter)
     .sort((a, b) => (b.votingPower || 0) - (a.votingPower || 0) || actorLabel(a).localeCompare(actorLabel(b)));
   state.charts.voterPower.setOption({
-    grid: { left: 260, right: 44, top: 24, bottom: 42 },
+    grid: { left: 282, right: 44, top: 24, bottom: 42 },
     tooltip: chartTooltip({
       formatter: (p) => {
         const row = rows[p.dataIndex];
@@ -614,7 +619,7 @@ function renderVoterPowerChart() {
       },
     }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
-    yAxis: { type: "category", data: rows.map(voterDisplayLabel), axisLabel: { color: "#a7afba", width: 240, overflow: "break", lineHeight: 15 } },
+    yAxis: { type: "category", data: rows.map(voterAxisLabel), axisLabel: { align: "left", margin: 274, color: "#a7afba", width: 260, overflow: "truncate" } },
     series: [{
       type: "bar",
       data: rows.map((row) => row.votingPower || 0),
@@ -657,7 +662,7 @@ function renderWindowPowerChart() {
     .sort((a, b) => Math.abs((b.endVotingPower || 0) - (b.startVotingPower || 0)) - Math.abs((a.endVotingPower || 0) - (a.startVotingPower || 0)) || (b.endVotingPower || 0) - (a.endVotingPower || 0) || actorLabel(a).localeCompare(actorLabel(b)));
   document.getElementById("windowPowerRows").textContent = `${rows.length} shown`;
   state.charts.windowPower.setOption({
-    grid: { left: 260, right: 44, top: 34, bottom: 52 },
+    grid: { left: 282, right: 44, top: 34, bottom: 52 },
     legend: { top: 4, textStyle: { color: "#a7afba" } },
     tooltip: chartTooltip({
       formatter: (p) => {
@@ -666,7 +671,7 @@ function renderWindowPowerChart() {
       },
     }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
-    yAxis: { type: "category", data: rows.map(voterDisplayLabel), axisLabel: { color: "#a7afba", width: 240, overflow: "break", lineHeight: 15 } },
+    yAxis: { type: "category", data: rows.map(voterAxisLabel), axisLabel: { align: "left", margin: 274, color: "#a7afba", width: 260, overflow: "truncate" } },
     series: [
       {
         name: "Window delta",
