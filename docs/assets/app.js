@@ -653,9 +653,16 @@ function renderAttackTimeline() {
     return maxRowWeight(b) - maxRowWeight(a) || (b.totalCompensationGonka || 0) - (a.totalCompensationGonka || 0) || actorLabel(a).localeCompare(actorLabel(b));
   });
   const columns = timeline.columns || [];
-  const yLabels = rows.map((row) => `${row.rank ? `#${row.rank}` : "not paid"} ${actorShortLabel(row)}`);
   const weightRailRows = rows.map((row, index) => ({ value: [maxRowWeight(row), index], row }));
   const maxRailWeight = Math.max(1, ...weightRailRows.map((item) => item.value[0]));
+  const weightBar = (weight) => {
+    const filled = Math.max(0, Math.min(10, Math.round((weight / maxRailWeight) * 10)));
+    return `${"=".repeat(filled)}${"-".repeat(10 - filled)}`;
+  };
+  const yLabels = rows.map((row) => {
+    const weight = maxRowWeight(row);
+    return `${row.rank ? `#${row.rank}` : "not paid"} ${actorShortLabel(row)}\nmax weight ${compact.format(weight)} [${weightBar(weight)}]`;
+  });
   const maxMetric = Math.max(
     1,
     ...rows.flatMap((row) => row.cells.map((cell) => state.timelineMetric === "reward" ? (cell.rewardGonka || 0) : (cell.weight || 0))),
@@ -723,17 +730,11 @@ function renderAttackTimeline() {
   const showQwen = state.timelineModel === "all" || state.timelineModel === "qwen";
   const showKimi = state.timelineModel === "all" || state.timelineModel === "kimi";
   state.charts.attackTimeline.setOption({
-    legend: { top: 4, data: ["Max participant weight", "epoch weight/reward state", "Compensated epoch", "Reward while inactive", "Qwen commits", "Kimi commits"], textStyle: { color: "#a7afba" } },
-    grid: [
-      { left: 368, right: 28, top: 44, bottom: 54 },
-      { left: 260, width: 82, top: 44, bottom: 54 },
-    ],
+    legend: { top: 4, data: ["epoch weight/reward state", "Compensated epoch", "Reward while inactive", "Qwen commits", "Kimi commits"], textStyle: { color: "#a7afba" } },
+    grid: { left: 270, right: 28, top: 44, bottom: 54 },
     tooltip: chartTooltip({
       formatter: (p) => {
         const row = p.data?.row || {};
-        if (p.seriesName === "Max participant weight") {
-          return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}<br>max observed weight ${fmt.format(p.value[0] || 0)}<br>compensation ${gonka(row.totalCompensationGonka || 0)}<br>${row.compensationStatus === "not_compensated" ? "<span class=\"warn-text\">not compensated</span>" : "compensated"}`;
-        }
         const cell = p.data?.cell || {};
         const modelText = p.data?.model ? `<br>${p.data.model.toUpperCase()} commits ${fmt.format(p.value[2] || 0)}` : "";
         const compensationText = row.compensationStatus === "not_compensated" ? "<br><span class=\"warn-text\">not compensated</span>" : "";
@@ -748,52 +749,19 @@ function renderAttackTimeline() {
           : cell.rewardWithoutConfirmation
             ? "<br><span class=\"warn-text\">reward paid while CPoC confirmation is zero</span>"
             : "";
-        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}${compensationText}<br>epoch ${escapeHtml(cell.epoch || "")} · ${escapeHtml(cell.snapshot || "")} · ${escapeHtml(cell.state || "")}${heightText}${blockTimeText}${fallbackText}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}${deltaText}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}${rewardFlag}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
+        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}${compensationText}<br>max observed weight ${fmt.format(maxRowWeight(row))}<br>epoch ${escapeHtml(cell.epoch || "")} · ${escapeHtml(cell.snapshot || "")} · ${escapeHtml(cell.state || "")}${heightText}${blockTimeText}${fallbackText}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}${deltaText}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}${rewardFlag}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
       },
     }),
-    xAxis: [
-      { type: "category", gridIndex: 0, data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },
-      { type: "value", gridIndex: 1, min: 0, max: maxRailWeight, inverse: true, axisLabel: { show: false }, splitLine: { show: false }, axisTick: { show: false }, axisLine: { lineStyle: { color: "#38404a" } } },
-    ],
-    yAxis: [
-      { type: "category", gridIndex: 0, data: yLabels, axisLabel: { color: "#a7afba", width: 240, overflow: "truncate" } },
-      { type: "category", gridIndex: 1, data: yLabels, axisLabel: { show: false }, axisTick: { show: false }, axisLine: { show: false } },
-    ],
+    xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },
+    yAxis: { type: "category", data: yLabels, axisLabel: { color: "#a7afba", width: 250, overflow: "truncate", lineHeight: 15 } },
     dataZoom: [
-      { type: "inside", yAxisIndex: [0, 1], filterMode: "none" },
-      { type: "slider", yAxisIndex: [0, 1], right: 4, width: 14, filterMode: "none", textStyle: { color: "#a7afba" } },
+      { type: "inside", yAxisIndex: 0, filterMode: "none" },
+      { type: "slider", yAxisIndex: 0, right: 4, width: 14, filterMode: "none", textStyle: { color: "#a7afba" } },
     ],
     series: [
       {
-        name: "Max participant weight",
-        type: "bar",
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        data: weightRailRows,
-        barMaxWidth: 9,
-        itemStyle: {
-          color: (p) => {
-            const row = p.data?.row || {};
-            if (row.compensationStatus === "not_compensated") return "#6d7682";
-            return optionColors[row.voteOption] || "#4db7a8";
-          },
-          borderRadius: [0, 4, 4, 0],
-        },
-        label: {
-          show: true,
-          position: "insideRight",
-          color: "#101114",
-          fontSize: 10,
-          formatter: (p) => compact.format(p.value[0] || 0),
-        },
-        tooltip: { show: true },
-        z: 8,
-      },
-      {
         name: "epoch band",
         type: "custom",
-        xAxisIndex: 0,
-        yAxisIndex: 0,
         silent: true,
         tooltip: { show: false },
         data: visibleEpochBands,
@@ -816,16 +784,12 @@ function renderAttackTimeline() {
       {
         name: "epoch weight/reward state",
         type: "heatmap",
-        xAxisIndex: 0,
-        yAxisIndex: 0,
         data: heatmapData,
         label: { show: false },
       },
       {
         name: "Compensated epoch",
         type: "custom",
-        xAxisIndex: 0,
-        yAxisIndex: 0,
         data: compensationData,
         tooltip: { show: true },
         renderItem: (params, api) => {
@@ -852,8 +816,6 @@ function renderAttackTimeline() {
       {
         name: "Reward while inactive",
         type: "scatter",
-        xAxisIndex: 0,
-        yAxisIndex: 0,
         symbol: "pin",
         symbolSize: (value) => Math.max(12, Math.min(24, 10 + Math.sqrt(value[2] || 0) / 8)),
         symbolOffset: [0, -4],
@@ -863,8 +825,6 @@ function renderAttackTimeline() {
       {
         name: "epoch separator",
         type: "custom",
-        xAxisIndex: 0,
-        yAxisIndex: 0,
         silent: true,
         tooltip: { show: false },
         data: epochBoundaries,
@@ -882,8 +842,6 @@ function renderAttackTimeline() {
       showQwen && {
         name: "Qwen commits",
         type: "scatter",
-        xAxisIndex: 0,
-        yAxisIndex: 0,
         symbol: "circle",
         symbolSize: (value) => Math.max(5, Math.min(18, 4 + Math.sqrt(value[2] || 0) / 70)),
         symbolOffset: showKimi ? [-7, 0] : [0, 0],
@@ -893,8 +851,6 @@ function renderAttackTimeline() {
       showKimi && {
         name: "Kimi commits",
         type: "scatter",
-        xAxisIndex: 0,
-        yAxisIndex: 0,
         symbol: "diamond",
         symbolSize: (value) => Math.max(5, Math.min(18, 4 + Math.sqrt(value[2] || 0) / 70)),
         symbolOffset: showQwen ? [7, 0] : [0, 0],
