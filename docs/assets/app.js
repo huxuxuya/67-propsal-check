@@ -40,6 +40,7 @@ const els = {
   voteTable: document.getElementById("voteTable"),
   strictClusterTable: document.getElementById("strictClusterTable"),
   signalClusterTable: document.getElementById("signalClusterTable"),
+  matrixStats: document.getElementById("matrixStats"),
   drawer: document.getElementById("drawer"),
   drawerContent: document.getElementById("drawerContent"),
   scrim: document.getElementById("scrim"),
@@ -316,85 +317,71 @@ function renderMatrix() {
   const byKey = new Map(rows.map((row) => [`${row.recipientStatus}:${row.voteOption}`, row]));
   const emptyRow = { addressCount: 0, totalCompensationGonka: 0, votingPower: 0 };
   const getRow = (recipientStatus, voteOption) => byKey.get(`${recipientStatus}:${voteOption}`) || emptyRow;
-  const lanes = ["Reward amount", "Governance voting power"];
-  const segmentDefs = [
-    {
-      name: "Rewarded yes",
-      color: optionColors.yes,
-      recipientStatus: "recipient",
-      voteOption: "yes",
-      laneValues: ["totalCompensationGonka", "votingPower"],
-    },
-    {
-      name: "Rewarded veto",
-      color: optionColors.no_with_veto,
-      recipientStatus: "recipient",
-      voteOption: "no_with_veto",
-      laneValues: ["totalCompensationGonka", "votingPower"],
-    },
-    {
-      name: "Rewarded no vote",
-      color: optionColors.did_not_vote,
-      recipientStatus: "recipient",
-      voteOption: "did_not_vote",
-      laneValues: ["totalCompensationGonka", null],
-    },
-    {
-      name: "Not rewarded yes",
-      color: optionColors.yes,
-      opacity: 0.48,
-      recipientStatus: "non_recipient",
-      voteOption: "yes",
-      laneValues: [null, "votingPower"],
-    },
-    {
-      name: "Not rewarded veto",
-      color: optionColors.no_with_veto,
-      opacity: 0.48,
-      recipientStatus: "non_recipient",
-      voteOption: "no_with_veto",
-      laneValues: [null, "votingPower"],
-    },
+  const rewardedFlows = [
+    { key: "yes", source: "Yes", color: optionColors.yes, row: getRow("recipient", "yes") },
+    { key: "no_with_veto", source: "No with veto", color: optionColors.no_with_veto, row: getRow("recipient", "no_with_veto") },
+    { key: "did_not_vote", source: "Did not vote", color: optionColors.did_not_vote, row: getRow("recipient", "did_not_vote") },
   ];
-  const series = segmentDefs.map((segment) => ({
-    name: segment.name,
-    type: "bar",
-    stack: "weight",
-    data: lanes.map((lane, laneIndex) => {
-      const valueKey = segment.laneValues[laneIndex];
-      const row = getRow(segment.recipientStatus, segment.voteOption);
-      return {
-        value: valueKey ? (row[valueKey] || 0) : 0,
-        row,
-        lane,
-        valueKey,
-        voteOption: segment.voteOption,
-        recipientStatus: segment.recipientStatus,
-        itemStyle: { color: segment.color || "#6d7682", opacity: segment.opacity || 1 },
-      };
-    }),
-    label: {
-      show: true,
-      color: "#eef0f2",
-      formatter: (p) => p.value ? compact.format(p.value) : "",
-    },
-  }));
+  const notRewardedRows = [
+    { key: "yes", label: "Not rewarded yes", color: optionColors.yes, row: getRow("non_recipient", "yes") },
+    { key: "no_with_veto", label: "Not rewarded veto", color: optionColors.no_with_veto, row: getRow("non_recipient", "no_with_veto") },
+  ];
+  const maxPower = Math.max(...notRewardedRows.map((item) => item.row.votingPower || 0), 1);
+  if (els.matrixStats) {
+    els.matrixStats.innerHTML = [
+      `<div class="reward-flow-card"><h3>Voted but not rewarded</h3><small>These voters have 0 GONKA in the reward flow, so they are shown by governance power here.</small></div>`,
+      ...notRewardedRows.map((item) => {
+        const row = item.row;
+        const width = Math.max(4, ((row.votingPower || 0) / maxPower) * 100);
+        return `<div class="reward-flow-card">
+          <h3 style="color:${item.color}">${escapeHtml(item.label)}</h3>
+          <div class="reward-flow-kpis">
+            <div><span>Power</span><strong>${compact.format(row.votingPower || 0)}</strong></div>
+            <div><span>Addresses</span><strong>${fmt.format(row.addressCount || 0)}</strong></div>
+            <div><span>Reward</span><strong>${gonka(row.totalCompensationGonka || 0)}</strong></div>
+          </div>
+          <div class="power-bar"><i style="width:${width}%;background:${item.color}"></i></div>
+        </div>`;
+      }),
+    ].join("");
+  }
   state.charts.matrix.setOption({
-    legend: { top: 0, textStyle: { color: "#a7afba" } },
     tooltip: {
-      formatter: (items) => {
-        const item = Array.isArray(items) ? items[0] : items;
-        const data = item.data || {};
-        const row = data.row || {};
-        const metric = data.valueKey === "totalCompensationGonka" ? "reward weight" : "governance power";
-        const rewardStatus = data.recipientStatus === "recipient" ? "rewarded" : "not rewarded";
-        return `${data.lane} / ${rewardStatus} / ${optionLabels[data.voteOption]}<br>${compact.format(item.value || 0)} ${metric}<br>${fmt.format(row.addressCount || 0)} addresses<br>${gonka(row.totalCompensationGonka || 0)} compensation<br>${fmt.format(row.votingPower || 0)} governance power`;
+      trigger: "item",
+      formatter: (item) => {
+        const row = item.data?.row || {};
+        if (item.dataType === "edge") {
+          return `<strong>${escapeHtml(item.data.source)} -> ${escapeHtml(item.data.target)}</strong><br>${gonka(item.data.value || 0)} reward amount<br>${fmt.format(row.addressCount || 0)} addresses<br>${fmt.format(row.votingPower || 0)} governance power`;
+        }
+        return `<strong>${escapeHtml(item.name)}</strong><br>Flow width = received GONKA`;
       },
     },
-    grid: { left: 118, right: 22, top: 38, bottom: 42 },
-    xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) }, name: "Weight by lane", nameTextStyle: { color: "#a7afba" } },
-    yAxis: { type: "category", data: lanes, axisLabel: { color: "#a7afba" } },
-    series,
+    series: [{
+      type: "sankey",
+      left: 8,
+      right: 18,
+      top: 24,
+      bottom: 24,
+      nodeWidth: 16,
+      nodeGap: 16,
+      draggable: false,
+      emphasis: { focus: "adjacency" },
+      label: { color: "#eef0f2", fontSize: 12 },
+      itemStyle: { borderColor: "#101114", borderWidth: 1 },
+      lineStyle: { color: "source", opacity: 0.5, curveness: 0.45 },
+      data: [
+        ...rewardedFlows.map((flow) => ({ name: flow.source, itemStyle: { color: flow.color } })),
+        { name: "Received reward", itemStyle: { color: "#d7a84f" } },
+      ],
+      links: rewardedFlows
+        .filter((flow) => (flow.row.totalCompensationGonka || 0) > 0)
+        .map((flow) => ({
+          source: flow.source,
+          target: "Received reward",
+          value: flow.row.totalCompensationGonka || 0,
+          row: flow.row,
+        })),
+    }],
   }, true);
 }
 
