@@ -1,0 +1,367 @@
+{
+  "epoch_group_data": {
+    "confirmation_weight_scales": [],
+    "effective_block_height": "4121152",
+    "epoch_group_id": "1039",
+    "epoch_index": "267",
+    "epoch_policy": "gonka1mp4tdsk29pezt2pk828e6tt3vk5c7s68rffvsty8qaw5pzzmz4rqfhdtdj",
+    "member_seed_signatures": [],
+    "poc_start_block_height": "4120752",
+    "sub_group_models": [
+      "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+      "moonshotai/Kimi-K2.6"
+    ],
+    "total_weight": "541415",
+    "unit_of_compute_price": "100",
+    "validation_weights": [
+      {
+        "confirmation_weight": "11389",
+        "member_address": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "13120"
+      },
+      {
+        "confirmation_weight": "2080",
+        "member_address": "gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "1768"
+      },
+      {
+        "confirmation_weight": "34512",
+        "member_address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+        "ml_nodes": [],
+        "reputation": 72,
+        "weight": "9647"
+      },
+      {
+        "confirmation_weight": "15257",
+        "member_address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "5403"
+      },
+      {
+        "confirmation_weight": "38455",
+        "member_address": "gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "43633"
+      },
+      {
+        "confirmation_weight": "7753",
+        "member_address": "gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "7366"
+      },
+      {
+        "confirmation_weight": "912",
+        "member_address": "gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "776"
+      },
+      {
+        "confirmation_weight": "133532",
+        "member_address": "gonka1duuaqdx06sx8v2dzggltwwmqyuw8lvjkjq7xll",
+        "ml_nodes": [],
+        "reputation": 56,
+        "weight": "127053"
+      },
+      {
+        "confirmation_weight": "8467",
+        "member_address": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "5330"
+      },
+      {
+        "confirmation_weight": "1340",
+        "member_address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+        "ml_nodes": [],
+        "weight": "1273"
+      },
+      {
+        "confirmation_weight": "18219",
+        "member_address": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "17309"
+      },
+      {
+        "confirmation_weight": "5383",
+        "member_address": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
+        "ml_nodes": [],
+        "weight": "3083"
+      },
+      {
+        "confirmation_weight": "621",
+        "member_address": "gonka1p2lhgng7tcqju7emk989s5fpdr7k2c3ek6h26m",
+        "ml_nodes": [],
+        "weight": "590"
+      },
+      {
+        "confirmation_weight": "611",
+        "member_address": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "528"
+      },
+      {
+        "confirmation_weight": "4785",
+        "member_address": "gonka1rcpc45n6zch9qlkn4m3cwngekad89xu8mcr09v",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "4068"
+      },
+      {
+        "confirmation_weight": "20812",
+        "member_address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "21071"
+      },
+      {
+        "confirmation_weight": "1183",
+        "member_address": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+        "ml_nodes": [],
+        "reputation": 59,
+        "weight": "1124"
+      },
+      {
+        "confirmation_weight": "2112",
+        "member_address": "gonka1u4zxypjgcr8khlzefwjr0vwdaj2uzruw2cehj3",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "1796"
+      },
+      {
+        "confirmation_weight": "235",
+        "member_address": "gonka1w29nvdy6caqtrw30whz9h6ghl0xszwh3egndah",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "200"
+      },
+      {
+        "confirmation_weight": "116152",
+        "member_address": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "36092"
+      },
+      {
+        "confirmation_weight": "986",
+        "member_address": "gonka1x7zh2277spp7jfqjhv0g5mnezg290xdr4kpfnk",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "839"
+      },
+      {
+        "confirmation_weight": "4107",
+        "member_address": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "2157"
+      },
+      {
+        "confirmation_weight": "66115",
+        "member_address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "24721"
+      },
+      {
+        "confirmation_weight": "21027",
+        "member_address": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
+        "ml_nodes": [],
+        "weight": "5866"
+      },
+      {
+        "confirmation_weight": "7020",
+        "member_address": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
+        "ml_nodes": [],
+        "weight": "1958"
+      },
+      {
+        "confirmation_weight": "3896",
+        "member_address": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "1087"
+      },
+      {
+        "confirmation_weight": "168346",
+        "member_address": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "63749"
+      },
+      {
+        "confirmation_weight": "14520",
+        "member_address": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
+        "ml_nodes": [],
+        "reputation": 95,
+        "weight": "4050"
+      },
+      {
+        "confirmation_weight": "7020",
+        "member_address": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
+        "ml_nodes": [],
+        "weight": "1958"
+      },
+      {
+        "confirmation_weight": "7389",
+        "member_address": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
+        "ml_nodes": [],
+        "reputation": 71,
+        "weight": "2061"
+      },
+      {
+        "confirmation_weight": "13418",
+        "member_address": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
+        "ml_nodes": [],
+        "weight": "3743"
+      },
+      {
+        "confirmation_weight": "1234",
+        "member_address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+        "ml_nodes": [],
+        "reputation": 6,
+        "weight": "1173"
+      },
+      {
+        "confirmation_weight": "465",
+        "member_address": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "442"
+      },
+      {
+        "confirmation_weight": "606",
+        "member_address": "gonka1d7p03cu2y2yt3vytq9wlfm6tlz0lfhlgv9h82p",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "633"
+      },
+      {
+        "confirmation_weight": "1172",
+        "member_address": "gonka1dkl4mah5erqggvhqkpc8j3qs5tyuetgdy552cp",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "1114"
+      },
+      {
+        "confirmation_weight": "376",
+        "member_address": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "358"
+      },
+      {
+        "confirmation_weight": "343",
+        "member_address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "ml_nodes": [],
+        "reputation": 23,
+        "weight": "19518"
+      },
+      {
+        "confirmation_weight": "44041",
+        "member_address": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
+        "ml_nodes": [],
+        "reputation": 16,
+        "weight": "12286"
+      },
+      {
+        "confirmation_weight": "7720",
+        "member_address": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
+        "ml_nodes": [],
+        "reputation": 8,
+        "weight": "2153"
+      },
+      {
+        "confirmation_weight": "88527",
+        "member_address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+        "ml_nodes": [],
+        "reputation": 19,
+        "weight": "27560"
+      },
+      {
+        "confirmation_weight": "64738",
+        "member_address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+        "ml_nodes": [],
+        "reputation": 23,
+        "weight": "18059"
+      },
+      {
+        "confirmation_weight": "1936",
+        "member_address": "gonka1qu9mna5xlvlnw9455ygtjq92wuzkzm237w8l08",
+        "ml_nodes": [],
+        "reputation": 92,
+        "weight": "1075"
+      },
+      {
+        "confirmation_weight": "7205",
+        "member_address": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
+        "ml_nodes": [],
+        "reputation": 26,
+        "weight": "2010"
+      },
+      {
+        "confirmation_weight": "2072",
+        "member_address": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "1969"
+      },
+      {
+        "confirmation_weight": "962",
+        "member_address": "gonka1uf5cg7ef0ns6877nl27y0s6rt06cdmn40k5a88",
+        "ml_nodes": [],
+        "reputation": 69,
+        "weight": "914"
+      },
+      {
+        "confirmation_weight": "27645",
+        "member_address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "6900"
+      },
+      {
+        "confirmation_weight": "596",
+        "member_address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+        "ml_nodes": [],
+        "reputation": 60,
+        "weight": "567"
+      },
+      {
+        "confirmation_weight": "14190",
+        "member_address": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
+        "ml_nodes": [],
+        "weight": "3958"
+      },
+      {
+        "confirmation_weight": "7278",
+        "member_address": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
+        "ml_nodes": [],
+        "reputation": 92,
+        "weight": "2031"
+      },
+      {
+        "confirmation_weight": "34665",
+        "member_address": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
+        "ml_nodes": [],
+        "weight": "9671"
+      },
+      {
+        "confirmation_weight": "20720",
+        "member_address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+        "ml_nodes": [],
+        "reputation": 100,
+        "weight": "15605"
+      }
+    ]
+  }
+}

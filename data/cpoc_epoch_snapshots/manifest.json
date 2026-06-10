@@ -3,53 +3,621 @@
     {
       "checkpoints": [
         {
-          "height": 4089970,
+          "file": "e265/start_4090370.json",
+          "height": 4090370,
           "index": 0,
-          "kind": "start"
+          "kind": "start",
+          "pocStartHeight": 4089970,
+          "snapshotStatus": "fetched"
         },
         {
           "blockTime": "2026-05-15T23:12:38.049503299Z",
+          "file": "e265/cpoc_01_4090250.json",
           "height": 4090250,
           "index": 1,
-          "kind": "cpoc"
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
         },
         {
           "blockTime": "2026-05-15T23:23:04.887284237Z",
+          "file": "e265/cpoc_02_4090371.json",
           "height": 4090371,
           "index": 2,
-          "kind": "cpoc"
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
         },
         {
           "blockTime": "2026-05-16T07:18:59.634470073Z",
+          "file": "e265/cpoc_03_4095963.json",
           "height": 4095963,
           "index": 3,
-          "kind": "cpoc"
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
         },
         {
           "blockTime": "2026-05-16T11:49:56.983231496Z",
+          "file": "e265/cpoc_04_4099160.json",
           "height": 4099160,
           "index": 4,
-          "kind": "cpoc"
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
         },
         {
           "blockTime": "2026-05-16T17:29:07.824615184Z",
+          "file": "e265/cpoc_05_4103171.json",
           "height": 4103171,
           "index": 5,
-          "kind": "cpoc"
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
         }
       ],
       "endHeight": 4105360,
       "epoch": 265,
-      "startHeight": 4089970
+      "startHeight": 4089970,
+      "startSnapshotHeight": 4090370
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e266/start_4105761.json",
+          "height": 4105761,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4105361,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-16T20:54:59.944502465Z",
+          "file": "e266/cpoc_01_4105641.json",
+          "height": 4105641,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-16T21:05:06.209227938Z",
+          "file": "e266/cpoc_02_4105762.json",
+          "height": 4105762,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-17T10:41:34.397959828Z",
+          "file": "e266/cpoc_03_4115375.json",
+          "height": 4115375,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-17T13:21:54.058748195Z",
+          "file": "e266/cpoc_04_4117265.json",
+          "height": 4117265,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4120751,
+      "epoch": 266,
+      "startHeight": 4105361,
+      "startSnapshotHeight": 4105761
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e267/start_4121152.json",
+          "height": 4121152,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4120752,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-17T18:41:25.157888503Z",
+          "file": "e267/cpoc_01_4121032.json",
+          "height": 4121032,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-17T18:51:47.357729103Z",
+          "file": "e267/cpoc_02_4121153.json",
+          "height": 4121153,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-17T20:52:06.027275595Z",
+          "file": "e267/cpoc_03_4122552.json",
+          "height": 4122552,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-18T03:13:29.794715391Z",
+          "file": "e267/cpoc_04_4127009.json",
+          "height": 4127009,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-18T13:07:11.889669448Z",
+          "file": "e267/cpoc_05_4133946.json",
+          "height": 4133946,
+          "index": 5,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4136142,
+      "epoch": 267,
+      "startHeight": 4120752,
+      "startSnapshotHeight": 4121152
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e268/start_4136543.json",
+          "height": 4136543,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4136143,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-18T16:38:38.816489526Z",
+          "file": "e268/cpoc_01_4136423.json",
+          "height": 4136423,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-18T16:49:08.289193977Z",
+          "file": "e268/cpoc_02_4136544.json",
+          "height": 4136544,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-18T17:46:38.008938422Z",
+          "file": "e268/cpoc_03_4137205.json",
+          "height": 4137205,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-19T00:08:22.668958143Z",
+          "file": "e268/cpoc_04_4141590.json",
+          "height": 4141590,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-19T05:20:52.023470828Z",
+          "file": "e268/cpoc_05_4145179.json",
+          "height": 4145179,
+          "index": 5,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-19T11:03:34.283507304Z",
+          "file": "e268/cpoc_06_4149112.json",
+          "height": 4149112,
+          "index": 6,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4151533,
+      "epoch": 268,
+      "startHeight": 4136143,
+      "startSnapshotHeight": 4136543
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e269/start_4151934.json",
+          "height": 4151934,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4151534,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-19T14:57:32.742119091Z",
+          "file": "e269/cpoc_01_4151814.json",
+          "height": 4151814,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-19T15:08:17.86457759Z",
+          "file": "e269/cpoc_02_4151935.json",
+          "height": 4151935,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-19T17:43:43.816894776Z",
+          "file": "e269/cpoc_03_4153715.json",
+          "height": 4153715,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-20T10:17:44.577453714Z",
+          "file": "e269/cpoc_04_4165142.json",
+          "height": 4165142,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4166924,
+      "epoch": 269,
+      "startHeight": 4151534,
+      "startSnapshotHeight": 4151934
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e270/start_4167325.json",
+          "height": 4167325,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4166925,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-20T13:16:32.687255158Z",
+          "file": "e270/cpoc_01_4167205.json",
+          "height": 4167205,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-20T13:27:18.098423231Z",
+          "file": "e270/cpoc_02_4167326.json",
+          "height": 4167326,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-20T15:42:55.109516391Z",
+          "file": "e270/cpoc_03_4168878.json",
+          "height": 4168878,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-20T22:03:18.278523772Z",
+          "file": "e270/cpoc_04_4173242.json",
+          "height": 4173242,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4182315,
+      "epoch": 270,
+      "startHeight": 4166925,
+      "startSnapshotHeight": 4167325
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e271/start_4182716.json",
+          "height": 4182716,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4182316,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-21T11:36:30.067059848Z",
+          "file": "e271/cpoc_01_4182596.json",
+          "height": 4182596,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-21T11:47:07.794038099Z",
+          "file": "e271/cpoc_02_4182717.json",
+          "height": 4182717,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-21T14:37:04.494026282Z",
+          "file": "e271/cpoc_03_4184667.json",
+          "height": 4184667,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-21T16:41:55.974864528Z",
+          "file": "e271/cpoc_04_4186097.json",
+          "height": 4186097,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-21T23:16:11.182729936Z",
+          "file": "e271/cpoc_05_4190619.json",
+          "height": 4190619,
+          "index": 5,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4197706,
+      "epoch": 271,
+      "startHeight": 4182316,
+      "startSnapshotHeight": 4182716
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e272/start_4198107.json",
+          "height": 4198107,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4197707,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-22T09:57:01.854633181Z",
+          "file": "e272/cpoc_01_4197987.json",
+          "height": 4197987,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-22T10:07:42.816346751Z",
+          "file": "e272/cpoc_02_4198108.json",
+          "height": 4198108,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-22T16:37:00.768135145Z",
+          "file": "e272/cpoc_03_4202574.json",
+          "height": 4202574,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-23T01:05:40.373652228Z",
+          "file": "e272/cpoc_04_4208409.json",
+          "height": 4208409,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-23T03:21:32.324068333Z",
+          "file": "e272/cpoc_05_4209967.json",
+          "height": 4209967,
+          "index": 5,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4213097,
+      "epoch": 272,
+      "startHeight": 4197707,
+      "startSnapshotHeight": 4198107
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e273/start_4213498.json",
+          "height": 4213498,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4213098,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-23T08:18:12.920621996Z",
+          "file": "e273/cpoc_01_4213378.json",
+          "height": 4213378,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-23T08:29:00.144253513Z",
+          "file": "e273/cpoc_02_4213499.json",
+          "height": 4213499,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-23T11:41:29.365541767Z",
+          "file": "e273/cpoc_03_4215708.json",
+          "height": 4215708,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4228488,
+      "epoch": 273,
+      "startHeight": 4213098,
+      "startSnapshotHeight": 4213498
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e274/start_4228889.json",
+          "height": 4228889,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4228489,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-24T06:36:07.454241389Z",
+          "file": "e274/cpoc_01_4228769.json",
+          "height": 4228769,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-24T06:46:48.635304991Z",
+          "file": "e274/cpoc_02_4228890.json",
+          "height": 4228890,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-24T08:19:11.312398825Z",
+          "file": "e274/cpoc_03_4229947.json",
+          "height": 4229947,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-24T11:27:23.227589594Z",
+          "file": "e274/cpoc_04_4232096.json",
+          "height": 4232096,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-24T12:52:09.112065902Z",
+          "file": "e274/cpoc_05_4233068.json",
+          "height": 4233068,
+          "index": 5,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-25T02:51:50.854955398Z",
+          "file": "e274/cpoc_06_4242738.json",
+          "height": 4242738,
+          "index": 6,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4243879,
+      "epoch": 274,
+      "startHeight": 4228489,
+      "startSnapshotHeight": 4228889
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e275/start_4244280.json",
+          "height": 4244280,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4243880,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-25T04:55:58.757133719Z",
+          "file": "e275/cpoc_01_4244160.json",
+          "height": 4244160,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-25T05:06:44.798297188Z",
+          "file": "e275/cpoc_02_4244281.json",
+          "height": 4244281,
+          "index": 2,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-25T12:14:54.663968839Z",
+          "file": "e275/cpoc_03_4249173.json",
+          "height": 4249173,
+          "index": 3,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-26T01:49:49.273781103Z",
+          "file": "e275/cpoc_04_4258478.json",
+          "height": 4258478,
+          "index": 4,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4259270,
+      "epoch": 275,
+      "startHeight": 4243880,
+      "startSnapshotHeight": 4244280
+    },
+    {
+      "checkpoints": [
+        {
+          "file": "e276/start_4259671.json",
+          "height": 4259671,
+          "index": 0,
+          "kind": "start",
+          "pocStartHeight": 4259271,
+          "snapshotStatus": "fetched"
+        },
+        {
+          "blockTime": "2026-05-26T03:23:47.078369503Z",
+          "file": "e276/cpoc_01_4259551.json",
+          "height": 4259551,
+          "index": 1,
+          "kind": "cpoc",
+          "snapshotStatus": "fetched"
+        }
+      ],
+      "endHeight": 4259671,
+      "epoch": 276,
+      "startHeight": 4259271,
+      "startSnapshotHeight": 4259671
     }
   ],
-  "generatedAt": "2026-06-10T17:34:08.503008+00:00",
+  "generatedAt": "2026-06-10T17:46:35.428450+00:00",
   "source": {
+    "apiNode": "http://204.12.168.157:8000",
     "binary": null,
     "configuredHeights": false,
     "heightSource": "events",
     "rpcNode": "http://204.12.168.157:26657",
     "scanStep": 100,
-    "snapshotsFetched": false
+    "snapshotSource": "rpc",
+    "snapshotsFetched": true
   }
 }

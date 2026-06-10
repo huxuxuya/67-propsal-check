@@ -2300,6 +2300,7 @@ def cpoc_columns_for_epoch(epoch, manifest_epochs):
                 "height": checkpoint.get("height"),
                 "blockTime": checkpoint.get("blockTime") or "",
                 "file": checkpoint.get("file"),
+                "snapshotStatus": checkpoint.get("snapshotStatus") or ("fetched" if checkpoint.get("file") else "missing"),
                 "fallback": not bool(checkpoint.get("file")),
             }
         )
@@ -2329,6 +2330,8 @@ def weights_for_timeline_column(column, manifest_epochs):
         if start and start.get("file"):
             return cpoc_epoch_weights_from_group(load_cpoc_snapshot_file(start["file"]))
         return cpoc_epoch_weights_from_group(load_cpoc_epoch_group(epoch, "start"))
+    if column.get("fallback"):
+        return {}
     return cpoc_epoch_weights_from_group(load_cpoc_epoch_group(epoch, "cpoc"))
 
 
@@ -2379,6 +2382,8 @@ def build_participant_epoch_timeline(recipients, votes):
         vote = vote_by_address.get(address, {})
         seen_active = False
         previous_weight = 0
+        previous_cpoc_confirmation_by_epoch = {}
+        first_failed_cpoc = None
         cells = []
         for index, column in enumerate(columns):
             epoch = column["epoch"]
@@ -2388,15 +2393,23 @@ def build_participant_epoch_timeline(recipients, votes):
             weight = current_row.get("weight", 0)
             start_weight = start_row.get("weight", 0)
             confirmation_weight = current_row.get("confirmationWeight", 0)
+            previous_cpoc_confirmation = previous_cpoc_confirmation_by_epoch.get(epoch)
+            cpoc_delta_confirmation = (
+                confirmation_weight - previous_cpoc_confirmation
+                if column["type"] == "cpoc" and previous_cpoc_confirmation is not None and not column.get("fallback")
+                else None
+            )
             reward = recipient.get("perEpoch", {}).get(f"e{epoch}", 0)
             activity = activity_by_epoch.get(epoch, {}).get(address, {})
             reward_without_weight = bool(reward and reward > 0 and start_weight <= 0)
             reward_without_confirmation = bool(
-                reward and reward > 0 and column["type"] == "cpoc" and start_weight > 0 and confirmation_weight <= 0
+                reward and reward > 0 and column["type"] == "cpoc" and not column.get("fallback") and start_weight > 0 and confirmation_weight <= 0
             )
             if column["type"] == "cpoc":
-                ratio = (confirmation_weight / start_weight) if start_weight else 0
-                if start_weight <= 0:
+                ratio = (confirmation_weight / start_weight) if start_weight and not column.get("fallback") else 0
+                if column.get("fallback"):
+                    state = "snapshot_missing"
+                elif start_weight <= 0:
                     state = "no_epoch_weight"
                 elif confirmation_weight <= 0:
                     state = "cpoc_failed"
@@ -2414,6 +2427,10 @@ def build_participant_epoch_timeline(recipients, votes):
                     state = "missing_after_active"
                 else:
                     state = "no_weight"
+            if column["type"] == "cpoc" and not column.get("fallback"):
+                previous_cpoc_confirmation_by_epoch[epoch] = confirmation_weight
+                if first_failed_cpoc is None and start_weight > 0 and confirmation_weight <= 0:
+                    first_failed_cpoc = {"epoch": epoch, "checkpointIndex": column.get("checkpointIndex"), "height": column.get("height")}
             max_weight = max(max_weight, weight)
             max_reward = max(max_reward, reward or 0)
             reward_without_weight_count += 1 if reward_without_weight and column["type"] == "weight" else 0
@@ -2429,10 +2446,12 @@ def build_participant_epoch_timeline(recipients, votes):
                     "height": column.get("height"),
                     "blockTime": column.get("blockTime") or "",
                     "fallback": bool(column.get("fallback")),
+                    "snapshotStatus": column.get("snapshotStatus") or "",
                     "state": state,
                     "weight": weight,
                     "startWeight": start_weight,
                     "confirmationWeight": confirmation_weight,
+                    "cpocDeltaConfirmation": cpoc_delta_confirmation,
                     "confirmationRatio": round((confirmation_weight / start_weight) if start_weight else 0, 6),
                     "confirmed": state == "confirmed",
                     "rewardGonka": round(reward or 0, 6),
@@ -2455,6 +2474,9 @@ def build_participant_epoch_timeline(recipients, votes):
                 "totalCompensationGonka": recipient["totalGonka"],
                 "voteOption": recipient.get("voteOption", "did_not_vote"),
                 "governanceVotingPower": vote.get("votingPower") or 0,
+                "firstFailedCpocIndex": first_failed_cpoc.get("checkpointIndex") if first_failed_cpoc else None,
+                "firstFailedCpocHeight": first_failed_cpoc.get("height") if first_failed_cpoc else None,
+                "firstFailedCpocEpoch": first_failed_cpoc.get("epoch") if first_failed_cpoc else None,
                 "cells": cells,
             }
         )

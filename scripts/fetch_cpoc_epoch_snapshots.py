@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import base64
 import json
 import os
 import shutil
@@ -9,7 +10,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-from env_utils import gonka_rpc_url
+from env_utils import gonka_api_url, gonka_rpc_url, load_dotenv
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +23,16 @@ DEFAULT_EPOCHS = list(range(265, 277))
 def load_json(path):
     with path.open() as f:
         return json.load(f)
+
+
+def default_api_node(rpc):
+    load_dotenv()
+    if os.environ.get("GONKA_API_URL"):
+        return gonka_api_url()
+    parsed = urllib.parse.urlparse(rpc)
+    if parsed.hostname:
+        return f"{parsed.scheme or 'http'}://{parsed.hostname}:8000"
+    return gonka_api_url()
 
 
 def inferenced_binary(required=False):
@@ -62,6 +73,11 @@ def epoch_bounds(epoch):
     return start, end
 
 
+def epoch_start_snapshot_height(epoch):
+    group = load_upstream_epoch_group(epoch, "healthy" if epoch == 265 else "")
+    return int(group.get("effective_block_height") or group.get("poc_start_block_height") or 0)
+
+
 def epoch_group_id(epoch):
     group = load_upstream_epoch_group(epoch, "healthy" if epoch == 265 else "")
     group_id = group.get("epoch_group_id")
@@ -77,6 +93,73 @@ def configured_heights():
     payload = load_json(path)
     raw_epochs = payload.get("epochs", payload)
     return {int(epoch): sorted({int(height) for height in heights}) for epoch, heights in raw_epochs.items()}
+
+
+def read_varint(buf, pos):
+    shift = 0
+    result = 0
+    while True:
+        byte = buf[pos]
+        pos += 1
+        result |= (byte & 0x7F) << shift
+        if not byte & 0x80:
+            return result, pos
+        shift += 7
+
+
+def parse_fields(buf):
+    pos = 0
+    while pos < len(buf):
+        key, pos = read_varint(buf, pos)
+        field_no = key >> 3
+        wire_type = key & 0x07
+        if wire_type == 0:
+            value, pos = read_varint(buf, pos)
+        elif wire_type == 1:
+            value = buf[pos : pos + 8]
+            pos += 8
+        elif wire_type == 2:
+            length, pos = read_varint(buf, pos)
+            value = buf[pos : pos + length]
+            pos += length
+        elif wire_type == 5:
+            value = buf[pos : pos + 4]
+            pos += 4
+        else:
+            raise ValueError(f"Unsupported protobuf wire type {wire_type}")
+        yield field_no, wire_type, value
+
+
+def encode_varint(value):
+    out = []
+    while True:
+        byte = value & 0x7F
+        value >>= 7
+        if value:
+            out.append(byte | 0x80)
+        else:
+            out.append(byte)
+            break
+    return bytes(out)
+
+
+def proto_key(field_no, wire_type):
+    return encode_varint((field_no << 3) | wire_type)
+
+
+def proto_varint(field_no, value):
+    return proto_key(field_no, 0) + encode_varint(value)
+
+
+def proto_bytes(field_no, value):
+    return proto_key(field_no, 2) + encode_varint(len(value)) + value
+
+
+def as_text(value):
+    try:
+        return value.decode()
+    except UnicodeDecodeError:
+        return ""
 
 
 def run_query(binary, rpc, epoch, height):
@@ -97,14 +180,20 @@ def run_query(binary, rpc, epoch, height):
     return json.loads(result.stdout)
 
 
-def rpc_get_json(rpc, path, params):
-    url = f"{rpc.rstrip('/')}/{path.lstrip('/')}?{urllib.parse.urlencode(params)}"
-    with urllib.request.urlopen(url, timeout=30) as response:
+def epoch_group_data_request_hex(epoch):
+    return "0x" + proto_varint(1, int(epoch)).hex()
+
+
+def http_get_json(node, path, params=None, headers=None):
+    query = f"?{urllib.parse.urlencode(params or {})}" if params else ""
+    url = f"{node.rstrip('/')}/{path.lstrip('/')}{query}"
+    request = urllib.request.Request(url, headers=headers or {})
+    with urllib.request.urlopen(request, timeout=30) as response:
         return json.load(response)
 
 
 def block_search(rpc, query, page=1, per_page=100):
-    return rpc_get_json(
+    return http_get_json(
         rpc,
         "block_search",
         {
@@ -112,6 +201,131 @@ def block_search(rpc, query, page=1, per_page=100):
             "page": str(page),
             "per_page": str(per_page),
         },
+    )
+
+
+def abci_query(rpc, path, height, data_hex=""):
+    params = {"path": f'"{path}"', "height": str(height)}
+    if data_hex:
+        params["data"] = data_hex
+    return http_get_json(rpc, "abci_query", params)
+
+
+def decode_decimal(value):
+    row = {}
+    for field_no, wire_type, inner_value in parse_fields(value):
+        if field_no == 1 and wire_type == 2:
+            row["value"] = as_text(inner_value)
+    return row
+
+
+def decode_ml_node_info(value):
+    row = {}
+    for field_no, wire_type, inner_value in parse_fields(value):
+        if field_no == 1 and wire_type == 2:
+            row["node_id"] = as_text(inner_value)
+        elif field_no == 2 and wire_type == 0:
+            row["throughput"] = str(inner_value)
+        elif field_no == 3 and wire_type == 0:
+            row["poc_weight"] = str(inner_value)
+        elif field_no == 4 and wire_type == 0:
+            row.setdefault("timeslot_allocation", []).append(bool(inner_value))
+    return row
+
+
+def decode_confirmation_weight_scale(value):
+    row = {}
+    for field_no, wire_type, inner_value in parse_fields(value):
+        if field_no == 1 and wire_type == 2:
+            row["model_id"] = as_text(inner_value)
+        elif field_no == 2 and wire_type == 2:
+            row["weight_scale_factor"] = decode_decimal(inner_value)
+    return row
+
+
+def decode_validation_weight(value):
+    row = {"ml_nodes": []}
+    for field_no, wire_type, inner_value in parse_fields(value):
+        if field_no == 1 and wire_type == 2:
+            row["member_address"] = as_text(inner_value)
+        elif field_no == 2 and wire_type == 0:
+            row["weight"] = str(inner_value)
+        elif field_no == 3 and wire_type == 0:
+            row["reputation"] = int(inner_value)
+        elif field_no == 4 and wire_type == 2:
+            row["ml_nodes"].append(decode_ml_node_info(inner_value))
+        elif field_no == 5 and wire_type == 0:
+            row["confirmation_weight"] = str(inner_value)
+        elif field_no == 6 and wire_type == 0:
+            row["voting_power"] = str(inner_value)
+    return row
+
+
+def decode_epoch_group_data(value):
+    row = {"member_seed_signatures": [], "validation_weights": [], "sub_group_models": [], "confirmation_weight_scales": []}
+    for field_no, wire_type, inner_value in parse_fields(value):
+        if field_no == 1 and wire_type == 0:
+            row["poc_start_block_height"] = str(inner_value)
+        elif field_no == 2 and wire_type == 0:
+            row["epoch_group_id"] = str(inner_value)
+        elif field_no == 3 and wire_type == 2:
+            row["epoch_policy"] = as_text(inner_value)
+        elif field_no == 4 and wire_type == 0:
+            row["effective_block_height"] = str(inner_value)
+        elif field_no == 5 and wire_type == 0:
+            row["last_block_height"] = str(inner_value)
+        elif field_no == 8 and wire_type == 2:
+            row["validation_weights"].append(decode_validation_weight(inner_value))
+        elif field_no == 9 and wire_type == 0:
+            row["unit_of_compute_price"] = str(inner_value)
+        elif field_no == 10 and wire_type == 0:
+            row["number_of_requests"] = str(inner_value)
+        elif field_no == 11 and wire_type == 0:
+            row["previous_epoch_requests"] = str(inner_value)
+        elif field_no == 13 and wire_type == 0:
+            row["total_weight"] = str(inner_value)
+        elif field_no == 14 and wire_type == 2:
+            row["model_id"] = as_text(inner_value)
+        elif field_no == 15 and wire_type == 2:
+            row["sub_group_models"].append(as_text(inner_value))
+        elif field_no == 16 and wire_type == 0:
+            row["epoch_index"] = str(inner_value)
+        elif field_no == 18 and wire_type == 0:
+            row["total_throughput"] = str(inner_value)
+        elif field_no == 19 and wire_type == 2:
+            row["confirmation_weight_scales"].append(decode_confirmation_weight_scale(inner_value))
+    return row
+
+
+def decode_epoch_group_response(value_b64):
+    raw = base64.b64decode(value_b64)
+    for field_no, wire_type, value in parse_fields(raw):
+        if field_no == 1 and wire_type == 2:
+            return {"epoch_group_data": decode_epoch_group_data(value)}
+    return {"epoch_group_data": {}}
+
+
+def fetch_epoch_group_from_rpc(rpc, epoch, height):
+    payload = abci_query(
+        rpc,
+        "/inference.inference.Query/EpochGroupData",
+        height,
+        epoch_group_data_request_hex(epoch),
+    )
+    response = ((payload.get("result") or {}).get("response") or {})
+    if response.get("code") not in (None, 0):
+        raise RuntimeError(response.get("log") or f"ABCI code {response.get('code')}")
+    value = response.get("value")
+    if not value:
+        raise RuntimeError(response.get("log") or "Empty ABCI response")
+    return decode_epoch_group_response(value)
+
+
+def fetch_epoch_group_from_api(api_node, epoch, height):
+    return http_get_json(
+        api_node,
+        f"/chain-api/productscience/inference/inference/epoch_group_data/{epoch}",
+        headers={"x-cosmos-block-height": str(height)},
     )
 
 
@@ -194,6 +408,25 @@ def fetch_at_height(binary, rpc, epoch, height, cache):
     return cache[key]
 
 
+def fetch_snapshot(snapshot_source, binary, rpc, api_node, epoch, height, cache):
+    key = (snapshot_source, epoch, height)
+    if key in cache:
+        return cache[key]
+    if snapshot_source == "inferenced":
+        payload = run_query(binary, rpc, epoch, height)
+    elif snapshot_source == "api":
+        payload = fetch_epoch_group_from_api(api_node, epoch, height)
+    elif snapshot_source == "rpc":
+        payload = fetch_epoch_group_from_rpc(rpc, epoch, height)
+    else:
+        raise ValueError(f"Unsupported snapshot source: {snapshot_source}")
+    group = unwrap_epoch_group(payload)
+    if not group.get("validation_weights"):
+        raise RuntimeError(f"No validation_weights for epoch {epoch} at height {height}")
+    cache[key] = payload
+    return payload
+
+
 def discover_heights(binary, rpc, epoch, start, end, scan_step):
     heights = sorted(set([start, end, *range(start, end + 1, scan_step)]))
     cache = {}
@@ -232,31 +465,42 @@ def main():
     )
     parser.add_argument("--epochs", nargs="+", type=int, default=DEFAULT_EPOCHS)
     parser.add_argument("--height-source", choices=["events", "scan", "configured"], default="events")
+    parser.add_argument("--snapshot-source", choices=["auto", "rpc", "api", "inferenced", "none"], default="auto")
     parser.add_argument("--scan-step", type=int, default=100)
     parser.add_argument("--node", default=gonka_rpc_url())
+    parser.add_argument("--api-node", default=None)
     parser.add_argument("--require-snapshots", action="store_true")
     args = parser.parse_args()
 
     if args.scan_step < 1:
         raise SystemExit("--scan-step must be >= 1")
 
-    binary = inferenced_binary(required=args.require_snapshots or args.height_source == "scan")
+    api_node = args.api_node or default_api_node(args.node)
+    binary = inferenced_binary(required=(args.snapshot_source == "inferenced") or args.height_source == "scan")
+    snapshot_source = args.snapshot_source
+    if snapshot_source == "auto":
+        snapshot_source = "inferenced" if binary else "rpc"
+    if snapshot_source == "inferenced" and not binary:
+        raise SystemExit("inferenced binary not found; set INFERENCED_BINARY=/path/to/inferenced")
     configured = configured_heights()
     manifest = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "source": {
             "rpcNode": args.node,
+            "apiNode": api_node,
             "binary": binary,
             "heightSource": args.height_source,
+            "snapshotSource": snapshot_source,
             "scanStep": args.scan_step,
             "configuredHeights": bool(configured),
-            "snapshotsFetched": bool(binary),
+            "snapshotsFetched": snapshot_source != "none",
         },
         "epochs": [],
     }
 
     for epoch in args.epochs:
         start, end = epoch_bounds(epoch)
+        start_snapshot_height = epoch_start_snapshot_height(epoch)
         event_rows = []
         if args.height_source == "configured":
             heights = configured.get(epoch, [])
@@ -272,10 +516,14 @@ def main():
 
         epoch_dir = OUT / f"e{epoch}"
         cache = {}
-        entries = [{"index": 0, "height": start, "kind": "start"}]
-        if binary:
-            path = write_snapshot(epoch_dir, f"start_{start}.json", fetch_at_height(binary, args.node, epoch, start, cache))
+        entries = [{"index": 0, "height": start_snapshot_height, "pocStartHeight": start, "kind": "start", "snapshotStatus": "missing"}]
+        if snapshot_source != "none":
+            payload = fetch_snapshot(snapshot_source, binary, args.node, api_node, epoch, start_snapshot_height, cache)
+            path = write_snapshot(epoch_dir, f"start_{start_snapshot_height}.json", payload)
             entries[0]["file"] = str(path.relative_to(OUT))
+            entries[0]["snapshotStatus"] = "fetched"
+        elif args.require_snapshots:
+            raise SystemExit(f"Snapshot required but snapshot source is none for epoch {epoch} start")
         for index, row in enumerate(event_rows, start=1):
             height = row["height"]
             entry = {
@@ -283,17 +531,28 @@ def main():
                 "height": height,
                 "blockTime": row.get("time") or "",
                 "kind": "cpoc",
+                "snapshotStatus": "missing",
             }
-            if binary:
-                payload = fetch_at_height(binary, args.node, epoch, height, cache)
-                path = write_snapshot(epoch_dir, f"cpoc_{index:02d}_{height}.json", payload)
-                entry["file"] = str(path.relative_to(OUT))
+            if snapshot_source != "none":
+                try:
+                    payload = fetch_snapshot(snapshot_source, binary, args.node, api_node, epoch, height, cache)
+                    path = write_snapshot(epoch_dir, f"cpoc_{index:02d}_{height}.json", payload)
+                    entry["file"] = str(path.relative_to(OUT))
+                    entry["snapshotStatus"] = "fetched"
+                except Exception as exc:
+                    entry["snapshotStatus"] = "error"
+                    entry["snapshotError"] = type(exc).__name__
+                    if args.require_snapshots:
+                        raise
+            elif args.require_snapshots:
+                raise SystemExit(f"Snapshot required but snapshot source is none for epoch {epoch} CPoC {height}")
             entries.append(entry)
 
         manifest["epochs"].append(
             {
                 "epoch": epoch,
                 "startHeight": start,
+                "startSnapshotHeight": start_snapshot_height,
                 "endHeight": end,
                 "checkpoints": entries,
             }
