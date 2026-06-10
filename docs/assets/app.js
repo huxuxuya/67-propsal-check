@@ -197,12 +197,15 @@ function renderOverview(data) {
 
 function renderCompensationChart() {
   const filtered = new Set(state.filteredRecipients.map((row) => row.address));
+  const voteOrder = { no_with_veto: 0, yes: 1, did_not_vote: 2, abstain: 3, no: 4 };
+  const voteOptions = ["no_with_veto", "yes", "did_not_vote"];
   const rows = (state.data.chartData?.compensationComponents || state.filteredRecipients)
     .filter((row) => filtered.has(row.address))
+    .sort((a, b) => (voteOrder[a.voteOption] ?? 99) - (voteOrder[b.voteOption] ?? 99) || (b.totalGonka || 0) - (a.totalGonka || 0))
     .slice(0, 30);
   if (state.compensationView === "tree") {
     state.charts.compensation.setOption({
-      tooltip: chartTooltip({ formatter: (p) => `${p.name}<br>${gonka(p.value)}<br>${escapeHtml(p.data.identityBoundary || "")}` }),
+      tooltip: chartTooltip({ formatter: (p) => `${p.name}<br>${gonka(p.value)}<br>vote ${escapeHtml(optionLabels[p.data.voteOption] || p.data.voteOption)}<br>power ${fmt.format(p.data.votingPower || 0)}<br>${escapeHtml(p.data.identityBoundary || "")}` }),
       series: [{
         type: "treemap",
         roam: false,
@@ -217,14 +220,18 @@ function renderCompensationChart() {
             value: row.totalGonka,
             address: row.address,
             identityBoundary: identityBoundary(row),
-            itemStyle: { color: boundaryColor(row) },
+            voteOption: row.voteOption,
+            votingPower: row.votingPower || 0,
+            itemStyle: { color: optionColors[row.voteOption] || optionColors.did_not_vote },
           })),
       }],
     }, true);
     return;
   }
+  const maxPower = Math.max(...rows.map((row) => row.votingPower || 0), 0);
   state.charts.compensation.setOption({
-    grid: { left: 150, right: 68, top: 20, bottom: 32 },
+    legend: { top: 4, data: voteOptions.map((option) => optionLabels[option]), textStyle: { color: "#a7afba" } },
+    grid: { left: 154, right: 72, top: 42, bottom: 32 },
     tooltip: chartTooltip({
       trigger: "axis",
       formatter: (params) => {
@@ -235,14 +242,20 @@ function renderCompensationChart() {
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
     yAxis: { type: "category", data: rows.map((row) => `#${row.rank} ${actorShortLabel(row)}`), axisLabel: { color: "#a7afba", width: 140, overflow: "truncate" } },
     series: [
-      { name: "e265-e266 attack", type: "bar", stack: "comp", data: rows.map((row) => row.attackE265E266Gonka || 0), itemStyle: { color: "#d9655f" } },
-      { name: "e267-e276 cap", type: "bar", stack: "comp", data: rows.map((row) => row.capE267E276Gonka || 0), itemStyle: { color: "#d7a84f" } },
+      ...voteOptions.map((option) => ({
+        name: optionLabels[option],
+        type: "bar",
+        stack: "vote",
+        data: rows.map((row) => row.voteOption === option ? (row.totalGonka || 0) : 0),
+        itemStyle: { color: optionColors[option] || optionColors.did_not_vote },
+        label: { show: true, position: "right", color: "#eef0f2", formatter: (p) => p.value ? compact.format(p.value) : "" },
+      })),
       {
         name: "vote power",
         type: "scatter",
         data: rows.map((row, index) => [row.totalGonka || 0, index, row.votingPower || 0]),
-        symbolSize: (value) => voteSymbolSize({ votingPower: value[2] }, Math.max(...rows.map((row) => row.votingPower || 0), 0)),
-        itemStyle: { color: (p) => optionColors[rows[p.dataIndex]?.voteOption] || optionColors.did_not_vote, borderColor: (p) => boundaryColor(rows[p.dataIndex]), borderWidth: 2 },
+        symbolSize: (value) => voteSymbolSize({ votingPower: value[2] }, maxPower),
+        itemStyle: { color: "#101114", borderColor: (p) => optionColors[rows[p.dataIndex]?.voteOption] || optionColors.did_not_vote, borderWidth: 2 },
       },
     ],
   }, true);
@@ -592,27 +605,82 @@ function renderWindowPowerChart() {
 function renderAttackTimeline() {
   const phases = (state.data.chartData?.eventTimeline || state.data.attackNarrative?.phases || [])
     .filter((row) => row.time || row.timeOrHeight);
-  const dated = phases.filter((row) => row.time && !Number.isNaN(Date.parse(row.time)));
-  const rows = dated.length >= 2 ? dated : phases;
+  const lanes = ["Compensation", "Governance", "Inference timing"];
+  const laneIndex = (row) => {
+    const text = `${row.label || ""} ${row.summary || ""} ${row.timeOrHeight || ""}`.toLowerCase();
+    if (text.includes("e287") || text.includes("inference")) return 2;
+    if (text.includes("damage") || text.includes("restitution")) return 0;
+    return 1;
+  };
+  const parseTimes = (row) => {
+    const matches = String(row.timeOrHeight || "").match(/\d{4}-\d{2}-\d{2}T[0-9:.]+Z/g) || [];
+    const start = Date.parse(row.time || matches[0] || "");
+    const end = matches.length > 1 ? Date.parse(matches[1]) : null;
+    return { start: Number.isNaN(start) ? null : start, end: end && !Number.isNaN(end) ? end : null };
+  };
+  const datedStarts = phases.map(parseTimes).map((item) => item.start).filter(Boolean);
+  const minTime = Math.min(...datedStarts);
+  const maxTime = Math.max(...datedStarts, ...phases.map(parseTimes).map((item) => item.end).filter(Boolean));
+  const span = Math.max(maxTime - minTime, 24 * 60 * 60 * 1000);
+  let staticIndex = 0;
+  const intervals = [];
+  const markers = [];
+  phases.forEach((row, index) => {
+    const lane = laneIndex(row);
+    const { start, end } = parseTimes(row);
+    if (start && end && end > start) {
+      intervals.push({ value: [start, end, lane, index], row });
+      return;
+    }
+    const time = start || (minTime - span * (0.16 - staticIndex++ * 0.035));
+    markers.push({ value: [time, lane, index], row, staticEvent: !start });
+  });
   state.charts.attackTimeline.setOption({
-    grid: { left: 40, right: 24, top: 28, bottom: 90 },
+    grid: { left: 124, right: 28, top: 30, bottom: 54 },
     tooltip: chartTooltip({
       formatter: (p) => {
-        const row = rows[p.dataIndex];
+        const row = p.data?.row || phases[p.value?.[2]];
         return `<strong>${escapeHtml(row.label)}</strong><br>${escapeHtml(formatTime(row.time) || row.timeOrHeight)}<br>${escapeHtml(row.summary)}`;
       },
     }),
-    xAxis: dated.length >= 2
-      ? { type: "time", axisLabel: { color: "#a7afba", formatter: (value) => formatTime(value).slice(5, 16) } }
-      : { type: "category", data: rows.map((row) => row.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 25 } },
-    yAxis: { type: "value", show: false, min: 0, max: 2 },
-    series: [{
-      type: "scatter",
-      symbolSize: 22,
-      data: rows.map((row, index) => [dated.length >= 2 ? Date.parse(row.time) : index, 1, row.confidence]),
-      itemStyle: { color: (p) => rows[p.dataIndex]?.confidence === "high" ? "#79b66a" : "#d7a84f" },
-      label: { show: true, formatter: (p) => rows[p.dataIndex]?.label || "", position: "top", color: "#eef0f2" },
-    }],
+    xAxis: { type: "time", min: minTime - span * 0.2, max: maxTime + span * 0.06, axisLabel: { color: "#a7afba", formatter: (value) => formatTime(value).slice(5, 16) } },
+    yAxis: { type: "category", data: lanes, axisLabel: { color: "#a7afba" } },
+    series: [
+      {
+        name: "interval",
+        type: "custom",
+        data: intervals,
+        renderItem: (params, api) => {
+          const start = api.coord([api.value(0), api.value(2)]);
+          const end = api.coord([api.value(1), api.value(2)]);
+          const height = 18;
+          return {
+            type: "rect",
+            shape: echarts.graphic.clipRectByRect(
+              { x: start[0], y: start[1] - height / 2, width: Math.max(end[0] - start[0], 2), height },
+              { x: params.coordSys.x, y: params.coordSys.y, width: params.coordSys.width, height: params.coordSys.height },
+            ),
+            style: { fill: "rgba(215, 168, 79, 0.55)", stroke: "#d7a84f", lineWidth: 1 },
+          };
+        },
+      },
+      {
+        name: "event",
+        type: "scatter",
+        symbolSize: (value, p) => p.data.staticEvent ? 14 : 18,
+        data: markers,
+        itemStyle: {
+          color: (p) => {
+            const lane = laneIndex(p.data.row || {});
+            return lane === 0 ? "#d9655f" : lane === 2 ? "#5da9e9" : "#d7a84f";
+          },
+          borderColor: "#101114",
+          borderWidth: 1,
+        },
+        label: { show: true, formatter: (p) => p.data.row?.label || "", position: "top", color: "#eef0f2", fontSize: 11 },
+        labelLayout: { hideOverlap: true },
+      },
+    ],
   }, true);
 }
 
