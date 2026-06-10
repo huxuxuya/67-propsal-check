@@ -39,6 +39,7 @@ const els = {
   entryExitTable: document.getElementById("entryExitTable"),
   telegramTable: document.getElementById("telegramTable"),
   labelTable: document.getElementById("labelTable"),
+  searchIndex: document.getElementById("searchIndex"),
   epochTable: document.getElementById("epochTable"),
   recipientTable: document.getElementById("recipientTable"),
   voteTable: document.getElementById("voteTable"),
@@ -202,6 +203,139 @@ function textMatch(row, query) {
     row.signalClusterId,
     ...(row.gnsNames || []).map((item) => item.fullName),
   ].filter(Boolean).join(" ").toLowerCase().includes(query);
+}
+
+function buildSearchIndexRows(data) {
+  const rows = new Map();
+  const ensure = (address) => {
+    if (!address) return null;
+    const normalized = String(address).replace("gonkavaloper", "gonka");
+    if (!rows.has(normalized)) {
+      rows.set(normalized, {
+        address: normalized,
+        labels: new Set(),
+        roles: new Set(),
+        statuses: new Set(),
+        votes: new Set(),
+        sources: new Set(),
+        totalGonka: 0,
+        votingPower: 0,
+      });
+    }
+    return rows.get(normalized);
+  };
+  const addLabel = (row, value) => {
+    if (value) row.labels.add(value);
+  };
+
+  (data.recipients || []).forEach((item) => {
+    const row = ensure(item.address);
+    if (!row) return;
+    row.roles.add("recipient");
+    row.sources.add("recipients");
+    addLabel(row, actorLabel(item));
+    row.statuses.add(item.status || "unknown");
+    row.votes.add(optionLabels[item.voteOption] || item.voteOption || "did not vote");
+    row.totalGonka = Math.max(row.totalGonka, item.totalGonka || 0);
+    row.votingPower = Math.max(row.votingPower, item.votingPower || item.governanceVotingPower || 0);
+  });
+
+  (data.votes || []).forEach((item) => {
+    const row = ensure(item.voter);
+    if (!row) return;
+    row.roles.add("voter");
+    row.sources.add("votes");
+    addLabel(row, actorLabel(item));
+    row.votes.add(optionLabels[item.primaryOption] || item.primaryOption || "unknown vote");
+    row.votingPower = Math.max(row.votingPower, item.votingPower || 0);
+  });
+
+  (data.actors || []).forEach((item) => {
+    const row = ensure(item.address);
+    if (!row) return;
+    row.sources.add("actors");
+    (item.roles || []).forEach((role) => row.roles.add(role));
+    addLabel(row, actorLabel(item));
+    row.totalGonka = Math.max(row.totalGonka, item.totalGonka || 0);
+    row.votingPower = Math.max(row.votingPower, item.votingPower || 0);
+  });
+
+  [
+    ...(data.identityGraph?.strictClusters || []),
+    ...(data.identityGraph?.signalClusters || []),
+    ...(data.epochEntryExitClusters || []),
+    ...(data.rankedParties || []),
+  ].forEach((item) => {
+    (item.addresses || []).forEach((address) => {
+      const row = ensure(address);
+      if (!row) return;
+      row.sources.add(item.id || "cluster");
+      addLabel(row, actorLabel(item));
+    });
+  });
+
+  (data.identityEvidence || []).forEach((item) => {
+    const row = ensure(item.address);
+    if (!row) return;
+    row.sources.add(item.sourceType || "identity evidence");
+    addLabel(row, item.publicLabel || item.sourceValue);
+  });
+
+  (data.evidenceClaims || []).forEach((item) => {
+    const row = ensure(item.address);
+    if (!row) return;
+    row.sources.add(item.sourceType || "evidence claim");
+    addLabel(row, item.subject || item.sourceValue);
+  });
+
+  (data.identityGraph?.edges || []).forEach((edge) => {
+    [edge.source, edge.target].forEach((value) => {
+      const address = String(value || "").startsWith("address:") ? String(value).slice(8) : "";
+      const row = ensure(address);
+      if (!row) return;
+      row.sources.add(edge.sourceType || "graph edge");
+      addLabel(row, edge.sourceValue || edge.target);
+    });
+  });
+
+  (data.telegramEvidence || []).forEach((item) => {
+    (item.addresses || []).forEach((address) => {
+      const row = ensure(address);
+      if (!row) return;
+      row.sources.add("telegram evidence");
+      addLabel(row, item.author || item.chat);
+    });
+  });
+
+  return [...rows.values()].sort((a, b) => b.totalGonka - a.totalGonka || b.votingPower - a.votingPower || a.address.localeCompare(b.address));
+}
+
+function renderSearchIndex() {
+  const query = els.search.value.trim().toLowerCase();
+  const rows = buildSearchIndexRows(state.data).filter((row) => {
+    if (!query) return true;
+    return [
+      row.address,
+      ...row.labels,
+      ...row.roles,
+      ...row.statuses,
+      ...row.votes,
+      ...row.sources,
+    ].join(" ").toLowerCase().includes(query);
+  });
+  document.getElementById("searchIndexRows").textContent = `${rows.length} searchable addresses`;
+  els.searchIndex.innerHTML = rows.map((row) => `
+    <div class="search-index-row">
+      <span class="mono search-index-address">${escapeHtml(row.address)}</span>
+      <span class="search-index-meta">${escapeHtml([...row.labels].filter(Boolean).slice(0, 3).join(" | ") || "Unknown public owner")}</span>
+      <span class="search-index-tags">${[...row.roles].sort().map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</span>
+      <span class="search-index-stats">${row.totalGonka ? gonka(row.totalGonka) : ""}${row.votingPower ? ` · power ${fmt.format(row.votingPower)}` : ""}</span>
+      <button class="row-button search-index-open" data-address="${escapeHtml(row.address)}">Open</button>
+    </div>
+  `).join("");
+  els.searchIndex.querySelectorAll("[data-address]").forEach((button) => {
+    button.addEventListener("click", () => openDrawer(button.dataset.address));
+  });
 }
 
 function applyFilters() {
@@ -1652,6 +1786,7 @@ function renderAll() {
   renderRankedTable();
   renderInterestClusterTable();
   renderEvidenceTable();
+  renderSearchIndex();
   renderLabelTable();
   renderEpochTable();
   renderMethodology();

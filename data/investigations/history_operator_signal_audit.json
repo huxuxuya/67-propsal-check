@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "description": "Operator/pool attribution leads from local Telegram history exports. These are non-proof signals unless corroborated.",
+    "generatedAt": "2026-06-10T21:08:09.529702+00:00",
+    "source": "history/**/*.html"
+  },
+  "rows": [
+    {
+      "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+      "author": "Sergei Koniakov",
+      "caveat": "Telegram message explicitly says the address appears to be that operator's node; still not public owner proof without corroboration.",
+      "confidence": "medium",
+      "currentLabel": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+      "excerpt": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv\n@Razum_Dmitriy , \u0432\u0440\u043e\u0434\u0435 \u0432\u0430\u0448\u0430 \u043d\u043e\u0434\u0430. Formula X",
+      "inferenceUrl": "http://135.181.56.61:8000",
+      "isAttributionProof": false,
+      "matchedValidator": "gonkavaloper1qa90tgczc0k5dvk4l5nvlf5y6phgm6mgk2pw9p",
+      "messageId": "message16248",
+      "messageTime": "31.05.2026 18:48:58 UTC+03:00",
+      "operatorSignalLabel": "Formula X",
+      "roles": "recipient",
+      "sourceFile": "history/Gonka Devs/messages16.html",
+      "sourceType": "telegram_operator_context",
+      "subject": "Formula X / Razum_Dmitriy",
+      "totalCompensationGonka": 158541.879456,
+      "validatorKey": "D34hhUrgETtsKcAvPCX33o1xCf5ntb+9y9ZT/NHKBqQ=",
+      "votingPower": 0
+    }
+  ],
+  "summary": {
+    "addresses": 1,
+    "formulaXAddresses": 1,
+    "formulaXRows": 1,
+    "rows": 1
+  }
+}

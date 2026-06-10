@@ -167,6 +167,66 @@ select {
   grid-column: span 1;
 }
 
+.searchable-index-panel {
+  margin-bottom: 14px;
+}
+
+.search-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1px;
+  max-height: 220px;
+  overflow: auto;
+  background: var(--line);
+}
+
+.search-index-row {
+  display: grid;
+  grid-template-columns: minmax(250px, 1.2fr) minmax(180px, 1fr) minmax(80px, auto) minmax(120px, auto) auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  padding: 7px 10px;
+  color: var(--text);
+  background: var(--panel);
+  text-align: left;
+}
+
+.search-index-row:hover {
+  background: var(--panel-2);
+}
+
+.search-index-address,
+.search-index-meta,
+.search-index-stats {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-index-address {
+  color: var(--accent);
+}
+
+.search-index-meta,
+.search-index-stats {
+  color: var(--muted);
+}
+
+.search-index-tags {
+  display: inline-flex;
+  gap: 4px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.search-index-open {
+  justify-self: end;
+  white-space: nowrap;
+}
+
 .reward-flow-panel {
   grid-column: 1 / -1;
 }

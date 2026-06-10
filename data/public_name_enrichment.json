@@ -2706,6 +2706,18 @@
         {
           "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
           "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages14.html",
+          "sourceType": "telegram_operator_statement",
+          "sourceUrl": "history/Gonka Devs/messages14.html",
+          "sourceValue": "\u0423\u0441\u043f\u0435\u0432\u0430\u0439\u0442\u0435 \u0437\u0430\u0434\u0435\u043b\u0435\u0433\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u041a\u0438\u043c\u0438 \u0434\u043e \u0441\u043b\u0435\u0434 \u044d\u043f\u043e\u0445\u0438 \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u043f\u043e\u0442\u0435\u0440\u044f\u0442\u044c 15% ! \u0415\u0441\u043b\u0438 \u0438\u0449\u0438\u0442\u0435 \u043a\u043e\u043c\u0443 \u0434\u0435\u043b\u0435\u0433\u0438\u0440\u043e\u0432\u0430\u0442\u044c, \u0442\u043e \u043c\u043e\u0436\u043d\u043e \u0432\u043e\u0442 \u0441\u044e\u0434\u0430: ./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \\ --from <your-account-key> \\ --node http://node2.gonka.ai:8000/chain-rpc/ \\ --chain-id gonka-mainnet \\ --keyring-backend file \\ --gas auto \\ --gas-adjustment 1.3 \\ -y \u042d\u0442\u043e \u0442\u043e\u043f 1 \u0441\u0435\u0433\u043c\u0435\u043d\u0442 \u043f\u043e \u0432\u0435\u0441\u0443 \u0438 \u043e\u043d \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u043f\u0443\u0441\u043a\u0430\u0442\u044c \u041a\u0438\u043c\u0438 \u0441\u0435\u0433\u043e\u0434\u043d\u044f \u0432\u0435\u0447\u0435\u0440\u043e\u043c. \u042f \u0431\u0443\u0434\u0443 \u0434\u0430\u0432\u0430\u0442\u044c \u043e\u0431\u043d\u043e\u043b\u0432\u0435\u043d\u0438\u044f \u0432 \u044d\u0442\u043e\u0442 \u0447\u0430\u0442 \u043f\u043e \u043f\u0440\u043e\u0433\u0440\u0435\u0441\u0441\u0443 \u0438 \u0435\u0441\u043b\u0438 \u0447\u0442\u043e-\u0442\u043e \u043f\u043e\u0439\u0434\u0435\u0442 \u043d\u0435 \u0442\u0430\u043a \u0442\u043e\u0436\u0435 \u0431\u0443\u0434\u0443 \u043e\u0442\u043f\u0438\u0441\u044b\u0432\u0430\u0442\u044c\u0441\u044f.",
+          "subject": "Votkon"
+        },
+        {
+          "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
+          "category": "public_identity",
           "caveat": "Telegram author posted operator/delegation language around this address; strong local-export operator signal, but not public owner proof without a linkable public source.",
           "confidence": "high",
           "isAttributionProof": false,
@@ -2737,18 +2749,6 @@
           "sourceType": "epoch_commit_participant",
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e266/epoch266_commits.json",
           "sourceValue": "e266 moonshotai/Kimi-K2.6 count=89984",
-          "subject": "02f196facea0c57cfe2d571e910df4295ea38c70d45ca9981928b136d91ae7a7ff"
-        },
-        {
-          "address": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e267/epoch267_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e267/epoch267_commits.json",
-          "sourceValue": "e267 moonshotai/Kimi-K2.6 count=77056",
           "subject": "02f196facea0c57cfe2d571e910df4295ea38c70d45ca9981928b136d91ae7a7ff"
         }
       ],
@@ -2939,8 +2939,8 @@
       "votingPower": 86433
     },
     {
-      "actorDisplayLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
-      "actorShortLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "actorDisplayLabel": "A \u00b7 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "actorShortLabel": "A",
       "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
       "bestPublicName": "http://178.105.174.27:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -2955,7 +2955,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "11262.520198 GONKA",
-          "subject": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+          "subject": "A \u00b7 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
         },
         {
           "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
@@ -2967,7 +2967,19 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
-          "subject": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+          "subject": "A \u00b7 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+        },
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages16.html",
+          "sourceType": "telegram_self_claim",
+          "sourceUrl": "history/Gonka Devs/messages16.html",
+          "sourceValue": "\u041c\u043e\u0439 \u0430\u0434\u0440\u0435\u0441 \u0441\u0440\u0435\u0434\u0438 \u044d\u0442\u0438\u0445 \u043d\u043e\u0434, \u0432\u0441\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u043b\u043e \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u043e",
+          "subject": "A"
         },
         {
           "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
@@ -3028,25 +3040,13 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e272/epoch272_commits.json",
           "sourceValue": "e272 moonshotai/Kimi-K2.6 count=14912",
           "subject": "03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab"
-        },
-        {
-          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e273/epoch273_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e273/epoch273_commits.json",
-          "sourceValue": "e273 moonshotai/Kimi-K2.6 count=15360",
-          "subject": "03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab"
         }
       ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.174.27:8000",
-      "label": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
-      "labelSource": "address",
+      "label": "A \u00b7 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "labelSource": "telegram_self_claim",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -3796,8 +3796,8 @@
       "votingPower": 19974
     },
     {
-      "actorDisplayLabel": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
-      "actorShortLabel": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+      "actorDisplayLabel": "\u0412\u0430\u043d\u044f \u041b\u043e\u0441\u044c \u00b7 gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+      "actorShortLabel": "\u0412\u0430\u043d\u044f \u041b\u043e\u0441\u044c",
       "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
       "bestPublicName": "gonkavaloper1zktn8j65wlys8a8e38hqhf4y3x6m4x047s835t",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -3812,7 +3812,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "2392.222959 GONKA",
-          "subject": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx"
+          "subject": "\u0412\u0430\u043d\u044f \u041b\u043e\u0441\u044c \u00b7 gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx"
         },
         {
           "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
@@ -3848,7 +3848,19 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx"
+          "subject": "\u0412\u0430\u043d\u044f \u041b\u043e\u0441\u044c \u00b7 gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx"
+        },
+        {
+          "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+          "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka RU/messages35.html",
+          "sourceType": "telegram_self_claim",
+          "sourceUrl": "history/Gonka RU/messages35.html",
+          "sourceValue": "\u0412\u0441\u0435\u043c \u043f\u0440\u0438\u0432\u0435\u0442! \u0415\u0441\u043b\u0438 \u0432\u044b \u043d\u0435 \u0445\u043e\u0441\u0442\u0438\u0442\u0435 \u041c\u0438\u043d\u0438\u041c\u0430\u043a\u0441 \u043d\u0430 \u0441\u0432\u043e\u0435\u0439 \u043d\u043e\u0434\u0435, \u0442\u043e \u043c\u043e\u0436\u0435\u0442\u0435 \u043e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c poc-delegation \u043d\u0430 \u043d\u0430\u0448\u0443 (\u043c\u044b \u0445\u043e\u0441\u0442\u0438\u043c \u0441\u0435\u0433\u043e\u0434\u043d\u044f), \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u043f\u043e\u0442\u0435\u0440\u044f\u0442\u044c 10-15% \u043e\u0442 \u0432\u0435\u0441\u0430 \u0441\u0432\u043e\u0435\u0439 \u043d\u043e\u0434\u044b. inferenced tx inference set-poc-delegation \\ MiniMaxAI/MiniMax-M2.7 \\ gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx \\ --from gonka-account-key \\ --chain-id gonka-mainnet \\ --node http://node1.gonka.ai:8000/chain-rpc/ \\ --keyring-backend file \\ --gas auto --gas-adjustment 1.3 \\ --gas-prices 0ngonka \\ --broadcast-mode sync \\ --yes",
+          "subject": "\u0412\u0430\u043d\u044f \u041b\u043e\u0441\u044c"
         },
         {
           "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
@@ -3885,25 +3897,13 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e267/epoch267_commits.json",
           "sourceValue": "e267 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=41216",
           "subject": "0253882a59405c28b3c780b28bea241ca359c1a347d8f487d4d5595efb63169667"
-        },
-        {
-          "address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e267/epoch267_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e267/epoch267_commits.json",
-          "sourceValue": "e267 moonshotai/Kimi-K2.6 count=6304",
-          "subject": "0253882a59405c28b3c780b28bea241ca359c1a347d8f487d4d5595efb63169667"
         }
       ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://65.108.198.21:8000",
-      "label": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
-      "labelSource": "address",
+      "label": "\u0412\u0430\u043d\u044f \u041b\u043e\u0441\u044c \u00b7 gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+      "labelSource": "telegram_self_claim",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -4358,8 +4358,8 @@
       "votingPower": 278
     },
     {
-      "actorDisplayLabel": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
-      "actorShortLabel": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+      "actorDisplayLabel": "Formula X? \u00b7 gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+      "actorShortLabel": "Formula X?",
       "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
       "bestPublicName": "gonkavaloper1qa90tgczc0k5dvk4l5nvlf5y6phgm6mgk2pw9p",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -4374,7 +4374,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "158541.879456 GONKA",
-          "subject": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv"
+          "subject": "Formula X? \u00b7 gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv"
         },
         {
           "address": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
@@ -4464,8 +4464,8 @@
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://135.181.56.61:8000",
-      "label": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
-      "labelSource": "address",
+      "label": "Formula X? \u00b7 gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
+      "labelSource": "telegram_operator_context",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5196,8 +5196,8 @@
       "votingPower": 0
     },
     {
-      "actorDisplayLabel": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
-      "actorShortLabel": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+      "actorDisplayLabel": "A \u00b7 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+      "actorShortLabel": "A",
       "address": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
       "bestPublicName": "gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5212,7 +5212,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "20610.390028 GONKA",
-          "subject": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau"
+          "subject": "A \u00b7 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau"
         },
         {
           "address": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
@@ -5237,6 +5237,18 @@
           "sourceUrl": "docs/data/dashboard.json",
           "sourceValue": "gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23",
           "subject": "public_label:gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23"
+        },
+        {
+          "address": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+          "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages16.html",
+          "sourceType": "telegram_self_claim",
+          "sourceUrl": "history/Gonka Devs/messages16.html",
+          "sourceValue": "\u041c\u043e\u0439 \u0430\u0434\u0440\u0435\u0441 \u0441\u0440\u0435\u0434\u0438 \u044d\u0442\u0438\u0445 \u043d\u043e\u0434, \u0432\u0441\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u043b\u043e \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u043e",
+          "subject": "A"
         },
         {
           "address": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
@@ -5285,25 +5297,13 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e269/epoch269_commits.json",
           "sourceValue": "e269 moonshotai/Kimi-K2.6 count=7296",
           "subject": "02a93250e5d41ce8b84b5365bb855cd9f5802ca2899d38c42be9667f7be7218e32"
-        },
-        {
-          "address": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e270/epoch270_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e270/epoch270_commits.json",
-          "sourceValue": "e270 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1024",
-          "subject": "02a93250e5d41ce8b84b5365bb855cd9f5802ca2899d38c42be9667f7be7218e32"
         }
       ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.170.135:8000",
-      "label": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
-      "labelSource": "address",
+      "label": "A \u00b7 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+      "labelSource": "telegram_self_claim",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5338,8 +5338,8 @@
       "votingPower": 0
     },
     {
-      "actorDisplayLabel": "A? \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
-      "actorShortLabel": "A?",
+      "actorDisplayLabel": "A \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+      "actorShortLabel": "A",
       "address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
       "bestPublicName": "http://136.243.110.227:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5354,7 +5354,19 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "18234.887511 GONKA",
-          "subject": "A? \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5"
+          "subject": "A \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5"
+        },
+        {
+          "address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+          "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages15.html",
+          "sourceType": "telegram_self_claim",
+          "sourceUrl": "history/Gonka Devs/messages15.html",
+          "sourceValue": "\u041c\u043e\u0436\u043d\u043e \u043f\u043e \u043c\u043e\u0435\u0439 \u043d\u043e\u0434\u0435 \u043e\u0442\u0441\u043b\u0435\u0436\u0438\u0432\u0430\u0442\u044c \u043d\u0430\u0433\u0440\u0430\u0434\u044b gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+          "subject": "A"
         },
         {
           "address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
@@ -5427,25 +5439,13 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e270/epoch270_commits.json",
           "sourceValue": "e270 moonshotai/Kimi-K2.6 count=26752",
           "subject": "03eb04cbdab5a6827d29dc22e4ef23784abaa10beca9fa13feed5dd42bb5479f36"
-        },
-        {
-          "address": "gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e271/epoch271_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e271/epoch271_commits.json",
-          "sourceValue": "e271 moonshotai/Kimi-K2.6 count=14144",
-          "subject": "03eb04cbdab5a6827d29dc22e4ef23784abaa10beca9fa13feed5dd42bb5479f36"
         }
       ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://136.243.110.227:8000",
-      "label": "A? \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
-      "labelSource": "telegram_self_or_team_claim",
+      "label": "A \u00b7 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+      "labelSource": "telegram_self_claim",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -5899,8 +5899,8 @@
       "votingPower": 0
     },
     {
-      "actorDisplayLabel": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
-      "actorShortLabel": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+      "actorDisplayLabel": "A \u00b7 gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+      "actorShortLabel": "A",
       "address": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
       "bestPublicName": "gonkavaloper1007g0ut3u4wjkay9hegqfev4pj90qgexjs8u0r",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -5915,7 +5915,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "11688.555563 GONKA",
-          "subject": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw"
+          "subject": "A \u00b7 gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw"
         },
         {
           "address": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
@@ -5940,6 +5940,18 @@
           "sourceUrl": "docs/data/dashboard.json",
           "sourceValue": "gonkavaloper1007g0ut3u4wjkay9hegqfev4pj90qgexjs8u0r",
           "subject": "public_label:gonkavaloper1007g0ut3u4wjkay9hegqfev4pj90qgexjs8u0r"
+        },
+        {
+          "address": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+          "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages16.html",
+          "sourceType": "telegram_self_claim",
+          "sourceUrl": "history/Gonka Devs/messages16.html",
+          "sourceValue": "\u041c\u043e\u0439 \u0430\u0434\u0440\u0435\u0441 \u0441\u0440\u0435\u0434\u0438 \u044d\u0442\u0438\u0445 \u043d\u043e\u0434, \u0432\u0441\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u043b\u043e \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u043e",
+          "subject": "A"
         },
         {
           "address": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
@@ -5988,25 +6000,13 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e271/epoch271_commits.json",
           "sourceValue": "e271 moonshotai/Kimi-K2.6 count=14816",
           "subject": "020dc473426641164233a995ba2705b43f707cd98800adc2a6dbd7f56391a45d3d"
-        },
-        {
-          "address": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e272/epoch272_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e272/epoch272_commits.json",
-          "sourceValue": "e272 moonshotai/Kimi-K2.6 count=22176",
-          "subject": "020dc473426641164233a995ba2705b43f707cd98800adc2a6dbd7f56391a45d3d"
         }
       ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.172.102:8000",
-      "label": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
-      "labelSource": "address",
+      "label": "A \u00b7 gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+      "labelSource": "telegram_self_claim",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -6183,8 +6183,8 @@
       "votingPower": 0
     },
     {
-      "actorDisplayLabel": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
-      "actorShortLabel": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+      "actorDisplayLabel": "A \u00b7 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+      "actorShortLabel": "A",
       "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
       "bestPublicName": "http://88.99.213.222:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -6199,7 +6199,7 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "10934.181496 GONKA",
-          "subject": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4"
+          "subject": "A \u00b7 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4"
         },
         {
           "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
@@ -6211,7 +6211,19 @@
           "sourceType": "proposal_vote",
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "no_with_veto",
-          "subject": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4"
+          "subject": "A \u00b7 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4"
+        },
+        {
+          "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+          "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages16.html",
+          "sourceType": "telegram_self_claim",
+          "sourceUrl": "history/Gonka Devs/messages16.html",
+          "sourceValue": "\u041c\u043e\u0439 \u0430\u0434\u0440\u0435\u0441 \u0441\u0440\u0435\u0434\u0438 \u044d\u0442\u0438\u0445 \u043d\u043e\u0434, \u0432\u0441\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u043b\u043e \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u043e",
+          "subject": "A"
         },
         {
           "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
@@ -6272,25 +6284,13 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e272/epoch272_commits.json",
           "sourceValue": "e272 moonshotai/Kimi-K2.6 count=26912",
           "subject": "020f7c51309e1c24591fe611fc5a70450930c537207c237080962badfb57e9508d"
-        },
-        {
-          "address": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
-          "category": "financial_or_epoch_activity",
-          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "upstream/gonka-kimi-restitution/e273/epoch273_commits.json",
-          "sourceType": "epoch_commit_participant",
-          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e273/epoch273_commits.json",
-          "sourceValue": "e273 moonshotai/Kimi-K2.6 count=40800",
-          "subject": "020f7c51309e1c24591fe611fc5a70450930c537207c237080962badfb57e9508d"
         }
       ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://88.99.213.222:8000",
-      "label": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
-      "labelSource": "address",
+      "label": "A \u00b7 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+      "labelSource": "telegram_self_claim",
       "nextActions": [
         "review recipient-voter conflict",
         "corroborate voter owner",
@@ -8561,8 +8561,8 @@
       "votingPower": 0
     },
     {
-      "actorDisplayLabel": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
-      "actorShortLabel": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+      "actorDisplayLabel": "A \u00b7 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+      "actorShortLabel": "A",
       "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
       "bestPublicName": "http://198.244.228.95:8000",
       "evidenceBoundary": "public_name_or_metadata_signal",
@@ -8577,7 +8577,19 @@
           "sourceType": "compensation_output",
           "sourceUrl": "data/proposal_67.json",
           "sourceValue": "1753.409171 GONKA",
-          "subject": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n"
+          "subject": "A \u00b7 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n"
+        },
+        {
+          "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+          "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages16.html",
+          "sourceType": "telegram_self_claim",
+          "sourceUrl": "history/Gonka Devs/messages16.html",
+          "sourceValue": "\u041c\u043e\u0439 \u0430\u0434\u0440\u0435\u0441 \u0441\u0440\u0435\u0434\u0438 \u044d\u0442\u0438\u0445 \u043d\u043e\u0434, \u0432\u0441\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u043b\u043e \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u043e",
+          "subject": "A"
         },
         {
           "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
@@ -8650,25 +8662,13 @@
           "sourceUrl": "data/public_identity_signals.json",
           "sourceValue": "http://198.244.228.95:8000",
           "subject": "url:http://198.244.228.95:8000"
-        },
-        {
-          "address": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
-          "category": "public_infrastructure",
-          "caveat": "Graph edge; infrastructure/provider edges are signals only.",
-          "confidence": "medium",
-          "isAttributionProof": false,
-          "sourceFile": "data/public_identity_signals.json",
-          "sourceType": "same_inference_host",
-          "sourceUrl": "data/public_identity_signals.json",
-          "sourceValue": "198.244.228.95",
-          "subject": "host:198.244.228.95"
         }
       ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://198.244.228.95:8000",
-      "label": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
-      "labelSource": "address",
+      "label": "A \u00b7 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+      "labelSource": "telegram_self_claim",
       "nextActions": [
         "corroborate beneficiary owner"
       ],
@@ -9896,6 +9896,18 @@
           "sourceUrl": "data/public_identity_signals.json",
           "sourceValue": "64.236.203.236",
           "subject": "host:64.236.203.236"
+        },
+        {
+          "address": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+          "category": "public_identity",
+          "caveat": "Local Telegram chat signal; not public owner proof without independent corroboration.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "history/Gonka Devs/messages16.html",
+          "sourceType": "telegram_context_only",
+          "sourceUrl": "history/Gonka Devs/messages16.html",
+          "sourceValue": "\u0412\u0441\u0435\u0433\u043e \u043e\u0442\u043f\u0440\u0430\u043b\u044f\u043b\u043e nonces 41 \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a. 9 PoC submitters \u041d\u0415 \u043f\u043e\u043f\u0430\u043b\u0438 \u0432 \u0444\u0438\u043d\u0430\u043b\u044c\u043d\u044b\u0439 set \u044d\u043f\u043e\u0445\u0438 266 (\u043e\u0442\u0432\u0430\u043b\u0438\u043b\u0438\u0441\u044c/\u0438\u0441\u043a\u043b\u044e\u0447\u0435\u043d\u044b \u043f\u043e\u0441\u043b\u0435 PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 \u0444\u0438\u043d\u0430\u043b\u044c\u043d\u044b\u0445 \u0447\u043b\u0435\u043d\u043e\u0432 \u041d\u0415 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u044f\u043b\u0438 PoC (preserved-only \u2014 \u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u043b\u0438 inference \u0432\u043e \u0432\u0440\u0435\u043c\u044f PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...",
+          "subject": "Evgenii Maksimenkov"
         },
         {
           "address": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",

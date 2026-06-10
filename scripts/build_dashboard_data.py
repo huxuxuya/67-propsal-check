@@ -507,6 +507,14 @@ def read_telegram_evidence():
     return load_optional_json(DATA / "telegram_evidence.json", {"messages": [], "summary": {}})
 
 
+def read_history_operator_signal_audit():
+    return load_optional_json(DATA / "investigations" / "history_operator_signal_audit.json", {"rows": [], "summary": {}})
+
+
+def read_chat_participant_attribution():
+    return load_optional_json(DATA / "investigations" / "chat_participant_attribution.json", {"rows": [], "summary": {}})
+
+
 def read_voting_end_epochs():
     return load_optional_json(DATA / "voting_end_epochs" / "manifest.json", {"epochs": [], "blocks": []})
 
@@ -614,7 +622,7 @@ def source_url_for_file(source_file):
 def normalize_claim_value(value):
     if value is None:
         return ""
-    return str(value).strip()
+    return re.sub(r"\s+", " ", str(value)).strip()
 
 
 def evidence_category(source_type):
@@ -1008,7 +1016,7 @@ def collect_address_labels(recipients, votes, participants, account_labels, cons
     return labels, identity_types
 
 
-def build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence=None, epoch_anomalies=None):
+def build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence=None, epoch_anomalies=None, history_operator_signals=None, chat_attribution=None):
     claims = []
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_by_address = {row["voter"]: row for row in votes}
@@ -1190,6 +1198,43 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
                 )
             )
 
+    for signal in (history_operator_signals or {}).get("rows") or []:
+        address = signal.get("address") or ""
+        if address and address not in relevant_addresses:
+            continue
+        claims.append(
+            make_claim(
+                address,
+                signal.get("operatorSignalLabel") or signal.get("subject") or "Operator signal",
+                signal.get("sourceType", "telegram_operator_context"),
+                signal.get("excerpt", ""),
+                signal.get("sourceFile", "history"),
+                signal.get("confidence", "medium"),
+                False,
+                signal.get("caveat", "Local Telegram history links this address to an operator/pool context; this is not public owner proof."),
+            )
+        )
+
+    for signal in (chat_attribution or {}).get("rows") or []:
+        address = signal.get("address") or ""
+        if not address or address not in relevant_addresses:
+            continue
+        level = signal.get("evidenceLevel", "")
+        if level in {"no_chat_signal", "public_owner_proof"}:
+            continue
+        claims.append(
+            make_claim(
+                address,
+                signal.get("bestChatCandidateLabel") or signal.get("author") or signal.get("currentLabel") or address,
+                signal.get("sourceType", "telegram_context_only"),
+                signal.get("excerpt", ""),
+                signal.get("sourceFile", "history"),
+                signal.get("confidence", "medium") or "medium",
+                False,
+                signal.get("caveat", "Local Telegram chat signal; not public owner proof without independent corroboration."),
+            )
+        )
+
     for row in epoch_anomalies or []:
         claims.append(
             make_claim(
@@ -1218,7 +1263,14 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
 
 
 def apply_investigation_labels(recipients, votes, evidence_claims):
-    label_source_types = {"telegram_operator_statement", "telegram_self_or_team_claim"}
+    label_source_types = {
+        "telegram_operator_statement",
+        "telegram_self_or_team_claim",
+        "telegram_operator_context",
+        "telegram_self_claim",
+        "telegram_operator_answer",
+        "telegram_pool_roster",
+    }
     operator_labels = {}
     priority = {"high": 0, "medium": 1}
     for claim in evidence_claims:
@@ -2706,10 +2758,14 @@ def build_telegram_attribution_audit(recipients, votes, evidence_claims):
     ]
     priority = {
         "telegram_self_or_team_claim": 0,
-        "telegram_operator_statement": 1,
-        "telegram_owner_inquiry": 2,
-        "telegram_address_context": 3,
-        "telegram_export_excerpt": 4,
+        "telegram_self_claim": 1,
+        "telegram_operator_statement": 2,
+        "telegram_operator_answer": 3,
+        "telegram_operator_context": 4,
+        "telegram_pool_roster": 5,
+        "telegram_owner_inquiry": 6,
+        "telegram_address_context": 7,
+        "telegram_export_excerpt": 8,
     }
     rows = []
     for claim in sorted(
@@ -2777,7 +2833,17 @@ def write_telegram_attribution_report(rows):
         for row in rows:
             writer.writerow({**row, "roles": " ".join(row["roles"])})
 
-    self_or_operator = [row for row in rows if row["sourceType"] in {"telegram_self_or_team_claim", "telegram_operator_statement"}]
+    self_or_operator = [
+        row for row in rows
+        if row["sourceType"] in {
+            "telegram_self_or_team_claim",
+            "telegram_self_claim",
+            "telegram_operator_statement",
+            "telegram_operator_answer",
+            "telegram_operator_context",
+            "telegram_pool_roster",
+        }
+    ]
     high_confidence = [row for row in self_or_operator if row["confidence"] == "high"]
     medium_leads = [row for row in self_or_operator if row["confidence"] == "medium"]
     with (reports / "telegram_attribution_audit.md").open("w") as f:
@@ -3473,6 +3539,8 @@ def main():
     onchain_graph = read_onchain_graph_snapshot()
     osint_sources = read_public_osint_sources()
     telegram_evidence = read_telegram_evidence()
+    history_operator_signals = read_history_operator_signal_audit()
+    chat_attribution = read_chat_participant_attribution()
     voting_end_epochs = read_voting_end_epochs()
     governance_power_evidence = read_governance_power_evidence()
     epoch_reward_claims = read_epoch_reward_claims()
@@ -3608,7 +3676,7 @@ def main():
         gns_by_address,
     )
     epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
-    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution)
     apply_investigation_labels(recipients, votes, evidence_claims)
     labels_by_address, identity_types_by_address = collect_address_labels(
         recipients,
@@ -3620,9 +3688,9 @@ def main():
     )
     actors = build_actors(proposal, recipients, votes, identity_graph, onchain_graph, labels_by_address, identity_types_by_address)
     epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
-    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution)
     epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
-    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution)
     claims_by_address = defaultdict(list)
     for claim in evidence_claims:
         if claim.get("address"):
@@ -3699,6 +3767,10 @@ def main():
         "publicNameEnrichmentMultiAddressGroupCount": public_name_enrichment["summary"]["publicNameGroupsWithMultipleProposalAddresses"],
         "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
         "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
+        "historyOperatorSignalCount": len(history_operator_signals.get("rows") or []),
+        "chatAttributionStrongSignalCount": chat_attribution.get("summary", {}).get("strongLocalOperatorRows", 0),
+        "chatAttributionMediumSignalCount": chat_attribution.get("summary", {}).get("mediumOperatorContextRows", 0),
+        "chatAttributionWeakContextCount": chat_attribution.get("summary", {}).get("weakContextRows", 0),
         "epochAnomaliesCount": len(epoch_anomalies),
         "epochEntryExitClusterCount": len(epoch_entry_exit_clusters),
         "votingEndEpochSnapshotCount": len(voting_end_epochs.get("epochs") or []),
@@ -3751,6 +3823,8 @@ def main():
         "publicNameEnrichment": public_name_enrichment,
         "telegramAttributionAudit": telegram_attribution_audit,
         "telegramEvidence": telegram_evidence.get("messages") or [],
+        "historyOperatorSignals": history_operator_signals.get("rows") or [],
+        "chatParticipantAttribution": chat_attribution.get("rows") or [],
         "epochAnomalies": epoch_anomalies,
         "epochEntryExitClusters": epoch_entry_exit_clusters,
         "governancePowerEvidence": governance_power_evidence,
