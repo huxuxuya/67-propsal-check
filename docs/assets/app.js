@@ -370,7 +370,16 @@ function renderEpochChart() {
 }
 
 function renderHeatmap() {
-  const rows = state.filteredRecipients.slice(0, 30);
+  const timelineRows = new Map((state.data.chartData?.participantEpochTimeline?.rows || []).map((row) => [row.address, row]));
+  const maxTimelineWeight = (address) => {
+    const timelineRow = timelineRows.get(address);
+    if (!timelineRow) return 0;
+    return Math.max(0, ...timelineRow.cells.map((cell) => cell.weight || cell.startWeight || cell.confirmationWeight || 0));
+  };
+  const rows = state.filteredRecipients
+    .slice()
+    .sort((a, b) => maxTimelineWeight(b.address) - maxTimelineWeight(a.address) || (b.totalGonka || 0) - (a.totalGonka || 0) || actorLabel(a).localeCompare(actorLabel(b)))
+    .slice(0, 30);
   const epochs = Array.from({ length: 12 }, (_, i) => `e${265 + i}`);
   const epochByKey = new Map((state.data.epochs || []).map((row) => [row.key, row]));
   const values = [];
@@ -386,11 +395,16 @@ function renderHeatmap() {
       const share = p.value[2] || 0;
       const epoch = epochByKey.get(epochs[p.value[0]]) || {};
       const epochShare = epoch.totalGonka ? (raw / epoch.totalGonka) * 100 : 0;
-      return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${epochs[p.value[0]]}: ${gonka(raw)}<br>${fmt.format(share)}% of this recipient total<br>${fmt.format(epochShare)}% of epoch total<br>recipient total ${gonka(row?.totalGonka || 0)}`;
+      return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address)}<br>max observed weight ${fmt.format(maxTimelineWeight(row.address))}<br>${epochs[p.value[0]]}: ${gonka(raw)}<br>${fmt.format(share)}% of this recipient total<br>${fmt.format(epochShare)}% of epoch total<br>recipient total ${gonka(row?.totalGonka || 0)}`;
     } }),
-    grid: { left: 150, right: 24, top: 24, bottom: 42 },
+    grid: { left: 250, right: 24, top: 24, bottom: 42 },
     xAxis: { type: "category", data: epochs, axisLabel: { color: "#a7afba" } },
-    yAxis: { type: "category", data: rows.map((row) => `#${row.rank} ${actorShortLabel(row)}`), axisLabel: { color: "#a7afba", width: 140, overflow: "truncate" } },
+    yAxis: {
+      type: "category",
+      inverse: true,
+      data: rows.map((row) => `${shortAddress(row.address)}  ${actorShortLabel(row)}`),
+      axisLabel: { align: "left", margin: 242, color: "#a7afba", width: 230, overflow: "truncate" },
+    },
     visualMap: { min: 0, max: 100, dimension: 2, calculable: true, orient: "horizontal", left: "center", bottom: 4, text: ["recipient share", "0"], textStyle: { color: "#a7afba" }, inRange: { color: ["#222831", "#4db7a8", "#d7a84f"] } },
     series: [{ type: "heatmap", data: values, encode: { x: 0, y: 1, value: 2 } }],
   }, true);
