@@ -307,71 +307,29 @@ function renderWaterfall() {
   const capEpochs = (state.data.epochs || [])
     .filter((row) => row.epoch >= 267 && row.epoch <= 276)
     .reduce((total, row) => total + (row.totalGonka || 0), 0) || summary.capE267E276Gonka || 0;
-  const rows = [{
-    name: "Final compensation",
-    attack: attackEpoch,
-    excluded: excludedEpoch,
-    cap: capEpochs,
-    visible: summary.visibleDamageE265Gonka || 0,
-    total: summary.totalCompensationGonka || 0,
-  }];
+  const components = [
+    { name: "e265 attack", value: attackEpoch, color: "#d9655f", description: "Epoch 265: direct attack/damage epoch" },
+    { name: "e266 could not enter", value: excludedEpoch, color: "#e78f61", description: "Epoch 266: attacked participants could not enter the next epoch" },
+    { name: "e267-e276 cap", value: capEpochs, color: "#d7a84f", description: "Epochs 267-276: capped compensation window after the attack impact" },
+  ];
   state.charts.waterfall.setOption({
-    legend: { top: 4, textStyle: { color: "#a7afba" } },
-    grid: { left: 124, right: 28, top: 54, bottom: 48 },
+    grid: { left: 70, right: 24, top: 28, bottom: 72 },
     tooltip: chartTooltip({
       trigger: "item",
       formatter: (p) => {
         const total = summary.totalCompensationGonka || 1;
-        if (p.seriesName === "visible e265 baseline") {
-          return `<strong>Visible e265 baseline</strong><br>${gonka(summary.visibleDamageE265Gonka || 0)}<br>Observed damage basis before formula expansion<br>${fmt.format(((summary.visibleDamageE265Gonka || 0) / total) * 100)}% of final payout`;
-        }
-        const descriptions = {
-          "e265 attack": "Epoch 265: direct attack/damage epoch",
-          "e266 could not enter": "Epoch 266: attacked participants could not enter the next epoch",
-          "e267-e276 cap": "Epochs 267-276: capped compensation window after the attack impact",
-        };
-        const description = descriptions[p.seriesName] || "";
-        return `<strong>${escapeHtml(p.seriesName)}</strong><br>${description}<br>${gonka(p.value || 0)}<br>${fmt.format(((p.value || 0) / total) * 100)}% of final payout<br>final total ${gonka(summary.totalCompensationGonka || 0)}`;
+        const row = components[p.dataIndex] || {};
+        return `<strong>${escapeHtml(row.name || p.name)}</strong><br>${escapeHtml(row.description || "")}<br>${gonka(row.value || 0)}<br>${fmt.format(((row.value || 0) / total) * 100)}% of final payout<br>final total ${gonka(summary.totalCompensationGonka || 0)}`;
       },
     }),
-    xAxis: { type: "value", max: rows[0].total, axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) }, name: "GONKA paid", nameTextStyle: { color: "#a7afba" } },
-    yAxis: { type: "category", data: rows.map((row) => row.name), axisLabel: { color: "#a7afba", width: 110, overflow: "break" } },
-    series: [
-      {
-        name: "e265 attack",
-        type: "bar",
-        stack: "formula",
-        data: rows.map((row) => row.attack),
-        itemStyle: { color: "#d9655f" },
-        label: { show: true, position: "inside", color: "#101114", fontWeight: 700, formatter: (p) => `e265 attack\n${compact.format(p.value)}` },
-      },
-      {
-        name: "e266 could not enter",
-        type: "bar",
-        stack: "formula",
-        data: rows.map((row) => row.excluded),
-        itemStyle: { color: "#e78f61" },
-        label: { show: true, position: "inside", color: "#101114", fontWeight: 700, formatter: (p) => `e266 excluded\n${compact.format(p.value)}` },
-      },
-      {
-        name: "e267-e276 cap",
-        type: "bar",
-        stack: "formula",
-        data: rows.map((row) => row.cap),
-        itemStyle: { color: "#d7a84f" },
-        label: { show: true, position: "inside", color: "#101114", fontWeight: 700, formatter: (p) => `e267-e276\n${compact.format(p.value)}` },
-      },
-      {
-        name: "visible e265 baseline",
-        type: "scatter",
-        symbol: "diamond",
-        symbolSize: 18,
-        data: rows.map((row, index) => [row.visible, index]),
-        itemStyle: { color: "#5da9e9", borderColor: "#101114", borderWidth: 2 },
-        label: { show: true, position: "top", color: "#eef0f2", formatter: (p) => `visible e265 ${compact.format(p.value[0])}` },
-        z: 10,
-      },
-    ],
+    xAxis: { type: "category", data: components.map((row) => row.name), axisLabel: { color: "#a7afba", interval: 0, rotate: 18 } },
+    yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) }, name: "GONKA paid", nameTextStyle: { color: "#a7afba" } },
+    series: [{
+      type: "bar",
+      data: components.map((row) => ({ value: row.value, itemStyle: { color: row.color } })),
+      barMaxWidth: 58,
+      label: { show: true, position: "top", color: "#eef0f2", formatter: (p) => compact.format(p.value) },
+    }],
   }, true);
 }
 
