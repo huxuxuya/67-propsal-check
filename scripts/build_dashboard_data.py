@@ -574,6 +574,30 @@ def build_voting_power_window(votes, governance_power_evidence):
     }
 
 
+def build_voting_window_epoch_weights(votes):
+    epochs = [285, 286, 287]
+    weights_by_epoch = {epoch: epoch_weights(epoch) for epoch in epochs}
+    groups_by_epoch = {epoch: load_epoch_group_snapshot(epoch) for epoch in epochs}
+    rows = {}
+    for vote in votes:
+        address = vote["voter"]
+        rows[address] = {
+            f"e{epoch}": weights_by_epoch.get(epoch, {}).get(address, {}).get("weight", 0)
+            for epoch in epochs
+        }
+    return {
+        "epochs": [
+            {
+                "epoch": epoch,
+                "pocStartBlockHeight": int(groups_by_epoch.get(epoch, {}).get("poc_start_block_height") or 0),
+                "effectiveBlockHeight": int(groups_by_epoch.get(epoch, {}).get("effective_block_height") or 0),
+            }
+            for epoch in epochs
+        ],
+        "rows": rows,
+    }
+
+
 def source_url_for_file(source_file):
     if source_file.startswith("http"):
         return source_file
@@ -3621,6 +3645,7 @@ def main():
     interest_clusters = build_interest_clusters(actors, evidence_claims, identity_graph)
     benefit_power_matrix = build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_claims)
     voting_power_window = build_voting_power_window(votes, governance_power_evidence)
+    voting_window_epoch_weights = build_voting_window_epoch_weights(votes)
     public_name_enrichment = build_public_name_enrichment(recipients, votes, identity_evidence, evidence_claims, gns_by_address)
     telegram_attribution_audit = build_telegram_attribution_audit(recipients, votes, evidence_claims)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
@@ -3722,6 +3747,7 @@ def main():
         "interestClusters": interest_clusters,
         "benefitPowerMatrix": benefit_power_matrix,
         "votingPowerWindow": voting_power_window,
+        "votingWindowEpochWeights": voting_window_epoch_weights,
         "publicNameEnrichment": public_name_enrichment,
         "telegramAttributionAudit": telegram_attribution_audit,
         "telegramEvidence": telegram_evidence.get("messages") or [],

@@ -669,14 +669,11 @@ function windowStatusLabel(status) {
 function renderWindowPowerChart() {
   const query = els.search.value.trim().toLowerCase();
   const selectedLabel = els.label.value;
-  const timelineRows = new Map((state.data.chartData?.participantEpochTimeline?.rows || []).map((row) => [row.address, row]));
-  const epochWeight = (address, epoch) => {
-    const row = timelineRows.get(address);
-    const cell = row?.cells?.find((item) => item.epoch === epoch && item.columnType === "weight");
-    return cell?.weight || cell?.startWeight || 0;
-  };
-  const e265Weight = (address) => epochWeight(address, 265);
-  const e266Weight = (address) => epochWeight(address, 266);
+  const votingEpochWeights = state.data.votingWindowEpochWeights?.rows || {};
+  const epochWeight = (address, epoch) => votingEpochWeights[address]?.[`e${epoch}`] || 0;
+  const e285Weight = (address) => epochWeight(address, 285);
+  const e286Weight = (address) => epochWeight(address, 286);
+  const e287Weight = (address) => epochWeight(address, 287);
   const rows = ((state.data.votingPowerWindow || {}).rows || [])
     .filter((row) => {
       if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
@@ -688,19 +685,20 @@ function renderWindowPowerChart() {
   document.getElementById("windowPowerRows").textContent = `${rows.length} shown`;
   const maxPower = Math.max(
     1,
-    ...rows.flatMap((row) => [row.startVotingPower || 0, row.endVotingPower || 0, e265Weight(row.voter), e266Weight(row.voter)]),
+    ...rows.flatMap((row) => [row.startVotingPower || 0, row.endVotingPower || 0, e285Weight(row.voter), e286Weight(row.voter), e287Weight(row.voter)]),
   );
   const markerSize = (value) => Math.max(7, Math.min(26, 6 + Math.sqrt((value?.[2] || 0) / maxPower) * 22));
   const votePoint = (row, index, value) => [Date.parse(row.blockTime || "") || row.height, index, value || 0];
   const formatPointTooltip = (p, label, value) => {
     const row = p.data?.row || rows[p.dataIndex] || {};
-    const e265 = e265Weight(row.voter);
-    const e266 = e266Weight(row.voter);
-    return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.voter || "")}<br>vote ${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}<br>${escapeHtml(formatTime(row.blockTime || ""))}<br>height ${fmt.format(row.height || 0)}<br>${label} ${fmt.format(value || 0)}<br>start gov power ${fmt.format(row.startVotingPower || 0)}<br>end gov power ${fmt.format(row.endVotingPower || 0)}<br>e265 inference weight ${fmt.format(e265)}<br>e266 inference weight ${fmt.format(e266)}<br>e266 - e265 ${fmt.format(e266 - e265)}<br>${escapeHtml(windowStatusLabel(row.windowPowerStatus))}`;
+    const e285 = e285Weight(row.voter);
+    const e286 = e286Weight(row.voter);
+    const e287 = e287Weight(row.voter);
+    return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.voter || "")}<br>vote ${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}<br>${escapeHtml(formatTime(row.blockTime || ""))}<br>height ${fmt.format(row.height || 0)}<br>${label} ${fmt.format(value || 0)}<br>start gov power ${fmt.format(row.startVotingPower || 0)}<br>end gov power ${fmt.format(row.endVotingPower || 0)}<br>e285 inference weight ${fmt.format(e285)}<br>e286 inference weight ${fmt.format(e286)}<br>e287 inference weight ${fmt.format(e287)}<br>e287 - e285 ${fmt.format(e287 - e285)}<br>${escapeHtml(windowStatusLabel(row.windowPowerStatus))}`;
   };
   state.charts.windowPower.setOption({
     grid: { left: 282, right: 44, top: 34, bottom: 52 },
-    legend: { top: 4, data: ["E265 inference weight", "E266 inference weight", "Start gov power", "End gov power"], textStyle: { color: "#a7afba" } },
+    legend: { top: 4, data: ["E285 weight", "E286 weight", "E287 weight", "Start gov power", "End gov power"], textStyle: { color: "#a7afba" } },
     tooltip: chartTooltip({
       formatter: (p) => {
         const value = Array.isArray(p.value) ? p.value[2] : 0;
@@ -716,22 +714,30 @@ function renderWindowPowerChart() {
     yAxis: { type: "category", data: rows.map(voterAxisLabel), axisLabel: { align: "left", margin: 274, color: "#a7afba", width: 260, overflow: "truncate" } },
     series: [
       {
-        name: "E265 inference weight",
+        name: "E285 weight",
         type: "scatter",
-        data: rows.map((row, index) => ({ value: votePoint(row, index, e265Weight(row.voter)), row })),
+        data: rows.map((row, index) => ({ value: votePoint(row, index, e285Weight(row.voter)), row })),
         symbol: "rect",
         symbolSize: markerSize,
-        symbolOffset: [-24, 0],
+        symbolOffset: [-32, 0],
         itemStyle: { color: "#d7a84f", borderColor: "#101114", borderWidth: 1 },
       },
       {
-        name: "E266 inference weight",
+        name: "E286 weight",
         type: "scatter",
-        data: rows.map((row, index) => ({ value: votePoint(row, index, e266Weight(row.voter)), row })),
+        data: rows.map((row, index) => ({ value: votePoint(row, index, e286Weight(row.voter)), row })),
         symbol: "rect",
         symbolSize: markerSize,
-        symbolOffset: [-8, 0],
+        symbolOffset: [-16, 0],
         itemStyle: { color: "#e78f61", borderColor: "#101114", borderWidth: 1 },
+      },
+      {
+        name: "E287 weight",
+        type: "scatter",
+        data: rows.map((row, index) => ({ value: votePoint(row, index, e287Weight(row.voter)), row })),
+        symbol: "rect",
+        symbolSize: markerSize,
+        itemStyle: { color: "#d9655f", borderColor: "#101114", borderWidth: 1 },
       },
       {
         name: "Start gov power",
@@ -739,7 +745,7 @@ function renderWindowPowerChart() {
         data: rows.map((row, index) => ({ value: votePoint(row, index, row.startVotingPower || 0), row })),
         symbol: "circle",
         symbolSize: markerSize,
-        symbolOffset: [8, 0],
+        symbolOffset: [16, 0],
         itemStyle: { color: "#5da9e9", borderColor: "#101114", borderWidth: 1 },
       },
       {
@@ -748,7 +754,7 @@ function renderWindowPowerChart() {
         data: rows.map((row, index) => ({ value: votePoint(row, index, row.endVotingPower || 0), row })),
         symbol: "diamond",
         symbolSize: markerSize,
-        symbolOffset: [24, 0],
+        symbolOffset: [32, 0],
         itemStyle: { color: (p) => optionColors[rows[p.dataIndex]?.primaryOption] || "#4db7a8", borderColor: "#eef0f2", borderWidth: 1 },
         label: {
           show: rows.length <= 26,
@@ -763,8 +769,9 @@ function renderWindowPowerChart() {
     <tr>
       <td>${escapeHtml(voterDisplayLabel(row))}<br><button class="row-button mono" data-address="${row.voter}">${escapeHtml(row.voter)}</button></td>
       <td><span class="tag" style="border-color:${optionColors[row.primaryOption] || "#6d7682"}">${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}</span><br><span class="muted">${escapeHtml(formatTime(row.blockTime || ""))}</span><br><span class="muted">tx height ${fmt.format(row.height || 0)}</span></td>
-      <td class="num">${fmt.format(e265Weight(row.voter))}</td>
-      <td class="num">${fmt.format(e266Weight(row.voter))}<br><span class="muted">delta ${fmt.format(e266Weight(row.voter) - e265Weight(row.voter))}</span></td>
+      <td class="num">${fmt.format(e285Weight(row.voter))}</td>
+      <td class="num">${fmt.format(e286Weight(row.voter))}</td>
+      <td class="num">${fmt.format(e287Weight(row.voter))}<br><span class="muted">delta ${fmt.format(e287Weight(row.voter) - e285Weight(row.voter))}</span></td>
       <td class="num">${fmt.format(row.startVotingPower || 0)}<br><span class="muted">${escapeHtml(row.startVotingPowerSource || "")}</span></td>
       <td class="num">${fmt.format(row.endVotingPower || 0)}<br><span class="muted">${escapeHtml(row.endVotingPowerSource || "")}</span></td>
       <td><span class="tag ${row.windowPowerStatus === "zero_at_start_and_end" ? "" : "warn"}">${escapeHtml(windowStatusLabel(row.windowPowerStatus))}</span><br><span class="muted">delegations ${fmt.format(row.startDelegationCount || 0)} -> ${fmt.format(row.endDelegationCount || 0)}</span></td>
