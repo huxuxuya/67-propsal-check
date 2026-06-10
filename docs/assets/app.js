@@ -652,6 +652,12 @@ function windowStatusLabel(status) {
 function renderWindowPowerChart() {
   const query = els.search.value.trim().toLowerCase();
   const selectedLabel = els.label.value;
+  const timelineRows = new Map((state.data.chartData?.participantEpochTimeline?.rows || []).map((row) => [row.address, row]));
+  const e265Weight = (address) => {
+    const row = timelineRows.get(address);
+    const cell = row?.cells?.find((item) => item.epoch === 265 && item.columnType === "weight");
+    return cell?.weight || cell?.startWeight || 0;
+  };
   const rows = ((state.data.votingPowerWindow || {}).rows || [])
     .filter((row) => {
       if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
@@ -659,43 +665,74 @@ function renderWindowPowerChart() {
       if (!query) return true;
       return textMatch({ ...row, address: row.voter, status: row.windowPowerStatus }, query);
     })
-    .sort((a, b) => Math.abs((b.endVotingPower || 0) - (b.startVotingPower || 0)) - Math.abs((a.endVotingPower || 0) - (a.startVotingPower || 0)) || (b.endVotingPower || 0) - (a.endVotingPower || 0) || actorLabel(a).localeCompare(actorLabel(b)));
+    .sort((a, b) => Date.parse(a.blockTime || "") - Date.parse(b.blockTime || "") || a.height - b.height || actorLabel(a).localeCompare(actorLabel(b)));
   document.getElementById("windowPowerRows").textContent = `${rows.length} shown`;
+  const maxPower = Math.max(
+    1,
+    ...rows.flatMap((row) => [row.startVotingPower || 0, row.endVotingPower || 0, e265Weight(row.voter)]),
+  );
+  const markerSize = (value) => Math.max(7, Math.min(26, 6 + Math.sqrt((value?.[2] || 0) / maxPower) * 22));
+  const votePoint = (row, index, value) => [Date.parse(row.blockTime || "") || row.height, index, value || 0];
+  const formatPointTooltip = (p, label, value) => {
+    const row = p.data?.row || rows[p.dataIndex] || {};
+    return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.voter || "")}<br>vote ${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}<br>${escapeHtml(formatTime(row.blockTime || ""))}<br>height ${fmt.format(row.height || 0)}<br>${label} ${fmt.format(value || 0)}<br>start gov power ${fmt.format(row.startVotingPower || 0)}<br>end gov power ${fmt.format(row.endVotingPower || 0)}<br>e265 inference weight ${fmt.format(e265Weight(row.voter))}<br>${escapeHtml(windowStatusLabel(row.windowPowerStatus))}`;
+  };
   state.charts.windowPower.setOption({
     grid: { left: 282, right: 44, top: 34, bottom: 52 },
-    legend: { top: 4, textStyle: { color: "#a7afba" } },
+    legend: { top: 4, data: ["E265 inference weight", "Start gov power", "End gov power"], textStyle: { color: "#a7afba" } },
     tooltip: chartTooltip({
       formatter: (p) => {
-        const row = rows[p.dataIndex || 0];
-        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.voter)}<br>${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)} at height ${row.height}<br>start ${fmt.format(row.startVotingPower || 0)} · end ${fmt.format(row.endVotingPower || 0)}<br>${escapeHtml(windowStatusLabel(row.windowPowerStatus))}`;
+        const value = Array.isArray(p.value) ? p.value[2] : 0;
+        return formatPointTooltip(p, p.seriesName, value);
       },
     }),
-    xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
+    xAxis: {
+      type: "time",
+      axisLabel: { color: "#a7afba", formatter: (value) => formatTime(value).slice(5, 16) },
+      name: "Vote block time",
+      nameTextStyle: { color: "#a7afba" },
+    },
     yAxis: { type: "category", data: rows.map(voterAxisLabel), axisLabel: { align: "left", margin: 274, color: "#a7afba", width: 260, overflow: "truncate" } },
     series: [
       {
-        name: "Window delta",
-        type: "custom",
-        data: rows.map((row, index) => [row.startVotingPower || 0, row.endVotingPower || 0, index]),
-        renderItem: (params, api) => {
-          const start = api.coord([api.value(0), api.value(2)]);
-          const end = api.coord([api.value(1), api.value(2)]);
-          return {
-            type: "line",
-            shape: { x1: start[0], y1: start[1], x2: end[0], y2: end[1] },
-            style: { stroke: "#6d7682", lineWidth: 2, opacity: 0.75 },
-          };
-        },
-        tooltip: { show: false },
+        name: "E265 inference weight",
+        type: "scatter",
+        data: rows.map((row, index) => ({ value: votePoint(row, index, e265Weight(row.voter)), row })),
+        symbol: "rect",
+        symbolSize: markerSize,
+        symbolOffset: [-14, 0],
+        itemStyle: { color: "#d7a84f", borderColor: "#101114", borderWidth: 1 },
       },
-      { name: "Start boundary", type: "scatter", data: rows.map((row, index) => [row.startVotingPower || 0, index]), symbolSize: 9, itemStyle: { color: "#5da9e9" } },
-      { name: "End boundary", type: "scatter", data: rows.map((row, index) => [row.endVotingPower || 0, index]), symbolSize: 12, itemStyle: { color: (p) => optionColors[rows[p.dataIndex]?.primaryOption] || "#4db7a8", borderColor: (p) => rows[p.dataIndex]?.windowPowerStatus === "zero_at_start_and_end" ? "#6d7682" : "#eef0f2", borderWidth: 1 } },
+      {
+        name: "Start gov power",
+        type: "scatter",
+        data: rows.map((row, index) => ({ value: votePoint(row, index, row.startVotingPower || 0), row })),
+        symbol: "circle",
+        symbolSize: markerSize,
+        itemStyle: { color: "#5da9e9", borderColor: "#101114", borderWidth: 1 },
+      },
+      {
+        name: "End gov power",
+        type: "scatter",
+        data: rows.map((row, index) => ({ value: votePoint(row, index, row.endVotingPower || 0), row })),
+        symbol: "diamond",
+        symbolSize: markerSize,
+        symbolOffset: [14, 0],
+        itemStyle: { color: (p) => optionColors[rows[p.dataIndex]?.primaryOption] || "#4db7a8", borderColor: "#eef0f2", borderWidth: 1 },
+        label: {
+          show: rows.length <= 26,
+          position: "right",
+          color: "#eef0f2",
+          formatter: (p) => compact.format(p.value[2] || 0),
+        },
+      },
     ],
   }, true);
   els.windowPowerTable.innerHTML = rows.map((row) => `
     <tr>
       <td>${escapeHtml(voterDisplayLabel(row))}<br><button class="row-button mono" data-address="${row.voter}">${escapeHtml(row.voter)}</button></td>
-      <td><span class="tag" style="border-color:${optionColors[row.primaryOption] || "#6d7682"}">${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}</span><br><span class="muted">tx height ${fmt.format(row.height || 0)}</span></td>
+      <td><span class="tag" style="border-color:${optionColors[row.primaryOption] || "#6d7682"}">${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}</span><br><span class="muted">${escapeHtml(formatTime(row.blockTime || ""))}</span><br><span class="muted">tx height ${fmt.format(row.height || 0)}</span></td>
+      <td class="num">${fmt.format(e265Weight(row.voter))}</td>
       <td class="num">${fmt.format(row.startVotingPower || 0)}<br><span class="muted">${escapeHtml(row.startVotingPowerSource || "")}</span></td>
       <td class="num">${fmt.format(row.endVotingPower || 0)}<br><span class="muted">${escapeHtml(row.endVotingPowerSource || "")}</span></td>
       <td><span class="tag ${row.windowPowerStatus === "zero_at_start_and_end" ? "" : "warn"}">${escapeHtml(windowStatusLabel(row.windowPowerStatus))}</span><br><span class="muted">delegations ${fmt.format(row.startDelegationCount || 0)} -> ${fmt.format(row.endDelegationCount || 0)}</span></td>

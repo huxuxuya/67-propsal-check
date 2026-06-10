@@ -537,6 +537,7 @@ def build_voting_power_window(votes, governance_power_evidence):
                 "operatorSignalDisplayLabel": vote.get("operatorSignalDisplayLabel", ""),
                 "primaryOption": vote["primaryOption"],
                 "height": vote["height"],
+                "blockTime": vote.get("blockTime", ""),
                 "txHash": vote["txHash"],
                 "isRecipient": vote["isRecipient"],
                 "startVotingPower": round(start_power or 0, 6),
