@@ -12,7 +12,7 @@ const state = {
   timelineScope: "recipients",
   timelineModel: "all",
   timelineMetric: "weight",
-  timelineSort: "default",
+  timelineSort: "maxWeight",
   charts: {},
 };
 
@@ -663,6 +663,7 @@ function renderAttackTimeline() {
     const weight = maxRowWeight(row);
     return `${row.rank ? `#${row.rank}` : "not paid"} ${actorShortLabel(row)}\nmax weight ${compact.format(weight)} [${weightBar(weight)}]`;
   });
+  const visibleRows = Math.max(0, Math.min(rows.length - 1, 27));
   const maxMetric = Math.max(
     1,
     ...rows.flatMap((row) => row.cells.map((cell) => state.timelineMetric === "reward" ? (cell.rewardGonka || 0) : (cell.weight || 0))),
@@ -753,10 +754,10 @@ function renderAttackTimeline() {
       },
     }),
     xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },
-    yAxis: { type: "category", data: yLabels, axisLabel: { color: "#a7afba", width: 250, overflow: "truncate", lineHeight: 15 } },
+    yAxis: { type: "category", data: yLabels, axisLabel: { color: "#a7afba", width: 250, overflow: "truncate", lineHeight: 14 } },
     dataZoom: [
-      { type: "inside", yAxisIndex: 0, filterMode: "none" },
-      { type: "slider", yAxisIndex: 0, right: 4, width: 14, filterMode: "none", textStyle: { color: "#a7afba" } },
+      { type: "inside", yAxisIndex: 0, filterMode: "none", startValue: 0, endValue: visibleRows },
+      { type: "slider", yAxisIndex: 0, right: 4, width: 14, filterMode: "none", startValue: 0, endValue: visibleRows, textStyle: { color: "#a7afba" } },
     ],
     series: [
       {
