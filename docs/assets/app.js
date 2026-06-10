@@ -754,7 +754,7 @@ function renderAttackTimeline() {
       },
     }),
     xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },
-    yAxis: { type: "category", data: yLabels, axisLabel: { color: "#a7afba", width: 250, overflow: "truncate", lineHeight: 14 } },
+    yAxis: { type: "category", inverse: true, data: yLabels, axisLabel: { color: "#a7afba", width: 250, overflow: "truncate", lineHeight: 14 } },
     dataZoom: [
       { type: "inside", yAxisIndex: 0, filterMode: "none", startValue: 0, endValue: visibleRows },
       { type: "slider", yAxisIndex: 0, right: 4, width: 14, filterMode: "none", startValue: 0, endValue: visibleRows, textStyle: { color: "#a7afba" } },
