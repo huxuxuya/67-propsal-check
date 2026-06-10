@@ -652,8 +652,8 @@ function renderAttackTimeline() {
     cell,
     itemStyle: {
       color: cellColor(cell),
-      borderColor: cell.rewardWithoutWeight || cell.rewardWithoutConfirmation ? "#d7a84f" : "#101114",
-      borderWidth: cell.rewardWithoutWeight || cell.rewardWithoutConfirmation ? 2 : 1,
+      borderColor: cell.columnType === "weight" && cell.rewardWithoutWeight ? "#d7a84f" : "#101114",
+      borderWidth: cell.columnType === "weight" && cell.rewardWithoutWeight ? 2 : 1,
     },
   })));
   const markerData = (model) => rows.flatMap((row, y) => row.cells.map((cell, x) => {
@@ -662,7 +662,7 @@ function renderAttackTimeline() {
     return { value: [x, y, count], row, cell, model };
   }).filter(Boolean));
   const rewardMarkerData = rows.flatMap((row, y) => row.cells.map((cell, x) => {
-    if (!cell.rewardWithoutWeight && !cell.rewardWithoutConfirmation) return null;
+    if (cell.columnType !== "weight" || !cell.rewardWithoutWeight) return null;
     return { value: [x, y, cell.rewardGonka || 0], row, cell };
   }).filter(Boolean));
   const epochBoundaries = columns
