@@ -9,6 +9,7 @@ const state = {
   data: null,
   filteredRecipients: [],
   compensationView: "bar",
+  timelineScope: "recipients",
   timelineModel: "all",
   timelineMetric: "weight",
   charts: {},
@@ -153,6 +154,13 @@ function setupFilters(data) {
     button.addEventListener("click", () => {
       state.timelineModel = button.dataset.timelineModel;
       document.querySelectorAll("[data-timeline-model]").forEach((item) => item.classList.toggle("active", item === button));
+      renderAttackTimeline();
+    });
+  });
+  document.querySelectorAll("[data-timeline-scope]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.timelineScope = button.dataset.timelineScope;
+      document.querySelectorAll("[data-timeline-scope]").forEach((item) => item.classList.toggle("active", item === button));
       renderAttackTimeline();
     });
   });
@@ -621,10 +629,19 @@ function renderWindowPowerChart() {
 function renderAttackTimeline() {
   const timeline = state.data.chartData?.participantEpochTimeline;
   if (!timeline) return;
+  const query = els.search.value.trim().toLowerCase();
   const filtered = new Set(state.filteredRecipients.map((row) => row.address));
-  const rows = timeline.rows.filter((row) => filtered.has(row.address));
+  const hasModelActivity = (row, model) => row.cells.some((cell) => model === "qwen" ? cell.qwenCount > 0 : cell.kimiCount > 0);
+  const rows = timeline.rows.filter((row) => {
+    if (state.timelineScope === "recipients" && !filtered.has(row.address)) return false;
+    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (state.timelineModel === "qwen" && !hasModelActivity(row, "qwen")) return false;
+    if (state.timelineModel === "kimi" && !hasModelActivity(row, "kimi")) return false;
+    if (!query) return true;
+    return textMatch(row, query);
+  });
   const columns = timeline.columns || [];
-  const yLabels = rows.map((row) => `#${row.rank} ${actorShortLabel(row)}`);
+  const yLabels = rows.map((row) => `${row.rank ? `#${row.rank}` : "not paid"} ${actorShortLabel(row)}`);
   const maxMetric = Math.max(
     1,
     ...rows.flatMap((row) => row.cells.map((cell) => state.timelineMetric === "reward" ? (cell.rewardGonka || 0) : (cell.weight || 0))),
@@ -699,6 +716,7 @@ function renderAttackTimeline() {
         const row = p.data?.row || {};
         const cell = p.data?.cell || {};
         const modelText = p.data?.model ? `<br>${p.data.model.toUpperCase()} commits ${fmt.format(p.value[2] || 0)}` : "";
+        const compensationText = row.compensationStatus === "not_compensated" ? "<br><span class=\"warn-text\">not compensated</span>" : "";
         const heightText = cell.height ? `<br>height ${fmt.format(cell.height)}` : "";
         const blockTimeText = cell.blockTime ? `<br>${escapeHtml(cell.blockTime)}` : "";
         const fallbackText = cell.fallback ? "<br><span class=\"warn-text\">snapshot missing, CPoC event only</span>" : "";
@@ -710,7 +728,7 @@ function renderAttackTimeline() {
           : cell.rewardWithoutConfirmation
             ? "<br><span class=\"warn-text\">reward paid while CPoC confirmation is zero</span>"
             : "";
-        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}<br>epoch ${escapeHtml(cell.epoch || "")} · ${escapeHtml(cell.snapshot || "")} · ${escapeHtml(cell.state || "")}${heightText}${blockTimeText}${fallbackText}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}${deltaText}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}${rewardFlag}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
+        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}${compensationText}<br>epoch ${escapeHtml(cell.epoch || "")} · ${escapeHtml(cell.snapshot || "")} · ${escapeHtml(cell.state || "")}${heightText}${blockTimeText}${fallbackText}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}${deltaText}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}${rewardFlag}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
       },
     }),
     xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },

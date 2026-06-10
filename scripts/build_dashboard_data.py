@@ -2372,13 +2372,27 @@ def build_participant_epoch_timeline(recipients, votes):
     weight_column_by_epoch = {column["epoch"]: column for column in columns if column["type"] == "weight"}
     activity_by_epoch = {epoch: upstream_epoch_model_activity(epoch) for epoch in EPOCHS}
     vote_by_address = {vote["voter"]: vote for vote in votes}
+    recipient_by_address = {recipient["address"]: recipient for recipient in recipients}
+    observed_addresses = set(recipient_by_address)
+    for weights in weights_by_column.values():
+        observed_addresses.update(weights)
+    for activity in activity_by_epoch.values():
+        observed_addresses.update(activity)
     rows = []
     max_weight = 0
     max_reward = 0
     reward_without_weight_count = 0
     reward_without_confirmation_count = 0
-    for recipient in sorted(recipients, key=lambda row: (-row["totalGonka"], row["address"])):
-        address = recipient["address"]
+    def sort_key(address):
+        recipient = recipient_by_address.get(address, {})
+        has_compensation = 1 if recipient.get("totalGonka", 0) > 0 else 0
+        max_observed_weight = max((weights.get(address, {}).get("weight", 0) for weights in weights_by_column.values()), default=0)
+        total_commits = sum((activity.get(address, {}).get("totalCommitCount", 0) for activity in activity_by_epoch.values()), 0)
+        return (-has_compensation, -recipient.get("totalGonka", 0), -max_observed_weight, -total_commits, address)
+
+    for address in sorted(observed_addresses, key=sort_key):
+        recipient = recipient_by_address.get(address)
+        recipient_per_epoch = recipient.get("perEpoch", {}) if recipient else {}
         vote = vote_by_address.get(address, {})
         seen_active = False
         previous_weight = 0
@@ -2399,7 +2413,7 @@ def build_participant_epoch_timeline(recipients, votes):
                 if column["type"] == "cpoc" and previous_cpoc_confirmation is not None and not column.get("fallback")
                 else None
             )
-            reward = recipient.get("perEpoch", {}).get(f"e{epoch}", 0)
+            reward = recipient_per_epoch.get(f"e{epoch}", 0)
             activity = activity_by_epoch.get(epoch, {}).get(address, {})
             reward_without_weight = bool(reward and reward > 0 and start_weight <= 0)
             reward_without_confirmation = bool(
@@ -2468,11 +2482,12 @@ def build_participant_epoch_timeline(recipients, votes):
         rows.append(
             {
                 "address": address,
-                "actorDisplayLabel": recipient.get("actorDisplayLabel", recipient.get("label", address)),
-                "actorShortLabel": recipient.get("actorShortLabel", recipient.get("label", address)),
-                "rank": recipient["rank"],
-                "totalCompensationGonka": recipient["totalGonka"],
-                "voteOption": recipient.get("voteOption", "did_not_vote"),
+                "actorDisplayLabel": recipient.get("actorDisplayLabel", recipient.get("label", address)) if recipient else address,
+                "actorShortLabel": recipient.get("actorShortLabel", recipient.get("label", address)) if recipient else address,
+                "rank": recipient.get("rank") if recipient else None,
+                "totalCompensationGonka": recipient.get("totalGonka", 0) if recipient else 0,
+                "compensationStatus": "compensated" if recipient else "not_compensated",
+                "voteOption": recipient.get("voteOption", "did_not_vote") if recipient else (vote.get("primaryOption") or "did_not_vote"),
                 "governanceVotingPower": vote.get("votingPower") or 0,
                 "firstFailedCpocIndex": first_failed_cpoc.get("checkpointIndex") if first_failed_cpoc else None,
                 "firstFailedCpocHeight": first_failed_cpoc.get("height") if first_failed_cpoc else None,
