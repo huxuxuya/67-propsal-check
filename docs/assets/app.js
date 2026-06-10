@@ -669,18 +669,30 @@ function renderAttackTimeline() {
     .map((column, index) => columns[index + 1] && columns[index + 1].epoch !== column.epoch ? [index, 0] : null)
     .filter(Boolean);
   const epochBands = [];
+  const epochRanges = new Map();
   columns.forEach((column, index) => {
     if (index > 0 && columns[index - 1].epoch === column.epoch) return;
     let endIndex = index;
     while (columns[endIndex + 1] && columns[endIndex + 1].epoch === column.epoch) endIndex += 1;
+    epochRanges.set(column.epoch, { start: index, end: endIndex });
     if (epochBands.length % 2 === 1) epochBands.push([index, endIndex]);
     else epochBands.push(null);
   });
   const visibleEpochBands = epochBands.filter(Boolean);
+  const compensationData = rows.flatMap((row, y) => {
+    const seen = new Set();
+    return row.cells.map((cell) => {
+      if (seen.has(cell.epoch) || !(cell.rewardGonka > 0)) return null;
+      seen.add(cell.epoch);
+      const range = epochRanges.get(cell.epoch);
+      if (!range) return null;
+      return { value: [range.start, range.end, y, cell.rewardGonka], row, cell };
+    }).filter(Boolean);
+  });
   const showQwen = state.timelineModel === "all" || state.timelineModel === "qwen";
   const showKimi = state.timelineModel === "all" || state.timelineModel === "kimi";
   state.charts.attackTimeline.setOption({
-    legend: { top: 4, data: ["epoch weight/reward state", "Reward while inactive", "Qwen commits", "Kimi commits"], textStyle: { color: "#a7afba" } },
+    legend: { top: 4, data: ["epoch weight/reward state", "Compensated epoch", "Reward while inactive", "Qwen commits", "Kimi commits"], textStyle: { color: "#a7afba" } },
     grid: { left: 170, right: 28, top: 44, bottom: 54 },
     tooltip: chartTooltip({
       formatter: (p) => {
@@ -735,6 +747,32 @@ function renderAttackTimeline() {
         type: "heatmap",
         data: heatmapData,
         label: { show: false },
+      },
+      {
+        name: "Compensated epoch",
+        type: "custom",
+        data: compensationData,
+        tooltip: { show: true },
+        renderItem: (params, api) => {
+          const start = api.coord([api.value(0), api.value(2)]);
+          const end = api.coord([api.value(1), api.value(2)]);
+          const cellWidth = api.size([1, 0])[0];
+          const cellHeight = api.size([0, 1])[1];
+          const barHeight = Math.max(3, Math.min(7, cellHeight * 0.18));
+          return {
+            type: "rect",
+            shape: {
+              x: start[0] - cellWidth / 2 + 2,
+              y: start[1] + cellHeight * 0.28,
+              width: end[0] - start[0] + cellWidth - 4,
+              height: barHeight,
+            },
+            style: {
+              fill: "#d7a84f",
+              opacity: Math.max(0.55, Math.min(0.95, 0.52 + Math.sqrt(api.value(3) || 0) / 280)),
+            },
+          };
+        },
       },
       {
         name: "Reward while inactive",
