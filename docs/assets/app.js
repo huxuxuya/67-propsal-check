@@ -656,6 +656,12 @@ function renderAttackTimeline() {
     if (!count) return null;
     return { value: [x, y, count], row, cell, model };
   }).filter(Boolean));
+  const epochBoundaries = columns
+    .map((column, index) => column.type === "cpoc" && index < columns.length - 1 ? [index, 0] : null)
+    .filter(Boolean);
+  const epochBands = columns
+    .map((column, index) => column.type === "weight" && Math.floor(index / 2) % 2 === 1 ? [index, 0] : null)
+    .filter(Boolean);
   const showQwen = state.timelineModel === "all" || state.timelineModel === "qwen";
   const showKimi = state.timelineModel === "all" || state.timelineModel === "kimi";
   state.charts.attackTimeline.setOption({
@@ -677,10 +683,48 @@ function renderAttackTimeline() {
     ],
     series: [
       {
+        name: "epoch band",
+        type: "custom",
+        silent: true,
+        tooltip: { show: false },
+        data: epochBands,
+        renderItem: (params, api) => {
+          const point = api.coord([api.value(0), 0]);
+          const cellWidth = api.size([1, 0])[0];
+          return {
+            type: "rect",
+            shape: {
+              x: point[0] - cellWidth / 2,
+              y: params.coordSys.y,
+              width: cellWidth * 2,
+              height: params.coordSys.height,
+            },
+            style: { fill: "rgba(255, 255, 255, 0.025)" },
+          };
+        },
+      },
+      {
         name: "epoch weight/reward state",
         type: "heatmap",
         data: heatmapData,
         label: { show: false },
+      },
+      {
+        name: "epoch separator",
+        type: "custom",
+        silent: true,
+        tooltip: { show: false },
+        data: epochBoundaries,
+        renderItem: (params, api) => {
+          const point = api.coord([api.value(0), 0]);
+          const cellWidth = api.size([1, 0])[0];
+          const x = point[0] + cellWidth / 2;
+          return {
+            type: "line",
+            shape: { x1: x, y1: params.coordSys.y, x2: x, y2: params.coordSys.y + params.coordSys.height },
+            style: { stroke: "#eef0f2", lineWidth: 1, opacity: 0.28 },
+          };
+        },
       },
       showQwen && {
         name: "Qwen commits",
