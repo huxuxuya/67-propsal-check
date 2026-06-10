@@ -54,6 +54,10 @@ function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 }
 
+function escapeRichText(value) {
+  return String(value ?? "").replace(/[{}|]/g, " ");
+}
+
 function primaryOption(vote) {
   return vote.finalVoteOptions.slice().sort((a, b) => b.weight - a.weight)[0]?.option || "unknown";
 }
@@ -1011,7 +1015,7 @@ function renderAttackTimeline() {
   const showKimi = state.timelineModel === "all" || state.timelineModel === "kimi";
   state.charts.attackTimeline.setOption({
     legend: { top: 4, data: ["epoch weight/reward state", "Compensated epoch", "Reward while inactive", "Qwen commits", "Kimi commits"], textStyle: { color: "#a7afba" } },
-    grid: { left: 270, right: 28, top: 44, bottom: 54 },
+    grid: { left: 340, right: 28, top: 44, bottom: 54 },
     tooltip: chartTooltip({
       formatter: (p) => {
         const row = p.data?.row || {};
@@ -1033,7 +1037,26 @@ function renderAttackTimeline() {
       },
     }),
     xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },
-    yAxis: { type: "category", inverse: true, data: yLabels, axisLabel: { color: "#a7afba", width: 250, overflow: "truncate", lineHeight: 14 } },
+    yAxis: {
+      type: "category",
+      inverse: true,
+      data: yLabels,
+      axisLabel: {
+        align: "left",
+        margin: 330,
+        width: 315,
+        overflow: "truncate",
+        lineHeight: 14,
+        formatter: (value) => {
+          const [name, meta = ""] = String(value).split("\n");
+          return `{timelineName|${escapeRichText(name)}}\n{timelineMeta|${escapeRichText(meta)}}`;
+        },
+        rich: {
+          timelineName: { width: 315, align: "left", color: "#e8edf2", fontWeight: 600, overflow: "truncate", lineHeight: 16 },
+          timelineMeta: { width: 315, align: "left", color: "#7f8a96", overflow: "truncate", lineHeight: 14 },
+        },
+      },
+    },
     dataZoom: [
       { type: "inside", yAxisIndex: 0, filterMode: "none", startValue: 0, endValue: visibleRows },
       { type: "slider", yAxisIndex: 0, right: 4, width: 14, filterMode: "none", startValue: 0, endValue: visibleRows, textStyle: { color: "#a7afba" } },
