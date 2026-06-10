@@ -295,10 +295,17 @@ function renderCompensationChart() {
 
 function renderWaterfall() {
   const summary = state.data.summary;
+  const epochById = new Map((state.data.epochs || []).map((row) => [row.epoch, row]));
+  const attackEpoch = epochById.get(265)?.totalGonka || summary.visibleDamageE265Gonka || 0;
+  const excludedEpoch = epochById.get(266)?.totalGonka || Math.max(0, (summary.attackE265E266Gonka || 0) - attackEpoch);
+  const capEpochs = (state.data.epochs || [])
+    .filter((row) => row.epoch >= 267 && row.epoch <= 276)
+    .reduce((total, row) => total + (row.totalGonka || 0), 0) || summary.capE267E276Gonka || 0;
   const rows = [{
     name: "Final compensation",
-    attack: summary.attackE265E266Gonka || 0,
-    cap: summary.capE267E276Gonka || 0,
+    attack: attackEpoch,
+    excluded: excludedEpoch,
+    cap: capEpochs,
     visible: summary.visibleDamageE265Gonka || 0,
     total: summary.totalCompensationGonka || 0,
   }];
@@ -312,9 +319,12 @@ function renderWaterfall() {
         if (p.seriesName === "visible e265 baseline") {
           return `<strong>Visible e265 baseline</strong><br>${gonka(summary.visibleDamageE265Gonka || 0)}<br>Observed damage basis before formula expansion<br>${fmt.format(((summary.visibleDamageE265Gonka || 0) / total) * 100)}% of final payout`;
         }
-        const description = p.seriesName === "attack window"
-          ? "Compensation attributed to epochs 265-266"
-          : "Compensation attributed to cap window epochs 267-276";
+        const descriptions = {
+          "e265 attack": "Epoch 265: direct attack/damage epoch",
+          "e266 could not enter": "Epoch 266: attacked participants could not enter the next epoch",
+          "e267-e276 cap": "Epochs 267-276: capped compensation window after the attack impact",
+        };
+        const description = descriptions[p.seriesName] || "";
         return `<strong>${escapeHtml(p.seriesName)}</strong><br>${description}<br>${gonka(p.value || 0)}<br>${fmt.format(((p.value || 0) / total) * 100)}% of final payout<br>final total ${gonka(summary.totalCompensationGonka || 0)}`;
       },
     }),
@@ -322,15 +332,23 @@ function renderWaterfall() {
     yAxis: { type: "category", data: rows.map((row) => row.name), axisLabel: { color: "#a7afba", width: 110, overflow: "break" } },
     series: [
       {
-        name: "attack window",
+        name: "e265 attack",
         type: "bar",
         stack: "formula",
         data: rows.map((row) => row.attack),
         itemStyle: { color: "#d9655f" },
-        label: { show: true, position: "inside", color: "#101114", fontWeight: 700, formatter: (p) => `e265-e266\n${compact.format(p.value)}` },
+        label: { show: true, position: "inside", color: "#101114", fontWeight: 700, formatter: (p) => `e265 attack\n${compact.format(p.value)}` },
       },
       {
-        name: "cap window",
+        name: "e266 could not enter",
+        type: "bar",
+        stack: "formula",
+        data: rows.map((row) => row.excluded),
+        itemStyle: { color: "#e78f61" },
+        label: { show: true, position: "inside", color: "#101114", fontWeight: 700, formatter: (p) => `e266 excluded\n${compact.format(p.value)}` },
+      },
+      {
+        name: "e267-e276 cap",
         type: "bar",
         stack: "formula",
         data: rows.map((row) => row.cap),
