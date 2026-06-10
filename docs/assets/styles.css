@@ -154,6 +154,10 @@ select {
   margin-bottom: 14px;
 }
 
+.timeline-grid {
+  grid-template-columns: 1fr;
+}
+
 .panel {
   min-width: 0;
   overflow: hidden;
