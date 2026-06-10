@@ -73,6 +73,16 @@ function formatTime(value) {
   return date.toISOString().replace("T", " ").replace(/\.\d+Z$/, " UTC");
 }
 
+function chartTooltip(options = {}) {
+  return {
+    appendToBody: true,
+    confine: false,
+    renderMode: "html",
+    extraCssText: "max-width:min(440px, calc(100vw - 32px));white-space:normal;overflow-wrap:anywhere;z-index:9999;",
+    ...options,
+  };
+}
+
 function voteSymbolSize(vote, maxPower) {
   const power = vote?.votingPower || 0;
   if (!power || !maxPower) return 10;
@@ -192,7 +202,7 @@ function renderCompensationChart() {
     .slice(0, 30);
   if (state.compensationView === "tree") {
     state.charts.compensation.setOption({
-      tooltip: { formatter: (p) => `${p.name}<br>${gonka(p.value)}<br>${escapeHtml(p.data.identityBoundary || "")}` },
+      tooltip: chartTooltip({ formatter: (p) => `${p.name}<br>${gonka(p.value)}<br>${escapeHtml(p.data.identityBoundary || "")}` }),
       series: [{
         type: "treemap",
         roam: false,
@@ -215,13 +225,13 @@ function renderCompensationChart() {
   }
   state.charts.compensation.setOption({
     grid: { left: 150, right: 68, top: 20, bottom: 32 },
-    tooltip: {
+    tooltip: chartTooltip({
       trigger: "axis",
       formatter: (params) => {
         const row = rows[params[0].dataIndex];
         return `<strong>${escapeHtml(actorLabel(row))}</strong><br>attack ${gonka(row.attackE265E266Gonka || 0)}<br>cap ${gonka(row.capE267E276Gonka || 0)}<br>total ${gonka(row.totalGonka || 0)}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)} · power ${fmt.format(row.votingPower || 0)}`;
       },
-    },
+    }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
     yAxis: { type: "category", data: rows.map((row) => `#${row.rank} ${actorShortLabel(row)}`), axisLabel: { color: "#a7afba", width: 140, overflow: "truncate" } },
     series: [
@@ -242,7 +252,7 @@ function renderWaterfall() {
   const summary = state.data.summary;
   state.charts.waterfall.setOption({
     grid: { left: 62, right: 16, top: 28, bottom: 48 },
-    tooltip: { trigger: "axis", formatter: (params) => `${params[0].name}<br>${gonka(params[0].value)}<br>${fmt.format((params[0].value / summary.totalCompensationGonka) * 100)}% of final total` },
+    tooltip: chartTooltip({ trigger: "axis", formatter: (params) => `${params[0].name}<br>${gonka(params[0].value)}<br>${fmt.format((params[0].value / summary.totalCompensationGonka) * 100)}% of final total` }),
     xAxis: { type: "category", data: ["visible e265", "e265-e266 attack", "e267-e276 cap"], axisLabel: { color: "#a7afba", interval: 0 } },
     yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
     series: [{ type: "bar", data: [summary.visibleDamageE265Gonka, summary.attackE265E266Gonka, summary.capE267E276Gonka], itemStyle: { color: (p) => ["#5da9e9", "#d9655f", "#d7a84f"][p.dataIndex] }, label: { show: true, position: "top", color: "#eef0f2", formatter: (p) => compact.format(p.value) } }],
@@ -253,13 +263,13 @@ function renderEpochChart() {
   const epochs = state.data.epochs || [];
   state.charts.epoch.setOption({
     grid: { left: 70, right: 20, top: 24, bottom: 44 },
-    tooltip: {
+    tooltip: chartTooltip({
       trigger: "axis",
       formatter: (params) => {
         const row = epochs[params[0].dataIndex];
         return `Epoch ${row.epoch}<br>${gonka(row.totalGonka)}<br>${row.recipientsCount} recipients`;
       },
-    },
+    }),
     xAxis: { type: "category", data: epochs.map((row) => `e${row.epoch}`), axisLabel: { color: "#a7afba" } },
     yAxis: [
       { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
@@ -296,14 +306,14 @@ function renderHeatmap() {
     values.push([x, y, share, raw, row.address]);
   }));
   state.charts.heatmap.setOption({
-    tooltip: { formatter: (p) => {
+    tooltip: chartTooltip({ formatter: (p) => {
       const row = rows[p.value[1]];
       const raw = p.value[3] || 0;
       const share = p.value[2] || 0;
       const epoch = epochByKey.get(epochs[p.value[0]]) || {};
       const epochShare = epoch.totalGonka ? (raw / epoch.totalGonka) * 100 : 0;
       return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${epochs[p.value[0]]}: ${gonka(raw)}<br>${fmt.format(share)}% of this recipient total<br>${fmt.format(epochShare)}% of epoch total<br>recipient total ${gonka(row?.totalGonka || 0)}`;
-    } },
+    } }),
     grid: { left: 150, right: 24, top: 24, bottom: 42 },
     xAxis: { type: "category", data: epochs, axisLabel: { color: "#a7afba" } },
     yAxis: { type: "category", data: rows.map((row) => `#${row.rank} ${actorShortLabel(row)}`), axisLabel: { color: "#a7afba", width: 140, overflow: "truncate" } },
@@ -346,7 +356,7 @@ function renderMatrix() {
     ].join("");
   }
   state.charts.matrix.setOption({
-    tooltip: {
+    tooltip: chartTooltip({
       trigger: "item",
       formatter: (item) => {
         const row = item.data?.row || {};
@@ -355,7 +365,7 @@ function renderMatrix() {
         }
         return `<strong>${escapeHtml(item.name)}</strong><br>Flow width = received GONKA`;
       },
-    },
+    }),
     series: [{
       type: "sankey",
       left: 8,
@@ -400,12 +410,12 @@ function renderTimeline() {
   const maxPower = Math.max(...votes.map((vote) => vote.votingPower || 0), 0);
   state.charts.timeline.setOption({
     grid: { left: 150, right: 42, top: 20, bottom: 42 },
-    tooltip: {
+    tooltip: chartTooltip({
       formatter: (p) => {
         const vote = votes[p.dataIndex];
         return `<strong>${escapeHtml(actorLabel(vote))}</strong><br>${escapeHtml(vote.voter)}<br>${escapeHtml(optionLabels[vote.primaryOption] || vote.primaryOption)}<br>${escapeHtml(formatTime(vote.blockTime))}<br>height ${vote.height}<br>governance power ${vote.votingPower == null ? "unknown" : fmt.format(vote.votingPower)}`;
       },
-    },
+    }),
     xAxis: {
       type: "time",
       axisLabel: { color: "#a7afba", formatter: (value) => formatTime(value).slice(5, 16) },
@@ -432,10 +442,10 @@ function renderTally() {
   const rows = state.data.chartData?.tallyByOption || Object.entries(state.data.summary.finalTally).map(([voteOption, votingPower]) => ({ voteOption, votingPower, addressCount: 0 }));
   state.charts.tally.setOption({
     grid: { left: 68, right: 18, top: 18, bottom: 42 },
-    tooltip: { formatter: (p) => {
+    tooltip: chartTooltip({ formatter: (p) => {
       const row = rows[p.dataIndex];
       return `${optionLabels[row.voteOption] || row.voteOption}<br>${fmt.format(row.votingPower)} voting power<br>${row.addressCount} final voters<br>${fmt.format(row.recipientVotingPower || 0)} recipient-voter power`;
-    } },
+    } }),
     xAxis: { type: "category", data: rows.map((row) => optionLabels[row.voteOption] || row.voteOption), axisLabel: { color: "#a7afba", interval: 0, rotate: 15 } },
     yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) } },
     series: [{
@@ -457,7 +467,7 @@ function renderVoterPowerChart() {
     .sort((a, b) => (b.votingPower || 0) - (a.votingPower || 0) || actorLabel(a).localeCompare(actorLabel(b)));
   state.charts.voterPower.setOption({
     grid: { left: 260, right: 44, top: 24, bottom: 42 },
-    tooltip: {
+    tooltip: chartTooltip({
       formatter: (p) => {
         const row = rows[p.dataIndex];
         const roles = [
@@ -466,7 +476,7 @@ function renderVoterPowerChart() {
         ].filter(Boolean).join(" + ");
         return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address)}<br>${escapeHtml(roles)}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}<br>governance power ${fmt.format(row.votingPower || 0)}<br>compensation ${gonka(row.totalCompensationGonka || 0)}<br>${escapeHtml(identityBoundary(row))}`;
       },
-    },
+    }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
     yAxis: { type: "category", data: rows.map(voterDisplayLabel), axisLabel: { color: "#a7afba", width: 240, overflow: "break", lineHeight: 15 } },
     series: [{
@@ -513,12 +523,12 @@ function renderWindowPowerChart() {
   state.charts.windowPower.setOption({
     grid: { left: 260, right: 44, top: 34, bottom: 52 },
     legend: { top: 4, textStyle: { color: "#a7afba" } },
-    tooltip: {
+    tooltip: chartTooltip({
       formatter: (p) => {
         const row = rows[p.dataIndex || 0];
         return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.voter)}<br>${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)} at height ${row.height}<br>start ${fmt.format(row.startVotingPower || 0)} · end ${fmt.format(row.endVotingPower || 0)}<br>${escapeHtml(windowStatusLabel(row.windowPowerStatus))}`;
       },
-    },
+    }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
     yAxis: { type: "category", data: rows.map(voterDisplayLabel), axisLabel: { color: "#a7afba", width: 240, overflow: "break", lineHeight: 15 } },
     series: [
@@ -559,12 +569,12 @@ function renderAttackTimeline() {
   const rows = dated.length >= 2 ? dated : phases;
   state.charts.attackTimeline.setOption({
     grid: { left: 40, right: 24, top: 28, bottom: 90 },
-    tooltip: {
+    tooltip: chartTooltip({
       formatter: (p) => {
         const row = rows[p.dataIndex];
         return `<strong>${escapeHtml(row.label)}</strong><br>${escapeHtml(formatTime(row.time) || row.timeOrHeight)}<br>${escapeHtml(row.summary)}`;
       },
-    },
+    }),
     xAxis: dated.length >= 2
       ? { type: "time", axisLabel: { color: "#a7afba", formatter: (value) => formatTime(value).slice(5, 16) } }
       : { type: "category", data: rows.map((row) => row.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 25 } },
@@ -647,7 +657,7 @@ function renderEntryExitChart() {
   const maxPower = Math.max(...rows.map((row) => row.governanceVotingPower || row.totalGovernanceVotingPower || 0), 0);
   state.charts.entryExit.setOption({
     grid: { left: 170, right: 24, top: 24, bottom: 42 },
-    tooltip: {
+    tooltip: chartTooltip({
       formatter: (params) => {
         const row = rows[params.dataIndex];
         if (clusterRows.length) {
@@ -655,7 +665,7 @@ function renderEntryExitChart() {
         }
         return `${escapeHtml(actorLabel(row))}<br>prev ${fmt.format(row.prevMaxWeight || 0)} · e287 ${fmt.format(row.e287Weight || 0)} · next ${fmt.format(row.nextMaxWeight || 0)}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}${row.voteHeight ? ` at ${row.voteHeight}` : ""}<br>exact gov power ${fmt.format(row.governanceVotingPower || 0)}<br>${escapeHtml(row.caveat || "")}`;
       },
-    },
+    }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
     yAxis: { type: "category", data: rows.map((row, index) => `#${row.rank || index + 1} ${actorShortLabel(row)}`), axisLabel: { color: "#a7afba", width: 160, overflow: "truncate" } },
     series: clusterRows.length ? [{
@@ -986,7 +996,7 @@ function renderActorGraph() {
     });
   });
   state.charts.actorGraph.setOption({
-    tooltip: { formatter: (p) => p.dataType === "edge" ? `${p.data.source}<br>${escapeHtml(p.data.value)}<br>${p.data.target}` : escapeHtml(p.data.name) },
+    tooltip: chartTooltip({ formatter: (p) => p.dataType === "edge" ? `${p.data.source}<br>${escapeHtml(p.data.value)}<br>${p.data.target}` : escapeHtml(p.data.name) }),
     legend: [{ data: ["party", "address", "proof", "signal"], textStyle: { color: "#a7afba" } }],
     series: [{
       type: "graph",
