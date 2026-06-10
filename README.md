@@ -17,7 +17,9 @@ Investigation workspace for Gonka proposal #67, "Kimi Restitution (epochs 265-27
 - `data/telegram_evidence.json` - curated short excerpts parsed from ignored Telegram exports under `history/`.
 - `data/voting_end_epochs/` - raw e285-e290 voting-end epoch snapshots and archive block snapshots, with public-node fallback recorded in the manifest.
 - `data/proposal_67_vote_blocks/` - raw archive block snapshots for proposal #67 governance vote transaction heights, used for the vote timeline.
+- `data/investigations/gonka1007_ownership_investigation.json` - focused ownership/counterparty dossier for `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`.
 - `reports/proposal_67_analysis.md` - current summary: recipients, final voters, and why 30k became 946k.
+- `reports/gonka1007_ownership_investigation.md` - readable focused investigation report for the same address.
 - `reports/attribution_audit.md` - ranked interested-party audit with evidence caveats.
 - `reports/ranked_parties.csv` - exportable ranked actor/cluster priority list.
 - `reports/evidence_claims.csv` - exportable evidence claims with source, confidence, and proof/signal boundary.
@@ -39,6 +41,7 @@ python3 scripts/parse_telegram_exports.py
 python3 scripts/fetch_voting_end_epoch_data.py
 python3 scripts/build_onchain_graph_snapshot.py
 python3 scripts/analyze_proposal_67.py
+python3 scripts/investigate_gonka1007.py
 python3 scripts/build_dashboard_data.py
 ```
 

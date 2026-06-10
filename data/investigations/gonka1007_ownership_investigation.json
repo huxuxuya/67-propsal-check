@@ -1,0 +1,1790 @@
+{
+  "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+  "compensation": {
+    "proposalId": "67",
+    "proposalProposer": "gonka1nvcwl2c7jxj2h47c56y8dmcmf0tynt5dplzngy",
+    "proposalRecipientOutputs": [],
+    "proposalSubmitTime": "2026-06-03T21:54:51.438833010Z"
+  },
+  "counterpartyContext": {
+    "gonka125vkkhk5tcj59jeq4fz9mt2zew6tcfuu42czm6": {
+      "historyHits": [],
+      "isParticipant": false,
+      "isRecipient": false,
+      "isVoter": false,
+      "participant": null,
+      "rankedParty": null,
+      "recipient": null,
+      "vote": null
+    },
+    "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6": {
+      "historyHits": [
+        {
+          "excerpt": "\u042f \u0442\u0443\u0442 \u0447\u0438\u043d\u0438\u043b \u043c\u0430\u0442\u0435\u043c\u0430\u0442\u0438\u043a\u0443 \u0432\u0430\u043b\u0438\u0434\u0430\u0446\u0438\u0439 \u043d\u0430 \u0442\u0440\u0435\u043a\u0435\u0440\u0435 \u0438 \u0437\u0430\u043c\u0435\u0442\u0438\u043b \u0447\u0442\u043e \u044d\u0442\u043e \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a \u0432\u044b\u0431\u044b\u043b, \u043f\u043e\u0442\u043e\u043c\u0443 \u0447\u0442\u043e \u0435\u0433\u043e \u043c\u0430\u043b\u043e \u043a\u0442\u043e \u043f\u0440\u043e\u0432\u0430\u043b\u0438\u0434\u0438\u0440\u043e\u0432\u0430\u043b (\u0445\u043e\u0442\u044f \u043e\u043d \u043e\u0442\u043f\u0440\u0430\u0432\u0438\u043b \u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e nonces).<br>\u042d\u0442\u043e \u043f\u0440\u043e\u0438\u0437\u043e\u0448\u043b\u043e \u0438 \u0434\u043b\u044f qwen \u0438 kimi \u043e\u0434\u043d\u043e\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e: <a href=\"https://tracker.gonka.vip/?participant=gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6\">https://tracker.gonka.vip/?participant=gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6</a><br><a href=\"ht",
+          "line": 10637,
+          "sourceFile": "history/Gonka Devs/messages16.html"
+        }
+      ],
+      "isParticipant": true,
+      "isRecipient": true,
+      "isVoter": false,
+      "participant": {
+        "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "coin_balance": "0",
+        "consecutive_invalid_inferences": "0",
+        "current_epoch_stats": {
+          "burned_coins": "0",
+          "confirmationPoCRatio": null,
+          "earned_coins": "0",
+          "inactiveLLR": {
+            "exponent": 0,
+            "value": "0"
+          },
+          "inference_count": "0",
+          "invalidLLR": {
+            "exponent": 0,
+            "value": "0"
+          },
+          "invalidated_inferences": "0",
+          "missed_requests": "0",
+          "rewarded_coins": "0",
+          "validated_inferences": "0"
+        },
+        "epochs_completed": 1,
+        "index": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "inference_url": "http://178.104.95.5:8000",
+        "join_height": "3996809",
+        "join_time": "1778406311836",
+        "last_inference_time": "0",
+        "status": "ACTIVE",
+        "validator_key": "yk6psIaYStHmC4Wbxa8IqaIwATFJNCbOh+Fi900QHSM=",
+        "weight": -1,
+        "worker_public_key": ""
+      },
+      "rankedParty": {
+        "actorDisplayLabel": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "actorShortLabel": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "addresses": [
+          "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6"
+        ],
+        "caveats": [
+          "No strict public owner proof."
+        ],
+        "confidence": "medium",
+        "id": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "identityBoundary": "public_identity_signal",
+        "identityTypes": [
+          "matched_validator_moniker"
+        ],
+        "label": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "labelSource": "address",
+        "operationalPriority": 23.762,
+        "overallPriority": 23.762,
+        "rank": 30,
+        "roles": [
+          "epoch_commit_participant",
+          "recipient"
+        ],
+        "scoreComponents": {
+          "benefit": 7.962,
+          "coordination": 1.8,
+          "epochAnomaly": 0,
+          "governance": 0,
+          "identityConfidence": 14,
+          "inferenceVoteOverlap": 0,
+          "operationalTiming": 0,
+          "proposalRole": 0,
+          "telegramAttribution": 0,
+          "voteTiming": 0
+        },
+        "topEvidence": [
+          {
+            "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+            "category": "financial_or_epoch_activity",
+            "caveat": "On-chain proposal output proves beneficiary address and amount, not human owner.",
+            "confidence": "high",
+            "isAttributionProof": false,
+            "sourceFile": "data/proposal_67.json",
+            "sourceType": "compensation_output",
+            "sourceUrl": "data/proposal_67.json",
+            "sourceValue": "39809.676543 GONKA",
+            "subject": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6"
+          },
+          {
+            "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+            "category": "public_identity",
+            "caveat": "Public self-declared metadata when proof=true; otherwise a public label/signal.",
+            "confidence": "high",
+            "isAttributionProof": false,
+            "sourceFile": "docs/data/dashboard.json",
+            "sourceType": "matched_validator_moniker",
+            "sourceUrl": "docs/data/dashboard.json",
+            "sourceValue": "gonkavaloper1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h",
+            "subject": "gonkavaloper1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h"
+          },
+          {
+            "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+            "category": "public_identity",
+            "caveat": "Graph edge; infrastructure/provider edges are signals only.",
+            "confidence": "high",
+            "isAttributionProof": false,
+            "sourceFile": "docs/data/dashboard.json",
+            "sourceType": "matched_validator_moniker",
+            "sourceUrl": "docs/data/dashboard.json",
+            "sourceValue": "gonkavaloper1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h",
+            "subject": "public_label:gonkavaloper1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h"
+          },
+          {
+            "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+            "category": "financial_or_epoch_activity",
+            "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+            "confidence": "medium",
+            "isAttributionProof": false,
+            "sourceFile": "upstream/gonka-kimi-restitution/e265/epoch265_commits.json",
+            "sourceType": "epoch_commit_participant",
+            "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e265/epoch265_commits.json",
+            "sourceValue": "e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1024",
+            "subject": "021173fcef5bd6bb75a30fe488b4158e320ce4fb6996c8c33f389195cef4708d93"
+          },
+          {
+            "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+            "category": "financial_or_epoch_activity",
+            "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+            "confidence": "medium",
+            "isAttributionProof": false,
+            "sourceFile": "upstream/gonka-kimi-restitution/e265/epoch265_commits.json",
+            "sourceType": "epoch_commit_participant",
+            "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e265/epoch265_commits.json",
+            "sourceValue": "e265 moonshotai/Kimi-K2.6 count=57984",
+            "subject": "021173fcef5bd6bb75a30fe488b4158e320ce4fb6996c8c33f389195cef4708d93"
+          }
+        ],
+        "totalCompensationGonka": 39809.676543,
+        "voteCounts": {
+          "did_not_vote": 1
+        }
+      },
+      "recipient": {
+        "activeNode": true,
+        "actorDisplayLabel": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "actorShortLabel": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "attackE265E266Gonka": 39809.676543,
+        "capE267E276Gonka": 0.0,
+        "claimedRewardByEpoch": {
+          "e265": {
+            "claimed": false,
+            "earnedGonka": 0.0,
+            "inferenceCount": 45444,
+            "invalidatedInferences": 7,
+            "missedRequests": 12,
+            "rewardedGonka": 0.0,
+            "validatedInferences": 45437
+          },
+          "e266": {
+            "claimed": true,
+            "earnedGonka": 0.015773,
+            "inferenceCount": 1900,
+            "invalidatedInferences": 0,
+            "missedRequests": 0,
+            "rewardedGonka": 239.625994,
+            "validatedInferences": 1900
+          }
+        },
+        "componentSource": "attack_e265_e266",
+        "epochsCompleted": 1,
+        "gnsNames": [],
+        "identityBoundary": "public_identity_signal",
+        "identityType": "matched_validator_moniker",
+        "inferenceUrl": "http://178.104.95.5:8000",
+        "label": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "labelSource": "address",
+        "onchainOutputGonka": 39809.676543,
+        "perEpoch": {
+          "e265": 20896.527179,
+          "e266": 18913.149364,
+          "e267": 0.0,
+          "e268": 0.0,
+          "e269": 0.0,
+          "e270": 0.0,
+          "e271": 0.0,
+          "e272": 0.0,
+          "e273": 0.0,
+          "e274": 0.0,
+          "e275": 0.0,
+          "e276": 0.0
+        },
+        "publicLabel": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "publicName": "",
+        "publicNodeInfo": {
+          "epochsCompleted": 1,
+          "inferenceUrl": "http://178.104.95.5:8000",
+          "joinHeight": "3996809",
+          "lastInferenceTime": "0",
+          "matchedValidator": {
+            "accountAddress": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h",
+            "details": "",
+            "identity": "",
+            "label": "",
+            "moniker": "gonkavaloper1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h",
+            "operatorAddress": "gonkavaloper1j7x6dv42xehe9e5au4ku3wvzwtqlegfjtla99h",
+            "securityContact": "",
+            "website": ""
+          },
+          "status": "ACTIVE",
+          "validatorKey": "yk6psIaYStHmC4Wbxa8IqaIwATFJNCbOh+Fi900QHSM=",
+          "workerPublicKey": ""
+        },
+        "rank": 8,
+        "signalClusterId": "",
+        "status": "ACTIVE",
+        "strictClusterId": "",
+        "totalGonka": 39809.676543,
+        "voteOption": "did_not_vote"
+      },
+      "vote": null
+    },
+    "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8": {
+      "historyHits": [
+        {
+          "excerpt": "<pre>2026/01/05 19:25:38 INFO Handling event subsystem=EventProcessing event=&quot;&amp;{JSONRPC:2.0 ID:block-2018387-tx-29 Result:{Query:block_monitor/Tx Data:{Type:tendermint/event/Tx Value:map[]} Events:map[coin_received.amount:[53ngonka] coin_received.authz_msg_index:[0] coin_received.msg_index:[0] coin_received.receiver:[gonka1quznlkw3da7qvls7ldz9y0l02dv0f2myy9rdsk] coin_spent.amount:[53ngonk",
+          "line": 37051,
+          "sourceFile": "history/Gonka Devs/messages5.html"
+        }
+      ],
+      "isParticipant": false,
+      "isRecipient": false,
+      "isVoter": false,
+      "participant": null,
+      "rankedParty": null,
+      "recipient": null,
+      "vote": null
+    },
+    "gonka1jrfmcl6ztdhtejv88j6fnmk0ex9ygj60dh46ak": {
+      "historyHits": [],
+      "isParticipant": false,
+      "isRecipient": false,
+      "isVoter": false,
+      "participant": null,
+      "rankedParty": null,
+      "recipient": null,
+      "vote": null
+    },
+    "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd": {
+      "historyHits": [],
+      "isParticipant": false,
+      "isRecipient": false,
+      "isVoter": false,
+      "participant": null,
+      "rankedParty": null,
+      "recipient": null,
+      "vote": null
+    }
+  },
+  "dashboard": {
+    "identityEdges": [
+      {
+        "confidence": "medium",
+        "isAttributionProof": false,
+        "source": "address:gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+        "sourceFile": "data/public_identity_signals.json",
+        "sourceType": "same_inference_host",
+        "sourceValue": "178.105.174.27",
+        "target": "host:178.105.174.27"
+      },
+      {
+        "confidence": "medium",
+        "isAttributionProof": false,
+        "source": "address:gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+        "sourceFile": "docs/data/dashboard.json",
+        "sourceType": "participant_inference_url",
+        "sourceValue": "http://178.105.174.27:8000",
+        "target": "inference_endpoint:http://178.105.174.27:8000"
+      },
+      {
+        "confidence": "medium",
+        "isAttributionProof": false,
+        "source": "address:gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+        "sourceFile": "data/public_identity_signals.json",
+        "sourceType": "participant_inference_url",
+        "sourceValue": "http://178.105.174.27:8000",
+        "target": "url:http://178.105.174.27:8000"
+      }
+    ],
+    "rankedParty": {
+      "actorDisplayLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "actorShortLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "addresses": [
+        "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+      ],
+      "caveats": [
+        "No strict public owner proof.",
+        "Address both received compensation and voted.",
+        "e287 inference timing is an operational signal, not governance voting power."
+      ],
+      "confidence": "medium",
+      "id": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "identityBoundary": "public_identity_signal",
+      "identityTypes": [
+        "participant_inference_url"
+      ],
+      "label": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "labelSource": "address",
+      "operationalPriority": 48.203,
+      "overallPriority": 34.203,
+      "rank": 15,
+      "roles": [
+        "epoch_commit_participant",
+        "recipient",
+        "voter"
+      ],
+      "scoreComponents": {
+        "benefit": 2.253,
+        "coordination": 1.95,
+        "epochAnomaly": 8,
+        "governance": 16,
+        "identityConfidence": 14,
+        "inferenceVoteOverlap": 6,
+        "operationalTiming": 8,
+        "proposalRole": 0,
+        "telegramAttribution": 0,
+        "voteTiming": 6
+      },
+      "topEvidence": [
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "category": "financial_or_epoch_activity",
+          "caveat": "On-chain proposal output proves beneficiary address and amount, not human owner.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/proposal_67.json",
+          "sourceType": "compensation_output",
+          "sourceUrl": "data/proposal_67.json",
+          "sourceValue": "11262.520198 GONKA",
+          "subject": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+        },
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "category": "governance",
+          "caveat": "Vote proves governance action by address, not human owner.",
+          "confidence": "high",
+          "isAttributionProof": false,
+          "sourceFile": "data/proposal_67_tx_search.json",
+          "sourceType": "proposal_vote",
+          "sourceUrl": "data/proposal_67_tx_search.json",
+          "sourceValue": "yes",
+          "subject": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+        },
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e268/epoch268_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e268/epoch268_commits.json",
+          "sourceValue": "e268 moonshotai/Kimi-K2.6 count=14528",
+          "subject": "03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab"
+        },
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e269/epoch269_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e269/epoch269_commits.json",
+          "sourceValue": "e269 moonshotai/Kimi-K2.6 count=7296",
+          "subject": "03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab"
+        },
+        {
+          "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "category": "financial_or_epoch_activity",
+          "caveat": "Epoch commit activity links an address to model participation and public key usage.",
+          "confidence": "medium",
+          "isAttributionProof": false,
+          "sourceFile": "upstream/gonka-kimi-restitution/e270/epoch270_commits.json",
+          "sourceType": "epoch_commit_participant",
+          "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e270/epoch270_commits.json",
+          "sourceValue": "e270 moonshotai/Kimi-K2.6 count=14880",
+          "subject": "03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab"
+        }
+      ],
+      "totalCompensationGonka": 11262.520198,
+      "voteCounts": {
+        "yes": 1
+      }
+    },
+    "recipient": {
+      "activeNode": false,
+      "actorDisplayLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "actorShortLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "attackE265E266Gonka": 0.0,
+      "capE267E276Gonka": 11262.520198,
+      "claimedRewardByEpoch": {
+        "e268": {
+          "claimed": true,
+          "earnedGonka": 0.032687,
+          "inferenceCount": 1055,
+          "invalidatedInferences": 0,
+          "missedRequests": 30,
+          "rewardedGonka": 4332.010079,
+          "validatedInferences": 1056
+        },
+        "e269": {
+          "claimed": true,
+          "earnedGonka": 0.003032,
+          "inferenceCount": 590,
+          "invalidatedInferences": 0,
+          "missedRequests": 21,
+          "rewardedGonka": 2385.568365,
+          "validatedInferences": 590
+        },
+        "e270": {
+          "claimed": true,
+          "earnedGonka": 0.084709,
+          "inferenceCount": 1750,
+          "invalidatedInferences": 0,
+          "missedRequests": 39,
+          "rewardedGonka": 6552.663433,
+          "validatedInferences": 1750
+        },
+        "e271": {
+          "claimed": true,
+          "earnedGonka": 0.126862,
+          "inferenceCount": 6721,
+          "invalidatedInferences": 0,
+          "missedRequests": 114,
+          "rewardedGonka": 4968.728344,
+          "validatedInferences": 6721
+        },
+        "e273": {
+          "claimed": true,
+          "earnedGonka": 0.0,
+          "inferenceCount": 0,
+          "invalidatedInferences": 0,
+          "missedRequests": 0,
+          "rewardedGonka": 5548.226164,
+          "validatedInferences": 0
+        }
+      },
+      "componentSource": "cap_e267_e276",
+      "epochsCompleted": 0,
+      "gnsNames": [],
+      "identityBoundary": "public_identity_signal",
+      "identityType": "participant_inference_url",
+      "inferenceUrl": "http://178.105.174.27:8000",
+      "label": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "labelSource": "address",
+      "onchainOutputGonka": 11262.520198,
+      "perEpoch": {
+        "e265": 0.0,
+        "e266": 0.0,
+        "e267": 0.0,
+        "e268": 2384.499296,
+        "e269": 1089.182117,
+        "e270": 3289.208043,
+        "e271": 1132.160499,
+        "e272": 0.0,
+        "e273": 3367.470243,
+        "e274": 0.0,
+        "e275": 0.0,
+        "e276": 0.0
+      },
+      "publicLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "publicName": "",
+      "publicNodeInfo": {
+        "epochsCompleted": 0,
+        "inferenceUrl": "http://178.105.174.27:8000",
+        "joinHeight": "4132613",
+        "lastInferenceTime": "1779140555741",
+        "matchedValidator": {},
+        "status": "INACTIVE",
+        "validatorKey": "tpe7BLcggZjebLowWzBPv7N9525XYz419oXnLSmXQsU=",
+        "workerPublicKey": ""
+      },
+      "rank": 17,
+      "signalClusterId": "",
+      "status": "INACTIVE",
+      "strictClusterId": "",
+      "totalGonka": 11262.520198,
+      "voteOption": "yes"
+    },
+    "vote": {
+      "actorDisplayLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "actorShortLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "blockTime": "2026-06-04T18:41:58.344042872Z",
+      "endVotingPower": 57838,
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
+        }
+      ],
+      "gnsNames": [],
+      "height": 4414864,
+      "identityBoundary": "public_identity_signal",
+      "identityType": "participant_inference_url",
+      "isRecipient": true,
+      "label": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "labelSource": "address",
+      "primaryOption": "yes",
+      "publicLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "publicName": "",
+      "publicNodeInfo": {
+        "epochsCompleted": 0,
+        "inferenceUrl": "http://178.105.174.27:8000",
+        "joinHeight": "4132613",
+        "lastInferenceTime": "1779140555741",
+        "matchedValidator": {},
+        "status": "INACTIVE",
+        "validatorKey": "tpe7BLcggZjebLowWzBPv7N9525XYz419oXnLSmXQsU=",
+        "workerPublicKey": ""
+      },
+      "signalClusterId": "",
+      "startVotingPower": 0,
+      "strictClusterId": "",
+      "txHash": "2163756502FF44AF25F1F41C5E1791ACC4236C8DC1ECBB0A825FDC4228BBBBBC",
+      "voter": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "votingPower": 57838,
+      "votingPowerReason": "Computed from archive Query/Validators and Query/DelegatorDelegations at block 4433308, last block before voting end using Gonka SDK gov tally logic.",
+      "votingPowerSource": "archive_staking_delegations_chain_like",
+      "windowPowerStatus": "power_at_end_only"
+    },
+    "votingWindowEpochWeights": {
+      "e285": 0,
+      "e286": 37261,
+      "e287": 57838
+    }
+  },
+  "epochCommitPublicKeyMatches": [
+    {
+      "count": 14528,
+      "epoch": 268,
+      "modelId": "moonshotai/Kimi-K2.6",
+      "participant": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "rootHash": "GFkuzKx6N90uPQJfkiFQxe/cY6pjOaM0QTf8bBAnrdw=",
+      "sourceFile": "upstream/gonka-kimi-restitution/e268/epoch268_commits.json"
+    },
+    {
+      "count": 7296,
+      "epoch": 269,
+      "modelId": "moonshotai/Kimi-K2.6",
+      "participant": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "rootHash": "r+k1f3WjIQZvBmN3w28YgCN+l/WhhC2CSRFXjFxl0jI=",
+      "sourceFile": "upstream/gonka-kimi-restitution/e269/epoch269_commits.json"
+    },
+    {
+      "count": 14880,
+      "epoch": 270,
+      "modelId": "moonshotai/Kimi-K2.6",
+      "participant": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "rootHash": "xjuYBPvQAMSvFZWEHsGy670YCI2fewfAOFT5uc678W0=",
+      "sourceFile": "upstream/gonka-kimi-restitution/e270/epoch270_commits.json"
+    },
+    {
+      "count": 22336,
+      "epoch": 271,
+      "modelId": "moonshotai/Kimi-K2.6",
+      "participant": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "rootHash": "NIKMrBEiVX9Ir0hQ9ACLvoH25M61+yCf+EQOevp/PD4=",
+      "sourceFile": "upstream/gonka-kimi-restitution/e271/epoch271_commits.json"
+    },
+    {
+      "count": 14912,
+      "epoch": 272,
+      "modelId": "moonshotai/Kimi-K2.6",
+      "participant": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "rootHash": "1q275yBrVB9IAGlrmeloCi19DknMFjIMAcUW5f3NlYw=",
+      "sourceFile": "upstream/gonka-kimi-restitution/e272/epoch272_commits.json"
+    },
+    {
+      "count": 15360,
+      "epoch": 273,
+      "modelId": "moonshotai/Kimi-K2.6",
+      "participant": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "rootHash": "L4WNfhMmqTZX5+MELBUNFuYpKdaHwvhrvp7l6gTwlow=",
+      "sourceFile": "upstream/gonka-kimi-restitution/e273/epoch273_commits.json"
+    }
+  ],
+  "evidenceClaims": [
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "public_infrastructure",
+      "caveat": "Public participant metadata links the node to this endpoint, not to a human owner.",
+      "confidence": "medium",
+      "isAttributionProof": false,
+      "sourceFile": "data/participants_by_address.json",
+      "sourceType": "participant_inference_url",
+      "sourceUrl": "data/participants_by_address.json",
+      "sourceValue": "http://178.105.174.27:8000",
+      "subject": "http://178.105.174.27:8000"
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "public_identity",
+      "caveat": "Validator key is unique in local snapshots but is not an owner proof.",
+      "confidence": "medium",
+      "isAttributionProof": false,
+      "sourceFile": "data/participants_by_address.json",
+      "sourceType": "participant_validator_key",
+      "sourceUrl": "data/participants_by_address.json",
+      "sourceValue": "tpe7BLcggZjebLowWzBPv7N9525XYz419oXnLSmXQsU=",
+      "subject": "tpe7BLcggZjebLowWzBPv7N9525XYz419oXnLSmXQsU="
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "governance",
+      "caveat": "On-chain staking state proves voting-power source, not human owner.",
+      "confidence": "high",
+      "isAttributionProof": false,
+      "sourceFile": "data/governance_power_67/governance_power_67.json",
+      "sourceType": "staking_self_delegation",
+      "sourceUrl": "data/governance_power_67/governance_power_67.json",
+      "sourceValue": "57838 ngonka self-delegated by voting end",
+      "subject": "gonkavaloper1007dchuqgdnute4qam70kmn56j2vfw388h4yhp"
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "governance",
+      "caveat": "Vote proves governance action by this address.",
+      "confidence": "high",
+      "isAttributionProof": false,
+      "sourceFile": "data/proposal_67_tx_search.json",
+      "sourceType": "proposal_vote",
+      "sourceUrl": "data/proposal_67_tx_search.json",
+      "sourceValue": "yes at height 4414864",
+      "subject": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "financial_or_epoch_activity",
+      "caveat": "Proposal output proves beneficiary address and amount, not human owner.",
+      "confidence": "high",
+      "isAttributionProof": false,
+      "sourceFile": "data/proposal_67.json",
+      "sourceType": "compensation_output",
+      "sourceUrl": "data/proposal_67.json",
+      "sourceValue": "11262.520198 GONKA",
+      "subject": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "public_infrastructure",
+      "caveat": "Hosting provider attribution is infrastructure-only.",
+      "confidence": "medium",
+      "isAttributionProof": false,
+      "sourceFile": "RIPE Stat",
+      "sourceType": "ripe_asn",
+      "sourceUrl": "RIPE Stat",
+      "sourceValue": "AS24940 HETZNER-DC / CLOUD-NBG1",
+      "subject": "178.105.174.27"
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "financial_or_epoch_activity",
+      "caveat": "Transfer counterparty is an on-chain money-flow link, not human ownership proof.",
+      "confidence": "high",
+      "isAttributionProof": false,
+      "sourceFile": "archive RPC tx_search",
+      "sourceType": "top_transfer_counterparty",
+      "sourceUrl": "archive RPC tx_search",
+      "sourceValue": "net -7130.0 GONKA",
+      "subject": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd"
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "negative_evidence",
+      "caveat": "Absence in local data is not global proof.",
+      "confidence": "medium",
+      "isAttributionProof": false,
+      "sourceFile": "data/participants_by_address.json",
+      "sourceType": "no_same_ip_cluster",
+      "sourceUrl": "data/participants_by_address.json",
+      "sourceValue": "No other local participant uses this IP",
+      "subject": "178.105.174.27"
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "category": "negative_evidence",
+      "caveat": "Absence in local data is not global proof.",
+      "confidence": "medium",
+      "isAttributionProof": false,
+      "sourceFile": "upstream/gonka-kimi-restitution",
+      "sourceType": "no_same_pubkey_cluster",
+      "sourceUrl": "upstream/gonka-kimi-restitution",
+      "sourceValue": "No other local participant uses this epoch commit public key",
+      "subject": "03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab"
+    }
+  ],
+  "generatedAt": "2026-06-10T20:33:19.482318+00:00",
+  "governancePower": {
+    "endDelegationsAt4433308": [
+      {
+        "balanceAmount": "57838",
+        "balanceDenom": "ngonka",
+        "delegatorAddress": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+        "shares": "57838000000000000000000",
+        "validatorAddress": "gonkavaloper1007dchuqgdnute4qam70kmn56j2vfw388h4yhp"
+      }
+    ],
+    "startDelegationsAt4401104": [],
+    "validatorAt4433308": {
+      "accountAddress": "gonka1007dchuqgdnute4qam70kmn56j2vfw388h4yhp",
+      "delegatorShares": "57838000000000000000000",
+      "moniker": "gonkavaloper1007dchuqgdnute4qam70kmn56j2vfw388h4yhp",
+      "operatorAddress": "gonkavaloper1007dchuqgdnute4qam70kmn56j2vfw388h4yhp",
+      "status": 3,
+      "tokens": "57838"
+    },
+    "window": {
+      "endDelegations": [
+        {
+          "balanceAmount": "57838",
+          "balanceDenom": "ngonka",
+          "delegatorAddress": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+          "shares": "57838000000000000000000",
+          "validatorAddress": "gonkavaloper1007dchuqgdnute4qam70kmn56j2vfw388h4yhp",
+          "votingPower": 57838
+        }
+      ],
+      "endVotingPower": 57838,
+      "endVotingPowerExact": "57838",
+      "endVotingPowerSource": "archive_staking_delegations_chain_like",
+      "startDelegations": [],
+      "startVotingPower": 0,
+      "startVotingPowerExact": "0",
+      "startVotingPowerSource": "archive_staking_no_voting_power",
+      "voter": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "windowPowerStatus": "power_at_end_only"
+    }
+  },
+  "historyHits": [
+    {
+      "excerpt": "\u041d\u0435\u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u0430\u0434\u0440\u0435\u0441\u0430 \u043d\u0435 \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u0438 reward_coins \u0437\u0430 272 \u0442\u043e\u043b\u044c\u043a\u043e work_coins:<br><br>gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4<br>gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau<br>gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw<br>gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv<br>gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5<br>gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n<br><br>\u0412\u043e\u0437\u043c\u043e\u0436\u043d\u043e \u044d\u0442\u043e \u043d\u0435 \u043f\u043e\u043b\u043d\u044b\u0439 \u0441\u043f\u0438\u0441\u043e\u043a.<br>\u0412\u0438\u0434\u0438\u043c\u044b\u0445 \u043f\u0440\u0438\u0447\u0438\u043d \u044d\u0442\u043e\u0433\u043e \u043d\u0435 \u043d\u0430\u0448\u0435\u043b.<br><br>UPD: \u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0435\u0442 miss rate \u0432\u044b\u0441\u043e\u043a\u0438\u0439",
+      "line": 24095,
+      "sourceFile": "history/Gonka Devs/messages16.html"
+    },
+    {
+      "excerpt": "### #15 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "line": 224,
+      "sourceFile": "reports/attribution_audit.md"
+    },
+    {
+      "excerpt": "- Addresses: gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "line": 226,
+      "sourceFile": "reports/attribution_audit.md"
+    },
+    {
+      "excerpt": "5,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,True,True,True,11262.520198,57838,yes,,,public_signal,0,2,26.078,review conflict narrative | prioritize owner attribution | enrich beneficiary identity,compensation_output:11262.520198 GONKA:high | proposal_vote:yes:high | epoch_commit_participant:e268 moonshotai/Kimi-K2.6 count=14528:medium | epoch_commit_participant:e269 moonshotai/Kimi-K2.6 count=7296:medium | epoch_commit_participant:e270 moonshotai/K",
+      "line": 6,
+      "sourceFile": "reports/benefit_power_matrix.csv"
+    },
+    {
+      "excerpt": "### #5 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "line": 75,
+      "sourceFile": "reports/benefit_power_matrix.md"
+    },
+    {
+      "excerpt": "- Address: `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`",
+      "line": 77,
+      "sourceFile": "reports/benefit_power_matrix.md"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,financial_or_epoch_activity,compensation_output,11262.520198 GONKA,high,False,data/proposal_67.json,data/proposal_67.json,\"On-chain proposal output proves beneficiary address and amount, not human owner.\"",
+      "line": 1688,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab,financial_or_epoch_activity,epoch_commit_participant,e268 moonshotai/Kimi-K2.6 count=14528,medium,False,upstream/gonka-kimi-restitution/e268/epoch268_commits.json,https://github.com/votkon/gonka-kimi-restitution/blob/main/e268/epoch268_commits.json,Epoch commit activity links an address to model participation and public key usage.",
+      "line": 1689,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab,financial_or_epoch_activity,epoch_commit_participant,e269 moonshotai/Kimi-K2.6 count=7296,medium,False,upstream/gonka-kimi-restitution/e269/epoch269_commits.json,https://github.com/votkon/gonka-kimi-restitution/blob/main/e269/epoch269_commits.json,Epoch commit activity links an address to model participation and public key usage.",
+      "line": 1690,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab,financial_or_epoch_activity,epoch_commit_participant,e270 moonshotai/Kimi-K2.6 count=14880,medium,False,upstream/gonka-kimi-restitution/e270/epoch270_commits.json,https://github.com/votkon/gonka-kimi-restitution/blob/main/e270/epoch270_commits.json,Epoch commit activity links an address to model participation and public key usage.",
+      "line": 1691,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab,financial_or_epoch_activity,epoch_commit_participant,e271 moonshotai/Kimi-K2.6 count=22336,medium,False,upstream/gonka-kimi-restitution/e271/epoch271_commits.json,https://github.com/votkon/gonka-kimi-restitution/blob/main/e271/epoch271_commits.json,Epoch commit activity links an address to model participation and public key usage.",
+      "line": 1692,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab,financial_or_epoch_activity,epoch_commit_participant,e272 moonshotai/Kimi-K2.6 count=14912,medium,False,upstream/gonka-kimi-restitution/e272/epoch272_commits.json,https://github.com/votkon/gonka-kimi-restitution/blob/main/e272/epoch272_commits.json,Epoch commit activity links an address to model participation and public key usage.",
+      "line": 1693,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab,financial_or_epoch_activity,epoch_commit_participant,e273 moonshotai/Kimi-K2.6 count=15360,medium,False,upstream/gonka-kimi-restitution/e273/epoch273_commits.json,https://github.com/votkon/gonka-kimi-restitution/blob/main/e273/epoch273_commits.json,Epoch commit activity links an address to model participation and public key usage.",
+      "line": 1694,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,governance,proposal_vote,yes,high,False,data/proposal_67_tx_search.json,data/proposal_67_tx_search.json,\"Vote proves governance action by address, not human owner.\"",
+      "line": 1695,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,public_identity,voting_end_epoch_anomaly,e287=57838 prev=37261 next=0 vote=yes@4414864,medium,False,data/voting_end_epochs/manifest.json,data/voting_end_epochs/manifest.json,Inference epoch weight/timing is operational evidence only. It is not governance voting power and does not prove whether a vote was counted.",
+      "line": 1696,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,http://178.105.174.27:8000,public_infrastructure,participant_inference_url,http://178.105.174.27:8000,medium,False,docs/data/dashboard.json,docs/data/dashboard.json,Public self-declared metadata when proof=true; otherwise a public label/signal.",
+      "line": 1697,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,inference_endpoint:http://178.105.174.27:8000,public_infrastructure,participant_inference_url,http://178.105.174.27:8000,medium,False,docs/data/dashboard.json,docs/data/dashboard.json,Graph edge; infrastructure/provider edges are signals only.",
+      "line": 1698,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,url:http://178.105.174.27:8000,public_infrastructure,participant_inference_url,http://178.105.174.27:8000,medium,False,data/public_identity_signals.json,data/public_identity_signals.json,Graph edge; infrastructure/provider edges are signals only.",
+      "line": 1699,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,host:178.105.174.27,public_infrastructure,same_inference_host,178.105.174.27,medium,False,data/public_identity_signals.json,data/public_identity_signals.json,Graph edge; infrastructure/provider edges are signals only.",
+      "line": 1700,
+      "sourceFile": "reports/evidence_claims.csv"
+    },
+    {
+      "excerpt": "| `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv` | http://178.105.174.27:8000 | true | yes:1.000000000000000000 | 4414864 |",
+      "line": 58,
+      "sourceFile": "reports/proposal_67_analysis.md"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,http://178.105.174.27:8000,true,yes:1.000000000000000000,4414864,2163756502FF44AF25F1F41C5E1791ACC4236C8DC1ECBB0A825FDC4228BBBBBC",
+      "line": 14,
+      "sourceFile": "reports/proposal_67_final_votes.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,http://178.105.174.27:8000,http://178.105.174.27:8000,INACTIVE,0,11262.520198,0.000000,11262.520198,\"e268,e269,e270,e271,e273\",11262.520198,true",
+      "line": 18,
+      "sourceFile": "reports/proposal_67_recipients.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,http://178.105.174.27:8000,recipient voter,11262.520198,57838,yes,public_name_or_metadata_signal,,,,,,,,http://178.105.174.27:8000,participant_inference_url:http://178.105.174.27:8000:medium,review recipient-voter conflict | corroborate voter owner | corroborate beneficiary owner",
+      "line": 10,
+      "sourceFile": "reports/public_name_enrichment.csv"
+    },
+    {
+      "excerpt": "### gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "line": 151,
+      "sourceFile": "reports/public_name_enrichment.md"
+    },
+    {
+      "excerpt": "- Address: `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`",
+      "line": 153,
+      "sourceFile": "reports/public_name_enrichment.md"
+    },
+    {
+      "excerpt": "- Best public name: http://178.105.174.27:8000",
+      "line": 155,
+      "sourceFile": "reports/public_name_enrichment.md"
+    },
+    {
+      "excerpt": "- Inference URL: http://178.105.174.27:8000",
+      "line": 159,
+      "sourceFile": "reports/public_name_enrichment.md"
+    },
+    {
+      "excerpt": "- participant_inference_url (medium, signal): http://178.105.174.27:8000",
+      "line": 163,
+      "sourceFile": "reports/public_name_enrichment.md"
+    },
+    {
+      "excerpt": "### participant_inference_url: http://178.105.174.27:8000",
+      "line": 1185,
+      "sourceFile": "reports/public_name_enrichment.md"
+    },
+    {
+      "excerpt": "- Addresses: gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "line": 1190,
+      "sourceFile": "reports/public_name_enrichment.md"
+    },
+    {
+      "excerpt": "participant_inference_url,http://178.105.174.27:8000,medium,False,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,1,11262.520198,57838,yes:57838.0,data/participants_by_address.json",
+      "line": 35,
+      "sourceFile": "reports/public_name_groups.csv"
+    },
+    {
+      "excerpt": "15,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,epoch_commit_participant recipient voter,11262.520198,34.203,medium,14,2.253,16,1.95,0,8,6,0,\"No strict public owner proof. | Address both received compensation and voted. | e287 inference timing is an operational signal, not governance voting power.\"",
+      "line": 16,
+      "sourceFile": "reports/ranked_parties.csv"
+    },
+    {
+      "excerpt": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,yes,4414864,True,0,57838,power_at_end_only,archive_staking_no_voting_power,archive_staking_delegations_chain_like,0,1,2163756502FF44AF25F1F41C5E1791ACC4236C8DC1ECBB0A825FDC4228BBBBBC",
+      "line": 2,
+      "sourceFile": "reports/voting_power_window_comparison.csv"
+    },
+    {
+      "excerpt": "- gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`: vote=yes tx_height=4414864 start_power=0 end_power=57838 status=power_at_end_only",
+      "line": 16,
+      "sourceFile": "reports/voting_power_window_comparison.md"
+    },
+    {
+      "excerpt": ",single-address timing lead,,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv,False,False,True,False,57838,37261,0,yes,4414864,57838,archive_staking_delegations_chain_like,True,0,partial_operational_timing_signal",
+      "line": 4,
+      "sourceFile": "reports/voting_window_power_reconciliation.csv"
+    }
+  ],
+  "localMatches": {
+    "sameEpochCommitPublicKeyAddresses": [
+      "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+    ],
+    "sameInferenceIpAddresses": [
+      "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+    ],
+    "sameValidatorKeyAddresses": [
+      "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+    ]
+  },
+  "participant": {
+    "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+    "coin_balance": "0",
+    "consecutive_invalid_inferences": "0",
+    "current_epoch_stats": {
+      "burned_coins": "0",
+      "confirmationPoCRatio": null,
+      "earned_coins": "0",
+      "inactiveLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "inference_count": "0",
+      "invalidLLR": {
+        "exponent": 0,
+        "value": "0"
+      },
+      "invalidated_inferences": "0",
+      "missed_requests": "0",
+      "rewarded_coins": "0",
+      "validated_inferences": "0"
+    },
+    "epochs_completed": 0,
+    "index": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+    "inference_url": "http://178.105.174.27:8000",
+    "join_height": "4132613",
+    "join_time": "1779102782047",
+    "last_inference_time": "1779140555741",
+    "status": "INACTIVE",
+    "validator_key": "tpe7BLcggZjebLowWzBPv7N9525XYz419oXnLSmXQsU=",
+    "weight": -1,
+    "worker_public_key": ""
+  },
+  "rewardClaims": [
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "claimed": true,
+      "earnedCoins": 32686695,
+      "earnedGonka": 0.032687,
+      "epoch": 268,
+      "inferenceCount": 1055,
+      "invalidatedInferences": 0,
+      "missedRequests": 30,
+      "rewardedCoins": 4332010078848,
+      "rewardedGonka": 4332.010079,
+      "validatedInferences": 1056
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "claimed": true,
+      "earnedCoins": 3031725,
+      "earnedGonka": 0.003032,
+      "epoch": 269,
+      "inferenceCount": 590,
+      "invalidatedInferences": 0,
+      "missedRequests": 21,
+      "rewardedCoins": 2385568364747,
+      "rewardedGonka": 2385.568365,
+      "validatedInferences": 590
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "claimed": true,
+      "earnedCoins": 84709355,
+      "earnedGonka": 0.084709,
+      "epoch": 270,
+      "inferenceCount": 1750,
+      "invalidatedInferences": 0,
+      "missedRequests": 39,
+      "rewardedCoins": 6552663432777,
+      "rewardedGonka": 6552.663433,
+      "validatedInferences": 1750
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "claimed": true,
+      "earnedCoins": 126861772,
+      "earnedGonka": 0.126862,
+      "epoch": 271,
+      "inferenceCount": 6721,
+      "invalidatedInferences": 0,
+      "missedRequests": 114,
+      "rewardedCoins": 4968728344407,
+      "rewardedGonka": 4968.728344,
+      "validatedInferences": 6721
+    },
+    {
+      "address": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "claimed": true,
+      "earnedCoins": 0,
+      "earnedGonka": 0.0,
+      "epoch": 273,
+      "inferenceCount": 0,
+      "invalidatedInferences": 0,
+      "missedRequests": 0,
+      "rewardedCoins": 5548226163897,
+      "rewardedGonka": 5548.226164,
+      "validatedInferences": 0
+    }
+  ],
+  "ripe": {
+    "error": "",
+    "ok": true,
+    "summary": {
+      "country": "DE",
+      "created": "2026-05-11T12:10:27Z",
+      "descr": "HETZNER-DC",
+      "inetnum": "178.105.160.0/20",
+      "last-modified": "2026-05-11T12:10:27Z",
+      "mnt-by": "HOS-GUN",
+      "netname": "CLOUD-NBG1",
+      "org": "ORG-HOA1-RIPE",
+      "origin": "24940",
+      "route": "178.104.0.0/15"
+    },
+    "url": "https://stat.ripe.net/data/whois/data.json?resource=178.105.174.27"
+  },
+  "transferFlows": {
+    "counterparties": [
+      {
+        "address": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "incomingCount": 0,
+        "incomingGonka": 0.0,
+        "latestHeight": 4506025,
+        "latestTxHash": "7C35D0D0792DFF1AE26F64CFD7B6EA43C1836FDF3BBA834934CFBB885DB6919A",
+        "netGonka": -7130.0,
+        "outgoingCount": 16,
+        "outgoingGonka": 7130.0
+      },
+      {
+        "address": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "incomingCount": 49,
+        "incomingGonka": 0.643265889,
+        "latestHeight": 4428980,
+        "latestTxHash": "C4A422D627AAA96C0FECDEE2348155FBC2E5E43084C9F2EB9911F2D2026DB9CD",
+        "netGonka": 0.643265889,
+        "outgoingCount": 0,
+        "outgoingGonka": 0.0
+      },
+      {
+        "address": "gonka1jrfmcl6ztdhtejv88j6fnmk0ex9ygj60dh46ak",
+        "incomingCount": 1,
+        "incomingGonka": 0.1,
+        "latestHeight": 4378165,
+        "latestTxHash": "AEAFD0F41099A1FEA35ACE0C1E6E7785E8938D66399025CA319BB1FB76AC92FF",
+        "netGonka": 0.1,
+        "outgoingCount": 0,
+        "outgoingGonka": 0.0
+      },
+      {
+        "address": "gonka125vkkhk5tcj59jeq4fz9mt2zew6tcfuu42czm6",
+        "incomingCount": 0,
+        "incomingGonka": 0.0,
+        "latestHeight": 4130013,
+        "latestTxHash": "B7C273E6D47A886A06AED7F654A324D0825361CC256884643E22ACA6A4731BE7",
+        "netGonka": -0.1,
+        "outgoingCount": 1,
+        "outgoingGonka": 0.1
+      },
+      {
+        "address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "incomingCount": 1,
+        "incomingGonka": 0.1,
+        "latestHeight": 4129921,
+        "latestTxHash": "D43AD2E7FCFECB49A7EBBFD297666EE38FE9106FF0489A31A24D1E2ACB1CDBBB",
+        "netGonka": 0.1,
+        "outgoingCount": 0,
+        "outgoingGonka": 0.0
+      }
+    ],
+    "flows": [
+      {
+        "amount": "657000000000ngonka",
+        "amountGonka": 657.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4506025,
+        "txHash": "7C35D0D0792DFF1AE26F64CFD7B6EA43C1836FDF3BBA834934CFBB885DB6919A"
+      },
+      {
+        "amount": "1314000000000ngonka",
+        "amountGonka": 1314.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4494309,
+        "txHash": "D0E353F636A4014C1FD816AD27F4CF41ECC8428AAB9091866F433B8149C71659"
+      },
+      {
+        "amount": "1839000000000ngonka",
+        "amountGonka": 1839.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4473865,
+        "txHash": "0DCC1FDD6EBEDF0C59EDC27898182B7088EB897649AE10C3FF69E3A2605A1544"
+      },
+      {
+        "amount": "625ngonka",
+        "amountGonka": 6.25e-07,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4428980,
+        "txHash": "C4A422D627AAA96C0FECDEE2348155FBC2E5E43084C9F2EB9911F2D2026DB9CD"
+      },
+      {
+        "amount": "484000000000ngonka",
+        "amountGonka": 484.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4413519,
+        "txHash": "3631B519F4F5767B3CB8B73EF6F4194294F0FCE93FA97FD306D0FFD437D4B6E4"
+      },
+      {
+        "amount": "1557270ngonka",
+        "amountGonka": 0.00155727,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4410258,
+        "txHash": "DA5E9CFFFEDA347B0C52F40EA7DBC629B2E175E21D9C6541671B5ADCDDC873BF"
+      },
+      {
+        "amount": "7726690ngonka",
+        "amountGonka": 0.00772669,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4410218,
+        "txHash": "D6A832F9D1196569F5B8423F9DBE28A112468AF742E4D008F63FABDD88731880"
+      },
+      {
+        "amount": "625ngonka",
+        "amountGonka": 6.25e-07,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4406683,
+        "txHash": "0B0DBF30B7A825975985993BAE444D2A85AC4C66ABEF3146E9DBF7871C3BCB93"
+      },
+      {
+        "amount": "449000000000ngonka",
+        "amountGonka": 449.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4398551,
+        "txHash": "F9FC5EC2D05C0380E51F1A973FBE507B337290D5D7139C04739A2E3EA57B532C"
+      },
+      {
+        "amount": "22964507ngonka",
+        "amountGonka": 0.022964507,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4390297,
+        "txHash": "22E7D86121A1222661C1DD7EB2847B7778F6CB0345DB089E60C95E5CA6D5F130"
+      },
+      {
+        "amount": "377000000000ngonka",
+        "amountGonka": 377.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4383031,
+        "txHash": "BC16E3D42CE914631FC022BC20C7AFDD656E4C5F2F4E4C8E6D25153EB17C2624"
+      },
+      {
+        "amount": "100000000ngonka",
+        "amountGonka": 0.1,
+        "counterparty": "gonka1jrfmcl6ztdhtejv88j6fnmk0ex9ygj60dh46ak",
+        "direction": "in",
+        "height": 4378165,
+        "txHash": "AEAFD0F41099A1FEA35ACE0C1E6E7785E8938D66399025CA319BB1FB76AC92FF"
+      },
+      {
+        "amount": "7964795ngonka",
+        "amountGonka": 0.007964795,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4374526,
+        "txHash": "7AB6342F766EB3294D2F39353D4FFCACF40DAD499B8B1A3464C747174CFFA95A"
+      },
+      {
+        "amount": "342000000000ngonka",
+        "amountGonka": 342.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4367377,
+        "txHash": "37BE0816C3C840C448805F7B7C3544E0FF1A93700E865DA1DA19DFBDE2785FCC"
+      },
+      {
+        "amount": "292000000000ngonka",
+        "amountGonka": 292.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4360328,
+        "txHash": "AFEF0B89212A5613FAFCEF1CAAA9C102F69AB9AC062EB12326D3ED6B89E8A723"
+      },
+      {
+        "amount": "14758543ngonka",
+        "amountGonka": 0.014758543,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358929,
+        "txHash": "3BC8DFE83CB696E8EE1C37072ED2DADF44F07036255E174AB140E5E376F46EFC"
+      },
+      {
+        "amount": "25286415ngonka",
+        "amountGonka": 0.025286415,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358882,
+        "txHash": "CCDBDF7C4231AF0969A20F3190A0189AD4AA7E101DE8CBF780D664E4A31408EF"
+      },
+      {
+        "amount": "23979567ngonka",
+        "amountGonka": 0.023979567,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358872,
+        "txHash": "86066A78AE35F584CA70D36B4F9C7D3269C8648F34602FA62AEE4D3220525A20"
+      },
+      {
+        "amount": "79847505ngonka",
+        "amountGonka": 0.079847505,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358867,
+        "txHash": "D8109280E58CF8526DF45D87ABDCC660A44B892B9FB2859A884EEB6CB2E0C6D1"
+      },
+      {
+        "amount": "25680232ngonka",
+        "amountGonka": 0.025680232,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358856,
+        "txHash": "B163D516216D49C1D160EB8D17E8C42D545C2358F25BBA0D76867E0602E7A885"
+      },
+      {
+        "amount": "49518280ngonka",
+        "amountGonka": 0.04951828,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358853,
+        "txHash": "60375F9D1D21B3A4B5981BA11C535567D381E76D185917AC44E8565AA87EA195"
+      },
+      {
+        "amount": "31717286ngonka",
+        "amountGonka": 0.031717286,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358849,
+        "txHash": "AE57AFD39754044FDD6FE0D2C476272755279772F7638E525C06F3D476441D67"
+      },
+      {
+        "amount": "49297586ngonka",
+        "amountGonka": 0.049297586,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358829,
+        "txHash": "DC50666A1F8F3C6559C29CDD133D4BDAB9C0FAE4D3970F09D162891803414F4A"
+      },
+      {
+        "amount": "58270940ngonka",
+        "amountGonka": 0.05827094,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358820,
+        "txHash": "46A53864A662BB02279EFE0A3EE557FFA36F4C6CC7D492A5E765182DEE2DA154"
+      },
+      {
+        "amount": "48306570ngonka",
+        "amountGonka": 0.04830657,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358817,
+        "txHash": "03D31D43188BE4CD6CC92DE181389B3D7EDE6E49EE834B6B96C3BCAD92F15E9A"
+      },
+      {
+        "amount": "799835ngonka",
+        "amountGonka": 0.000799835,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358802,
+        "txHash": "05B3A9649971A30A72293560FD755A32C2C2A40520588E7625EF7463C264F020"
+      },
+      {
+        "amount": "1747320ngonka",
+        "amountGonka": 0.00174732,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358801,
+        "txHash": "C09DDAA0C8FB503ED5AEF7E770142545378A45FCD7A318E2A3BA9DB33C7BF735"
+      },
+      {
+        "amount": "795292ngonka",
+        "amountGonka": 0.000795292,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358798,
+        "txHash": "6B524B93244B4CDFD61D1499FB1E391FA6E9FD50D452B8CE9939FC9072C97189"
+      },
+      {
+        "amount": "2834915ngonka",
+        "amountGonka": 0.002834915,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4358448,
+        "txHash": "90E11A55C2D0AF302DE87610C762DC428CBA7F0493B06951B8ECD97AE050D188"
+      },
+      {
+        "amount": "212000000000ngonka",
+        "amountGonka": 212.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4344447,
+        "txHash": "9DB7C5B8CD9DE5ED15505D0F60CFFB268AA54D9263EE8DFF61AFED10B052ED89"
+      },
+      {
+        "amount": "4556961ngonka",
+        "amountGonka": 0.004556961,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4341440,
+        "txHash": "7DB8D742107E8354E36E195C73B0EBE3FD8A7898B4416FD3CAFB29E372D99227"
+      },
+      {
+        "amount": "160000000000ngonka",
+        "amountGonka": 160.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4327183,
+        "txHash": "45528C95CFA94B5568EB7AD2EF0ADE972F55251D643936AD6D173DEFEA2A56D6"
+      },
+      {
+        "amount": "1819223ngonka",
+        "amountGonka": 0.001819223,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4326188,
+        "txHash": "C1A8F0306EC5DB7391988C5477F3B6962F63F31492E726C89CF56F71C980B514"
+      },
+      {
+        "amount": "264000000000ngonka",
+        "amountGonka": 264.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4311267,
+        "txHash": "7A14C8D6D9D927C23A05BD17E4DAFC4B66B6A1FE65F15C853E59635E3144F39C"
+      },
+      {
+        "amount": "14750852ngonka",
+        "amountGonka": 0.014750852,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4309920,
+        "txHash": "B3418689A6098D3195D38DEDCDD3E1DC91CCBC32D140487E405C477371731286"
+      },
+      {
+        "amount": "27644815ngonka",
+        "amountGonka": 0.027644815,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4309920,
+        "txHash": "5D112418B97C6DF3CBBE75C744713B79B83328284A8DEB95DF207C036044CF66"
+      },
+      {
+        "amount": "62989223ngonka",
+        "amountGonka": 0.062989223,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4309920,
+        "txHash": "3F17ABFB6E7E036A976758A8B04BE827EBC79D5D92F5B67CC914A44C1B1619E2"
+      },
+      {
+        "amount": "23667470ngonka",
+        "amountGonka": 0.02366747,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4309920,
+        "txHash": "2D692BF636FE7E75232F28D814A0F2C08E3ABCA42EB976FFCDE1D74A6A005893"
+      },
+      {
+        "amount": "4432295ngonka",
+        "amountGonka": 0.004432295,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4309094,
+        "txHash": "70B375283677C6F0492604B071059012F893E00EEAFF4FF0D52B09A9C8054BF8"
+      },
+      {
+        "amount": "723648ngonka",
+        "amountGonka": 0.000723648,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4309092,
+        "txHash": "1BBEB963D4775C4262995AC92BD3E37F857BB2B15CC1C2A7799D1D0C523DE103"
+      },
+      {
+        "amount": "35502450ngonka",
+        "amountGonka": 0.03550245,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4306300,
+        "txHash": "DC5F2A22C4B9F0885453106D7B8EF900261B90A9CF06DEABB6B26071B45BD087"
+      },
+      {
+        "amount": "132000000000ngonka",
+        "amountGonka": 132.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4282943,
+        "txHash": "E6517837D4099F0DA48043AFA3EE0141C6252715EBBD23E71F3F8BD8020A7398"
+      },
+      {
+        "amount": "135000000000ngonka",
+        "amountGonka": 135.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4270093,
+        "txHash": "61CA4F90A1871902068127FBBBC7FD7E5CC9FFC3E6CF25CB0717F596AFCF525E"
+      },
+      {
+        "amount": "132000000000ngonka",
+        "amountGonka": 132.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4244306,
+        "txHash": "1575A3A96F4153B0A63E354B9AB2B01B02428C0BDDCCD2C632595214E63DAC40"
+      },
+      {
+        "amount": "102000000000ngonka",
+        "amountGonka": 102.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4228857,
+        "txHash": "6A00C5470015BD0E11824F77A21659D0403D63679424E0BA15C1B2F837151F5D"
+      },
+      {
+        "amount": "239000000000ngonka",
+        "amountGonka": 239.0,
+        "counterparty": "gonka1rhmr93td57nwqxv08we74va095hfdh3wha7vyd",
+        "direction": "out",
+        "height": 4216666,
+        "txHash": "C1FB492A1BBC4CF001B58372110D6EED8F9A9EEFE1717B945DA5071AD985ADAD"
+      },
+      {
+        "amount": "7625ngonka",
+        "amountGonka": 7.625e-06,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4213523,
+        "txHash": "7870A823F9BCDFEA4D1522ABB8F0A9144F27FF2EB4A3B9F3CE0418AF7992D78E"
+      },
+      {
+        "amount": "2250ngonka",
+        "amountGonka": 2.25e-06,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4213521,
+        "txHash": "155EF7D3631D4C839BF89B8944F5C66B382B1289543829CEA8096A8BDEC9A61D"
+      },
+      {
+        "amount": "1750ngonka",
+        "amountGonka": 1.75e-06,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4213520,
+        "txHash": "A874B5788621C2A97DA51168CAAEB19B2E51620DA6AB639AD461FE227551E6C0"
+      },
+      {
+        "amount": "2000ngonka",
+        "amountGonka": 2e-06,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4198196,
+        "txHash": "0E048E93A54B8BB470EF25AE6652AA8810A03D20B2BEE84E2C4E588629F250D6"
+      },
+      {
+        "amount": "13625ngonka",
+        "amountGonka": 1.3625e-05,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4198139,
+        "txHash": "29BB2C13D19BE25A8B4453A78CE3AAB12A1C0F24DE99778774400BD5E4098D51"
+      },
+      {
+        "amount": "875ngonka",
+        "amountGonka": 8.75e-07,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4198139,
+        "txHash": "1460B41290C92977A70977FC7EF95A2391F58B81306B9D6D9CF818A45B0C23B7"
+      },
+      {
+        "amount": "7000ngonka",
+        "amountGonka": 7e-06,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4198138,
+        "txHash": "5557496275E12305E56C94345ECFCD55E88601CC40F9905510EF4C4044F0511E"
+      },
+      {
+        "amount": "28125ngonka",
+        "amountGonka": 2.8125e-05,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4198131,
+        "txHash": "2256C1E500A974FDF943A2F4D5FA4C705AD1C3C6B3556E8EC9DAB81113812136"
+      },
+      {
+        "amount": "25625ngonka",
+        "amountGonka": 2.5625e-05,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4198130,
+        "txHash": "FC45F7154F7300D6C982DFEE3CD2486F6A21F851248D1F41957F60D8517D20FC"
+      },
+      {
+        "amount": "2249485ngonka",
+        "amountGonka": 0.002249485,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4194766,
+        "txHash": "983A151130AD9D9AC6FA7BFC33CD883A922C5C9C34A45673641A490DD864892C"
+      },
+      {
+        "amount": "1916836ngonka",
+        "amountGonka": 0.001916836,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4194749,
+        "txHash": "D09DB9A11C67EECF81BA91BB72A0B69F6A13783F556F6E7AF713228F3F18E910"
+      },
+      {
+        "amount": "2417965ngonka",
+        "amountGonka": 0.002417965,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4194747,
+        "txHash": "0D497AA31745498F6086E6EACA04456046C8EDD76A05398A7EA22D9CDDBA390D"
+      },
+      {
+        "amount": "4681800ngonka",
+        "amountGonka": 0.0046818,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4194746,
+        "txHash": "C3FBCDCD1D790AD7227C6D2E115FBA93BC3C05FDA046783D4D985A2FFFE6E764"
+      },
+      {
+        "amount": "2586655ngonka",
+        "amountGonka": 0.002586655,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4194743,
+        "txHash": "6B04E4525052B297275C194531E75BA72054E079020A8F206644CA30E76DE305"
+      },
+      {
+        "amount": "45250ngonka",
+        "amountGonka": 4.525e-05,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4167352,
+        "txHash": "36C02632C4B4783296C3FFE81189E6C94C12ED3390ABB0B7C2F676842F2B360C"
+      },
+      {
+        "amount": "21312ngonka",
+        "amountGonka": 2.1312e-05,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4167349,
+        "txHash": "8F195F6C4F1CAA3E5616F99F205145EB76A81062B17D28CBAFFAF224629EE285"
+      },
+      {
+        "amount": "15938ngonka",
+        "amountGonka": 1.5938e-05,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4167348,
+        "txHash": "0C7E2F3657C32E4CDA8D9E7ADCBD398ED89226D2DFAE5C2ED78B5B34C8C47F00"
+      },
+      {
+        "amount": "95100ngonka",
+        "amountGonka": 9.51e-05,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4167345,
+        "txHash": "8EE46953D2F61264C7EDF4CB14B588B1E70CFFB3808D7C189817CB103AE650DD"
+      },
+      {
+        "amount": "1188ngonka",
+        "amountGonka": 1.188e-06,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4151957,
+        "txHash": "DA9882C28C2FA9CAA7A81DBCCAAA2E7FF6BC14737B19429EA6560839407D46C7"
+      },
+      {
+        "amount": "3750ngonka",
+        "amountGonka": 3.75e-06,
+        "counterparty": "gonka1jftn8khawsmfn7shgzfjn27myu5d4zd6ns09y8",
+        "direction": "in",
+        "height": 4151955,
+        "txHash": "64ECA7FA6CD3CF6F427DD751E0E3CCD530262BF4FCDFF44E0B2F42B7AA26EB6B"
+      },
+      {
+        "amount": "100000000ngonka",
+        "amountGonka": 0.1,
+        "counterparty": "gonka125vkkhk5tcj59jeq4fz9mt2zew6tcfuu42czm6",
+        "direction": "out",
+        "height": 4130013,
+        "txHash": "B7C273E6D47A886A06AED7F654A324D0825361CC256884643E22ACA6A4731BE7"
+      },
+      {
+        "amount": "100000000ngonka",
+        "amountGonka": 0.1,
+        "counterparty": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "direction": "in",
+        "height": 4129921,
+        "txHash": "D43AD2E7FCFECB49A7EBBFD297666EE38FE9106FF0489A31A24D1E2ACB1CDBBB"
+      }
+    ]
+  },
+  "txTrace": {
+    "createValidator": {
+      "count": 0,
+      "error": "",
+      "ok": true,
+      "sample": []
+    },
+    "delegateDelegator": {
+      "count": 0,
+      "error": "",
+      "ok": true,
+      "sample": []
+    },
+    "sender": {
+      "count": 40,
+      "error": "",
+      "ok": true,
+      "sample": [
+        {
+          "code": 0,
+          "hash": "7C35D0D0792DFF1AE26F64CFD7B6EA43C1836FDF3BBA834934CFBB885DB6919A",
+          "height": "4506025"
+        },
+        {
+          "code": 0,
+          "hash": "D0E353F636A4014C1FD816AD27F4CF41ECC8428AAB9091866F433B8149C71659",
+          "height": "4494309"
+        },
+        {
+          "code": 0,
+          "hash": "0DCC1FDD6EBEDF0C59EDC27898182B7088EB897649AE10C3FF69E3A2605A1544",
+          "height": "4473865"
+        },
+        {
+          "code": 0,
+          "hash": "898895411DC461B339683F5F24BD3B65CF9D4DF4FECF088CA28711F28B438B67",
+          "height": "4457908"
+        },
+        {
+          "code": 0,
+          "hash": "366E8EA98115C5BA0750F431259F3A15BE778F9D5FDEEBD7DBA4BF3B170161AB",
+          "height": "4457906"
+        }
+      ]
+    },
+    "transferRecipient": {
+      "count": 51,
+      "error": "",
+      "ok": true,
+      "sample": [
+        {
+          "code": 0,
+          "hash": "C4A422D627AAA96C0FECDEE2348155FBC2E5E43084C9F2EB9911F2D2026DB9CD",
+          "height": "4428980"
+        },
+        {
+          "code": 0,
+          "hash": "DA5E9CFFFEDA347B0C52F40EA7DBC629B2E175E21D9C6541671B5ADCDDC873BF",
+          "height": "4410258"
+        },
+        {
+          "code": 0,
+          "hash": "D6A832F9D1196569F5B8423F9DBE28A112468AF742E4D008F63FABDD88731880",
+          "height": "4410218"
+        },
+        {
+          "code": 0,
+          "hash": "0B0DBF30B7A825975985993BAE444D2A85AC4C66ABEF3146E9DBF7871C3BCB93",
+          "height": "4406683"
+        },
+        {
+          "code": 0,
+          "hash": "22E7D86121A1222661C1DD7EB2847B7778F6CB0345DB089E60C95E5CA6D5F130",
+          "height": "4390297"
+        }
+      ]
+    },
+    "transferSender": {
+      "count": 17,
+      "error": "",
+      "ok": true,
+      "sample": [
+        {
+          "code": 0,
+          "hash": "7C35D0D0792DFF1AE26F64CFD7B6EA43C1836FDF3BBA834934CFBB885DB6919A",
+          "height": "4506025"
+        },
+        {
+          "code": 0,
+          "hash": "D0E353F636A4014C1FD816AD27F4CF41ECC8428AAB9091866F433B8149C71659",
+          "height": "4494309"
+        },
+        {
+          "code": 0,
+          "hash": "0DCC1FDD6EBEDF0C59EDC27898182B7088EB897649AE10C3FF69E3A2605A1544",
+          "height": "4473865"
+        },
+        {
+          "code": 0,
+          "hash": "3631B519F4F5767B3CB8B73EF6F4194294F0FCE93FA97FD306D0FFD437D4B6E4",
+          "height": "4413519"
+        },
+        {
+          "code": 0,
+          "hash": "F9FC5EC2D05C0380E51F1A973FBE507B337290D5D7139C04739A2E3EA57B532C",
+          "height": "4398551"
+        }
+      ]
+    }
+  },
+  "voteTxs": [
+    {
+      "feePayer": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "hash": "2163756502FF44AF25F1F41C5E1791ACC4236C8DC1ECBB0A825FDC4228BBBBBC",
+      "height": 4414864,
+      "index": 1,
+      "option": "[{\"option\":1,\"weight\":\"1.000000000000000000\"}]",
+      "sender": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv"
+    }
+  ]
+}
