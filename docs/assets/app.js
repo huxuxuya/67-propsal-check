@@ -295,12 +295,59 @@ function renderCompensationChart() {
 
 function renderWaterfall() {
   const summary = state.data.summary;
+  const rows = [{
+    name: "Final compensation",
+    attack: summary.attackE265E266Gonka || 0,
+    cap: summary.capE267E276Gonka || 0,
+    visible: summary.visibleDamageE265Gonka || 0,
+    total: summary.totalCompensationGonka || 0,
+  }];
   state.charts.waterfall.setOption({
-    grid: { left: 62, right: 16, top: 28, bottom: 48 },
-    tooltip: chartTooltip({ trigger: "axis", formatter: (params) => `${params[0].name}<br>${gonka(params[0].value)}<br>${fmt.format((params[0].value / summary.totalCompensationGonka) * 100)}% of final total` }),
-    xAxis: { type: "category", data: ["visible e265", "e265-e266 attack", "e267-e276 cap"], axisLabel: { color: "#a7afba", interval: 0 } },
-    yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
-    series: [{ type: "bar", data: [summary.visibleDamageE265Gonka, summary.attackE265E266Gonka, summary.capE267E276Gonka], itemStyle: { color: (p) => ["#5da9e9", "#d9655f", "#d7a84f"][p.dataIndex] }, label: { show: true, position: "top", color: "#eef0f2", formatter: (p) => compact.format(p.value) } }],
+    legend: { top: 4, textStyle: { color: "#a7afba" } },
+    grid: { left: 124, right: 28, top: 54, bottom: 48 },
+    tooltip: chartTooltip({
+      trigger: "item",
+      formatter: (p) => {
+        const total = summary.totalCompensationGonka || 1;
+        if (p.seriesName === "visible e265 baseline") {
+          return `<strong>Visible e265 baseline</strong><br>${gonka(summary.visibleDamageE265Gonka || 0)}<br>Observed damage basis before formula expansion<br>${fmt.format(((summary.visibleDamageE265Gonka || 0) / total) * 100)}% of final payout`;
+        }
+        const description = p.seriesName === "attack window"
+          ? "Compensation attributed to epochs 265-266"
+          : "Compensation attributed to cap window epochs 267-276";
+        return `<strong>${escapeHtml(p.seriesName)}</strong><br>${description}<br>${gonka(p.value || 0)}<br>${fmt.format(((p.value || 0) / total) * 100)}% of final payout<br>final total ${gonka(summary.totalCompensationGonka || 0)}`;
+      },
+    }),
+    xAxis: { type: "value", max: rows[0].total, axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) }, name: "GONKA paid", nameTextStyle: { color: "#a7afba" } },
+    yAxis: { type: "category", data: rows.map((row) => row.name), axisLabel: { color: "#a7afba", width: 110, overflow: "break" } },
+    series: [
+      {
+        name: "attack window",
+        type: "bar",
+        stack: "formula",
+        data: rows.map((row) => row.attack),
+        itemStyle: { color: "#d9655f" },
+        label: { show: true, position: "inside", color: "#101114", fontWeight: 700, formatter: (p) => `e265-e266\n${compact.format(p.value)}` },
+      },
+      {
+        name: "cap window",
+        type: "bar",
+        stack: "formula",
+        data: rows.map((row) => row.cap),
+        itemStyle: { color: "#d7a84f" },
+        label: { show: true, position: "inside", color: "#101114", fontWeight: 700, formatter: (p) => `e267-e276\n${compact.format(p.value)}` },
+      },
+      {
+        name: "visible e265 baseline",
+        type: "scatter",
+        symbol: "diamond",
+        symbolSize: 18,
+        data: rows.map((row, index) => [row.visible, index]),
+        itemStyle: { color: "#5da9e9", borderColor: "#101114", borderWidth: 2 },
+        label: { show: true, position: "top", color: "#eef0f2", formatter: (p) => `visible e265 ${compact.format(p.value[0])}` },
+        z: 10,
+      },
+    ],
   }, true);
 }
 
