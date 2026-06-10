@@ -333,6 +333,11 @@ td.num {
   color: var(--warn);
 }
 
+.warn-text {
+  color: var(--warn);
+  font-weight: 700;
+}
+
 .muted {
   color: var(--muted);
 }

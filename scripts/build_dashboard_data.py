@@ -2250,8 +2250,61 @@ def load_cpoc_epoch_group(epoch, phase):
     return load_upstream_epoch_group(epoch)
 
 
-def cpoc_epoch_weights(epoch, phase):
-    group = load_cpoc_epoch_group(epoch, phase)
+def load_cpoc_manifest():
+    path = DATA / "cpoc_epoch_snapshots" / "manifest.json"
+    if not path.exists():
+        return {}
+    return load_json(path)
+
+
+def cpoc_manifest_epochs():
+    manifest = load_cpoc_manifest()
+    return {int(row["epoch"]): row for row in manifest.get("epochs", []) if row.get("epoch") is not None}
+
+
+def load_cpoc_snapshot_file(relative_file):
+    path = DATA / "cpoc_epoch_snapshots" / relative_file
+    wrapper = load_json(path)
+    payload = wrapper.get("json") or wrapper
+    return payload.get("epoch_group_data") or payload
+
+
+def cpoc_columns_for_epoch(epoch, manifest_epochs):
+    columns = [{"key": f"e{epoch}_weight", "label": f"e{epoch} W", "epoch": epoch, "phase": "start", "type": "weight"}]
+    manifest_epoch = manifest_epochs.get(epoch, {})
+    checkpoints = manifest_epoch.get("checkpoints") or []
+    cpoc_checkpoints = [row for row in checkpoints if row.get("kind") != "start"]
+    if not cpoc_checkpoints:
+        columns.append(
+            {
+                "key": f"e{epoch}_cpoc",
+                "label": "CPoC",
+                "epoch": epoch,
+                "phase": "cpoc",
+                "type": "cpoc",
+                "checkpointIndex": 1,
+                "fallback": True,
+            }
+        )
+        return columns
+    for checkpoint in cpoc_checkpoints:
+        index = int(checkpoint.get("index") or 0)
+        columns.append(
+            {
+                "key": f"e{epoch}_c{index}",
+                "label": f"C{index}",
+                "epoch": epoch,
+                "phase": f"cpoc_{index}",
+                "type": "cpoc",
+                "checkpointIndex": index,
+                "height": checkpoint.get("height"),
+                "file": checkpoint.get("file"),
+            }
+        )
+    return columns
+
+
+def cpoc_epoch_weights_from_group(group):
     weights = {}
     for item in group.get("validation_weights") or []:
         address = item.get("member_address")
@@ -2262,6 +2315,19 @@ def cpoc_epoch_weights(epoch, phase):
             "confirmationWeight": int(item.get("confirmation_weight") or 0),
         }
     return weights
+
+
+def weights_for_timeline_column(column, manifest_epochs):
+    epoch = column["epoch"]
+    if column.get("file"):
+        return cpoc_epoch_weights_from_group(load_cpoc_snapshot_file(column["file"]))
+    if column["type"] == "weight":
+        manifest_epoch = manifest_epochs.get(epoch, {})
+        start = next((row for row in manifest_epoch.get("checkpoints", []) if row.get("kind") == "start"), None)
+        if start and start.get("file"):
+            return cpoc_epoch_weights_from_group(load_cpoc_snapshot_file(start["file"]))
+        return cpoc_epoch_weights_from_group(load_cpoc_epoch_group(epoch, "start"))
+    return cpoc_epoch_weights_from_group(load_cpoc_epoch_group(epoch, "cpoc"))
 
 
 def model_bucket(model_id):
@@ -2293,20 +2359,19 @@ def upstream_epoch_model_activity(epoch):
 
 
 def build_participant_epoch_timeline(recipients, votes):
+    manifest_epochs = cpoc_manifest_epochs()
     columns = []
     for epoch in EPOCHS:
-        columns.append({"key": f"e{epoch}_weight", "label": f"e{epoch} W", "epoch": epoch, "phase": "start", "type": "weight"})
-        columns.append({"key": f"e{epoch}_cpoc", "label": f"e{epoch} CPoC", "epoch": epoch, "phase": "cpoc", "type": "cpoc"})
-    weights_by_epoch_phase = {
-        (epoch, phase): cpoc_epoch_weights(epoch, phase)
-        for epoch in EPOCHS
-        for phase in ["start", "cpoc"]
-    }
+        columns.extend(cpoc_columns_for_epoch(epoch, manifest_epochs))
+    weights_by_column = {column["key"]: weights_for_timeline_column(column, manifest_epochs) for column in columns}
+    weight_column_by_epoch = {column["epoch"]: column for column in columns if column["type"] == "weight"}
     activity_by_epoch = {epoch: upstream_epoch_model_activity(epoch) for epoch in EPOCHS}
     vote_by_address = {vote["voter"]: vote for vote in votes}
     rows = []
     max_weight = 0
     max_reward = 0
+    reward_without_weight_count = 0
+    reward_without_confirmation_count = 0
     for recipient in sorted(recipients, key=lambda row: (-row["totalGonka"], row["address"])):
         address = recipient["address"]
         vote = vote_by_address.get(address, {})
@@ -2315,14 +2380,18 @@ def build_participant_epoch_timeline(recipients, votes):
         cells = []
         for index, column in enumerate(columns):
             epoch = column["epoch"]
-            start_row = weights_by_epoch_phase[(epoch, "start")].get(address, {})
-            cpoc_row = weights_by_epoch_phase[(epoch, "cpoc")].get(address, {})
-            current_row = start_row if column["type"] == "weight" else cpoc_row
+            start_column = weight_column_by_epoch[epoch]
+            start_row = weights_by_column[start_column["key"]].get(address, {})
+            current_row = weights_by_column[column["key"]].get(address, {})
             weight = current_row.get("weight", 0)
             start_weight = start_row.get("weight", 0)
             confirmation_weight = current_row.get("confirmationWeight", 0)
             reward = recipient.get("perEpoch", {}).get(f"e{epoch}", 0)
             activity = activity_by_epoch.get(epoch, {}).get(address, {})
+            reward_without_weight = bool(reward and reward > 0 and start_weight <= 0)
+            reward_without_confirmation = bool(
+                reward and reward > 0 and column["type"] == "cpoc" and start_weight > 0 and confirmation_weight <= 0
+            )
             if column["type"] == "cpoc":
                 ratio = (confirmation_weight / start_weight) if start_weight else 0
                 if start_weight <= 0:
@@ -2345,6 +2414,8 @@ def build_participant_epoch_timeline(recipients, votes):
                     state = "no_weight"
             max_weight = max(max_weight, weight)
             max_reward = max(max_reward, reward or 0)
+            reward_without_weight_count += 1 if reward_without_weight and column["type"] == "weight" else 0
+            reward_without_confirmation_count += 1 if reward_without_confirmation else 0
             cells.append(
                 {
                     "x": index,
@@ -2352,6 +2423,9 @@ def build_participant_epoch_timeline(recipients, votes):
                     "columnType": column["type"],
                     "epoch": epoch,
                     "snapshot": column["phase"],
+                    "checkpointIndex": column.get("checkpointIndex"),
+                    "height": column.get("height"),
+                    "fallback": bool(column.get("fallback")),
                     "state": state,
                     "weight": weight,
                     "startWeight": start_weight,
@@ -2359,6 +2433,8 @@ def build_participant_epoch_timeline(recipients, votes):
                     "confirmationRatio": round((confirmation_weight / start_weight) if start_weight else 0, 6),
                     "confirmed": state == "confirmed",
                     "rewardGonka": round(reward or 0, 6),
+                    "rewardWithoutWeight": reward_without_weight,
+                    "rewardWithoutConfirmation": reward_without_confirmation,
                     "qwenCount": activity.get("qwenCount", 0) if column["type"] == "weight" else 0,
                     "kimiCount": activity.get("kimiCount", 0) if column["type"] == "weight" else 0,
                     "otherCount": activity.get("otherCount", 0) if column["type"] == "weight" else 0,
@@ -2382,7 +2458,13 @@ def build_participant_epoch_timeline(recipients, votes):
     return {
         "columns": columns,
         "rows": rows,
-        "summary": {"maxWeight": max_weight, "maxRewardGonka": round(max_reward, 6)},
+        "summary": {
+            "maxWeight": max_weight,
+            "maxRewardGonka": round(max_reward, 6),
+            "cpocCheckpointCount": sum(1 for column in columns if column["type"] == "cpoc"),
+            "rewardWithoutWeightCount": reward_without_weight_count,
+            "rewardWithoutConfirmationCount": reward_without_confirmation_count,
+        },
     }
 
 

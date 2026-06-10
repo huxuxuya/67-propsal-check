@@ -649,30 +649,51 @@ function renderAttackTimeline() {
     value: [x, y, metricValue(cell)],
     row,
     cell,
-    itemStyle: { color: cellColor(cell), borderColor: "#101114", borderWidth: 1 },
+    itemStyle: {
+      color: cellColor(cell),
+      borderColor: cell.rewardWithoutWeight || cell.rewardWithoutConfirmation ? "#d7a84f" : "#101114",
+      borderWidth: cell.rewardWithoutWeight || cell.rewardWithoutConfirmation ? 2 : 1,
+    },
   })));
   const markerData = (model) => rows.flatMap((row, y) => row.cells.map((cell, x) => {
     const count = model === "qwen" ? cell.qwenCount : cell.kimiCount;
     if (!count) return null;
     return { value: [x, y, count], row, cell, model };
   }).filter(Boolean));
+  const rewardMarkerData = rows.flatMap((row, y) => row.cells.map((cell, x) => {
+    if (!cell.rewardWithoutWeight && !cell.rewardWithoutConfirmation) return null;
+    return { value: [x, y, cell.rewardGonka || 0], row, cell };
+  }).filter(Boolean));
   const epochBoundaries = columns
-    .map((column, index) => column.type === "cpoc" && index < columns.length - 1 ? [index, 0] : null)
+    .map((column, index) => columns[index + 1] && columns[index + 1].epoch !== column.epoch ? [index, 0] : null)
     .filter(Boolean);
-  const epochBands = columns
-    .map((column, index) => column.type === "weight" && Math.floor(index / 2) % 2 === 1 ? [index, 0] : null)
-    .filter(Boolean);
+  const epochBands = [];
+  columns.forEach((column, index) => {
+    if (index > 0 && columns[index - 1].epoch === column.epoch) return;
+    let endIndex = index;
+    while (columns[endIndex + 1] && columns[endIndex + 1].epoch === column.epoch) endIndex += 1;
+    if (epochBands.length % 2 === 1) epochBands.push([index, endIndex]);
+    else epochBands.push(null);
+  });
+  const visibleEpochBands = epochBands.filter(Boolean);
   const showQwen = state.timelineModel === "all" || state.timelineModel === "qwen";
   const showKimi = state.timelineModel === "all" || state.timelineModel === "kimi";
   state.charts.attackTimeline.setOption({
-    legend: { top: 4, data: ["epoch weight/reward state", "Qwen commits", "Kimi commits"], textStyle: { color: "#a7afba" } },
+    legend: { top: 4, data: ["epoch weight/reward state", "Reward while inactive", "Qwen commits", "Kimi commits"], textStyle: { color: "#a7afba" } },
     grid: { left: 170, right: 28, top: 44, bottom: 54 },
     tooltip: chartTooltip({
       formatter: (p) => {
         const row = p.data?.row || {};
         const cell = p.data?.cell || {};
         const modelText = p.data?.model ? `<br>${p.data.model.toUpperCase()} commits ${fmt.format(p.value[2] || 0)}` : "";
-        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}<br>${escapeHtml(cell.columnKey || "")} · ${escapeHtml(cell.state || "")}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
+        const heightText = cell.height ? `<br>height ${fmt.format(cell.height)}` : "";
+        const fallbackText = cell.fallback ? "<br><span class=\"warn-text\">fallback snapshot, archive CPoC not fetched</span>" : "";
+        const rewardFlag = cell.rewardWithoutWeight
+          ? "<br><span class=\"warn-text\">reward paid while epoch start weight is zero</span>"
+          : cell.rewardWithoutConfirmation
+            ? "<br><span class=\"warn-text\">reward paid while CPoC confirmation is zero</span>"
+            : "";
+        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}<br>epoch ${escapeHtml(cell.epoch || "")} · ${escapeHtml(cell.snapshot || "")} · ${escapeHtml(cell.state || "")}${heightText}${fallbackText}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}${rewardFlag}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
       },
     }),
     xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },
@@ -687,16 +708,17 @@ function renderAttackTimeline() {
         type: "custom",
         silent: true,
         tooltip: { show: false },
-        data: epochBands,
+        data: visibleEpochBands,
         renderItem: (params, api) => {
-          const point = api.coord([api.value(0), 0]);
+          const start = api.coord([api.value(0), 0]);
+          const end = api.coord([api.value(1), 0]);
           const cellWidth = api.size([1, 0])[0];
           return {
             type: "rect",
             shape: {
-              x: point[0] - cellWidth / 2,
+              x: start[0] - cellWidth / 2,
               y: params.coordSys.y,
-              width: cellWidth * 2,
+              width: end[0] - start[0] + cellWidth,
               height: params.coordSys.height,
             },
             style: { fill: "rgba(255, 255, 255, 0.025)" },
@@ -708,6 +730,15 @@ function renderAttackTimeline() {
         type: "heatmap",
         data: heatmapData,
         label: { show: false },
+      },
+      {
+        name: "Reward while inactive",
+        type: "scatter",
+        symbol: "pin",
+        symbolSize: (value) => Math.max(12, Math.min(24, 10 + Math.sqrt(value[2] || 0) / 8)),
+        symbolOffset: [0, -4],
+        data: rewardMarkerData,
+        itemStyle: { color: "#d7a84f", borderColor: "#101114", borderWidth: 1 },
       },
       {
         name: "epoch separator",
