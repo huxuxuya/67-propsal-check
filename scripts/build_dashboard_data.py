@@ -544,6 +544,7 @@ def build_voting_power_window(votes, governance_power_evidence):
                 "operatorSignalLabel": vote.get("operatorSignalLabel", ""),
                 "operatorSignalDisplayLabel": vote.get("operatorSignalDisplayLabel", ""),
                 "primaryOption": vote["primaryOption"],
+                "finalVoteOptions": vote.get("finalVoteOptions", []),
                 "height": vote["height"],
                 "blockTime": vote.get("blockTime", ""),
                 "txHash": vote["txHash"],
@@ -1723,6 +1724,7 @@ def build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_cl
                 "totalCompensationGonka": round(total_comp, 6),
                 "votingPower": round(voting_power, 6),
                 "voteOption": vote.get("primaryOption", "did_not_vote"),
+                "finalVoteOptions": vote.get("finalVoteOptions", []),
                 "clusterId": cluster.get("id", ""),
                 "clusterKind": cluster.get("kind", ""),
                 "evidenceBoundary": evidence_boundary,
@@ -1864,6 +1866,7 @@ def build_public_name_enrichment(recipients, votes, identity_evidence, evidence_
                 "totalCompensationGonka": round(recipient.get("totalGonka") or 0, 6),
                 "votingPower": round(vote.get("votingPower") or 0, 6),
                 "voteOption": vote.get("primaryOption", "did_not_vote"),
+                "finalVoteOptions": vote.get("finalVoteOptions", []),
                 "gnsNames": all_gns_names,
                 "reverseGnsNames": reverse_names,
                 "validatorOperatorAddress": matched_validator.get("operatorAddress", ""),
@@ -2036,6 +2039,7 @@ def build_epoch_anomalies(votes, recipients, labels_by_address):
                     "voteHeight": vote_height,
                     "voteBlockTime": block_time(vote_height) if vote_height else "",
                     "voteOption": vote.get("primaryOption") if vote else "did_not_vote",
+                    "finalVoteOptions": vote.get("finalVoteOptions", []) if vote else [],
                     "governanceVotingPower": governance_voting_power,
                     "governanceVotingPowerSource": vote.get("votingPowerSource", "") if vote else "",
                     "hasGovernanceVotingPower": governance_voting_power > 0,
@@ -2588,6 +2592,7 @@ def build_participant_epoch_timeline(recipients, votes):
                 "totalCompensationGonka": recipient.get("totalGonka", 0) if recipient else 0,
                 "compensationStatus": "compensated" if recipient else "not_compensated",
                 "voteOption": recipient.get("voteOption", "did_not_vote") if recipient else (vote.get("primaryOption") or "did_not_vote"),
+                "finalVoteOptions": recipient.get("finalVoteOptions", []) if recipient else vote.get("finalVoteOptions", []),
                 "governanceVotingPower": vote.get("votingPower") or 0,
                 "firstFailedCpocIndex": first_failed_cpoc.get("checkpointIndex") if first_failed_cpoc else None,
                 "firstFailedCpocHeight": first_failed_cpoc.get("height") if first_failed_cpoc else None,
@@ -2612,16 +2617,19 @@ def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomal
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_options = ["yes", "no", "abstain", "no_with_veto"]
     vote_by_address = {vote["voter"]: vote for vote in votes}
-    vote_matrix_groups = defaultdict(lambda: {"addresses": [], "totalCompensationGonka": 0, "votingPower": 0})
+    vote_matrix_groups = defaultdict(lambda: {"addresses": set(), "totalCompensationGonka": 0, "votingPower": 0})
     for address in sorted(set(recipient_by_address) | set(vote_by_address)):
         recipient = recipient_by_address.get(address)
         vote = vote_by_address.get(address)
         recipient_status = "recipient" if recipient else "non_recipient"
-        vote_option = vote["primaryOption"] if vote else "did_not_vote"
-        group = vote_matrix_groups[(recipient_status, vote_option)]
-        group["addresses"].append(address)
-        group["totalCompensationGonka"] += recipient.get("totalGonka", 0) if recipient else 0
-        group["votingPower"] += vote.get("votingPower") or 0 if vote else 0
+        vote_options_for_address = vote.get("finalVoteOptions") or [{"option": vote["primaryOption"], "weight": 1}] if vote else [{"option": "did_not_vote", "weight": 1}]
+        for vote_part in vote_options_for_address:
+            vote_option = vote_part.get("option", "did_not_vote")
+            weight = vote_part.get("weight") or 0
+            group = vote_matrix_groups[(recipient_status, vote_option)]
+            group["addresses"].add(address)
+            group["totalCompensationGonka"] += (recipient.get("totalGonka", 0) if recipient else 0) * weight
+            group["votingPower"] += (vote.get("votingPower") or 0 if vote else 0) * weight
 
     vote_matrix = []
     for recipient_status in ["recipient", "non_recipient"]:
@@ -2634,7 +2642,7 @@ def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomal
                     "addressCount": len(group["addresses"]),
                     "totalCompensationGonka": round(group["totalCompensationGonka"], 6),
                     "votingPower": round(group["votingPower"], 6),
-                    "addresses": group["addresses"],
+                    "addresses": sorted(group["addresses"]),
                 }
             )
 
@@ -2652,6 +2660,7 @@ def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomal
                 "capE267E276Gonka": row["capE267E276Gonka"],
                 "totalGonka": row["totalGonka"],
                 "voteOption": row.get("voteOption", "did_not_vote"),
+                "finalVoteOptions": row.get("finalVoteOptions", []),
                 "votingPower": vote.get("votingPower") or 0,
                 "recipientVoterOverlap": bool(vote),
             }
@@ -2674,6 +2683,7 @@ def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomal
                 "votedDuringE287": row["votedDuringE287"],
                 "exitedAfterE287": row["exitedAfterE287"],
                 "voteOption": row["voteOption"],
+                "finalVoteOptions": row.get("finalVoteOptions", []),
                 "voteHeight": row["voteHeight"],
                 "voteBlockTime": row["voteBlockTime"],
                 "governanceVotingPower": row.get("governanceVotingPower", 0),
@@ -3607,6 +3617,7 @@ def main():
                 "voteOption": max(votes_by_address[row["address"]]["options"], key=lambda item: item["weight"])["option"]
                 if row["address"] in votes_by_address
                 else "did_not_vote",
+                "finalVoteOptions": votes_by_address[row["address"]]["options"] if row["address"] in votes_by_address else [],
                 "identityType": primary_identity_type(evidence_rows),
             }
         )

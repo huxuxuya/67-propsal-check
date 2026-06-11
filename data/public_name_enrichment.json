@@ -1783,6 +1783,24 @@
           "subject": "public_label:1MsHbnXp09bUZK/WEJVpwTOiZgKN+P5R7zuXXQUnYDM="
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 0.3801
+        },
+        {
+          "option": "no",
+          "weight": 0.0052
+        },
+        {
+          "option": "abstain",
+          "weight": 0.0258
+        },
+        {
+          "option": "no_with_veto",
+          "weight": 0.5889
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_owner_proof",
       "inferenceUrl": "http://89.149.242.149:8000",
@@ -1938,6 +1956,12 @@
           "sourceUrl": "docs/data/dashboard.json",
           "sourceValue": "RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI=",
           "subject": "public_label:RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI="
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -2096,6 +2120,7 @@
           "subject": "03eca8933c0b6f2227da3cd38ab8ce35ec643f7e8060cbfa4710d732b6c29c9cd1"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_owner_proof",
       "inferenceUrl": "https://node3.gonka.ai",
@@ -2252,6 +2277,7 @@
           "subject": "030aa5b15e5d967003b9cd5d5bf52fff4c9f51729f7c7a891778a1b1d39b42837e"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_owner_proof",
       "inferenceUrl": "http://162.55.232.115:8000",
@@ -2401,6 +2427,7 @@
           "subject": "03f10763a0966c01fc7af4f98110d225db13326b5040b42ca5e453df62daf1c5fc"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_owner_proof",
       "inferenceUrl": "http://node1.gonka.ai:8000",
@@ -2555,6 +2582,12 @@
           "sourceUrl": "docs/data/dashboard.json",
           "sourceValue": "qwe.gnk -> gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4",
           "subject": "gns_name:qwe.gnk -> gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [
@@ -2752,6 +2785,12 @@
           "subject": "02f196facea0c57cfe2d571e910df4295ea38c70d45ca9981928b136d91ae7a7ff"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://89.169.97.113:8000",
@@ -2895,6 +2934,12 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e270/epoch270_commits.json",
           "sourceValue": "e270 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=8512",
           "subject": "03ec5f9bf7833eb50bb97742d137907a80818ab2146ecf0bc9389f2701abbe3cc1"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -3042,6 +3087,12 @@
           "subject": "03a654c9be1fa2ae64cefc00d611b88e41faa00d907d5f0f1ca85682b7db2661ab"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.174.27:8000",
@@ -3178,6 +3229,12 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e268/epoch268_commits.json",
           "sourceValue": "e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=48832",
           "subject": "0374c37b34b4a20d88a5e121eef8ee2e8fe58abd8f1ebb70648001bfbaeaae95ec"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -3325,6 +3382,12 @@
           "subject": "029f9a1e6de87303e29e4d177e660138f68484956f0197189adb122d07bc46a4bb"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://network002.kaitaku.ai:8000",
@@ -3465,6 +3528,12 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e269/epoch269_commits.json",
           "sourceValue": "e269 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1440",
           "subject": "03a1b25d015f0e33cfe4b9d2b675583f245752599f6567c069ebc047e7c80c543e"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -3612,6 +3681,12 @@
           "subject": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://94.237.52.191:8000",
@@ -3752,6 +3827,12 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e268/epoch268_commits.json",
           "sourceValue": "e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=56928",
           "subject": "02a615a1bd04a683ba98a55319cf2bef8a7a94e73b8697c7911230cf7ec47c6945"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -3899,6 +3980,12 @@
           "subject": "0253882a59405c28b3c780b28bea241ca359c1a347d8f487d4d5595efb63169667"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://65.108.198.21:8000",
@@ -4044,6 +4131,12 @@
           "subject": "inference_endpoint:http://84.32.59.212:8000"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://84.32.59.212:8000",
@@ -4172,6 +4265,12 @@
           "sourceUrl": "data/public_identity_signals.json",
           "sourceValue": "84.32.185.226",
           "subject": "host:84.32.185.226"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -4314,6 +4413,12 @@
           "sourceUrl": "docs/data/dashboard.json",
           "sourceValue": "http://69.48.159.137:8000/",
           "subject": "http://69.48.159.137:8000/"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -4461,6 +4566,7 @@
           "subject": "021cbe7c06fa9abc1c928e19db4d3aecc4858f5c9bcee571b1a65d6ebb262ad494"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://135.181.56.61:8000",
@@ -4603,6 +4709,7 @@
           "subject": "03cba80222158ca9cc6508471d87ec7fab3466f5eb49ffd00a866606a2b682e864"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://54.37.131.156:8000",
@@ -4738,6 +4845,7 @@
           "subject": "038c6ff7a171cb847eb9a73f73e387e7b2a2c1747452a8d5545cab589af5fb7e80"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://65.21.232.177:8000",
@@ -4880,6 +4988,7 @@
           "subject": "0342ece33f76c352637c1f5b031a9e8280ba1f7525c115599b2a5f41cc013641fa"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://57.128.30.101:8000",
@@ -5015,6 +5124,7 @@
           "subject": "021173fcef5bd6bb75a30fe488b4158e320ce4fb6996c8c33f389195cef4708d93"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.104.95.5:8000",
@@ -5157,6 +5267,7 @@
           "subject": "http://95.217.121.189:8000"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.217.121.189:8000",
@@ -5299,6 +5410,7 @@
           "subject": "02a93250e5d41ce8b84b5365bb855cd9f5802ca2899d38c42be9667f7be7218e32"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.170.135:8000",
@@ -5441,6 +5553,7 @@
           "subject": "03eb04cbdab5a6827d29dc22e4ef23784abaa10beca9fa13feed5dd42bb5479f36"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://136.243.110.227:8000",
@@ -5576,6 +5689,7 @@
           "subject": "0355a7994822847fbcbb58de942a9b0f17d7fd7c02607b0f1af11e3e07d06d168f"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://94.130.152.246:8000",
@@ -5718,6 +5832,7 @@
           "subject": "03e14d80c27e9cddcc9c497aa2c7801b3cbb44e6fb49e41b90fef63c724152bed3"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://195.201.192.170:8000",
@@ -5860,6 +5975,7 @@
           "subject": "035c0485cd0b61ab02f287a6397e553e86674e3b5e2d6f01a592ac1ea59173d4f6"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://35.89.168.230:8000",
@@ -6002,6 +6118,7 @@
           "subject": "020dc473426641164233a995ba2705b43f707cd98800adc2a6dbd7f56391a45d3d"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.172.102:8000",
@@ -6144,6 +6261,7 @@
           "subject": "02e2c9ea5669b978592a4a5491d62b28a979c5fbf74d4edf5c82b769a4f1ada204"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://204.12.168.89:8000",
@@ -6286,6 +6404,12 @@
           "subject": "020f7c51309e1c24591fe611fc5a70450930c537207c237080962badfb57e9508d"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://88.99.213.222:8000",
@@ -6424,6 +6548,7 @@
           "subject": "http://95.217.35.48:8000"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.217.35.48:8000",
@@ -6559,6 +6684,7 @@
           "subject": "02c77791c963a1e9fab046df84ad8ae108db44eb5e6df97c8b7a9ce37f682e6150"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://94.130.143.155:8000",
@@ -6701,6 +6827,7 @@
           "subject": "02d8526667dd1ffc273ec4cd843adb11f9223ae5355b5364cbd5e34aecafa895ff"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://88.198.4.29:8000",
@@ -6843,6 +6970,7 @@
           "subject": "http://136.243.111.105:8000"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://136.243.111.105:8000",
@@ -6978,6 +7106,7 @@
           "subject": "03731617e3cc9938f07965670281d5f7bb1b272b2e789fd4aaa10c4cc0850f4264"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://195.201.83.167:8000",
@@ -7120,6 +7249,7 @@
           "subject": "0391d1fc1fd4001c4f9aa4777ea96f4cb92d0aff1daa2ffe4134d8f7a7c25f8cec"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://138.201.121.253:8000",
@@ -7253,6 +7383,12 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e276/epoch276_commits.json",
           "sourceValue": "e276 moonshotai/Kimi-K2.6 count=25600",
           "subject": "03af831d718768e2e9e694d26a48fabaa917372a282514ebf53b56935616a86e59"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -7400,6 +7536,7 @@
           "subject": "02f685075910fd3da7cb88e2bb337960d6985b216bd0a9b8213564526c68b77dce"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://109.206.182.166:8000",
@@ -7549,6 +7686,7 @@
           "subject": "0226a972d39634e6ce8045cf24f8664caa911ce28cbab13159910aeba15255d39d"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.217.122.154:8000",
@@ -7684,6 +7822,7 @@
           "subject": "inference_endpoint:http://109.206.182.132:8000"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://109.206.182.132:8000",
@@ -7826,6 +7965,7 @@
           "subject": "host:159.69.112.72"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://159.69.112.72:8000",
@@ -7961,6 +8101,7 @@
           "subject": "url:http://178.105.166.7:8000"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.166.7:8000",
@@ -8103,6 +8244,7 @@
           "subject": "03be67dd2e5d5f543d5ad026133a1546d138175bfb42c2f5ab2d51c6463fb2eea7"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://95.217.47.126:8000",
@@ -8245,6 +8387,7 @@
           "subject": "inference_endpoint:http://94.130.64.22:8000"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://94.130.64.22:8000",
@@ -8387,6 +8530,7 @@
           "subject": "03d24ebb0345d8d11846c78259042db0d705d8470d0069438a19504e2a2b789bfb"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://gnk.antifreeze.dev:8000",
@@ -8529,6 +8673,7 @@
           "subject": "host:125.93.200.207"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://125.93.200.207:8000",
@@ -8664,6 +8809,7 @@
           "subject": "url:http://198.244.228.95:8000"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://198.244.228.95:8000",
@@ -8799,6 +8945,7 @@
           "subject": "host:178.105.165.144"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.165.144:8000",
@@ -8941,6 +9088,7 @@
           "subject": "host:178.105.169.55"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.169.55:8000",
@@ -9083,6 +9231,7 @@
           "subject": "host:178.105.175.114"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://178.105.175.114:8000",
@@ -9225,6 +9374,7 @@
           "subject": "host:185.70.186.176"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://185.70.186.176:8000",
@@ -9367,6 +9517,7 @@
           "subject": "02c19101da4e9f0d4f0435c6da7c83bf41e12e556978b56d80cd681a1f1ac7a4ad"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://202.78.161.246:8000",
@@ -9502,6 +9653,7 @@
           "subject": "host:202.78.161.100"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://202.78.161.100:8000",
@@ -9642,6 +9794,12 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e273/epoch273_commits.json",
           "sourceValue": "e273 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1920",
           "subject": "026c1af3d86cefc21b08955dd955ede2aa8d75c33c8d443c5d11bd299a84b25ff9"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -9789,6 +9947,12 @@
           "subject": "02cfc5020f71110797779115566f064a9dfafc0ac0b356b71dc9c01ab085a902fe"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://20.171.77.105:8000",
@@ -9922,6 +10086,7 @@
           "subject": "gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg"
         }
       ],
+      "finalVoteOptions": [],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://64.236.203.236:8000",
@@ -10055,6 +10220,12 @@
           "sourceUrl": "docs/data/dashboard.json",
           "sourceValue": "https:/gonka.top",
           "subject": "website:https:/gonka.top"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -10206,6 +10377,12 @@
           "subject": "Mykola"
         }
       ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
+        }
+      ],
       "gnsNames": [],
       "identityBoundary": "public_identity_signal",
       "inferenceUrl": "http://78.46.89.87:8000",
@@ -10262,6 +10439,12 @@
           "sourceUrl": "data/proposal_67_tx_search.json",
           "sourceValue": "yes",
           "subject": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "yes",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -10389,6 +10572,12 @@
           "sourceUrl": "docs/data/dashboard.json",
           "sourceValue": "http://20.88.58.210:8000",
           "subject": "http://20.88.58.210:8000"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],
@@ -10531,6 +10720,12 @@
           "sourceUrl": "https://github.com/votkon/gonka-kimi-restitution/blob/main/e271/epoch271_commits.json",
           "sourceValue": "e271 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1920",
           "subject": "033b20f3463fdfc087062c5927a1ae6fac78cefa6ad834fcd896294173d00fb3c8"
+        }
+      ],
+      "finalVoteOptions": [
+        {
+          "option": "no_with_veto",
+          "weight": 1.0
         }
       ],
       "gnsNames": [],

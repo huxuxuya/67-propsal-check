@@ -59,7 +59,49 @@ function escapeRichText(value) {
 }
 
 function primaryOption(vote) {
-  return vote.finalVoteOptions.slice().sort((a, b) => b.weight - a.weight)[0]?.option || "unknown";
+  return (vote.finalVoteOptions || []).slice().sort((a, b) => b.weight - a.weight)[0]?.option || vote.primaryOption || vote.voteOption || "unknown";
+}
+
+function voteOptionLabel(option) {
+  return optionLabels[option] || option || "Unknown";
+}
+
+function voteSplitOptions(row) {
+  return (row?.finalVoteOptions || [])
+    .filter((item) => item && item.option && Number(item.weight || 0) > 0)
+    .slice()
+    .sort((a, b) => (b.weight || 0) - (a.weight || 0));
+}
+
+function voteDisplayText(row) {
+  const options = voteSplitOptions(row);
+  if (!options.length) return voteOptionLabel(row?.primaryOption || row?.voteOption || "did_not_vote");
+  if (options.length === 1 && Math.abs((options[0].weight || 0) - 1) < 0.000001) return voteOptionLabel(options[0].option);
+  return options.map((item) => `${voteOptionLabel(item.option)} ${fmt.format((item.weight || 0) * 100)}%`).join(" / ");
+}
+
+function voteDisplayHtml(row) {
+  const options = voteSplitOptions(row);
+  if (!options.length || (options.length === 1 && Math.abs((options[0].weight || 0) - 1) < 0.000001)) {
+    const option = options[0]?.option || row?.primaryOption || row?.voteOption || "did_not_vote";
+    return `<span class="tag" style="border-color:${optionColors[option] || "#6d7682"}">${escapeHtml(voteOptionLabel(option))}</span>`;
+  }
+  return options.map((item) => (
+    `<span class="tag" style="border-color:${optionColors[item.option] || "#6d7682"}">${escapeHtml(voteOptionLabel(item.option))} ${fmt.format((item.weight || 0) * 100)}%</span>`
+  )).join(" ");
+}
+
+function voteWeight(row, option) {
+  const options = voteSplitOptions(row);
+  if (options.length) return options.filter((item) => item.option === option).reduce((total, item) => total + (item.weight || 0), 0);
+  return (row?.primaryOption || row?.voteOption || "did_not_vote") === option ? 1 : 0;
+}
+
+function voteMatches(row, selectedOption) {
+  if (selectedOption === "all") return true;
+  const options = voteSplitOptions(row);
+  if (options.length) return options.some((item) => item.option === selectedOption);
+  return (row?.primaryOption || row?.voteOption || "did_not_vote") === selectedOption;
 }
 
 function actorLabel(row) {
@@ -239,7 +281,7 @@ function buildSearchIndexRows(data) {
     row.sources.add("recipients");
     addLabel(row, actorLabel(item));
     row.statuses.add(item.status || "unknown");
-    row.votes.add(optionLabels[item.voteOption] || item.voteOption || "did not vote");
+    row.votes.add(voteDisplayText(item));
     row.totalGonka = Math.max(row.totalGonka, item.totalGonka || 0);
     row.votingPower = Math.max(row.votingPower, item.votingPower || item.governanceVotingPower || 0);
   });
@@ -250,7 +292,7 @@ function buildSearchIndexRows(data) {
     row.roles.add("voter");
     row.sources.add("votes");
     addLabel(row, actorLabel(item));
-    row.votes.add(optionLabels[item.primaryOption] || item.primaryOption || "unknown vote");
+    row.votes.add(voteDisplayText(item));
     row.votingPower = Math.max(row.votingPower, item.votingPower || 0);
   });
 
@@ -348,7 +390,7 @@ function applyFilters() {
   state.filteredRecipients = state.data.recipients.filter((row) => {
     if (!textMatch(row, query)) return false;
     if (els.status.value !== "all" && row.status !== els.status.value) return false;
-    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (!voteMatches(row, els.vote.value)) return false;
     if (els.identity.value !== "all" && row.identityType !== els.identity.value) return false;
     if (label !== "all" && row.label !== label) return false;
     if (els.node.value === "active" && !row.activeNode) return false;
@@ -373,14 +415,42 @@ function renderOverview(data) {
 function renderCompensationChart() {
   const filtered = new Set(state.filteredRecipients.map((row) => row.address));
   const voteOrder = { no_with_veto: 0, yes: 1, did_not_vote: 2, abstain: 3, no: 4 };
-  const voteOptions = ["no_with_veto", "yes", "did_not_vote"];
+  const voteOptions = ["no_with_veto", "yes", "abstain", "no", "did_not_vote"];
   const rows = (state.data.chartData?.compensationComponents || state.filteredRecipients)
     .filter((row) => filtered.has(row.address))
     .sort((a, b) => (voteOrder[a.voteOption] ?? 99) - (voteOrder[b.voteOption] ?? 99) || (b.totalGonka || 0) - (a.totalGonka || 0))
     .slice(0, 30);
   if (state.compensationView === "tree") {
+    const treeRows = (state.data.chartData?.compensationComponents || state.filteredRecipients)
+      .filter((row) => filtered.has(row.address))
+      .map((row) => {
+        const splitOptions = voteOptions
+          .map((option) => ({ option, weight: voteWeight(row, option) }))
+          .filter((item) => item.weight > 0);
+        const children = splitOptions.length > 1 ? splitOptions.map((item) => ({
+          name: `${voteOptionLabel(item.option)} ${fmt.format(item.weight * 100)}%`,
+          value: (row.totalGonka || 0) * item.weight,
+          address: row.address,
+          identityBoundary: identityBoundary(row),
+          voteOption: item.option,
+          finalVoteOptions: row.finalVoteOptions || [],
+          votingPower: (row.votingPower || 0) * item.weight,
+          itemStyle: { color: optionColors[item.option] || optionColors.did_not_vote },
+        })) : null;
+        return {
+          name: actorShortLabel(row),
+          value: row.totalGonka,
+          address: row.address,
+          identityBoundary: identityBoundary(row),
+          voteOption: row.voteOption,
+          finalVoteOptions: row.finalVoteOptions || [],
+          votingPower: row.votingPower || 0,
+          itemStyle: { color: optionColors[row.voteOption] || optionColors.did_not_vote },
+          children,
+        };
+      });
     state.charts.compensation.setOption({
-      tooltip: chartTooltip({ formatter: (p) => `${p.name}<br>${gonka(p.value)}<br>vote ${escapeHtml(optionLabels[p.data.voteOption] || p.data.voteOption)}<br>power ${fmt.format(p.data.votingPower || 0)}<br>${escapeHtml(p.data.identityBoundary || "")}` }),
+      tooltip: chartTooltip({ formatter: (p) => `${p.name}<br>${gonka(p.value)}<br>vote ${escapeHtml(voteDisplayText(p.data))}<br>power ${fmt.format(p.data.votingPower || 0)}<br>${escapeHtml(p.data.identityBoundary || "")}` }),
       series: [{
         type: "treemap",
         roam: false,
@@ -388,17 +458,7 @@ function renderCompensationChart() {
         breadcrumb: { show: false },
         label: { color: "#eef0f2", formatter: "{b}" },
         itemStyle: { borderColor: "#101114", borderWidth: 2 },
-        data: (state.data.chartData?.compensationComponents || state.filteredRecipients)
-          .filter((row) => filtered.has(row.address))
-          .map((row) => ({
-            name: actorShortLabel(row),
-            value: row.totalGonka,
-            address: row.address,
-            identityBoundary: identityBoundary(row),
-            voteOption: row.voteOption,
-            votingPower: row.votingPower || 0,
-            itemStyle: { color: optionColors[row.voteOption] || optionColors.did_not_vote },
-          })),
+        data: treeRows,
       }],
     }, true);
     return;
@@ -412,7 +472,7 @@ function renderCompensationChart() {
       trigger: "axis",
       formatter: (params) => {
         const row = rows[params[0].dataIndex];
-        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>attack ${gonka(row.attackE265E266Gonka || 0)}<br>cap ${gonka(row.capE267E276Gonka || 0)}<br>total ${gonka(row.totalGonka || 0)}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)} · power ${fmt.format(row.votingPower || 0)}`;
+        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>attack ${gonka(row.attackE265E266Gonka || 0)}<br>cap ${gonka(row.capE267E276Gonka || 0)}<br>total ${gonka(row.totalGonka || 0)}<br>vote ${escapeHtml(voteDisplayText(row))} · power ${fmt.format(row.votingPower || 0)}`;
       },
     }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
@@ -422,7 +482,7 @@ function renderCompensationChart() {
         name: optionLabels[option],
         type: "bar",
         stack: "vote",
-        data: rows.map((row) => row.voteOption === option ? (row.totalGonka || 0) : 0),
+        data: rows.map((row) => (row.totalGonka || 0) * voteWeight(row, option)),
         itemStyle: { color: optionColors[option] || optionColors.did_not_vote },
         label: { show: true, position: "right", color: "#eef0f2", formatter: (p) => p.value ? compact.format(p.value) : "" },
       })),
@@ -692,7 +752,7 @@ function renderTimeline() {
   const votes = state.data.votes
     .filter((vote) => {
       if (selectedLabel !== "all" && vote.label !== selectedLabel) return false;
-      if (els.vote.value !== "all" && vote.primaryOption !== els.vote.value) return false;
+      if (!voteMatches(vote, els.vote.value)) return false;
       if (!query) return true;
       return textMatch({ ...vote, address: vote.voter }, query);
     })
@@ -704,7 +764,7 @@ function renderTimeline() {
     tooltip: chartTooltip({
       formatter: (p) => {
         const vote = votes[p.dataIndex];
-        return `<strong>${escapeHtml(actorLabel(vote))}</strong><br>${escapeHtml(vote.voter)}<br>${escapeHtml(optionLabels[vote.primaryOption] || vote.primaryOption)}<br>${escapeHtml(formatTime(vote.blockTime))}<br>height ${vote.height}<br>governance power ${vote.votingPower == null ? "unknown" : fmt.format(vote.votingPower)}`;
+        return `<strong>${escapeHtml(actorLabel(vote))}</strong><br>${escapeHtml(vote.voter)}<br>${escapeHtml(voteDisplayText(vote))}<br>${escapeHtml(formatTime(vote.blockTime))}<br>height ${vote.height}<br>governance power ${vote.votingPower == null ? "unknown" : fmt.format(vote.votingPower)}`;
       },
     }),
     xAxis: {
@@ -735,9 +795,9 @@ function renderTally() {
     grid: { left: 68, right: 18, top: 18, bottom: 42 },
     tooltip: chartTooltip({ formatter: (p) => {
       const row = rows[p.dataIndex];
-      return `${optionLabels[row.voteOption] || row.voteOption}<br>${fmt.format(row.votingPower)} voting power<br>${row.addressCount} final voters<br>${fmt.format(row.recipientVotingPower || 0)} recipient-voter power`;
+      return `${voteOptionLabel(row.voteOption)}<br>${fmt.format(row.votingPower)} voting power<br>${row.addressCount} final voters<br>${fmt.format(row.recipientVotingPower || 0)} recipient-voter power`;
     } }),
-    xAxis: { type: "category", data: rows.map((row) => optionLabels[row.voteOption] || row.voteOption), axisLabel: { color: "#a7afba", interval: 0, rotate: 15 } },
+    xAxis: { type: "category", data: rows.map((row) => voteOptionLabel(row.voteOption)), axisLabel: { color: "#a7afba", interval: 0, rotate: 15 } },
     yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) } },
     series: [{
       type: "bar",
@@ -770,7 +830,7 @@ function renderVoterPowerChart() {
           row.isRecipient ? "recipient" : "",
           row.isVoter ? "voter" : "",
         ].filter(Boolean).join(" + ");
-        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address)}<br>${escapeHtml(roles)}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}<br>governance power ${fmt.format(row.votingPower || 0)}<br>compensation ${gonka(row.totalCompensationGonka || 0)}<br>${escapeHtml(identityBoundary(row))}`;
+        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address)}<br>${escapeHtml(roles)}<br>vote ${escapeHtml(voteDisplayText(row))}<br>governance power ${fmt.format(row.votingPower || 0)}<br>compensation ${gonka(row.totalCompensationGonka || 0)}<br>${escapeHtml(identityBoundary(row))}`;
       },
     }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "Archive governance voting power", nameTextStyle: { color: "#a7afba" } },
@@ -786,7 +846,7 @@ function renderVoterPowerChart() {
     <tr>
       <td>${escapeHtml(voterDisplayLabel(row))}<br><span class="muted">${escapeHtml(actorLabel(row))}</span></td>
       <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
-      <td><span class="tag" style="border-color:${optionColors[row.voteOption] || "#6d7682"}">${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}</span></td>
+      <td>${voteDisplayHtml(row)}</td>
       <td class="num">${fmt.format(row.votingPower || 0)}</td>
       <td><span class="tag ${identityBoundary(row) === "public_owner_proof" ? "good" : ""}">${escapeHtml(identityBoundary(row))}</span><br><span class="muted">proof ${row.proofCount}; high ${row.highConfidenceClaimCount}</span></td>
     </tr>
@@ -815,7 +875,7 @@ function renderWindowPowerChart() {
   const rows = ((state.data.votingPowerWindow || {}).rows || [])
     .filter((row) => {
       if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
-      if (els.vote.value !== "all" && row.primaryOption !== els.vote.value) return false;
+      if (!voteMatches(row, els.vote.value)) return false;
       if (!query) return true;
       return textMatch({ ...row, address: row.voter, status: row.windowPowerStatus }, query);
     })
@@ -832,7 +892,7 @@ function renderWindowPowerChart() {
     const e285 = e285Weight(row.voter);
     const e286 = e286Weight(row.voter);
     const e287 = e287Weight(row.voter);
-    return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.voter || "")}<br>vote ${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}<br>${escapeHtml(formatTime(row.blockTime || ""))}<br>height ${fmt.format(row.height || 0)}<br>${label} ${fmt.format(value || 0)}<br>start gov power ${fmt.format(row.startVotingPower || 0)}<br>end gov power ${fmt.format(row.endVotingPower || 0)}<br>e285 inference weight ${fmt.format(e285)}<br>e286 inference weight ${fmt.format(e286)}<br>e287 inference weight ${fmt.format(e287)}<br>e287 - e285 ${fmt.format(e287 - e285)}<br>${escapeHtml(windowStatusLabel(row.windowPowerStatus))}`;
+    return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.voter || "")}<br>vote ${escapeHtml(voteDisplayText(row))}<br>${escapeHtml(formatTime(row.blockTime || ""))}<br>height ${fmt.format(row.height || 0)}<br>${label} ${fmt.format(value || 0)}<br>start gov power ${fmt.format(row.startVotingPower || 0)}<br>end gov power ${fmt.format(row.endVotingPower || 0)}<br>e285 inference weight ${fmt.format(e285)}<br>e286 inference weight ${fmt.format(e286)}<br>e287 inference weight ${fmt.format(e287)}<br>e287 - e285 ${fmt.format(e287 - e285)}<br>${escapeHtml(windowStatusLabel(row.windowPowerStatus))}`;
   };
   state.charts.windowPower.setOption({
     grid: { left: 282, right: 44, top: 34, bottom: 52 },
@@ -906,7 +966,7 @@ function renderWindowPowerChart() {
   els.windowPowerTable.innerHTML = rows.map((row) => `
     <tr>
       <td>${escapeHtml(voterDisplayLabel(row))}<br><button class="row-button mono" data-address="${row.voter}">${escapeHtml(row.voter)}</button></td>
-      <td><span class="tag" style="border-color:${optionColors[row.primaryOption] || "#6d7682"}">${escapeHtml(optionLabels[row.primaryOption] || row.primaryOption)}</span><br><span class="muted">${escapeHtml(formatTime(row.blockTime || ""))}</span><br><span class="muted">tx height ${fmt.format(row.height || 0)}</span></td>
+      <td>${voteDisplayHtml(row)}<br><span class="muted">${escapeHtml(formatTime(row.blockTime || ""))}</span><br><span class="muted">tx height ${fmt.format(row.height || 0)}</span></td>
       <td class="num">${fmt.format(e285Weight(row.voter))}</td>
       <td class="num">${fmt.format(e286Weight(row.voter))}</td>
       <td class="num">${fmt.format(e287Weight(row.voter))}<br><span class="muted">delta ${fmt.format(e287Weight(row.voter) - e285Weight(row.voter))}</span></td>
@@ -926,7 +986,7 @@ function renderAttackTimeline() {
   const maxRowWeight = (row) => Math.max(0, ...row.cells.map((cell) => cell.weight || cell.startWeight || cell.confirmationWeight || 0));
   const rows = timeline.rows.filter((row) => {
     if (state.timelineScope === "recipients" && !filtered.has(row.address)) return false;
-    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (!voteMatches(row, els.vote.value)) return false;
     if (state.timelineModel === "qwen" && !hasModelActivity(row, "qwen")) return false;
     if (state.timelineModel === "kimi" && !hasModelActivity(row, "kimi")) return false;
     if (!query) return true;
@@ -1033,7 +1093,7 @@ function renderAttackTimeline() {
           : cell.rewardWithoutConfirmation
             ? "<br><span class=\"warn-text\">reward paid while CPoC confirmation is zero</span>"
             : "";
-        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}${compensationText}<br>max observed weight ${fmt.format(maxRowWeight(row))}<br>epoch ${escapeHtml(cell.epoch || "")} · ${escapeHtml(cell.snapshot || "")} · ${escapeHtml(cell.state || "")}${heightText}${blockTimeText}${fallbackText}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}${deltaText}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}${rewardFlag}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption || "did not vote")} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
+        return `<strong>${escapeHtml(actorLabel(row))}</strong><br>${escapeHtml(row.address || "")}${compensationText}<br>max observed weight ${fmt.format(maxRowWeight(row))}<br>epoch ${escapeHtml(cell.epoch || "")} · ${escapeHtml(cell.snapshot || "")} · ${escapeHtml(cell.state || "")}${heightText}${blockTimeText}${fallbackText}<br>weight ${fmt.format(cell.weight || 0)}<br>start weight ${fmt.format(cell.startWeight || 0)}<br>confirmation weight ${fmt.format(cell.confirmationWeight || 0)}${deltaText}<br>confirmation ratio ${fmt.format((cell.confirmationRatio || 0) * 100)}%<br>reward ${gonka(cell.rewardGonka || 0)}${rewardFlag}<br>Qwen commits ${fmt.format(cell.qwenCount || 0)} · Kimi commits ${fmt.format(cell.kimiCount || 0)}${modelText}<br>vote ${escapeHtml(voteDisplayText(row))} · gov power ${fmt.format(row.governanceVotingPower || 0)}`;
       },
     }),
     xAxis: { type: "category", data: columns.map((column) => column.label), axisLabel: { color: "#a7afba", interval: 0, rotate: 28 } },
@@ -1186,7 +1246,7 @@ function renderAnomalyTable() {
   const selectedLabel = els.label.value;
   const rows = (state.data.epochAnomalies || []).filter((row) => {
     if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
-    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (!voteMatches(row, els.vote.value)) return false;
     if (!query) return true;
     return [row.address, row.label, row.voteOption, row.status, row.caveat].join(" ").toLowerCase().includes(query);
   });
@@ -1199,7 +1259,7 @@ function renderAnomalyTable() {
       <td class="num">${fmt.format(row.e287Weight)}</td>
       <td class="num">${fmt.format(row.prevMaxWeight)}</td>
       <td class="num">${fmt.format(row.nextMaxWeight)}</td>
-      <td>${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}${row.voteHeight ? `<br><span class="mono muted">${row.voteHeight}</span>` : ""}${row.voteBlockTime ? `<br><span class="muted">${escapeHtml(row.voteBlockTime)}</span>` : ""}</td>
+      <td>${voteDisplayHtml(row)}${row.voteHeight ? `<br><span class="mono muted">${row.voteHeight}</span>` : ""}${row.voteBlockTime ? `<br><span class="muted">${escapeHtml(row.voteBlockTime)}</span>` : ""}</td>
       <td class="num">${fmt.format(row.governanceVotingPower || 0)}<br><span class="muted">${escapeHtml(row.governanceVotingPowerSource || "")}</span></td>
       <td><span class="tag ${row.status === "operational_enter_vote_exit_signal" ? "warn" : row.status === "partial_operational_timing_signal" ? "warn" : ""}">${escapeHtml(row.status)}</span><br><span class="muted">${escapeHtml(row.caveat || "")}</span></td>
     </tr>
@@ -1238,7 +1298,7 @@ function renderEntryExitChart() {
         if (clusterRows.length) {
           return `${escapeHtml(actorLabel(row))}<br>${escapeHtml(row.kind)}<br>e287 inference weight ${fmt.format(row.totalE287Weight)}<br>exact gov power ${fmt.format(row.totalGovernanceVotingPower || 0)}<br>${row.confirmedEnterVoteExitWithPowerCount || 0} full enter/vote/exit with power`;
         }
-        return `${escapeHtml(actorLabel(row))}<br>prev ${fmt.format(row.prevMaxWeight || 0)} · e287 ${fmt.format(row.e287Weight || 0)} · next ${fmt.format(row.nextMaxWeight || 0)}<br>vote ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}${row.voteHeight ? ` at ${row.voteHeight}` : ""}<br>exact gov power ${fmt.format(row.governanceVotingPower || 0)}<br>${escapeHtml(row.caveat || "")}`;
+        return `${escapeHtml(actorLabel(row))}<br>prev ${fmt.format(row.prevMaxWeight || 0)} · e287 ${fmt.format(row.e287Weight || 0)} · next ${fmt.format(row.nextMaxWeight || 0)}<br>vote ${escapeHtml(voteDisplayText(row))}${row.voteHeight ? ` at ${row.voteHeight}` : ""}<br>exact gov power ${fmt.format(row.governanceVotingPower || 0)}<br>${escapeHtml(row.caveat || "")}`;
       },
     }),
     xAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) } },
@@ -1449,7 +1509,7 @@ function renderBenefitPowerTable() {
   const rows = (state.data.benefitPowerMatrix || []).filter((row) => {
     if (!benefitPowerMatches(row, query)) return false;
     if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
-    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (!voteMatches(row, els.vote.value)) return false;
     if (els.confidence.value !== "all" && !(row.topEvidence || []).some((item) => item.confidence === els.confidence.value)) return false;
     if (els.sourceType.value !== "all" && !(row.topEvidence || []).some((item) => item.sourceType === els.sourceType.value)) return false;
     return true;
@@ -1461,7 +1521,7 @@ function renderBenefitPowerTable() {
       <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
       <td>${escapeHtml(actorLabel(row))}<br><span class="muted">${escapeHtml(row.clusterId || "no cluster")}</span></td>
       <td class="num">${gonka(row.totalCompensationGonka)}</td>
-      <td class="num">${fmt.format(row.votingPower || 0)}<br><span class="muted">${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}</span></td>
+      <td class="num">${fmt.format(row.votingPower || 0)}<br><span class="muted">${escapeHtml(voteDisplayText(row))}</span></td>
       <td>${row.recipientVoterOverlap ? "<span class=\"tag warn\">recipient voter</span>" : row.isRecipient ? "<span class=\"tag\">recipient</span>" : row.isVoter ? "<span class=\"tag\">voter</span>" : "-"}</td>
       <td><span class="tag ${identityBoundary(row) === "public_owner_proof" ? "good" : ""}">${escapeHtml(identityBoundary(row))}</span><br><span class="muted">proof ${row.proofCount}; high ${row.highConfidenceClaimCount}</span></td>
       <td>${(row.nextActions || []).map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join(" ")}</td>
@@ -1497,7 +1557,7 @@ function renderPublicNameTable() {
   const rows = (state.data.publicNameEnrichment?.rows || []).filter((row) => {
     if (!publicNameMatches(row, query)) return false;
     if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
-    if (els.vote.value !== "all" && row.voteOption !== els.vote.value) return false;
+    if (!voteMatches(row, els.vote.value)) return false;
     if (els.confidence.value !== "all" && !(row.publicNameSources || []).some((item) => item.confidence === els.confidence.value)) return false;
     if (els.sourceType.value !== "all" && !(row.publicNameSources || []).some((item) => item.sourceType === els.sourceType.value)) return false;
     return true;
@@ -1509,7 +1569,7 @@ function renderPublicNameTable() {
       <td>${escapeHtml(actorLabel(row))}</td>
       <td>${escapeHtml(row.bestPublicName || "none")}<br><span class="muted">${escapeHtml((row.reverseGnsNames || []).join(", ") || (row.gnsNames || []).join(", ") || "no GNS")}</span></td>
       <td>${(row.roles || []).map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</td>
-      <td class="num">${gonka(row.totalCompensationGonka || 0)}<br><span class="muted">power ${fmt.format(row.votingPower || 0)} · ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}</span></td>
+      <td class="num">${gonka(row.totalCompensationGonka || 0)}<br><span class="muted">power ${fmt.format(row.votingPower || 0)} · ${escapeHtml(voteDisplayText(row))}</span></td>
       <td><span class="tag ${row.evidenceBoundary === "public_owner_proof" ? "good" : row.evidenceBoundary === "unknown_public_owner" ? "warn" : ""}">${escapeHtml(row.evidenceBoundary)}</span></td>
       <td>${(row.publicNameSources || []).slice(0, 5).map((item) => `<span class="tag">${escapeHtml(item.sourceType)}: ${escapeHtml(String(item.value).slice(0, 52))}</span>`).join(" ") || "-"}</td>
       <td>${(row.nextActions || []).map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join(" ")}</td>
@@ -1634,6 +1694,7 @@ function buildLabelRows(data) {
         voterCount: 0,
         totalGonka: 0,
         votes: new Set(),
+        voteOptions: new Set(),
       });
     }
     return labels.get(label);
@@ -1652,7 +1713,10 @@ function buildLabelRows(data) {
     item.addresses.add(row.voter);
     item.identityTypes.add(row.identityType || "unknown");
     item.voterCount += 1;
-    item.votes.add(row.primaryOption || primaryOption(row));
+    item.votes.add(voteDisplayText(row));
+    const options = voteSplitOptions(row);
+    if (options.length) options.forEach((option) => item.voteOptions.add(option.option));
+    else item.voteOptions.add(row.primaryOption || primaryOption(row));
   });
 
   return [...labels.values()]
@@ -1661,6 +1725,7 @@ function buildLabelRows(data) {
       addresses: [...row.addresses].sort(),
       identityTypes: [...row.identityTypes].sort(),
       votes: [...row.votes].sort(),
+      voteOptions: [...row.voteOptions].sort(),
     }))
     .sort((a, b) => b.totalGonka - a.totalGonka || b.addresses.length - a.addresses.length || a.label.localeCompare(b.label));
 }
@@ -1671,7 +1736,7 @@ function renderLabelTable() {
   const rows = buildLabelRows(state.data).filter((row) => {
     if (selectedLabel !== "all" && row.label !== selectedLabel) return false;
     if (els.identity.value !== "all" && !row.identityTypes.includes(els.identity.value)) return false;
-    if (els.vote.value !== "all" && !row.votes.includes(els.vote.value) && !(els.vote.value === "did_not_vote" && row.recipientCount > row.voterCount)) return false;
+    if (els.vote.value !== "all" && !row.voteOptions.includes(els.vote.value) && !(els.vote.value === "did_not_vote" && row.recipientCount > row.voterCount)) return false;
     if (!query) return true;
     return [
       row.label,
@@ -1702,7 +1767,7 @@ function renderTables() {
       <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
       <td>${escapeHtml(actorLabel(row))}</td>
       <td><span class="tag">${escapeHtml(row.status)}</span></td>
-      <td>${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}</td>
+      <td>${voteDisplayHtml(row)}</td>
       <td>${escapeHtml(row.strictClusterId || row.signalClusterId || "-")}</td>
       <td class="num">${gonka(row.totalGonka)}</td>
     </tr>
@@ -1712,7 +1777,7 @@ function renderTables() {
   const label = els.label.value;
   const filteredVotes = state.data.votes.filter((row) => {
     if (!textMatch({ ...row, address: row.voter }, query)) return false;
-    if (els.vote.value !== "all" && row.primaryOption !== els.vote.value) return false;
+    if (!voteMatches(row, els.vote.value)) return false;
     if (els.identity.value !== "all" && row.identityType !== els.identity.value) return false;
     if (label !== "all" && row.label !== label) return false;
     return true;
@@ -1723,7 +1788,7 @@ function renderTables() {
       <td class="num">${row.height}</td>
       <td><button class="row-button mono" data-address="${row.voter}">${escapeHtml(row.voter)}</button></td>
       <td>${row.isRecipient ? "Yes" : "No"}</td>
-      <td>${escapeHtml(row.finalVoteOptions.map((item) => `${optionLabels[item.option]} ${fmt.format(item.weight * 100)}%`).join(", "))}</td>
+      <td>${voteDisplayHtml(row)}</td>
       <td>${escapeHtml(row.strictClusterId || row.signalClusterId || "-")}</td>
       <td>${row.votingPower == null ? "unknown" : fmt.format(row.votingPower)}<br><span class="muted">${escapeHtml(row.votingPowerReason || row.votingPowerSource || "")}</span><br><span class="muted">${escapeHtml(formatTime(row.blockTime))}</span></td>
     </tr>
@@ -1864,7 +1929,7 @@ function openDrawer(address) {
     <div class="drawer-section">
       <h3>Vote</h3>
       ${vote ? `<dl class="kv">
-        <dt>Final vote</dt><dd>${escapeHtml(vote.finalVoteOptions.map((item) => `${optionLabels[item.option]} ${fmt.format(item.weight * 100)}%`).join(", "))}</dd>
+        <dt>Final vote</dt><dd>${escapeHtml(voteDisplayText(vote))}</dd>
         <dt>Vote block</dt><dd>${vote.height}<br><span class="muted">${escapeHtml(formatTime(vote.blockTime))}</span></dd>
         <dt>Tx hash</dt><dd class="mono">${escapeHtml(vote.txHash)}</dd>
         <dt>Voting power</dt><dd>${vote.votingPower == null ? "unknown" : fmt.format(vote.votingPower)}<br><span class="muted">${escapeHtml(vote.votingPowerReason || vote.votingPowerSource || "")}</span></dd>
@@ -1876,7 +1941,7 @@ function openDrawer(address) {
       ${entryExitClusters.length ? `<dl class="kv">${entryExitClusters.map((cluster) => {
         const item = (cluster.addressRows || []).find((row) => row.address === address) || {};
         const neighbors = (cluster.addresses || []).filter((itemAddress) => itemAddress !== address).slice(0, 8);
-        return `<dt>#${cluster.rank} ${escapeHtml(cluster.kind)}</dt><dd>${escapeHtml(actorLabel(cluster))}<br>e287 inference weight ${fmt.format(item.e287Weight || 0)}, prev ${fmt.format(item.prevMaxWeight || 0)}, next ${fmt.format(item.nextMaxWeight || 0)}<br>exact governance voting power ${fmt.format(item.governanceVotingPower || 0)}<br>inference enter / governance vote tx in e287 / inference exit: ${item.enteredE287 ? "yes" : "no"} / ${item.votedDuringE287 ? "yes" : "no"} / ${item.exitedAfterE287 ? "yes" : "no"}<br>vote tx ${escapeHtml(optionLabels[item.voteOption] || item.voteOption || "none")} ${item.voteHeight ? `at ${item.voteHeight}` : ""}<br><span class="muted">Inference weight is not governance voting power. Neighbors: ${neighbors.length ? neighbors.map(escapeHtml).join(", ") : "none"}</span><br><span class="muted">${escapeHtml((cluster.caveats || []).join(" "))}</span></dd>`;
+        return `<dt>#${cluster.rank} ${escapeHtml(cluster.kind)}</dt><dd>${escapeHtml(actorLabel(cluster))}<br>e287 inference weight ${fmt.format(item.e287Weight || 0)}, prev ${fmt.format(item.prevMaxWeight || 0)}, next ${fmt.format(item.nextMaxWeight || 0)}<br>exact governance voting power ${fmt.format(item.governanceVotingPower || 0)}<br>inference enter / governance vote tx in e287 / inference exit: ${item.enteredE287 ? "yes" : "no"} / ${item.votedDuringE287 ? "yes" : "no"} / ${item.exitedAfterE287 ? "yes" : "no"}<br>vote tx ${escapeHtml(voteDisplayText(item))} ${item.voteHeight ? `at ${item.voteHeight}` : ""}<br><span class="muted">Inference weight is not governance voting power. Neighbors: ${neighbors.length ? neighbors.map(escapeHtml).join(", ") : "none"}</span><br><span class="muted">${escapeHtml((cluster.caveats || []).join(" "))}</span></dd>`;
       }).join("")}</dl>` : "<p>No e287 inference timing cluster for this address.</p>"}
     </div>
     <div class="drawer-section">
