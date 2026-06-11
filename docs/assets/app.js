@@ -409,7 +409,6 @@ function renderOverview(data) {
   document.getElementById("finalTally").textContent = `Yes ${fmt.format(data.summary.finalTally.yes)} / Veto ${fmt.format(data.summary.finalTally.no_with_veto)}`;
   document.getElementById("recipientVoters").textContent = `${data.summary.recipientVotersCount} of ${data.summary.uniqueVotersCount}`;
   document.getElementById("multiplier").textContent = `${fmt.format(data.summary.visibleDamageToFinalMultiplier)}x`;
-  document.getElementById("componentSplit").textContent = `${gonka(data.summary.visibleDamageE265Gonka)} visible e265 damage became ${gonka(data.summary.totalCompensationGonka)}`;
 }
 
 function renderCompensationChart() {
