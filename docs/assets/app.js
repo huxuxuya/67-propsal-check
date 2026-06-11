@@ -498,27 +498,32 @@ function renderCompensationChart() {
 function renderWaterfall() {
   const summary = state.data.summary;
   const epochById = new Map((state.data.epochs || []).map((row) => [row.epoch, row]));
-  const attackEpoch = epochById.get(265)?.totalGonka || summary.visibleDamageE265Gonka || 0;
-  const excludedEpoch = epochById.get(266)?.totalGonka || Math.max(0, (summary.attackE265E266Gonka || 0) - attackEpoch);
-  const capEpochs = (state.data.epochs || [])
-    .filter((row) => row.epoch >= 267 && row.epoch <= 276)
-    .reduce((total, row) => total + (row.totalGonka || 0), 0) || summary.capE267E276Gonka || 0;
   const components = [
-    { name: "e265 attack", value: attackEpoch, color: "#d9655f", description: "Epoch 265: direct attack/damage epoch" },
-    { name: "e266 could not enter", value: excludedEpoch, color: "#e78f61", description: "Epoch 266: attacked participants could not enter the next epoch" },
-    { name: "e267-e276 cap", value: capEpochs, color: "#d7a84f", description: "Epochs 267-276: capped compensation window after the attack impact" },
+    { epoch: 265, name: "e265 attack", value: epochById.get(265)?.totalGonka || summary.visibleDamageE265Gonka || 0, color: "#d9655f", description: "Direct attack/damage epoch" },
+    { epoch: 266, name: "e266 excluded", value: epochById.get(266)?.totalGonka || 0, color: "#e78f61", description: "Attacked participants could not enter the next epoch" },
+    ...(state.data.epochs || [])
+      .filter((row) => row.epoch >= 267 && row.epoch <= 276)
+      .map((row) => ({
+        epoch: row.epoch,
+        name: `e${row.epoch}`,
+        value: row.totalGonka || 0,
+        recipientsCount: row.recipientsCount || 0,
+        color: "#d7a84f",
+        description: "Capped compensation epoch",
+      })),
   ];
   state.charts.waterfall.setOption({
-    grid: { left: 70, right: 24, top: 28, bottom: 72 },
+    grid: { left: 70, right: 24, top: 28, bottom: 86 },
     tooltip: chartTooltip({
       trigger: "item",
       formatter: (p) => {
         const total = summary.totalCompensationGonka || 1;
         const row = components[p.dataIndex] || {};
-        return `<strong>${escapeHtml(row.name || p.name)}</strong><br>${escapeHtml(row.description || "")}<br>${gonka(row.value || 0)}<br>${fmt.format(((row.value || 0) / total) * 100)}% of final payout<br>final total ${gonka(summary.totalCompensationGonka || 0)}`;
+        const recipients = row.recipientsCount ? `<br>${fmt.format(row.recipientsCount)} recipients` : "";
+        return `<strong>${escapeHtml(row.name || p.name)}</strong><br>${escapeHtml(row.description || "")}<br>${gonka(row.value || 0)}${recipients}<br>${fmt.format(((row.value || 0) / total) * 100)}% of final payout<br>final total ${gonka(summary.totalCompensationGonka || 0)}`;
       },
     }),
-    xAxis: { type: "category", data: components.map((row) => row.name), axisLabel: { color: "#a7afba", interval: 0, rotate: 18 } },
+    xAxis: { type: "category", data: components.map((row) => row.name), axisLabel: { color: "#a7afba", interval: 0, rotate: 32 } },
     yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) }, name: "GONKA paid", nameTextStyle: { color: "#a7afba" } },
     series: [{
       type: "bar",
