@@ -21,7 +21,7 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - telegram_operator_statement (high, signal): Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда: ./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \ --from <your-account-key> \ --node http://node2.gonka.ai:8000/chain-rpc/ \ --chain-id gonka-mainnet \ --keyring-backend file \ --gas auto \ --gas-adjustment 1.3 \ -y Это топ 1 сегмент по весу и он будет запускать Кими сегодня вечером. Я буду давать обнолвения в этот чат по прогрессу и если что-то пойдет не так тоже буду отписываться.
 
-### #2 ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
+### #2 Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
 - Compensation: 66487.744752 GONKA; governance power: 28865; vote: no_with_veto
@@ -155,7 +155,7 @@ Top evidence:
 - matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
 - matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
 - proposal_vote (high, signal): yes
-- epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=60352
+- discord_address_excerpt (medium, signal): gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj gonka1ccdm8j6sjyhq4qask049dwgaczs7f3pxte6zmp gonka1d7ghexkrnm00fh695zcd00xgfgwxe2vvamcsdt gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1fc9tzt83dgrqswlgay4668cuqjrk7zsqks2vm2 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz gonka1lr9mj6dgkv0h76c8y8w0l3esztyg9v2q8d6d8d gonka1myu058axjs62mc3e7n...
 
 ### #10 gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz
 
@@ -189,7 +189,7 @@ Top evidence:
 - matched_validator_moniker (high, signal): gonkavaloper1hwvel7n3zuk6wruefuzc356l9myske9shc8fy0
 - matched_validator_moniker (high, signal): gonkavaloper1hwvel7n3zuk6wruefuzc356l9myske9shc8fy0
 - proposal_vote (high, signal): yes
-- epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=51552
+- discord_address_excerpt (medium, signal): gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj gonka1ccdm8j6sjyhq4qask049dwgaczs7f3pxte6zmp gonka1d7ghexkrnm00fh695zcd00xgfgwxe2vvamcsdt gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1fc9tzt83dgrqswlgay4668cuqjrk7zsqks2vm2 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz gonka1lr9mj6dgkv0h76c8y8w0l3esztyg9v2q8d6d8d gonka1myu058axjs62mc3e7n...
 
 ### #12 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 
@@ -274,7 +274,7 @@ Top evidence:
 - matched_validator_moniker (high, signal): gonkavaloper1fvly5jrewyjmjfgwah3khy9rttq4cqajyeptjv
 - matched_validator_moniker (high, signal): gonkavaloper1fvly5jrewyjmjfgwah3khy9rttq4cqajyeptjv
 - proposal_vote (high, signal): no_with_veto
-- epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=4000
+- discord_address_excerpt (medium, signal): gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj gonka1ccdm8j6sjyhq4qask049dwgaczs7f3pxte6zmp gonka1d7ghexkrnm00fh695zcd00xgfgwxe2vvamcsdt gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1fc9tzt83dgrqswlgay4668cuqjrk7zsqks2vm2 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz gonka1lr9mj6dgkv0h76c8y8w0l3esztyg9v2q8d6d8d gonka1myu058axjs62mc3e7n...
 
 ### #17 gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww
 
@@ -316,7 +316,7 @@ Top evidence:
 - Compensation: 0 GONKA; governance power: 5395; vote: no_with_veto
 - Recipient: False; voter: True; overlap: False
 - Cluster: none (none)
-- Evidence boundary: public_owner_proof (proof 5, high-confidence claims 8)
+- Evidence boundary: public_owner_proof (proof 5, high-confidence claims 9)
 - Triage score: 8.771
 - Next actions: monitor
 
@@ -327,13 +327,13 @@ Top evidence:
 - matched_validator_moniker (high, proof): Hyperfusion
 - validator_key_match (high, proof): RpybUPIxWuzq83a7BqPL2dvUMc2cyPWljCcIwW/RFRI=
 
-### #20 gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
+### #20 ma1teg0? · gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
 
 - Address: `gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5`
 - Compensation: 3018.840187 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
 - Cluster: strict-1 (strict_identity)
-- Evidence boundary: public_owner_proof (proof 5, high-confidence claims 7)
+- Evidence boundary: public_owner_proof (proof 5, high-confidence claims 9)
 - Triage score: 8.755
 - Next actions: monitor
 
@@ -378,13 +378,13 @@ Top evidence:
 - compensation_output (high, signal): 1166.439756 GONKA
 - validator_key_match (high, signal): aVjnIbFCA91pBgh+9efqFNobNu8my/kDn2xZckGkGwk=
 
-### #23 gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
+### #23 Arturs Plisko? · gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
 
 - Address: `gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le`
 - Compensation: 1025.259358 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
 - Cluster: strict-1 (strict_identity)
-- Evidence boundary: public_owner_proof (proof 5, high-confidence claims 7)
+- Evidence boundary: public_owner_proof (proof 5, high-confidence claims 8)
 - Triage score: 8.256
 - Next actions: monitor
 
@@ -442,9 +442,9 @@ Top evidence:
 Top evidence:
 - compensation_output (high, signal): 18234.887511 GONKA
 - telegram_self_claim (high, signal): Можно по моей ноде отслеживать награды gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
+- discord_address_excerpt (medium, signal): gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj gonka1ccdm8j6sjyhq4qask049dwgaczs7f3pxte6zmp gonka1d7ghexkrnm00fh695zcd00xgfgwxe2vvamcsdt gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1fc9tzt83dgrqswlgay4668cuqjrk7zsqks2vm2 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz gonka1lr9mj6dgkv0h76c8y8w0l3esztyg9v2q8d6d8d gonka1myu058axjs62mc3e7n...
+- discord_context_only (medium, signal): gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj gonka1ccdm8j6sjyhq4qask049dwgaczs7f3pxte6zmp gonka1d7ghexkrnm00fh695zcd00xgfgwxe2vvamcsdt gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1fc9tzt83dgrqswlgay4668cuqjrk7zsqks2vm2 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz gonka1lr9mj6dgkv0h76c8y8w0l3esztyg9v2q8d6d8d gonka1myu058axjs62mc3e7n...
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=11168
-- epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=12896
-- epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=19040
 
 ### #27 gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0
 
@@ -497,22 +497,22 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=12480
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=12640
 
-### #30 gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239
+### #30 xscp_x? · gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239
 
 - Address: `gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239`
 - Compensation: 12612.234866 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
 - Cluster: none (none)
-- Evidence boundary: public_signal (proof 0, high-confidence claims 3)
+- Evidence boundary: public_signal (proof 0, high-confidence claims 4)
 - Triage score: 3.153
 - Next actions: enrich beneficiary identity
 
 Top evidence:
 - compensation_output (high, signal): 12612.234866 GONKA
+- discord_self_claim (high, signal): @BerlinBro,Help me out: I have 3 unlaimed rewards, one wallet is : gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239 (1) I upgraded decentralized-api binary manually inside API container directory using: wget -q -O decentralized-api.zip https://github.com/product-science/race-releases/releases/download/release%2Fv0.2.5-post7/decentralized-api-amd64.zip sudo unzip -o -j decentralized-api.zip -d .dapi/cosmovisor/genesis/bin/ sudo chmod +x .dapi/cosmovisor/genesis/bin/decentralized-api Container restarted correctly. Node stayed synced. (2) I executed both claim methods successfully: First: POST http://localhost:9200/admin/v1/claim-reward/recover with body {“force_claim”: true, “epoch_id”: 114} Resp...
 - matched_validator_moniker (high, signal): gonkavaloper1ujnc662v6g69jm6fgxnr79a2m7ehzeutn55dxg
 - matched_validator_moniker (high, signal): gonkavaloper1ujnc662v6g69jm6fgxnr79a2m7ehzeutn55dxg
-- epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=7296
-- epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=6784
+- discord_address_excerpt (medium, signal): @Tania C.https://gonkascan.com/?page=participant&participant=gonka1zrzapmfar303hfdqpfglkcxn5xf0s595zqt2c8 https://gonkascan.com/?page=participant&participant=gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239 still not claimed after sun the recover command (edited)
 
 ### #31 gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj
 

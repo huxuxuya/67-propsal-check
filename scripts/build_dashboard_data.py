@@ -521,12 +521,20 @@ def read_telegram_evidence():
     return load_optional_json(DATA / "telegram_evidence.json", {"messages": [], "summary": {}})
 
 
+def read_discord_evidence():
+    return load_optional_json(DATA / "discord_evidence.json", {"messages": [], "summary": {}})
+
+
 def read_history_operator_signal_audit():
     return load_optional_json(DATA / "investigations" / "history_operator_signal_audit.json", {"rows": [], "summary": {}})
 
 
 def read_chat_participant_attribution():
     return load_optional_json(DATA / "investigations" / "chat_participant_attribution.json", {"rows": [], "summary": {}})
+
+
+def read_discord_participant_attribution():
+    return load_optional_json(DATA / "investigations" / "discord_participant_attribution.json", {"rows": [], "summary": {}})
 
 
 def read_voting_end_epochs():
@@ -642,7 +650,9 @@ def normalize_claim_value(value):
 
 def evidence_category(source_type):
     if source_type.startswith("telegram_"):
-        return "telegram_signal"
+        return "chat_signal"
+    if source_type.startswith("discord_"):
+        return "chat_signal"
     if source_type in {"proposal_proposer", "proposal_message_sender", "proposal_vote", "proposal_output"}:
         return "governance"
     if source_type in {"compensation_output", "upstream_delegation", "epoch_commit_participant"}:
@@ -668,7 +678,18 @@ def attribution_tier(source_type, category, proof=False):
         "telegram_pool_roster",
     }:
         return "telegram_signal"
+    if source_type in {
+        "discord_self_claim",
+        "discord_self_or_team_claim",
+        "discord_operator_statement",
+        "discord_operator_answer",
+        "discord_operator_context",
+        "discord_pool_roster",
+    }:
+        return "discord_signal"
     if source_type.startswith("telegram_"):
+        return "context_only"
+    if source_type.startswith("discord_"):
         return "context_only"
     if category in {"infrastructure_signal", "public_infrastructure"} or source_type in {
         "participant_inference_url",
@@ -717,6 +738,18 @@ def telegram_claim_metadata(row):
     source_url = row.get("sourceUrl") or telegram_source_url(row)
     return {
         "sourceUrl": source_url,
+        "chatPlatform": "telegram",
+        "chatName": row.get("chat", ""),
+        "chatMessageId": row.get("messageId", ""),
+        "chatMessageTime": row.get("messageTime") or row.get("date", ""),
+        "chatAuthor": row.get("author", ""),
+        "chatAuthorSource": row.get("authorSource", ""),
+        "chatSignalStrength": row.get("signalStrength", ""),
+        "chatContextTags": row.get("contextTags", []),
+        "chatReplyToMessageId": row.get("replyToMessageId", ""),
+        "chatReplyText": row.get("replyText", ""),
+        "chatExcerpt": row.get("excerpt", ""),
+        "chatContextMessages": row.get("contextMessages", []),
         "telegramChat": row.get("chat", ""),
         "telegramMessageId": row.get("messageId", ""),
         "telegramMessageTime": row.get("messageTime") or row.get("date", ""),
@@ -725,7 +758,28 @@ def telegram_claim_metadata(row):
         "telegramSignalStrength": row.get("signalStrength", ""),
         "telegramContextTags": row.get("contextTags", []),
         "telegramReplyToMessageId": row.get("replyToMessageId", ""),
+        "telegramReplyText": row.get("replyText", ""),
         "telegramExcerpt": row.get("excerpt", ""),
+        "telegramContextMessages": row.get("contextMessages", []),
+    }
+
+
+def discord_claim_metadata(row):
+    return {
+        "sourceUrl": row.get("sourceUrl") or source_url_for_file(row.get("sourceFile", "")),
+        "chatPlatform": "discord",
+        "chatName": row.get("chat", ""),
+        "chatChannelId": row.get("channelId", ""),
+        "chatMessageId": row.get("messageId", ""),
+        "chatMessageTime": row.get("messageTime") or row.get("date", ""),
+        "chatAuthor": row.get("author", ""),
+        "chatAuthorUsername": row.get("authorUsername", ""),
+        "chatAuthorUserId": row.get("authorUserId", ""),
+        "chatAuthorSource": row.get("authorSource", ""),
+        "chatSignalStrength": row.get("signalStrength", ""),
+        "chatContextTags": row.get("contextTags", []),
+        "chatReplyToMessageId": row.get("replyToMessageId", ""),
+        "chatExcerpt": row.get("excerpt", ""),
     }
 
 
@@ -1091,7 +1145,7 @@ def collect_address_labels(recipients, votes, participants, account_labels, cons
     return labels, identity_types
 
 
-def build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence=None, epoch_anomalies=None, history_operator_signals=None, chat_attribution=None):
+def build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence=None, epoch_anomalies=None, history_operator_signals=None, chat_attribution=None, discord_evidence=None, discord_attribution=None):
     claims = []
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_by_address = {row["voter"]: row for row in votes}
@@ -1274,6 +1328,26 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
                 )
             )
 
+    for message in (discord_evidence or {}).get("messages") or []:
+        for address in message.get("addresses") or []:
+            if address not in relevant_addresses:
+                continue
+            excerpt_value = message.get("excerpt", "")
+            author_value = message.get("author") or message.get("authorUsername") or message.get("chat", "")
+            claims.append(
+                make_claim(
+                    address,
+                    author_value,
+                    message.get("sourceType", "discord_export_excerpt"),
+                    excerpt_value,
+                    message.get("sourceFile", "history/export-gonka-full"),
+                    message.get("confidence", "medium"),
+                    False,
+                    message.get("caveat", "Discord excerpt requires corroboration."),
+                    discord_claim_metadata(message),
+                )
+            )
+
     for signal in (history_operator_signals or {}).get("rows") or []:
         address = signal.get("address") or ""
         if address and address not in relevant_addresses:
@@ -1297,7 +1371,7 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
         if not address or address not in relevant_addresses:
             continue
         level = signal.get("evidenceLevel", "")
-        if level in {"no_chat_signal", "public_owner_proof"}:
+        if level == "no_chat_signal" or signal.get("sourceType") == "no_chat_signal":
             continue
         claims.append(
             make_claim(
@@ -1310,6 +1384,27 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
                 False,
                 signal.get("caveat", "Local Telegram chat signal; not public owner proof without independent corroboration."),
                 telegram_claim_metadata(signal),
+            )
+        )
+
+    for signal in (discord_attribution or {}).get("rows") or []:
+        address = signal.get("address") or ""
+        if not address or address not in relevant_addresses:
+            continue
+        level = signal.get("evidenceLevel", "")
+        if level == "no_chat_signal" or signal.get("sourceType") == "no_chat_signal":
+            continue
+        claims.append(
+            make_claim(
+                address,
+                signal.get("bestChatCandidateLabel") or signal.get("author") or signal.get("currentLabel") or address,
+                signal.get("sourceType", "discord_context_only"),
+                signal.get("excerpt", ""),
+                signal.get("sourceFile", "history/export-gonka-full"),
+                signal.get("confidence", "medium") or "medium",
+                False,
+                signal.get("caveat", "Local Discord chat signal; not public owner proof without independent corroboration."),
+                discord_claim_metadata(signal),
             )
         )
 
@@ -1348,6 +1443,12 @@ def apply_investigation_labels(recipients, votes, evidence_claims):
         "telegram_self_claim",
         "telegram_operator_answer",
         "telegram_pool_roster",
+        "discord_operator_statement",
+        "discord_self_or_team_claim",
+        "discord_operator_context",
+        "discord_self_claim",
+        "discord_operator_answer",
+        "discord_pool_roster",
     }
     operator_labels = {}
     priority = {"high": 0, "medium": 1}
@@ -1368,9 +1469,10 @@ def apply_investigation_labels(recipients, votes, evidence_claims):
             "sourceUrl": claim.get("sourceUrl", ""),
             "caveat": claim.get("caveat", ""),
             "attributionTier": claim.get("attributionTier", "telegram_signal"),
-            "telegramMessageId": claim.get("telegramMessageId", ""),
-            "telegramMessageTime": claim.get("telegramMessageTime", ""),
-            "telegramAuthor": claim.get("telegramAuthor", ""),
+            "chatPlatform": claim.get("chatPlatform", ""),
+            "chatMessageId": claim.get("chatMessageId", claim.get("telegramMessageId", "")),
+            "chatMessageTime": claim.get("chatMessageTime", claim.get("telegramMessageTime", "")),
+            "chatAuthor": claim.get("chatAuthor", claim.get("telegramAuthor", "")),
         }
         current = operator_labels.get(address)
         if not current or priority[confidence] < priority.get(current.get("confidence", ""), 9):
@@ -1671,7 +1773,9 @@ def build_attribution_dossiers(recipients, votes, actors, evidence_claims):
         row = {**actor, **recipient, **vote, "address": address}
         claims = claims_by_address.get(address, [])
         proof_claims = [claim for claim in claims if claim.get("attributionTier") == "proof"]
+        chat_claims = [claim for claim in claims if claim.get("attributionTier") in {"telegram_signal", "discord_signal"}]
         telegram_claims = [claim for claim in claims if claim.get("attributionTier") == "telegram_signal"]
+        discord_claims = [claim for claim in claims if claim.get("attributionTier") == "discord_signal"]
         host_claims = [claim for claim in claims if claim.get("attributionTier") == "host_signal"]
         hosts = set(address_hosts(recipient) + address_hosts(vote))
         for claim in claims:
@@ -1683,12 +1787,13 @@ def build_attribution_dossiers(recipients, votes, actors, evidence_claims):
             tier = "proof"
         elif row.get("operatorSignalLabel"):
             candidate = row.get("operatorSignalLabel", "")
-            key = f"telegram:{candidate}"
-            tier = "telegram_signal"
-        elif telegram_claims:
-            candidate = sorted(telegram_claims, key=claim_sort_key)[0].get("subject") or actor.get("actorShortLabel") or address
-            key = f"telegram:{candidate}"
-            tier = "telegram_signal"
+            tier = row.get("attributionTier") or actor.get("attributionTier") or "telegram_signal"
+            key = f"{tier}:{candidate}"
+        elif chat_claims:
+            best_chat_claim = sorted(chat_claims, key=claim_sort_key)[0]
+            candidate = best_chat_claim.get("subject") or actor.get("actorShortLabel") or address
+            tier = best_chat_claim.get("attributionTier", "telegram_signal")
+            key = f"{tier}:{candidate}"
         elif hosts:
             candidate = sorted(hosts)[0]
             key = f"host:{candidate}"
@@ -1752,7 +1857,9 @@ def build_attribution_dossiers(recipients, votes, actors, evidence_claims):
     for group in grouped.values():
         claims = sorted(group["claims"], key=claim_sort_key)
         proof_claims = [claim for claim in claims if claim.get("attributionTier") == "proof"]
+        chat_claims = [claim for claim in claims if claim.get("attributionTier") in {"telegram_signal", "discord_signal"}]
         telegram_claims = [claim for claim in claims if claim.get("attributionTier") == "telegram_signal"]
+        discord_claims = [claim for claim in claims if claim.get("attributionTier") == "discord_signal"]
         host_claims = [claim for claim in claims if claim.get("attributionTier") == "host_signal"]
         context_claims = [claim for claim in claims if claim.get("attributionTier") == "context_only"]
         tier_counts = Counter(claim.get("attributionTier", "context_only") for claim in claims)
@@ -1761,6 +1868,8 @@ def build_attribution_dossiers(recipients, votes, actors, evidence_claims):
             caveats.append("No public owner proof; treat as attribution lead.")
         if telegram_claims:
             caveats.append("Telegram signal needs independent corroboration before owner attribution.")
+        if discord_claims:
+            caveats.append("Discord signal needs independent corroboration before owner attribution.")
         if host_claims:
             caveats.append("Host/infrastructure links do not prove common ownership.")
         dossiers.append(
@@ -1768,7 +1877,7 @@ def build_attribution_dossiers(recipients, votes, actors, evidence_claims):
                 "id": group["id"],
                 "candidateLabel": group["candidateLabel"],
                 "displayLabel": group["displayLabel"],
-                "attributionTier": "proof" if proof_claims else ("telegram_signal" if telegram_claims else ("host_signal" if host_claims else group["attributionTier"])),
+                "attributionTier": "proof" if proof_claims else ((sorted(chat_claims, key=claim_sort_key)[0].get("attributionTier") if chat_claims else "") or ("host_signal" if host_claims else group["attributionTier"])),
                 "identityBoundary": "public_owner_proof" if proof_claims else group["identityBoundary"],
                 "addresses": sorted(group["addresses"]),
                 "addressRows": sorted(group["addressRows"], key=lambda row: (-row["totalCompensationGonka"], -row["votingPower"], row["address"])),
@@ -1781,6 +1890,7 @@ def build_attribution_dossiers(recipients, votes, actors, evidence_claims):
                 "tierCounts": dict(tier_counts),
                 "proofClaims": proof_claims[:12],
                 "telegramClaims": telegram_claims[:20],
+                "discordClaims": discord_claims[:20],
                 "hostClaims": host_claims[:12],
                 "contextClaims": context_claims[:12],
                 "topClaims": claims[:16],
@@ -1790,7 +1900,7 @@ def build_attribution_dossiers(recipients, votes, actors, evidence_claims):
 
     dossiers.sort(
         key=lambda row: (
-            {"proof": 0, "telegram_signal": 1, "host_signal": 2, "public_signal": 3, "context_only": 4}.get(row["attributionTier"], 9),
+            {"proof": 0, "telegram_signal": 1, "discord_signal": 1, "host_signal": 2, "public_signal": 3, "context_only": 4}.get(row["attributionTier"], 9),
             -row["totalVotingPower"],
             -row["totalCompensationGonka"],
             row["displayLabel"],
@@ -1892,6 +2002,98 @@ def build_telegram_coverage(telegram_evidence, chat_attribution, recipients, vot
         "byParticipantEvidenceLevel": [{"evidenceLevel": key, "rows": value} for key, value in sorted(by_evidence_level.items())],
         "byFile": sorted(by_file.values(), key=lambda row: (row["chat"], row["sourceFile"])),
         "participantAddressesWithoutTelegram": participant_without_telegram,
+        "unlinkedAddressRows": unlinked_address_rows[:300],
+    }
+
+
+def build_discord_coverage(discord_evidence, discord_attribution, recipients, votes):
+    messages = discord_evidence.get("messages") or []
+    participant_addresses = {row["address"] for row in recipients} | {row["voter"] for row in votes}
+
+    def message_addresses(message):
+        return sorted({normalize_account_address(address) for address in message.get("addresses") or [] if address})
+
+    linked_messages = []
+    unlinked_address_rows = []
+    participant_addresses_with_discord = set()
+    by_file = {}
+    by_chat = Counter()
+    by_source_type = Counter()
+    by_author = Counter()
+
+    for message in messages:
+        addresses = message_addresses(message)
+        matching = sorted(set(addresses) & participant_addresses)
+        if matching:
+            linked_messages.append(message)
+            participant_addresses_with_discord.update(matching)
+        elif addresses:
+            unlinked_address_rows.append(
+                {
+                    "platform": "discord",
+                    "chat": message.get("chat", ""),
+                    "channelId": message.get("channelId", ""),
+                    "messageId": message.get("messageId", ""),
+                    "date": message.get("date", ""),
+                    "author": message.get("author", ""),
+                    "authorUsername": message.get("authorUsername", ""),
+                    "authorUserId": message.get("authorUserId", ""),
+                    "sourceFile": message.get("sourceFile", ""),
+                    "sourceUrl": message.get("sourceUrl", ""),
+                    "sourceType": message.get("sourceType", ""),
+                    "confidence": message.get("confidence", ""),
+                    "addresses": addresses,
+                    "urls": message.get("urls", []),
+                    "ips": message.get("ips", []),
+                    "excerpt": message.get("excerpt", ""),
+                }
+            )
+        source_file = message.get("sourceFile", "")
+        file_row = by_file.setdefault(
+            source_file,
+            {
+                "sourceFile": source_file,
+                "chat": message.get("chat", ""),
+                "rows": 0,
+                "participantLinkedRows": 0,
+                "addressRows": 0,
+                "hostRows": 0,
+            },
+        )
+        file_row["rows"] += 1
+        if matching:
+            file_row["participantLinkedRows"] += 1
+        if addresses:
+            file_row["addressRows"] += 1
+        if message.get("ips"):
+            file_row["hostRows"] += 1
+        by_chat[message.get("chat", "unknown")] += 1
+        by_source_type[message.get("sourceType", "unknown")] += 1
+        by_author[message.get("author") or message.get("authorUsername") or "unknown"] += 1
+
+    participant_rows = discord_attribution.get("rows") or []
+    by_evidence_level = Counter(row.get("evidenceLevel", "unknown") for row in participant_rows)
+    participant_without_discord = sorted(participant_addresses - participant_addresses_with_discord)
+    unlinked_address_rows.sort(key=lambda row: (row["sourceFile"], row["messageId"], row["addresses"]))
+
+    return {
+        "summary": {
+            **(discord_evidence.get("summary") or {}),
+            "rawMatchedMessages": len(messages),
+            "participantLinkedMessages": len(linked_messages),
+            "participantAddresses": len(participant_addresses),
+            "participantAddressesWithDiscord": len(participant_addresses_with_discord),
+            "participantAddressesWithoutDiscord": len(participant_without_discord),
+            "unlinkedDiscordAddressRows": len(unlinked_address_rows),
+            "discordAttributionRows": len(participant_rows),
+        },
+        "byChat": [{"chat": key, "rows": value} for key, value in sorted(by_chat.items())],
+        "bySourceType": [{"sourceType": key, "rows": value} for key, value in sorted(by_source_type.items())],
+        "byAuthor": [{"author": key, "rows": value} for key, value in by_author.most_common(60)],
+        "byParticipantEvidenceLevel": [{"evidenceLevel": key, "rows": value} for key, value in sorted(by_evidence_level.items())],
+        "byFile": sorted(by_file.values(), key=lambda row: (row["chat"], row["sourceFile"])),
+        "linkedMessages": linked_messages[:100],
+        "participantAddressesWithoutDiscord": participant_without_discord,
         "unlinkedAddressRows": unlinked_address_rows[:300],
     }
 
@@ -2980,6 +3182,70 @@ def build_participant_epoch_timeline(recipients, votes):
     }
 
 
+def build_combined_telegram_evidence(telegram_evidence, history_operator_signals, chat_attribution):
+    rows = []
+    for message in (telegram_evidence.get("messages") or []):
+        rows.append({**message, "evidenceSource": "telegram_export"})
+
+    seen = {
+        (
+            row.get("sourceFile", ""),
+            str(row.get("messageId", "")),
+            tuple(row.get("addresses") or []),
+            row.get("sourceType", ""),
+        )
+        for row in rows
+    }
+
+    def add_signal(signal, evidence_source):
+        source_type = signal.get("sourceType", "")
+        if source_type in {"no_chat_signal"}:
+            return
+        address = signal.get("address", "")
+        message_id = str(signal.get("messageId", ""))
+        addresses = [address] if address else []
+        key = (signal.get("sourceFile", ""), message_id, tuple(addresses), source_type)
+        if key in seen:
+            return
+        seen.add(key)
+        rows.append(
+            {
+                "evidenceSource": evidence_source,
+                "chat": signal.get("chat", ""),
+                "messageId": message_id.replace("message", ""),
+                "date": signal.get("messageTime", ""),
+                "author": signal.get("author", ""),
+                "authorSource": signal.get("authorSource", ""),
+                "excerpt": signal.get("excerpt", ""),
+                "replyText": signal.get("replyText", ""),
+                "replyToMessageId": str(signal.get("replyToMessageId", "")).replace("message", ""),
+                "contextMessages": signal.get("contextMessages", []),
+                "addresses": addresses,
+                "urls": signal.get("urls", []),
+                "usernames": signal.get("usernames", []),
+                "sourceFile": signal.get("sourceFile", ""),
+                "sourceUrl": signal.get("sourceUrl", ""),
+                "sourceType": source_type,
+                "confidence": signal.get("confidence", ""),
+                "signalStrength": signal.get("evidenceLevel", signal.get("signalStrength", "")),
+                "contextTags": signal.get("contextTags", []),
+                "isAttributionProof": False,
+                "bestChatCandidateLabel": signal.get("bestChatCandidateLabel") or signal.get("operatorSignalLabel", ""),
+                "caveat": signal.get("caveat", ""),
+            }
+        )
+
+    for signal in (chat_attribution.get("rows") or []):
+        if signal.get("evidenceLevel") == "no_chat_signal" or signal.get("sourceType") == "no_chat_signal":
+            continue
+        add_signal(signal, "telegram_participant_attribution")
+    for signal in (history_operator_signals.get("rows") or []):
+        add_signal(signal, "telegram_operator_history_audit")
+
+    rows.sort(key=lambda row: (row.get("sourceFile", ""), str(row.get("messageId", "")), row.get("evidenceSource", "")))
+    return rows
+
+
 def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomalies, summary, attack_narrative):
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_options = ["yes", "no", "abstain", "no_with_veto"]
@@ -3916,8 +4182,10 @@ def main():
     onchain_graph = read_onchain_graph_snapshot()
     osint_sources = read_public_osint_sources()
     telegram_evidence = read_telegram_evidence()
+    discord_evidence = read_discord_evidence()
     history_operator_signals = read_history_operator_signal_audit()
     chat_attribution = read_chat_participant_attribution()
+    discord_attribution = read_discord_participant_attribution()
     voting_end_epochs = read_voting_end_epochs()
     governance_power_evidence = read_governance_power_evidence()
     epoch_reward_claims = read_epoch_reward_claims()
@@ -4054,7 +4322,7 @@ def main():
         gns_by_address,
     )
     epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
-    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution, discord_evidence, discord_attribution)
     apply_investigation_labels(recipients, votes, evidence_claims)
     labels_by_address, identity_types_by_address = collect_address_labels(
         recipients,
@@ -4066,9 +4334,9 @@ def main():
     )
     actors = build_actors(proposal, recipients, votes, identity_graph, onchain_graph, labels_by_address, identity_types_by_address)
     epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
-    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution, discord_evidence, discord_attribution)
     epoch_anomalies = build_epoch_anomalies(votes, recipients, labels_by_address)
-    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution)
+    evidence_claims = build_evidence_claims(proposal, recipients, votes, identity_evidence, identity_graph, onchain_graph, osint_sources, telegram_evidence, epoch_anomalies, history_operator_signals, chat_attribution, discord_evidence, discord_attribution)
     claims_by_address = defaultdict(list)
     for claim in evidence_claims:
         if claim.get("address"):
@@ -4095,6 +4363,8 @@ def main():
     public_name_enrichment = build_public_name_enrichment(recipients, votes, identity_evidence, evidence_claims, gns_by_address)
     attribution_dossiers = build_attribution_dossiers(recipients, votes, actors, evidence_claims)
     telegram_coverage = build_telegram_coverage(telegram_evidence, chat_attribution, recipients, votes)
+    telegram_evidence_rows = build_combined_telegram_evidence(telegram_evidence, history_operator_signals, chat_attribution)
+    discord_coverage = build_discord_coverage(discord_evidence, discord_attribution, recipients, votes)
     telegram_attribution_audit = build_telegram_attribution_audit(recipients, votes, evidence_claims)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
@@ -4149,11 +4419,17 @@ def main():
         "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
         "telegramParticipantLinkedMessagesCount": telegram_coverage["summary"]["participantLinkedMessages"],
         "telegramUnlinkedAddressRowsCount": telegram_coverage["summary"]["unlinkedTelegramAddressRows"],
+        "discordEvidenceCount": len(discord_evidence.get("messages") or []),
+        "discordParticipantLinkedMessagesCount": discord_coverage["summary"]["participantLinkedMessages"],
+        "discordUnlinkedAddressRowsCount": discord_coverage["summary"]["unlinkedDiscordAddressRows"],
         "attributionDossierCount": len(attribution_dossiers),
         "historyOperatorSignalCount": len(history_operator_signals.get("rows") or []),
         "chatAttributionStrongSignalCount": chat_attribution.get("summary", {}).get("strongLocalOperatorRows", 0),
         "chatAttributionMediumSignalCount": chat_attribution.get("summary", {}).get("mediumOperatorContextRows", 0),
         "chatAttributionWeakContextCount": chat_attribution.get("summary", {}).get("weakContextRows", 0),
+        "discordAttributionStrongSignalCount": discord_attribution.get("summary", {}).get("strongLocalOperatorRows", 0),
+        "discordAttributionMediumSignalCount": discord_attribution.get("summary", {}).get("mediumOperatorContextRows", 0),
+        "discordAttributionWeakContextCount": discord_attribution.get("summary", {}).get("weakContextRows", 0),
         "epochAnomaliesCount": len(epoch_anomalies),
         "epochEntryExitClusterCount": len(epoch_entry_exit_clusters),
         "votingEndEpochSnapshotCount": len(voting_end_epochs.get("epochs") or []),
@@ -4206,10 +4482,13 @@ def main():
         "publicNameEnrichment": public_name_enrichment,
         "attributionDossiers": attribution_dossiers,
         "telegramCoverage": telegram_coverage,
+        "discordCoverage": discord_coverage,
         "telegramAttributionAudit": telegram_attribution_audit,
-        "telegramEvidence": telegram_evidence.get("messages") or [],
+        "telegramEvidence": telegram_evidence_rows,
+        "discordEvidence": discord_coverage.get("linkedMessages") or [],
         "historyOperatorSignals": history_operator_signals.get("rows") or [],
         "chatParticipantAttribution": chat_attribution.get("rows") or [],
+        "discordParticipantAttribution": discord_attribution.get("rows") or [],
         "epochAnomalies": epoch_anomalies,
         "epochEntryExitClusters": epoch_entry_exit_clusters,
         "governancePowerEvidence": governance_power_evidence,
@@ -4219,7 +4498,7 @@ def main():
             "governanceVotingWindowRule": "Zero-power voters are still real on-chain governance voters. The dashboard compares archive staking/delegation power at the voting-start boundary and the voting-end boundary; the final tally is governed by the end-window chain-like power, while the start-window view is a reconciliation check.",
             "inferenceEpochRule": "e287 validation_weights are inference/epoch participation weights. They are operational timing signals only and are not used as governance voting power.",
             "recipientConflictRule": "Recipient-voter conflict is based on address overlap between compensation outputs and final on-chain governance voters; it does not imply the compensation amount affected vote weight.",
-            "identityRule": "Public attribution requires public validator/GNS/metadata/source evidence. Infrastructure, Telegram, and inference timing remain signals unless independently corroborated.",
+            "identityRule": "Public attribution requires public validator/GNS/metadata/source evidence. Infrastructure, Telegram, Discord, and inference timing remain signals unless independently corroborated.",
         },
         "hypotheses": hypotheses,
         "attackNarrative": attack_narrative,
@@ -4233,7 +4512,7 @@ def main():
             "GNS .gnk names are read from the saved on-chain CosmWasm contract state snapshot.",
             "Public-social OSINT is limited to linkable public sources such as Gonka names, GitHub, public websites, GNS records, and public profile URLs.",
             "Ranked parties are prioritized interested-party leads, not legal accusations.",
-            "Telegram evidence contains short excerpts from local exports selected by address/URL/username matches; full exports remain ignored under history/.",
+            "Telegram and Discord evidence contain short excerpts from local exports selected by address/URL/username/host matches; full exports remain ignored under history/.",
             "Voting-end epoch anomalies are operational timing signals and not ownership proof by themselves.",
             "Node ownership clues include public validator moniker, website, identity, security contact, details, and participant inference URL when present.",
             "Strict clusters use only high-confidence public attribution evidence; signal clusters may include infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate.",

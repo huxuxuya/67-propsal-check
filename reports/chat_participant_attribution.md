@@ -12,7 +12,7 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 
 ## weak_context: `gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau`
 
-- Current label: A? · gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
+- Current label: gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
 - Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient; compensation: 20610.390028 GONKA; voting power: 0
 - Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
@@ -21,7 +21,7 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 
 ## weak_context: `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`
 
-- Current label: A? · gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
+- Current label: gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 - Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient voter; compensation: 11262.520198 GONKA; voting power: 57838
 - Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
@@ -30,7 +30,7 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 
 ## weak_context: `gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw`
 
-- Current label: A? · gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw
+- Current label: gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw
 - Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient; compensation: 11688.555563 GONKA; voting power: 0
 - Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
@@ -156,7 +156,7 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 
 ## weak_context: `gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n`
 
-- Current label: A? · gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n
+- Current label: gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n
 - Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient; compensation: 1753.409171 GONKA; voting power: 0
 - Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
@@ -352,7 +352,7 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 
 ## weak_context: `gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4`
 
-- Current label: A? · gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
+- Current label: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 - Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient voter; compensation: 10934.181496 GONKA; voting power: 0
 - Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik

@@ -21,7 +21,7 @@ Top evidence:
 - gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau matched_validator_moniker (high, signal): gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23
 - gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6 matched_validator_moniker (high, signal): gonkavaloper1wvv656pt2d8x2khcvytqeessck5uzjnx7svq7h
 
-## #2 gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
+## #2 ma1teg0? · gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
 
 - Cluster: strict-1 (strict_identity; public_owner_proof)
 - Addresses: gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le

@@ -131,6 +131,7 @@ function attributionTier(row) {
   if (row.isAttributionProof) return "proof";
   const sourceType = row.sourceType || "";
   if (sourceType.startsWith("telegram_")) return sourceType.includes("self") || sourceType.includes("operator") || sourceType.includes("pool") ? "telegram_signal" : "context_only";
+  if (sourceType.startsWith("discord_")) return sourceType.includes("self") || sourceType.includes("operator") || sourceType.includes("pool") ? "discord_signal" : "context_only";
   const category = row.category || "";
   if (category === "infrastructure_signal" || category === "public_infrastructure") return "host_signal";
   if (identityBoundary(row) === "public_owner_proof") return "proof";
@@ -141,6 +142,7 @@ function attributionTierLabel(tier) {
   return {
     proof: "proof",
     telegram_signal: "telegram signal",
+    discord_signal: "discord signal",
     host_signal: "host signal",
     public_signal: "public signal",
     context_only: "context only",
@@ -149,7 +151,7 @@ function attributionTierLabel(tier) {
 
 function attributionTag(value) {
   const tier = typeof value === "string" ? value : attributionTier(value);
-  const klass = tier === "proof" ? "good" : tier === "telegram_signal" || tier === "context_only" ? "warn" : "";
+  const klass = tier === "proof" ? "good" : tier === "telegram_signal" || tier === "discord_signal" || tier === "context_only" ? "warn" : "";
   return `<span class="tag ${klass}">${escapeHtml(attributionTierLabel(tier))}</span>`;
 }
 
@@ -510,6 +512,10 @@ function buildSearchIndexRows(data) {
         addRef(row, claim.sourceUrl);
         addRef(row, claim.telegramMessageId);
         addRef(row, claim.telegramAuthor);
+        addRef(row, claim.chatMessageId);
+        addRef(row, claim.chatAuthor);
+        addRef(row, claim.chatAuthorUsername);
+        addRef(row, claim.chatAuthorUserId);
       });
     });
   });
@@ -532,6 +538,11 @@ function buildSearchIndexRows(data) {
     addRef(row, item.telegramMessageId);
     addRef(row, item.telegramAuthor);
     addRef(row, item.telegramChat);
+    addRef(row, item.chatMessageId);
+    addRef(row, item.chatAuthor);
+    addRef(row, item.chatAuthorUsername);
+    addRef(row, item.chatAuthorUserId);
+    addRef(row, item.chatName);
   });
 
   (data.identityGraph?.edges || []).forEach((edge) => {
@@ -555,6 +566,36 @@ function buildSearchIndexRows(data) {
       addRef(row, item.sourceFile);
       (item.urls || []).forEach((url) => addRef(row, url));
       (item.usernames || []).forEach((username) => addRef(row, username));
+    });
+  });
+
+  (data.discordEvidence || []).forEach((item) => {
+    (item.addresses || []).forEach((address) => {
+      const row = ensure(address);
+      if (!row) return;
+      row.sources.add("discord evidence");
+      addLabel(row, item.author || item.authorUsername || item.chat);
+      addRef(row, item.messageId);
+      addRef(row, item.authorUserId);
+      addRef(row, item.authorUsername);
+      addRef(row, item.sourceFile);
+      (item.urls || []).forEach((url) => addRef(row, url));
+      (item.ips || []).forEach((ip) => addRef(row, ip));
+    });
+  });
+
+  ((data.discordCoverage || {}).unlinkedAddressRows || []).forEach((item) => {
+    (item.addresses || []).forEach((address) => {
+      const row = ensure(address);
+      if (!row) return;
+      row.sources.add("discord unlinked lead");
+      addLabel(row, item.author || item.authorUsername || item.chat);
+      addRef(row, item.messageId);
+      addRef(row, item.authorUserId);
+      addRef(row, item.authorUsername);
+      addRef(row, item.sourceFile);
+      (item.urls || []).forEach((url) => addRef(row, url));
+      (item.ips || []).forEach((ip) => addRef(row, ip));
     });
   });
 
@@ -1579,6 +1620,12 @@ function attributionDossierMatches(row, query) {
       item.telegramMessageId,
       item.telegramAuthor,
       item.telegramChat,
+      item.chatPlatform,
+      item.chatName,
+      item.chatMessageId,
+      item.chatAuthor,
+      item.chatAuthorUsername,
+      item.chatAuthorUserId,
     ].filter(Boolean).join(" ")),
   ].filter(Boolean).join(" ").toLowerCase().includes(query);
 }
@@ -1598,6 +1645,7 @@ function renderAttributionDossiers() {
     const evidence = [
       `proof ${tierCounts.proof || 0}`,
       `telegram ${tierCounts.telegram_signal || 0}`,
+      `discord ${tierCounts.discord_signal || 0}`,
       `host ${tierCounts.host_signal || 0}`,
       `context ${tierCounts.context_only || 0}`,
     ].map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join(" ");
@@ -1698,7 +1746,11 @@ function renderTelegramTable() {
       row.messageId,
       row.date,
       row.author,
+      row.evidenceSource,
+      row.sourceType,
+      row.bestChatCandidateLabel,
       row.excerpt,
+      ...(row.contextMessages || []).map((item) => [item.author, item.excerpt, item.replyText].join(" ")),
       ...(row.addresses || []),
       ...(row.urls || []),
       ...(row.usernames || []),
@@ -1709,9 +1761,9 @@ function renderTelegramTable() {
     <tr>
       <td>${escapeHtml(row.date || "-")}<br><span class="mono muted">${escapeHtml(row.messageId || "")}</span></td>
       <td>${escapeHtml(row.chat || "-")}</td>
-      <td>${escapeHtml(row.author || "-")}</td>
+      <td>${escapeHtml(row.author || "-")}<br><span class="tag">${escapeHtml(row.evidenceSource || "telegram")}</span> ${row.bestChatCandidateLabel ? `<span class="tag">${escapeHtml(row.bestChatCandidateLabel)}</span>` : ""}</td>
       <td>${(row.addresses || []).map((address) => `<button class="row-button mono" data-address="${address.replace("gonkavaloper", "gonka")}">${escapeHtml(address)}</button>`).join("<br>")}</td>
-      <td>${escapeHtml(row.excerpt || "")}</td>
+      <td><span class="tag">${escapeHtml(row.sourceType || "")}</span> <span class="tag">${escapeHtml(row.confidence || "")}</span><br>${escapeHtml(row.excerpt || "")}${chatContextHtml({ chatContextMessages: row.contextMessages })}</td>
     </tr>
   `).join("");
 }
@@ -1728,6 +1780,10 @@ function matchesGlobalEvidenceFilters(row, query) {
     row.sourceValue,
     row.confidence,
     row.caveat,
+    row.chatReplyText,
+    row.telegramReplyText,
+    ...(row.chatContextMessages || []).map((item) => [item.author, item.excerpt, item.replyText].join(" ")),
+    ...(row.telegramContextMessages || []).map((item) => [item.author, item.excerpt, item.replyText].join(" ")),
   ].filter(Boolean).join(" ").toLowerCase().includes(query);
 }
 
@@ -1781,7 +1837,7 @@ function renderEvidenceTable() {
       <td>${escapeHtml(row.subject || "-")}</td>
       <td>${row.address ? `<button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button>` : "<span class=\"muted\">repo/social</span>"}</td>
       <td><span class="tag">${escapeHtml(row.category)}</span></td>
-      <td>${escapeHtml(row.sourceType)}<br><span class="mono muted">${escapeHtml(row.telegramMessageId ? `${row.telegramChat || ""} ${row.telegramMessageId}` : row.sourceUrl)}</span></td>
+      <td>${escapeHtml(row.sourceType)}<br><span class="mono muted">${escapeHtml(row.chatMessageId ? `${row.chatPlatform || "chat"} ${row.chatName || ""} ${row.chatMessageId}` : (row.telegramMessageId ? `${row.telegramChat || ""} ${row.telegramMessageId}` : row.sourceUrl))}</span></td>
       <td>${escapeHtml(row.sourceValue)}</td>
       <td>${attributionTag(row)} <span class="tag">${escapeHtml(row.confidence)}</span></td>
     </tr>
@@ -2235,6 +2291,17 @@ function renderAll() {
 }
 
 function claimSourceLine(row) {
+  if (row.chatMessageId || row.chatAuthor || row.chatName) {
+    return [
+      row.chatPlatform || "chat",
+      row.chatName,
+      row.chatMessageId,
+      row.chatMessageTime,
+      row.chatAuthor ? `by ${row.chatAuthor}` : "",
+      row.chatAuthorUsername ? `@${row.chatAuthorUsername}` : "",
+      row.chatAuthorUserId ? `uid:${row.chatAuthorUserId}` : "",
+    ].filter(Boolean).join(" · ");
+  }
   if (row.telegramMessageId || row.telegramAuthor || row.telegramChat) {
     return [
       row.telegramChat,
@@ -2246,15 +2313,57 @@ function claimSourceLine(row) {
   return row.sourceUrl || row.sourceFile || "";
 }
 
+function chatContextHtml(row) {
+  const context = row.chatContextMessages || row.telegramContextMessages || [];
+  if (!context.length && !(row.chatReplyText || row.telegramReplyText)) return "";
+  if (!context.length) {
+    return `<div class="chat-context"><div class="chat-context-row"><span class="tag">reply</span><span>${escapeHtml(row.chatReplyText || row.telegramReplyText)}</span></div></div>`;
+  }
+  return `<div class="chat-context">${context.map((item) => {
+    const relations = (item.relations || []).map((relation) => `<span class="tag">${escapeHtml(relation)}</span>`).join(" ");
+    return `<div class="chat-context-row ${item.relations?.includes("target") ? "target" : ""}">
+      <div class="chat-context-meta">${relations}<span class="mono">${escapeHtml(item.messageId || "")}</span> ${escapeHtml(item.date || "")} ${item.author ? `by ${escapeHtml(item.author)}` : ""}</div>
+      ${item.replyText ? `<div class="chat-context-reply">reply: ${escapeHtml(item.replyText)}</div>` : ""}
+      <div>${escapeHtml(item.excerpt || "")}</div>
+    </div>`;
+  }).join("")}</div>`;
+}
+
 function claimDetailHtml(row) {
-  return `<dt>${escapeHtml(row.sourceType)}</dt><dd>${escapeHtml(row.sourceValue)} ${attributionTag(row)} <span class="tag">${escapeHtml(row.confidence || "")}</span><br><span class="mono muted">${escapeHtml(claimSourceLine(row))}</span><br><span class="muted">${escapeHtml(row.caveat || "")}</span></dd>`;
+  return `<dt>${escapeHtml(row.sourceType)}</dt><dd>${escapeHtml(row.sourceValue)} ${attributionTag(row)} <span class="tag">${escapeHtml(row.confidence || "")}</span><br><span class="mono muted">${escapeHtml(claimSourceLine(row))}</span><br><span class="muted">${escapeHtml(row.caveat || "")}</span>${chatContextHtml(row)}</dd>`;
+}
+
+function claimDisplayPriority(row) {
+  const tierPriority = { proof: 0, telegram_signal: 1, discord_signal: 1, host_signal: 2, public_signal: 3, context_only: 4 };
+  const sourceType = row.sourceType || "";
+  const chatBoost = sourceType.startsWith("telegram_") || sourceType.startsWith("discord_") ? -1 : 0;
+  return [
+    chatBoost,
+    tierPriority[attributionTier(row)] ?? 9,
+    { high: 0, medium: 1, low: 2 }[row.confidence] ?? 3,
+    sourceType,
+  ];
+}
+
+function compareClaims(a, b) {
+  const left = claimDisplayPriority(a);
+  const right = claimDisplayPriority(b);
+  for (let index = 0; index < left.length; index += 1) {
+    if (left[index] < right[index]) return -1;
+    if (left[index] > right[index]) return 1;
+  }
+  return String(a.sourceValue || "").localeCompare(String(b.sourceValue || ""));
 }
 
 function openDrawer(address) {
   const recipient = state.data.recipients.find((row) => row.address === address);
   const vote = state.data.votes.find((row) => row.voter === address);
   const evidence = state.data.identityEvidence.filter((row) => row.address === address);
-  const evidenceClaims = (state.data.evidenceClaims || []).filter((row) => row.address === address);
+  const evidenceClaims = (state.data.evidenceClaims || []).filter((row) => row.address === address).sort(compareClaims);
+  const chatEvidenceClaims = evidenceClaims.filter((row) => {
+    const sourceType = row.sourceType || "";
+    return sourceType.startsWith("telegram_") || sourceType.startsWith("discord_") || row.chatMessageId || row.telegramMessageId;
+  });
   const actor = (state.data.actors || []).find((row) => row.address === address);
   const rankedParty = (state.data.rankedParties || []).find((row) => (row.addresses || []).includes(address));
   const attributionDossiers = (state.data.attributionDossiers || []).filter((row) => (row.addresses || []).includes(address));
@@ -2273,15 +2382,21 @@ function openDrawer(address) {
     <h2>${escapeHtml(label)}</h2>
     <p class="drawer-address-line"><span class="mono selectable-address">${escapeHtml(address)}</span><button class="copy-address-button" type="button" data-copy-address="${escapeHtml(address)}">copy</button></p>
     <div class="drawer-section">
+      <h3>Chat Evidence</h3>
+      ${chatEvidenceClaims.length ? `<dl class="kv">${chatEvidenceClaims.slice(0, 12).map(claimDetailHtml).join("")}</dl>` : "<p>No Telegram or Discord evidence for this address.</p>"}
+    </div>
+    <div class="drawer-section">
       <h3>Attribution Dossier</h3>
       ${attributionDossiers.length ? attributionDossiers.map((dossier) => {
         const telegramClaims = (dossier.telegramClaims || []).slice(0, 8);
+        const discordClaims = (dossier.discordClaims || []).slice(0, 8);
         return `<dl class="kv">
           <dt>Candidate</dt><dd>${escapeHtml(dossier.displayLabel || dossier.candidateLabel)} ${attributionTag(dossier.attributionTier)} <span class="tag">${escapeHtml(dossier.identityBoundary || "unknown")}</span></dd>
           <dt>Addresses</dt><dd>${(dossier.addresses || []).map((item) => `<button class="row-button mono" data-address="${item}">${escapeHtml(item)}</button>`).join("<br>")}</dd>
           <dt>Hosts</dt><dd>${(dossier.hosts || []).length ? dossier.hosts.map((host) => `<span class="tag">${escapeHtml(host)}</span>`).join(" ") : "none"}</dd>
-          <dt>Evidence</dt><dd>${["proof", "telegram_signal", "host_signal", "context_only"].map((tier) => `<span class="tag">${escapeHtml(attributionTierLabel(tier))} ${(dossier.tierCounts || {})[tier] || 0}</span>`).join(" ")}</dd>
+          <dt>Evidence</dt><dd>${["proof", "telegram_signal", "discord_signal", "host_signal", "context_only"].map((tier) => `<span class="tag">${escapeHtml(attributionTierLabel(tier))} ${(dossier.tierCounts || {})[tier] || 0}</span>`).join(" ")}</dd>
           <dt>Telegram</dt><dd>${telegramClaims.length ? telegramClaims.map((claim) => `${escapeHtml(claim.telegramChat || "")} ${escapeHtml(claim.telegramMessageId || "")}<br><span class="muted">${escapeHtml(claim.telegramMessageTime || "")} ${claim.telegramAuthor ? `by ${escapeHtml(claim.telegramAuthor)}` : ""}</span><br>${escapeHtml(claim.sourceValue || claim.telegramExcerpt || "")}`).join("<br><br>") : "none"}</dd>
+          <dt>Discord</dt><dd>${discordClaims.length ? discordClaims.map((claim) => `${escapeHtml(claim.chatName || "")} ${escapeHtml(claim.chatMessageId || "")}<br><span class="muted">${escapeHtml(claim.chatMessageTime || "")} ${claim.chatAuthor ? `by ${escapeHtml(claim.chatAuthor)}` : ""} ${claim.chatAuthorUsername ? `@${escapeHtml(claim.chatAuthorUsername)}` : ""}</span><br>${escapeHtml(claim.sourceValue || claim.chatExcerpt || "")}`).join("<br><br>") : "none"}</dd>
           <dt>Caveats</dt><dd>${(dossier.caveats || []).map(escapeHtml).join("<br>") || "none"}</dd>
         </dl>`;
       }).join("") : "<p>No attribution dossier for this address.</p>"}

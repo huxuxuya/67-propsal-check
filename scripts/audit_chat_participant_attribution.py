@@ -98,6 +98,59 @@ def excerpt(value, max_len=700):
     return value[: max_len - 1].rstrip() + "..."
 
 
+def context_excerpt(value, max_len=280):
+    return excerpt(value, max_len)
+
+
+def context_messages(messages, index, before=2, after=2):
+    by_id = {message.get("messageId", ""): (idx, message) for idx, message in enumerate(messages)}
+    target = messages[index]
+    selected = {}
+
+    def add(idx, relation):
+        if idx < 0 or idx >= len(messages):
+            return
+        message = messages[idx]
+        message_id = message.get("messageId", "")
+        current = selected.get(message_id)
+        if current:
+            if relation not in current["relations"]:
+                current["relations"].append(relation)
+            return
+        selected[message_id] = {
+            "messageId": message_id,
+            "date": message.get("date", ""),
+            "author": message.get("author", ""),
+            "authorSource": message.get("authorSource", ""),
+            "relations": [relation],
+            "replyToMessageId": message.get("replyToMessageId", ""),
+            "replyText": context_excerpt(message.get("replyText", ""), 180),
+            "excerpt": context_excerpt(message.get("text", "")),
+            "sequenceIndex": idx,
+        }
+
+    for offset in range(before, 0, -1):
+        add(index - offset, f"previous_{offset}")
+    add(index, "target")
+    for offset in range(1, after + 1):
+        add(index + offset, f"next_{offset}")
+
+    reply_id = target.get("replyToMessageId", "")
+    if reply_id and reply_id in by_id:
+        add(by_id[reply_id][0], "reply_parent")
+
+    child_count = 0
+    target_id = target.get("messageId", "")
+    for child_index, message in enumerate(messages):
+        if child_count >= 3:
+            break
+        if message.get("replyToMessageId") == target_id:
+            add(child_index, "reply_child")
+            child_count += 1
+
+    return sorted(selected.values(), key=lambda row: row["sequenceIndex"])
+
+
 def source_url(source_file, message_id):
     if not source_file or not message_id:
         return source_file
@@ -395,6 +448,7 @@ def add_candidate(candidates, address, message, features, context_kind):
         "sourceUrl": source_url(message.get("sourceFile", ""), message.get("messageId", "")),
         "excerpt": excerpt(message.get("text", "")),
         "replyText": excerpt(message.get("replyText", ""), 260),
+        "contextMessages": message.get("contextMessages", []),
         "urls": features.get("urls", []),
         "usernames": features.get("usernames", []),
         "ips": features.get("ips", []),
@@ -436,8 +490,14 @@ def build_audit():
     by_message_id = {}
     by_source_file = {}
     for message in messages:
-        by_message_id[(message["sourceFile"], message["messageId"])] = message
         by_source_file.setdefault(message["sourceFile"], []).append(message)
+
+    for source_file, source_messages in by_source_file.items():
+        for index, message in enumerate(source_messages):
+            message["contextMessages"] = context_messages(source_messages, index)
+
+    for message in messages:
+        by_message_id[(message["sourceFile"], message["messageId"])] = message
         message["features"] = message_features(message)
 
     candidates = {address: [] for address in relevant}
@@ -479,6 +539,7 @@ def build_audit():
             "sourceUrl": best.get("sourceUrl", ""),
             "excerpt": best.get("excerpt", ""),
             "replyText": best.get("replyText", ""),
+            "contextMessages": best.get("contextMessages", []),
             "urls": best.get("urls", []),
             "usernames": best.get("usernames", []),
             "ips": best.get("ips", []),

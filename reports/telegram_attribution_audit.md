@@ -2,10 +2,10 @@
 
 Local Telegram exports are used as investigation context only. Explicit high-confidence self/operator statements can label dashboard rows. Medium leads are shown with a question mark and remain non-public signals unless corroborated by linkable public evidence.
 
-- Proposal/voter Telegram evidence rows: 67
-- Self/operator rows: 7
-- High-confidence self/operator rows: 5
-- Medium self/operator leads: 2
+- Proposal/voter Telegram evidence rows: 72
+- Self/operator rows: 11
+- High-confidence self/operator rows: 8
+- Medium self/operator leads: 3
 
 ## gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
 
@@ -34,7 +34,16 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Excerpt: Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
-## ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
+## Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
+
+- Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
+- Roles: recipient, voter; vote: no_with_veto; voting power: 28865; compensation: 66487.744752 GONKA
+- Telegram signal: telegram_pool_roster (medium, signal) by Ancapex
+- Source: history/Gonka RU/messages31.html#message33924
+- Excerpt: Можно сравнить на примере Ancapex - gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 Одинаковое оборудование, Qwen - 4000 веса, Kimi - 7805
+- Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
+
+## Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
 - Roles: recipient, voter; vote: no_with_veto; voting power: 28865; compensation: 66487.744752 GONKA
@@ -43,7 +52,7 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Excerpt: gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 - Caveat: Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.
 
-## ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
+## Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
 - Roles: recipient, voter; vote: no_with_veto; voting power: 28865; compensation: 66487.744752 GONKA
@@ -52,7 +61,7 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Excerpt: https://gonkascan.com/?page=address&address=gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 - Caveat: Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.
 
-## ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
+## Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
 - Roles: recipient, voter; vote: no_with_veto; voting power: 28865; compensation: 66487.744752 GONKA
@@ -61,7 +70,7 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Excerpt: Да, https://gonkascan.com/?page=address&address=gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 - Caveat: Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.
 
-## ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
+## Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
 - Roles: recipient, voter; vote: no_with_veto; voting power: 28865; compensation: 66487.744752 GONKA
@@ -77,6 +86,15 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Telegram signal: telegram_context_only (medium, signal) by Fedor Tmkhv
 - Source: history/Gonka Devs/messages15.html#message14927
 - Excerpt: А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...
+- Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
+
+## Formula x AI · gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra
+
+- Address: `gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra`
+- Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 1166.439756 GONKA
+- Telegram signal: telegram_context_only (medium, signal) by Дмитрий В
+- Source: history/Gonka RU/messages23.html#message25786
+- Excerpt: Вот если кому не лень, посмотрите плиз для интереса: gonka18hns0dspklh6r89nyeg8qaph4vhfkd63tl7a37 gonka1aazyzjuywye4530acgjgw0stu4ydpt9hv4afut gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka1uzk2scggfzghr9a5j92l00gzw4jx4adc66977y
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
 ## gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc
@@ -331,7 +349,16 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Excerpt: Что думаете про крупнейшего участника gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum? про (не)учет его голоса в голосовании?
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
-## gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
+## ma1teg0? · gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
+
+- Address: `gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5`
+- Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 3018.840187 GONKA
+- Telegram signal: telegram_self_claim (high, signal) by Mitch
+- Source: history/Gonka Devs/messages9.html#message8456
+- Excerpt: gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 Откуда взялся этот адресс и почему он предложил моей ноде модель? Какая то мелкая нода, не моя
+- Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
+
+## ma1teg0? · gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
 
 - Address: `gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5`
 - Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 3018.840187 GONKA
@@ -526,7 +553,7 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 79247.555227 GONKA
 - Telegram signal: telegram_address_context (medium, signal) by Evgenii Maksimenkov
 - Source: history/Gonka Devs/messages15.html#message14265
-- Excerpt: EM 01:36 In reply to this message Если модель не прошла, то почему у этого участника она доступна? https://tracker.gonka.vip/?participant=gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz
+- Excerpt: EM 01:36 Если модель не прошла, то почему у этого участника она доступна? https://tracker.gonka.vip/?participant=gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz
 - Caveat: Telegram export mentions this address; treat as context unless corroborated by self-claim, operator language, or public evidence.
 
 ## gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz
@@ -565,7 +592,16 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Excerpt: Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 финальных членов НЕ отправляли PoC (preserved-only — продолжили inference во время PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
-## gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
+## Arturs Plisko? · gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
+
+- Address: `gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le`
+- Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 1025.259358 GONKA
+- Telegram signal: telegram_self_claim (high, signal) by Arturs Plisko
+- Source: history/Gonka Devs/messages16.html#message16103
+- Excerpt: Нет. Мы послали интент от gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, но по тому что я вижу он теми скриптами не виден
+- Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
+
+## Arturs Plisko? · gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
 
 - Address: `gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le`
 - Roles: recipient; vote: did_not_vote; voting power: 0; compensation: 1025.259358 GONKA
@@ -589,8 +625,17 @@ Local Telegram exports are used as investigation context only. Explicit high-con
 - Roles: voter; vote: no_with_veto; voting power: 5395; compensation: 0 GONKA
 - Telegram signal: telegram_self_or_team_claim (high, signal) by Arturs Plisko
 - Source: history/Gonka Devs/messages16.html#message16103
-- Excerpt: AP 16:11 In reply to this message Нет. Мы послали интент от gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, но по тому что я вижу он теми скриптами не виден
+- Excerpt: AP 16:11 Нет. Мы послали интент от gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, но по тому что я вижу он теми скриптами не виден
 - Caveat: Telegram author used self/team ownership language around this address; strong local-export attribution signal, but not public owner proof without a linkable public source.
+
+## Arturs Plisko? · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
+
+- Address: `gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p`
+- Roles: voter; vote: no_with_veto; voting power: 5395; compensation: 0 GONKA
+- Telegram signal: telegram_self_claim (high, signal) by Arturs Plisko
+- Source: history/Gonka Devs/messages16.html#message16103
+- Excerpt: Нет. Мы послали интент от gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, но по тому что я вижу он теми скриптами не виден
+- Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
 ## Arturs Plisko? · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 

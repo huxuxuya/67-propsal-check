@@ -1,7 +1,7 @@
 {
   "metadata": {
     "description": "Structured local Telegram attribution audit for proposal participants. Chat-only rows are not public owner proof.",
-    "generatedAt": "2026-06-11T09:45:22.265471+00:00",
+    "generatedAt": "2026-06-11T12:37:45.963084+00:00",
     "source": "history/Gonka */messages*.html"
   },
   "rows": [
@@ -15,6 +15,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka10070xwkwv00sulsa7gdfwkgh8w069stkjjf39x",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -47,6 +48,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka10075dz43h94zhqu5hwdj3nyjay6v8mzwvpxr0s",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -79,7 +81,75 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
-      "currentLabel": "A? · gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
+      "contextMessages": [
+        {
+          "author": "Vas Ily",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:34:30 UTC+03:00",
+          "excerpt": "а сейчас как будто на треть обрезало",
+          "messageId": "message15921",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15886",
+          "sequenceIndex": 642
+        },
+        {
+          "author": "Vas Ily",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 11:36:48 UTC+03:00",
+          "excerpt": "причём вес сети уменьшился, то есть вроде нельзя сказать что это из-за наплыва желающих хостить kimi",
+          "messageId": "message15922",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 643
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:53:31 UTC+03:00",
+          "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556...",
+          "messageId": "message15923",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 644
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "23.05.2026 12:02:29 UTC+03:00",
+          "excerpt": "Мой адрес среди этих нод, все работало корректно",
+          "messageId": "message15924",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15923",
+          "sequenceIndex": 645
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 12:02:37 UTC+03:00",
+          "excerpt": "Отлключений не было",
+          "messageId": "message15925",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 646
+        }
+      ],
+      "currentLabel": "gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau",
       "evidenceLevel": "weak_context",
       "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий",
       "inferenceUrl": "http://178.105.170.135:8000",
@@ -111,7 +181,75 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
-      "currentLabel": "A? · gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
+      "contextMessages": [
+        {
+          "author": "Vas Ily",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:34:30 UTC+03:00",
+          "excerpt": "а сейчас как будто на треть обрезало",
+          "messageId": "message15921",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15886",
+          "sequenceIndex": 642
+        },
+        {
+          "author": "Vas Ily",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 11:36:48 UTC+03:00",
+          "excerpt": "причём вес сети уменьшился, то есть вроде нельзя сказать что это из-за наплыва желающих хостить kimi",
+          "messageId": "message15922",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 643
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:53:31 UTC+03:00",
+          "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556...",
+          "messageId": "message15923",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 644
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "23.05.2026 12:02:29 UTC+03:00",
+          "excerpt": "Мой адрес среди этих нод, все работало корректно",
+          "messageId": "message15924",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15923",
+          "sequenceIndex": 645
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 12:02:37 UTC+03:00",
+          "excerpt": "Отлключений не было",
+          "messageId": "message15925",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 646
+        }
+      ],
+      "currentLabel": "gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv",
       "evidenceLevel": "weak_context",
       "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий",
       "inferenceUrl": "http://178.105.174.27:8000",
@@ -143,7 +281,75 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
-      "currentLabel": "A? · gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
+      "contextMessages": [
+        {
+          "author": "Vas Ily",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:34:30 UTC+03:00",
+          "excerpt": "а сейчас как будто на треть обрезало",
+          "messageId": "message15921",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15886",
+          "sequenceIndex": 642
+        },
+        {
+          "author": "Vas Ily",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 11:36:48 UTC+03:00",
+          "excerpt": "причём вес сети уменьшился, то есть вроде нельзя сказать что это из-за наплыва желающих хостить kimi",
+          "messageId": "message15922",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 643
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:53:31 UTC+03:00",
+          "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556...",
+          "messageId": "message15923",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 644
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "23.05.2026 12:02:29 UTC+03:00",
+          "excerpt": "Мой адрес среди этих нод, все работало корректно",
+          "messageId": "message15924",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15923",
+          "sequenceIndex": 645
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 12:02:37 UTC+03:00",
+          "excerpt": "Отлключений не было",
+          "messageId": "message15925",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 646
+        }
+      ],
+      "currentLabel": "gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw",
       "evidenceLevel": "weak_context",
       "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий",
       "inferenceUrl": "http://178.105.172.102:8000",
@@ -175,6 +381,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1007lnkyhdh7aq0vjdcdwcerkdh4yy85rymjdg6",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -207,6 +414,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1007n977a7uda3pd9m6hftw8xcql0tc20m96myu",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -239,6 +447,86 @@
       "chat": "Gonka RU",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Дмитрий В",
+          "authorSource": "explicit",
+          "date": "13.05.2026 11:43:54 UTC+03:00",
+          "excerpt": "Если бы сеть росла, мы бы не теряли h100. Думаешь стоит временно на падании сети вносить такие изменения в пользу слабого оборудования и потом их отключать? Почему хосты за это проголосуют?",
+          "messageId": "message33921",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message33918",
+          "sequenceIndex": 839
+        },
+        {
+          "author": "Andrey Panasenko",
+          "authorSource": "explicit",
+          "date": "13.05.2026 11:45:27 UTC+03:00",
+          "excerpt": "Оборудование не настолько слабое, как это показывает коэффициент. Речь, скорее об этом.",
+          "messageId": "message33922",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message33921",
+          "sequenceIndex": 840
+        },
+        {
+          "author": "Slava MSE!",
+          "authorSource": "explicit",
+          "date": "13.05.2026 11:45:51 UTC+03:00",
+          "excerpt": "@maksimenkoff, Евгений, давай твою платформу выкладывать в открытый доступ и дадим комьюнити право делать PR. Вчера Давид в АМА на эту тему говорил. Сказал, что не считает правильным поддерживать какой-то один проект. В общем, я предлагаю передать проект активным людям и дать пр...",
+          "messageId": "message33923",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 841
+        },
+        {
+          "author": "Arturs Plisko",
+          "authorSource": "explicit",
+          "date": "13.05.2026 11:46:17 UTC+03:00",
+          "excerpt": "Можно сравнить на примере Ancapex - gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 Одинаковое оборудование, Qwen - 4000 веса, Kimi - 7805",
+          "messageId": "message33924",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message33921",
+          "sequenceIndex": 842
+        },
+        {
+          "author": "Arturs Plisko",
+          "authorSource": "inherited_previous_message",
+          "date": "13.05.2026 11:46:38 UTC+03:00",
+          "excerpt": "Не можешь хостить Kimi - эффективно штраф 50%",
+          "messageId": "message33925",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 843
+        },
+        {
+          "author": "Slava MSE!",
+          "authorSource": "explicit",
+          "date": "13.05.2026 11:47:54 UTC+03:00",
+          "excerpt": "Если бы мы не теряли Н100, то сеть бы росла ) Ты пойми, что они остаются только потому, что у них - контракты на месяц и больше. Как только закончится контракт, они продлять не будут, если мы что-то не поменяем. Н100 - это очень крутые карты. Прям очень. А 8*Н100 - это просто пу...",
+          "messageId": "message33926",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message33921",
+          "sequenceIndex": 844
+        }
+      ],
       "currentLabel": "ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
       "evidenceLevel": "public_owner_proof",
       "excerpt": "Можно сравнить на примере Ancapex - gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 Одинаковое оборудование, Qwen - 4000 веса, Kimi - 7805",
@@ -271,6 +559,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:08:15 UTC+03:00",
+          "excerpt": "попробую объяснить про \"насыпание\" из фонда - это не манна небесная, экономически - это размытие стоимости токенов и доли первых инвесторов, которые отдали за GNK в 3-8 раз больше 1-2-3$. каждая раздача - должна иметь четкую ощутимую цель - что на выходе из пользы будет - больше...",
+          "messageId": "message14925",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 675
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:24:48 UTC+03:00",
+          "excerpt": "у самурая только путь. Кроме денег нам нужно помнить и о времени, что мы теряем. Все решения нужно строить наперед, если мы верим, что проект вырастет. Так же мы хотим выглядеть как быстро развивающаюся экосистема. У гонки видно, что большое количество талантливых инженеров посв...",
+          "messageId": "message14926",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14925",
+          "sequenceIndex": 676
+        },
+        {
+          "author": "Fedor Tmkhv",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:53:26 UTC+03:00",
+          "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqea...",
+          "messageId": "message14927",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 677
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:54:20 UTC+03:00",
+          "excerpt": "Сообщение дало нужный эффект в день написания, отвечать по пунктам было не обязательно) Но спасибо, что нашел время 🙃",
+          "messageId": "message14928",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14923",
+          "sequenceIndex": 678
+        },
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 18:56:55 UTC+03:00",
+          "excerpt": "1. Изначально должен стабильно работать core продукт, llm/inference. сорри за базу - но Brand Awarness - и вообще продвижение бренда, имеет смысл только 2. после того как у вас есть стабильно рабочий продукт/сервис и есть худо бедно работающая экономика.",
+          "messageId": "message14929",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14926",
+          "sequenceIndex": 679
+        }
+      ],
       "currentLabel": "gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np",
       "evidenceLevel": "weak_context",
       "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...",
@@ -303,6 +658,99 @@
       "chat": "Gonka RU",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Nikolay",
+          "authorSource": "explicit",
+          "date": "02.04.2026 15:59:16 UTC+03:00",
+          "excerpt": "Сколько у них?",
+          "messageId": "message25783",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message25782",
+          "sequenceIndex": 970
+        },
+        {
+          "author": "Rustam",
+          "authorSource": "explicit",
+          "date": "02.04.2026 16:00:30 UTC+03:00",
+          "excerpt": "У первых 6 холдеров 75.22% всех коинов. А все 10 вместе контролируют 83.82%",
+          "messageId": "message25784",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message25772",
+          "sequenceIndex": 971
+        },
+        {
+          "author": "Timur Vyalshin",
+          "authorSource": "explicit",
+          "date": "02.04.2026 16:00:36 UTC+03:00",
+          "excerpt": "BlockChain Life уже не тот 😄😄😄 Спикеры:",
+          "messageId": "message25785",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 972
+        },
+        {
+          "author": "Дмитрий В",
+          "authorSource": "explicit",
+          "date": "02.04.2026 16:03:02 UTC+03:00",
+          "excerpt": "Вот если кому не лень, посмотрите плиз для интереса: gonka18hns0dspklh6r89nyeg8qaph4vhfkd63tl7a37 gonka1aazyzjuywye4530acgjgw0stu4ydpt9hv4afut gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka1uzk2scggfzghr9a5j92l00gzw4jx4adc66977y",
+          "messageId": "message25786",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message25783",
+          "sequenceIndex": 973
+        },
+        {
+          "author": "0x00 0xFF",
+          "authorSource": "explicit",
+          "date": "02.04.2026 16:06:04 UTC+03:00",
+          "excerpt": "есть блокчейны, где ситуация и похуже будет 😏",
+          "messageId": "message25787",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message25784",
+          "sequenceIndex": 974
+        },
+        {
+          "author": "Andrey Panasenko",
+          "authorSource": "explicit",
+          "date": "02.04.2026 16:06:25 UTC+03:00",
+          "excerpt": "Да это не все холдеры. 2 и 4 место — аккаунты вестинга. Если тип аккаунта Module.account — можно не брать в расчет. А адрес комьюнити пула и тд. Скорее всего, стоит структурировать страничку просто",
+          "messageId": "message25788",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message25784",
+          "sequenceIndex": 975
+        },
+        {
+          "author": "Nikolay",
+          "authorSource": "explicit",
+          "date": "02.04.2026 16:08:52 UTC+03:00",
+          "excerpt": "gonka18hns0dspklh6r89nyeg8qaph4vhfkd63tl7a37 - 4095 gonka1aazyzjuywye4530acgjgw0stu4ydpt9hv4afut - 2 115 gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra - 10 641 gonka1uzk2scggfzghr9a5j92l00gzw4jx4adc66977y - 12 959 Ну да, прилично",
+          "messageId": "message25789",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message25786",
+          "sequenceIndex": 976
+        }
+      ],
       "currentLabel": "Formula x AI · gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
       "evidenceLevel": "public_owner_proof",
       "excerpt": "Вот если кому не лень, посмотрите плиз для интереса: gonka18hns0dspklh6r89nyeg8qaph4vhfkd63tl7a37 gonka1aazyzjuywye4530acgjgw0stu4ydpt9hv4afut gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka1uzk2scggfzghr9a5j92l00gzw4jx4adc66977y",
@@ -335,6 +783,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -367,6 +816,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -399,6 +849,75 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "18.05.2026 06:05:12 UTC+03:00",
+          "excerpt": "Да, 267",
+          "messageId": "message15550",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 285
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "18.05.2026 07:06:10 UTC+03:00",
+          "excerpt": "Видно ли какие адреса не валидировали, но должны были?",
+          "messageId": "message15551",
+          "relations": [
+            "previous_1",
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15550",
+          "sequenceIndex": 286
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "18.05.2026 07:43:04 UTC+03:00",
+          "excerpt": "Их много, для kimi это: 1. gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np 2. gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc 3. gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu 4. gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d 5. gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 6. gonka1tl5m3v...",
+          "messageId": "message15552",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15551",
+          "sequenceIndex": 287
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "18.05.2026 07:53:30 UTC+03:00",
+          "excerpt": "5le - gonka-1 (node1.gonka.ai)",
+          "messageId": "message15553",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15552",
+          "sequenceIndex": 288
+        },
+        {
+          "author": "Nik",
+          "authorSource": "inherited_previous_message",
+          "date": "18.05.2026 07:54:26 UTC+03:00",
+          "excerpt": "Глеб, это бага или нет?",
+          "messageId": "message15554",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 289
+        }
+      ],
       "currentLabel": "gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc",
       "evidenceLevel": "weak_context",
       "excerpt": "Их много, для kimi это: 1. gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np 2. gonka14g78ez2zy08k8sssue483zmfpgd4qut8zcwlqc 3. gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu 4. gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d 5. gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 6. gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws 7. gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje 8. gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz 9. gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds 10. gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le 11. gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
@@ -431,6 +950,86 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "inherited_previous_message",
+          "date": "01.05.2026 01:28:03 UTC+03:00",
+          "excerpt": "мог бы адреса пошэрить?",
+          "messageId": "message13965",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13960",
+          "sequenceIndex": 730
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:29:14 UTC+03:00",
+          "excerpt": "Они получили effectiveWeight = 0 на всю эпоху и из-за этого не получили награду",
+          "messageId": "message13966",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13964",
+          "sequenceIndex": 731
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:30:44 UTC+03:00",
+          "excerpt": "Да, ты скорее всего прав, это все одни и те же кейсы",
+          "messageId": "message13967",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 732
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:37:44 UTC+03:00",
+          "excerpt": "с одной ML gonka1h3s37p0l23mg6ak9h9nmayh6r9f2vm6umj3qet gonka1zpw8tml8xl4fm6zm8zpf2u4pq4tehmd9e2vgq7 мультиноды gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc (в эту эпоху зашла с 5 ML, до этого там было 3ML) gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6 (3 ML)",
+          "messageId": "message13968",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13965",
+          "sequenceIndex": 733
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:52:57 UTC+03:00",
+          "excerpt": "Кстатит, тестова утилита на сетевых теперь на всех выдает вот такое. Думаю что это вероятно нормально. Но давайте уточним. \"issues\": [ \"Missing 1 of 20 required permissions\" ], \"recommendations\": [ \"Run authz grant commands. See inference-chain/x/inference/permissions.go\" ]",
+          "messageId": "message13969",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 734
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:57:07 UTC+03:00",
+          "excerpt": "да, это не критично, если сделать еще раз: ./inferenced tx inference grant-ml-ops-permissions \\ gonka-account-key \\ <ml-operational-key-address> \\ --from gonka-account-key \\ --keyring-backend file \\ --gas 2000000 \\ --node <seed_api_url>/chain-rpc/ исчезнет",
+          "messageId": "message13970",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13969",
+          "sequenceIndex": 735
+        }
+      ],
       "currentLabel": "gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
       "evidenceLevel": "weak_context",
       "excerpt": "с одной ML gonka1h3s37p0l23mg6ak9h9nmayh6r9f2vm6umj3qet gonka1zpw8tml8xl4fm6zm8zpf2u4pq4tehmd9e2vgq7 мультиноды gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc (в эту эпоху зашла с 5 ML, до этого там было 3ML) gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6 (3 ML)",
@@ -463,6 +1062,86 @@
       "chat": "Gonka Devs",
       "confidence": "high",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "07.05.2026 02:08:29 UTC+03:00",
+          "excerpt": "Подскажите, сколько примерно gonka сейчас дает 1 сервер с 8xB-300 ? Через веса на трекерах и коэфициенты хрен что понятно сейчас.",
+          "messageId": "message14671",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 427
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "07.05.2026 02:10:19 UTC+03:00",
+          "excerpt": "Думаю, что около 11k GNK точно выдадут 40xB200",
+          "messageId": "message14674",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 430
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "07.05.2026 02:10:29 UTC+03:00",
+          "excerpt": "На оптимальном Кими",
+          "messageId": "message14675",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 431
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "07.05.2026 02:12:01 UTC+03:00",
+          "excerpt": "Можно по моей ноде отслеживать награды gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
+          "messageId": "message14676",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14671",
+          "sequenceIndex": 432
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "07.05.2026 02:17:05 UTC+03:00",
+          "excerpt": "интересует имнно по B-300, тк думаю их брать и клиента надо сориентировать, сколкьо они выдают сейчас. b-200 то и стоят иначе, и мой поставщик их не предлагал, тольо b-300",
+          "messageId": "message14677",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 433
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "07.05.2026 02:17:58 UTC+03:00",
+          "excerpt": "Там в 2 раза отличается мощность в зависимости от образа или различных оптимизаций",
+          "messageId": "message14678",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 434
+        }
+      ],
       "currentLabel": "A? · gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
       "evidenceLevel": "strong_local_operator_signal",
       "excerpt": "Можно по моей ноде отслеживать награды gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5",
@@ -495,6 +1174,87 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Dem | Démíngān",
+          "authorSource": "inherited_previous_message",
+          "date": "15.05.2026 00:10:02 UTC+03:00",
+          "excerpt": "Про этих из Китая?",
+          "messageId": "message15029",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 775
+        },
+        {
+          "author": "M",
+          "authorSource": "explicit",
+          "date": "15.05.2026 00:12:27 UTC+03:00",
+          "excerpt": "Где они сейчас? Покажите их ноды",
+          "messageId": "message15031",
+          "relations": [
+            "previous_1",
+            "reply_parent"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 776
+        },
+        {
+          "author": "Dem | Démíngān",
+          "authorSource": "explicit",
+          "date": "15.05.2026 00:14:41 UTC+03:00",
+          "excerpt": "Я понял критерий «улицы». Я не знаю их адресов, может их нет, один только вижу gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq маленький",
+          "messageId": "message15032",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15031",
+          "sequenceIndex": 777
+        },
+        {
+          "author": "M",
+          "authorSource": "explicit",
+          "date": "15.05.2026 00:15:34 UTC+03:00",
+          "excerpt": "0.07% сети",
+          "messageId": "message15033",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 778
+        },
+        {
+          "author": "Dem | Démíngān",
+          "authorSource": "explicit",
+          "date": "15.05.2026 00:15:46 UTC+03:00",
+          "excerpt": "Я лишь подметил, что странно звучит \"с улицы\"",
+          "messageId": "message15034",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 779
+        },
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "15.05.2026 00:18:48 UTC+03:00",
+          "excerpt": "Вы не о том спорите. Вопрос что конкретно это принесет за эти деньги - при исполнении? Оборот вырастет ? Модели китайские запустим с цензурой ? Давайте так дадим из ваших 75к, если окупится вырастет курс, придут поставщики железа 2-3k GPU, начнут потреблять kimi/qwen модель по a...",
+          "messageId": "message15038",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15032",
+          "sequenceIndex": 783
+        }
+      ],
       "currentLabel": "gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
       "evidenceLevel": "weak_context",
       "excerpt": "Я понял критерий «улицы». Я не знаю их адресов, может их нет, один только вижу gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq маленький",
@@ -527,6 +1287,88 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Mykola",
+          "authorSource": "inherited_previous_message",
+          "date": "21.03.2026 22:57:00 UTC+03:00",
+          "excerpt": "На двух нодах такое было. Возможно чего-то не хватало в кастомизированых мл нодах",
+          "messageId": "message12932",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message12930",
+          "sequenceIndex": 704
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "21.03.2026 23:04:39 UTC+03:00",
+          "excerpt": "А сколько миссов было?",
+          "messageId": "message12933",
+          "relations": [
+            "previous_1",
+            "reply_parent"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 705
+        },
+        {
+          "author": "Mykola",
+          "authorSource": "explicit",
+          "date": "21.03.2026 23:13:26 UTC+03:00",
+          "excerpt": "https://tracker.gonka.hyperfusion.io/?participant=gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2&epoch=206 115 - дошло до 11%. В логах ничего не было. Репорты тоже не показывали багу. После перехода на альфу пришло 2 миса и больше не было до конца эпохи",
+          "messageId": "message12934",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message12933",
+          "sequenceIndex": 706
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "21.03.2026 23:19:58 UTC+03:00",
+          "excerpt": "Смотрю на разницу: https://github.com/gonka-ai/gonka/compare/release/v0.2.11-alpha1...release/v0.2.11 0.2.11-alpha1 не поддерживает subnets и много других отличий, но вроде по обработке стандартных inference ровно такая же Не думаете что перезагрузка помогла?",
+          "messageId": "message12935",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message12934",
+          "sequenceIndex": 707
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "inherited_previous_message",
+          "date": "21.03.2026 23:20:44 UTC+03:00",
+          "excerpt": "А сейчас на нодах тоже alpha1?",
+          "messageId": "message12936",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 708
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "22.03.2026 00:03:06 UTC+03:00",
+          "excerpt": "а можешь скинуть вторую с миссами, пожалуйста?",
+          "messageId": "message12942",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message12934",
+          "sequenceIndex": 714
+        }
+      ],
       "currentLabel": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
       "evidenceLevel": "weak_context",
       "excerpt": "https://tracker.gonka.hyperfusion.io/?participant=gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2&epoch=206 115 - дошло до 11%. В логах ничего не было. Репорты тоже не показывали багу. После перехода на альфу пришло 2 миса и больше не было до конца эпохи",
@@ -562,6 +1404,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -594,6 +1437,75 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "inherited_previous_message",
+          "date": "15.05.2026 15:41:05 UTC+03:00",
+          "excerpt": "Сейчас уже ничего не сделаешь. Лучшая стратегия - сменить сетевую в новой эпохе, чтобы этого избежать в будущем.",
+          "messageId": "message15167",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 912
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "15.05.2026 15:42:09 UTC+03:00",
+          "excerpt": "так а что не так с весом? у кого не засчиталось? у меня сходится вроде для всех кто с вето проголосовал",
+          "messageId": "message15168",
+          "relations": [
+            "previous_1",
+            "reply_parent"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 913
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "15.05.2026 15:42:48 UTC+03:00",
+          "excerpt": "Например у него вес не засчитался: gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+          "messageId": "message15169",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15168",
+          "sequenceIndex": 914
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "15.05.2026 15:43:28 UTC+03:00",
+          "excerpt": "а блин точно, не сошлось",
+          "messageId": "message15170",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15169",
+          "sequenceIndex": 915
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "inherited_previous_message",
+          "date": "15.05.2026 15:45:36 UTC+03:00",
+          "excerpt": "это может быть в tally проблема, а финальный нормально посчитает. Скоро узнаем",
+          "messageId": "message15171",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 916
+        }
+      ],
       "currentLabel": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
       "evidenceLevel": "weak_context",
       "excerpt": "Например у него вес не засчитался: gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
@@ -626,6 +1538,86 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "David Liberman",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:43:22 UTC+03:00",
+          "excerpt": "@maksimenkoff если можешь параллельно собрать, было бы очень хорошо",
+          "messageId": "message15335",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 90
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:44:20 UTC+03:00",
+          "excerpt": "я уже попросил, @qDanik посмотреть, почему произошла инвалидация, очень опасаюсь, что это связанно с тем, что многие участники пользуются разными версиями mlnode, и в итоге разница слишком возросла, но это первая не проверенная гипотеза.",
+          "messageId": "message15336",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 91
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:51:49 UTC+03:00",
+          "excerpt": "gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel - у этого нет kimi ml node, но он валидировал kimi. Возможно удалил ноды перед PoC Участники с kimi в сети (вдруг кому пригодится) Валидировал только qwen: gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f gonka1kx9mca3xm8u8ypzfuhmxey66u0u...",
+          "messageId": "message15337",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 92
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:53:14 UTC+03:00",
+          "excerpt": "Это учитывая делегации?",
+          "messageId": "message15338",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 93
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:54:23 UTC+03:00",
+          "excerpt": "Мы квен делегировали сюда gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+          "messageId": "message15339",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 94
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:34 UTC+03:00",
+          "excerpt": "Когда анализируете, надо учитывать делегацию, знаю, что так как все это делают в первый, раз это потребует училися",
+          "messageId": "message15344",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15337",
+          "sequenceIndex": 99
+        }
+      ],
       "currentLabel": "gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y",
       "evidenceLevel": "weak_context",
       "excerpt": "gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel - у этого нет kimi ml node, но он валидировал kimi. Возможно удалил ноды перед PoC Участники с kimi в сети (вдруг кому пригодится) Валидировал только qwen: gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 Валидировал только kimi: gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 Никого не валидировали (почему?): gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0 gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
@@ -658,6 +1650,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:08:15 UTC+03:00",
+          "excerpt": "попробую объяснить про \"насыпание\" из фонда - это не манна небесная, экономически - это размытие стоимости токенов и доли первых инвесторов, которые отдали за GNK в 3-8 раз больше 1-2-3$. каждая раздача - должна иметь четкую ощутимую цель - что на выходе из пользы будет - больше...",
+          "messageId": "message14925",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 675
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:24:48 UTC+03:00",
+          "excerpt": "у самурая только путь. Кроме денег нам нужно помнить и о времени, что мы теряем. Все решения нужно строить наперед, если мы верим, что проект вырастет. Так же мы хотим выглядеть как быстро развивающаюся экосистема. У гонки видно, что большое количество талантливых инженеров посв...",
+          "messageId": "message14926",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14925",
+          "sequenceIndex": 676
+        },
+        {
+          "author": "Fedor Tmkhv",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:53:26 UTC+03:00",
+          "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqea...",
+          "messageId": "message14927",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 677
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:54:20 UTC+03:00",
+          "excerpt": "Сообщение дало нужный эффект в день написания, отвечать по пунктам было не обязательно) Но спасибо, что нашел время 🙃",
+          "messageId": "message14928",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14923",
+          "sequenceIndex": 678
+        },
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 18:56:55 UTC+03:00",
+          "excerpt": "1. Изначально должен стабильно работать core продукт, llm/inference. сорри за базу - но Brand Awarness - и вообще продвижение бренда, имеет смысл только 2. после того как у вас есть стабильно рабочий продукт/сервис и есть худо бедно работающая экономика.",
+          "messageId": "message14929",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14926",
+          "sequenceIndex": 679
+        }
+      ],
       "currentLabel": "gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d",
       "evidenceLevel": "weak_context",
       "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...",
@@ -690,6 +1749,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:08:15 UTC+03:00",
+          "excerpt": "попробую объяснить про \"насыпание\" из фонда - это не манна небесная, экономически - это размытие стоимости токенов и доли первых инвесторов, которые отдали за GNK в 3-8 раз больше 1-2-3$. каждая раздача - должна иметь четкую ощутимую цель - что на выходе из пользы будет - больше...",
+          "messageId": "message14925",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 675
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:24:48 UTC+03:00",
+          "excerpt": "у самурая только путь. Кроме денег нам нужно помнить и о времени, что мы теряем. Все решения нужно строить наперед, если мы верим, что проект вырастет. Так же мы хотим выглядеть как быстро развивающаюся экосистема. У гонки видно, что большое количество талантливых инженеров посв...",
+          "messageId": "message14926",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14925",
+          "sequenceIndex": 676
+        },
+        {
+          "author": "Fedor Tmkhv",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:53:26 UTC+03:00",
+          "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqea...",
+          "messageId": "message14927",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 677
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:54:20 UTC+03:00",
+          "excerpt": "Сообщение дало нужный эффект в день написания, отвечать по пунктам было не обязательно) Но спасибо, что нашел время 🙃",
+          "messageId": "message14928",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14923",
+          "sequenceIndex": 678
+        },
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 18:56:55 UTC+03:00",
+          "excerpt": "1. Изначально должен стабильно работать core продукт, llm/inference. сорри за базу - но Brand Awarness - и вообще продвижение бренда, имеет смысл только 2. после того как у вас есть стабильно рабочий продукт/сервис и есть худо бедно работающая экономика.",
+          "messageId": "message14929",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14926",
+          "sequenceIndex": 679
+        }
+      ],
       "currentLabel": "gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2",
       "evidenceLevel": "weak_context",
       "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...",
@@ -722,6 +1848,99 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:42:49 UTC+03:00",
+          "excerpt": "Они должны быть все записаны на чейне, кто участвовал в PoC",
+          "messageId": "message15334",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15333",
+          "sequenceIndex": 89
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:54:51 UTC+03:00",
+          "excerpt": "И одна из нод почему-то не прошла PoC",
+          "messageId": "message15341",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 96
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:55:14 UTC+03:00",
+          "excerpt": "Она даже в эпоху не зашла",
+          "messageId": "message15342",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 97
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:31 UTC+03:00",
+          "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v...",
+          "messageId": "message15343",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15334",
+          "sequenceIndex": 98
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:34 UTC+03:00",
+          "excerpt": "Когда анализируете, надо учитывать делегацию, знаю, что так как все это делают в первый, раз это потребует училися",
+          "messageId": "message15344",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15337",
+          "sequenceIndex": 99
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:58:27 UTC+03:00",
+          "excerpt": "Мою ноду не включили в список, ml9 узел был inference вместо PoC",
+          "messageId": "message15345",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 100
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:58:34 UTC+03:00",
+          "excerpt": "Сюда",
+          "messageId": "message15346",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15343",
+          "sequenceIndex": 101
+        }
+      ],
       "currentLabel": "gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9",
       "evidenceLevel": "weak_context",
       "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 финальных членов НЕ отправляли PoC (preserved-only — продолжили inference во время PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...",
@@ -754,7 +1973,75 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
-      "currentLabel": "A? · gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
+      "contextMessages": [
+        {
+          "author": "Vas Ily",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:34:30 UTC+03:00",
+          "excerpt": "а сейчас как будто на треть обрезало",
+          "messageId": "message15921",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15886",
+          "sequenceIndex": 642
+        },
+        {
+          "author": "Vas Ily",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 11:36:48 UTC+03:00",
+          "excerpt": "причём вес сети уменьшился, то есть вроде нельзя сказать что это из-за наплыва желающих хостить kimi",
+          "messageId": "message15922",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 643
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:53:31 UTC+03:00",
+          "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556...",
+          "messageId": "message15923",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 644
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "23.05.2026 12:02:29 UTC+03:00",
+          "excerpt": "Мой адрес среди этих нод, все работало корректно",
+          "messageId": "message15924",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15923",
+          "sequenceIndex": 645
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 12:02:37 UTC+03:00",
+          "excerpt": "Отлключений не было",
+          "messageId": "message15925",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 646
+        }
+      ],
+      "currentLabel": "gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n",
       "evidenceLevel": "weak_context",
       "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий",
       "inferenceUrl": "http://198.244.228.95:8000",
@@ -786,6 +2073,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -818,6 +2106,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Mykola",
+          "authorSource": "explicit",
+          "date": "21.03.2026 23:48:30 UTC+03:00",
+          "excerpt": "Да",
+          "messageId": "message12941",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message12940",
+          "sequenceIndex": 713
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "22.03.2026 00:03:06 UTC+03:00",
+          "excerpt": "а можешь скинуть вторую с миссами, пожалуйста?",
+          "messageId": "message12942",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message12934",
+          "sequenceIndex": 714
+        },
+        {
+          "author": "Mykola",
+          "authorSource": "explicit",
+          "date": "22.03.2026 00:10:52 UTC+03:00",
+          "excerpt": "Gonka Chain Tracker https://tracker.gonka.hyperfusion.io/?participant=gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0&epoch=206",
+          "messageId": "message12943",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 715
+        },
+        {
+          "author": "Mykola",
+          "authorSource": "inherited_previous_message",
+          "date": "22.03.2026 00:14:20 UTC+03:00",
+          "excerpt": "Сегодня с ней экспериментировал - тоже мисов кинула пока обратно на альфу не вернулся",
+          "messageId": "message12944",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 716
+        },
+        {
+          "author": "Artem",
+          "authorSource": "explicit",
+          "date": "23.03.2026 08:40:52 UTC+03:00",
+          "excerpt": "Получилось решить проблему? Сейчас такая же в точности",
+          "messageId": "message12945",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message12880",
+          "sequenceIndex": 717
+        }
+      ],
       "currentLabel": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
       "evidenceLevel": "weak_context",
       "excerpt": "Gonka Chain Tracker https://tracker.gonka.hyperfusion.io/?participant=gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0&epoch=206",
@@ -853,6 +2208,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:08:15 UTC+03:00",
+          "excerpt": "попробую объяснить про \"насыпание\" из фонда - это не манна небесная, экономически - это размытие стоимости токенов и доли первых инвесторов, которые отдали за GNK в 3-8 раз больше 1-2-3$. каждая раздача - должна иметь четкую ощутимую цель - что на выходе из пользы будет - больше...",
+          "messageId": "message14925",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 675
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:24:48 UTC+03:00",
+          "excerpt": "у самурая только путь. Кроме денег нам нужно помнить и о времени, что мы теряем. Все решения нужно строить наперед, если мы верим, что проект вырастет. Так же мы хотим выглядеть как быстро развивающаюся экосистема. У гонки видно, что большое количество талантливых инженеров посв...",
+          "messageId": "message14926",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14925",
+          "sequenceIndex": 676
+        },
+        {
+          "author": "Fedor Tmkhv",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:53:26 UTC+03:00",
+          "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqea...",
+          "messageId": "message14927",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 677
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:54:20 UTC+03:00",
+          "excerpt": "Сообщение дало нужный эффект в день написания, отвечать по пунктам было не обязательно) Но спасибо, что нашел время 🙃",
+          "messageId": "message14928",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14923",
+          "sequenceIndex": 678
+        },
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 18:56:55 UTC+03:00",
+          "excerpt": "1. Изначально должен стабильно работать core продукт, llm/inference. сорри за базу - но Brand Awarness - и вообще продвижение бренда, имеет смысл только 2. после того как у вас есть стабильно рабочий продукт/сервис и есть худо бедно работающая экономика.",
+          "messageId": "message14929",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14926",
+          "sequenceIndex": 679
+        }
+      ],
       "currentLabel": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
       "evidenceLevel": "weak_context",
       "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...",
@@ -885,6 +2307,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -917,6 +2340,74 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Mykola",
+          "authorSource": "explicit",
+          "date": "31.05.2026 17:20:21 UTC+03:00",
+          "excerpt": "Для тех у кого застревает запуск контейнеров на 8ках при TP=1. Попробуйте использовать переменную окружения ограничивающую количестово потоков на один инстанс - например OMP_NUM_THREADS=24",
+          "messageId": "message16243",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 946
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:34:54 UTC+03:00",
+          "excerpt": "Коллеги а что вчера было по Kimi ? Смотрю вес был 9,429 Confirm Ratio 100.00% Делегации на месте А выплата вместо обычных 4-5к всего 2238 GNK https://tracker.gonka.vip/?epoch=280&participant=gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
+          "messageId": "message16244",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 947
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:39:53 UTC+03:00",
+          "excerpt": "Кто-то здесь знает хостов с этими адресами? gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
+          "messageId": "message16245",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 948
+        },
+        {
+          "author": "Kytaets ⛩🐼",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:40:41 UTC+03:00",
+          "excerpt": "А что там?",
+          "messageId": "message16246",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16245",
+          "sequenceIndex": 949
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:44:29 UTC+03:00",
+          "excerpt": "Видимо старая версия mlnode от Kaitakuai, инференс запросы замирают посередине на несколько минут, в процессе выполнения. Обновление контейнера у других участников помогло избавиться от этой проблемы",
+          "messageId": "message16247",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 950
+        }
+      ],
       "currentLabel": "gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr",
       "evidenceLevel": "weak_context",
       "excerpt": "Кто-то здесь знает хостов с этими адресами? gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
@@ -949,6 +2440,99 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:42:49 UTC+03:00",
+          "excerpt": "Они должны быть все записаны на чейне, кто участвовал в PoC",
+          "messageId": "message15334",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15333",
+          "sequenceIndex": 89
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:54:51 UTC+03:00",
+          "excerpt": "И одна из нод почему-то не прошла PoC",
+          "messageId": "message15341",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 96
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:55:14 UTC+03:00",
+          "excerpt": "Она даже в эпоху не зашла",
+          "messageId": "message15342",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 97
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:31 UTC+03:00",
+          "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v...",
+          "messageId": "message15343",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15334",
+          "sequenceIndex": 98
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:34 UTC+03:00",
+          "excerpt": "Когда анализируете, надо учитывать делегацию, знаю, что так как все это делают в первый, раз это потребует училися",
+          "messageId": "message15344",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15337",
+          "sequenceIndex": 99
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:58:27 UTC+03:00",
+          "excerpt": "Мою ноду не включили в список, ml9 узел был inference вместо PoC",
+          "messageId": "message15345",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 100
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:58:34 UTC+03:00",
+          "excerpt": "Сюда",
+          "messageId": "message15346",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15343",
+          "sequenceIndex": 101
+        }
+      ],
       "currentLabel": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
       "evidenceLevel": "weak_context",
       "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 финальных членов НЕ отправляли PoC (preserved-only — продолжили inference во время PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...",
@@ -981,6 +2565,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -1013,6 +2598,87 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 22:45:49 UTC+03:00",
+          "excerpt": "Логи сейчас отправим",
+          "messageId": "message15546",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 281
+        },
+        {
+          "author": "Tania Charchian",
+          "authorSource": "explicit",
+          "date": "18.05.2026 03:23:48 UTC+03:00",
+          "excerpt": "Epoch #267: PoC Validation Recovered PoC validation completed successfully in epoch #267, and affected hosts were able to return to the active set. The issue in epoch #266 was caused by an attack that affected hosts running the Kimi model. The network continued operating, but th...",
+          "messageId": "message15547",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 282
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "18.05.2026 05:52:05 UTC+03:00",
+          "excerpt": "Я тут чинил математику валидаций на трекере и заметил что это участник выбыл, потому что его мало кто провалидировал (хотя он отправил достаточно nonces). Это произошло и для qwen и kimi одновременно: https://tracker.gonka.vip/?participant=gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjh...",
+          "messageId": "message15548",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 283
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "18.05.2026 06:05:00 UTC+03:00",
+          "excerpt": "Эта эпоха, да?",
+          "messageId": "message15549",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15548",
+          "sequenceIndex": 284
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "18.05.2026 06:05:12 UTC+03:00",
+          "excerpt": "Да, 267",
+          "messageId": "message15550",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 285
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "18.05.2026 15:19:55 UTC+03:00",
+          "excerpt": "тут выяснили, не было \"poc/proofs\" в GONKA_API_EXEMPT_ROUTES https://github.com/gonka-ai/gonka/blob/d8b8e9073d1a420d344d3ecc33ef23957f4142b1/deploy/join/docker-compose.yml#L133 и запросы артефактов обрубались rate limiter",
+          "messageId": "message15573",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15548",
+          "sequenceIndex": 306
+        }
+      ],
       "currentLabel": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
       "evidenceLevel": "weak_context",
       "excerpt": "Я тут чинил математику валидаций на трекере и заметил что это участник выбыл, потому что его мало кто провалидировал (хотя он отправил достаточно nonces). Это произошло и для qwen и kimi одновременно: https://tracker.gonka.vip/?participant=gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6 @gmorgachev Это тупо невезение или он действительно что-то сделал не так?",
@@ -1050,6 +2716,99 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:42:49 UTC+03:00",
+          "excerpt": "Они должны быть все записаны на чейне, кто участвовал в PoC",
+          "messageId": "message15334",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15333",
+          "sequenceIndex": 89
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:54:51 UTC+03:00",
+          "excerpt": "И одна из нод почему-то не прошла PoC",
+          "messageId": "message15341",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 96
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:55:14 UTC+03:00",
+          "excerpt": "Она даже в эпоху не зашла",
+          "messageId": "message15342",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 97
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:31 UTC+03:00",
+          "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v...",
+          "messageId": "message15343",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15334",
+          "sequenceIndex": 98
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:34 UTC+03:00",
+          "excerpt": "Когда анализируете, надо учитывать делегацию, знаю, что так как все это делают в первый, раз это потребует училися",
+          "messageId": "message15344",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15337",
+          "sequenceIndex": 99
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:58:27 UTC+03:00",
+          "excerpt": "Мою ноду не включили в список, ml9 узел был inference вместо PoC",
+          "messageId": "message15345",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 100
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:58:34 UTC+03:00",
+          "excerpt": "Сюда",
+          "messageId": "message15346",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15343",
+          "sequenceIndex": 101
+        }
+      ],
       "currentLabel": "gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax",
       "evidenceLevel": "weak_context",
       "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 финальных членов НЕ отправляли PoC (preserved-only — продолжили inference во время PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...",
@@ -1082,6 +2841,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "05.06.2026 21:40:58 UTC+03:00",
+          "excerpt": "{ \"messages\": [ { \"@type\": \"/cosmos.gov.v1.MsgUpdateParams\", \"authority\": \"gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33\", \"params\": { \"min_deposit\": [ { \"denom\": \"ngonka\", \"amount\": \"500000000000\" } ], \"expedited_min_deposit\": [ { \"denom\": \"ngonka\", \"amount\": \"1000000000000\" } ]...",
+          "messageId": "message16596",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 310
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "05.06.2026 21:41:37 UTC+03:00",
+          "excerpt": "Насколько я помню expedited_min_deposit должен быть больше min_deposit",
+          "messageId": "message16597",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16596",
+          "sequenceIndex": 311
+        },
+        {
+          "author": "Mykola",
+          "authorSource": "explicit",
+          "date": "05.06.2026 21:55:09 UTC+03:00",
+          "excerpt": "Что думаете про крупнейшего участника gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum? про (не)учет его голоса в голосовании?",
+          "messageId": "message16598",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 312
+        },
+        {
+          "author": "Mykola",
+          "authorSource": "inherited_previous_message",
+          "date": "05.06.2026 21:55:24 UTC+03:00",
+          "excerpt": "Баг или фича?",
+          "messageId": "message16599",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 313
+        },
+        {
+          "author": "vladik 🌊",
+          "authorSource": "explicit",
+          "date": "05.06.2026 21:55:45 UTC+03:00",
+          "excerpt": "@baridoka",
+          "messageId": "message16600",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16584",
+          "sequenceIndex": 314
+        }
+      ],
       "currentLabel": "gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum",
       "evidenceLevel": "weak_context",
       "excerpt": "Что думаете про крупнейшего участника gonka1kvmerzu64094dt9t62ea0cp75larh39ulzldum? про (не)учет его голоса в голосовании?",
@@ -1114,6 +2940,74 @@
       "chat": "Gonka Devs",
       "confidence": "high",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Soltan Kokoev",
+          "authorSource": "explicit",
+          "date": "16.01.2026 22:13:25 UTC+03:00",
+          "excerpt": "Как починил?",
+          "messageId": "message8454",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message8370",
+          "sequenceIndex": 295
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "16.01.2026 22:41:28 UTC+03:00",
+          "excerpt": "рассматриваю сетевую ноду, и вижу что то странное curl -s http://localhost:9200/admin/v1/nodes | jq",
+          "messageId": "message8455",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 296
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "inherited_previous_message",
+          "date": "16.01.2026 22:42:20 UTC+03:00",
+          "excerpt": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 Откуда взялся этот адресс и почему он предложил моей ноде модель? Какая то мелкая нода, не моя",
+          "messageId": "message8456",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 297
+        },
+        {
+          "author": "Alexander",
+          "authorSource": "explicit",
+          "date": "16.01.2026 22:43:47 UTC+03:00",
+          "excerpt": "Это node3 ))",
+          "messageId": "message8457",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message8456",
+          "sequenceIndex": 298
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "16.01.2026 22:45:08 UTC+03:00",
+          "excerpt": "вот оно что :) ну норм",
+          "messageId": "message8458",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 299
+        }
+      ],
       "currentLabel": "gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
       "evidenceLevel": "public_owner_proof",
       "excerpt": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 Откуда взялся этот адресс и почему он предложил моей ноде модель? Какая то мелкая нода, не моя",
@@ -1148,6 +3042,73 @@
       "chat": "Gonka RU",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Artem Brasco",
+          "authorSource": "explicit",
+          "date": "20.12.2025 03:41:19 UTC+03:00",
+          "excerpt": "Кто сталкивался, эпоха claimed а balances 0?",
+          "messageId": "message2966",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 778
+        },
+        {
+          "author": "Dmitry",
+          "authorSource": "explicit",
+          "date": "20.12.2025 08:15:00 UTC+03:00",
+          "excerpt": "А этот upgrade - backward compatible или нет? Кто разбирался? Все кто вовремя не поменяют у себя на нодах - будут иметь проблемы?",
+          "messageId": "message2967",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message2948",
+          "sequenceIndex": 779
+        },
+        {
+          "author": "Denis",
+          "authorSource": "explicit",
+          "date": "20.12.2025 09:09:13 UTC+03:00",
+          "excerpt": "Подскажите пжл, у сервера 100% MISSED RATE на данный момент, этот параметр еще может сократиться до проходного значения или лучше нажать \"стоп\"? https://tracker.gonka.hyperfusion.io/?participant=gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
+          "messageId": "message2968",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 780
+        },
+        {
+          "author": "Arseniy Alikhanov",
+          "authorSource": "explicit",
+          "date": "20.12.2025 09:11:31 UTC+03:00",
+          "excerpt": "Если голосование за апдейт проходит, то потом автоматически накатывается обновление по всем нодам, чтобы все на одинаковой версии работали",
+          "messageId": "message2970",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message2967",
+          "sequenceIndex": 781
+        },
+        {
+          "author": "Dmitry",
+          "authorSource": "explicit",
+          "date": "20.12.2025 09:22:46 UTC+03:00",
+          "excerpt": "Тривиального решения по шифрованию промптов и ответов в децентрализованной AI compute среде действительно нет. Гомоморфное шифрование теоретически применимо, но на практике это потребует переписывание всего кода и огромный не приемлемый оверхед по памяти и скорости. Наиболее про...",
+          "messageId": "message2971",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message2876",
+          "sequenceIndex": 782
+        }
+      ],
       "currentLabel": "gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
       "evidenceLevel": "weak_context",
       "excerpt": "Подскажите пжл, у сервера 100% MISSED RATE на данный момент, этот параметр еще может сократиться до проходного значения или лучше нажать \"стоп\"? https://tracker.gonka.hyperfusion.io/?participant=gonka1l8jd2nz92mnem0xwgwkltcw2952cnlphs5arsa",
@@ -1182,6 +3143,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1m58jds005cttwq2vt0p7yk6vy2aqg254cqqppf",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -1214,6 +3176,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1mgdgcll2f4m0cjekqyueheeu7y8adz0hddfnh2",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -1246,6 +3209,86 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "David Liberman",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:43:22 UTC+03:00",
+          "excerpt": "@maksimenkoff если можешь параллельно собрать, было бы очень хорошо",
+          "messageId": "message15335",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 90
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:44:20 UTC+03:00",
+          "excerpt": "я уже попросил, @qDanik посмотреть, почему произошла инвалидация, очень опасаюсь, что это связанно с тем, что многие участники пользуются разными версиями mlnode, и в итоге разница слишком возросла, но это первая не проверенная гипотеза.",
+          "messageId": "message15336",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 91
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:51:49 UTC+03:00",
+          "excerpt": "gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel - у этого нет kimi ml node, но он валидировал kimi. Возможно удалил ноды перед PoC Участники с kimi в сети (вдруг кому пригодится) Валидировал только qwen: gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f gonka1kx9mca3xm8u8ypzfuhmxey66u0u...",
+          "messageId": "message15337",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 92
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:53:14 UTC+03:00",
+          "excerpt": "Это учитывая делегации?",
+          "messageId": "message15338",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 93
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:54:23 UTC+03:00",
+          "excerpt": "Мы квен делегировали сюда gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+          "messageId": "message15339",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 94
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:34 UTC+03:00",
+          "excerpt": "Когда анализируете, надо учитывать делегацию, знаю, что так как все это делают в первый, раз это потребует училися",
+          "messageId": "message15344",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15337",
+          "sequenceIndex": 99
+        }
+      ],
       "currentLabel": "gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0",
       "evidenceLevel": "weak_context",
       "excerpt": "gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel - у этого нет kimi ml node, но он валидировал kimi. Возможно удалил ноды перед PoC Участники с kimi в сети (вдруг кому пригодится) Валидировал только qwen: gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2 Валидировал только kimi: gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 Никого не валидировали (почему?): gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1mmlyd5xxu5l68yx8wzclrkxkxvm88mhq5tp5s0 gonka1830lqug50lse998x2lakk4pj5ypfumz5pasz0y gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq",
@@ -1278,6 +3321,74 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 22:38:50 UTC+03:00",
+          "excerpt": "Хорошо, тогда ничего не отключаем, жду от вас инструкции",
+          "messageId": "message15536",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 272
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 22:40:39 UTC+03:00",
+          "excerpt": "У нас есть кто-то кто в этой эпохе прислал nonces, и не вошёл в эпоху?",
+          "messageId": "message15537",
+          "relations": [
+            "previous_1",
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15531",
+          "sequenceIndex": 273
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "17.05.2026 22:41:21 UTC+03:00",
+          "excerpt": "только Квен адрес один gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
+          "messageId": "message15538",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15537",
+          "sequenceIndex": 274
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 22:41:29 UTC+03:00",
+          "excerpt": "У меня вот есть ml узел который 2 эпохи подряд не проходил PoC, это тоже будет учитываться при выплатах?",
+          "messageId": "message15539",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 275
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 22:41:43 UTC+03:00",
+          "excerpt": "У него даже не пишется вес",
+          "messageId": "message15540",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 276
+        }
+      ],
       "currentLabel": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
       "evidenceLevel": "weak_context",
       "excerpt": "только Квен адрес один gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
@@ -1310,6 +3421,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1naxyjmun6kl23htjdujwd6c5z5avgwapsrmfk3",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -1342,6 +3454,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -1374,6 +3487,100 @@
       "chat": "Gonka Devs",
       "confidence": "high",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Tania Charchian",
+          "authorSource": "explicit",
+          "date": "02.05.2026 08:58:23 UTC+03:00",
+          "excerpt": "Action required for all hosts: Kimi K2.6 Bootstrap A short guide is now available explaining what hosts need to do before the Kimi K2.6 bootstrap window. Epoch 251 is when the moonshotai/Kimi-K2.6 model group may become eligible. To avoid unnecessary weight reductions, every par...",
+          "messageId": "message14179",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 940
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "02.05.2026 10:59:23 UTC+03:00",
+          "excerpt": "Всем привет! Если кто то ищет сегмент для делегации - пишите в личку - подскажу адрес. Будем пробовать заводить Кими в 251 эпоху.",
+          "messageId": "message14181",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 941
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "02.05.2026 12:16:47 UTC+03:00",
+          "excerpt": "Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда: ./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \\ --from <your-account-key> \\ --node http://node2.g...",
+          "messageId": "message14182",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 942
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "02.05.2026 12:18:04 UTC+03:00",
+          "excerpt": "проверить, что делегировалось можно вот тут: https://node3.gonka.ai/chain-api/productscience/inference/inference/poc_delegation/gonka.....",
+          "messageId": "message14184",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14182",
+          "sequenceIndex": 943
+        },
+        {
+          "author": "Anton Bizyaev",
+          "authorSource": "explicit",
+          "date": "02.05.2026 12:22:57 UTC+03:00",
+          "excerpt": "А делегировать позже можно? Теряешь вес пока не делегируешь?",
+          "messageId": "message14185",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 944
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "02.05.2026 12:23:45 UTC+03:00",
+          "excerpt": "Какой образ он использует?",
+          "messageId": "message14187",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14182",
+          "sequenceIndex": 946
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "inherited_previous_message",
+          "date": "02.05.2026 22:16:27 UTC+03:00",
+          "excerpt": "Первый 8xB200 с Kimi уже добавлен и работает, скоро будет еще несколько и тестовый 8xH200. ./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \\ --from <your-account-key> \\ --node http://node2.gonka.ai:8000/chain-rpc/ \\...",
+          "messageId": "message14217",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14182",
+          "sequenceIndex": 971
+        }
+      ],
       "currentLabel": "Votkon? · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg",
       "evidenceLevel": "strong_local_operator_signal",
       "excerpt": "Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда: ./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \\ --from <your-account-key> \\ --node http://node2.gonka.ai:8000/chain-rpc/ \\ --chain-id gonka-mainnet \\ --keyring-backend file \\ --gas auto \\ --gas-adjustment 1.3 \\ -y Это топ 1 сегмент по весу и он будет запускать Кими сегодня вечером. Я буду давать обнолвения в этот чат по прогрессу и если что-то пойдет не так тоже буду отписываться.",
@@ -1408,6 +3615,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "asd.gnk · gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4",
       "evidenceLevel": "public_owner_proof",
       "excerpt": "",
@@ -1440,6 +3648,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Kytaets ⛩🐼",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:40:41 UTC+03:00",
+          "excerpt": "А что там?",
+          "messageId": "message16246",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16245",
+          "sequenceIndex": 949
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:44:29 UTC+03:00",
+          "excerpt": "Видимо старая версия mlnode от Kaitakuai, инференс запросы замирают посередине на несколько минут, в процессе выполнения. Обновление контейнера у других участников помогло избавиться от этой проблемы",
+          "messageId": "message16247",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 950
+        },
+        {
+          "author": "Sergei Koniakov",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:48:58 UTC+03:00",
+          "excerpt": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv @Razum_Dmitriy , вроде ваша нода. Formula X",
+          "messageId": "message16248",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 951
+        },
+        {
+          "author": "Vyacheslav",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:50:53 UTC+03:00",
+          "excerpt": "Мои",
+          "messageId": "message16249",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 952
+        },
+        {
+          "author": "Vyacheslav",
+          "authorSource": "inherited_previous_message",
+          "date": "31.05.2026 18:50:57 UTC+03:00",
+          "excerpt": "2",
+          "messageId": "message16250",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 953
+        }
+      ],
       "currentLabel": "Formula X? · gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv",
       "evidenceLevel": "medium_operator_context",
       "excerpt": "gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv @Razum_Dmitriy , вроде ваша нода. Formula X",
@@ -1476,6 +3751,75 @@
       "chat": "Gonka RU",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Deleted Account",
+          "authorSource": "explicit",
+          "date": "06.02.2026 10:09:07 UTC+03:00",
+          "excerpt": "Хорошо, благодарю 😌 Хотелось бы ещё здесь прочесть отзывы реального опыта ☺️👍",
+          "messageId": "message13898",
+          "relations": [
+            "previous_2",
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13897",
+          "sequenceIndex": 565
+        },
+        {
+          "author": "More",
+          "authorSource": "explicit",
+          "date": "06.02.2026 10:26:17 UTC+03:00",
+          "excerpt": "https://t.me/GonkaStart/81",
+          "messageId": "message13899",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 566
+        },
+        {
+          "author": "Andrey Panasenko",
+          "authorSource": "explicit",
+          "date": "06.02.2026 11:41:25 UTC+03:00",
+          "excerpt": "Реального опыта мало, сейчас в эпохе вижу только двоих таких: https://gonkascan.com/?page=address&address=gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl https://gonkascan.com/?page=address&address=gonka1xt7gy4ya2095jxnf9aerspw95r8h4t5mk39z57 Но стоимость веса у них, как видим, не...",
+          "messageId": "message13901",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13898",
+          "sequenceIndex": 567
+        },
+        {
+          "author": "Deleted Account",
+          "authorSource": "explicit",
+          "date": "06.02.2026 11:43:05 UTC+03:00",
+          "excerpt": "И я о том же... Потому что уже посмотрела 🌚🙈",
+          "messageId": "message13902",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13901",
+          "sequenceIndex": 568
+        },
+        {
+          "author": "Deleted Account",
+          "authorSource": "inherited_previous_message",
+          "date": "06.02.2026 11:43:39 UTC+03:00",
+          "excerpt": "А потому 8хН100 более реальный вариант для хорошего результата майнинга.",
+          "messageId": "message13903",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 569
+        }
+      ],
       "currentLabel": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
       "evidenceLevel": "weak_context",
       "excerpt": "Реального опыта мало, сейчас в эпохе вижу только двоих таких: https://gonkascan.com/?page=address&address=gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl https://gonkascan.com/?page=address&address=gonka1xt7gy4ya2095jxnf9aerspw95r8h4t5mk39z57 Но стоимость веса у них, как видим, не очень. Если ориентироваться на аренду 150/сутки.",
@@ -1513,6 +3857,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -1545,6 +3890,7 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
+      "contextMessages": [],
       "currentLabel": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
@@ -1577,6 +3923,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:08:15 UTC+03:00",
+          "excerpt": "попробую объяснить про \"насыпание\" из фонда - это не манна небесная, экономически - это размытие стоимости токенов и доли первых инвесторов, которые отдали за GNK в 3-8 раз больше 1-2-3$. каждая раздача - должна иметь четкую ощутимую цель - что на выходе из пользы будет - больше...",
+          "messageId": "message14925",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 675
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:24:48 UTC+03:00",
+          "excerpt": "у самурая только путь. Кроме денег нам нужно помнить и о времени, что мы теряем. Все решения нужно строить наперед, если мы верим, что проект вырастет. Так же мы хотим выглядеть как быстро развивающаюся экосистема. У гонки видно, что большое количество талантливых инженеров посв...",
+          "messageId": "message14926",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14925",
+          "sequenceIndex": 676
+        },
+        {
+          "author": "Fedor Tmkhv",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:53:26 UTC+03:00",
+          "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqea...",
+          "messageId": "message14927",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 677
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:54:20 UTC+03:00",
+          "excerpt": "Сообщение дало нужный эффект в день написания, отвечать по пунктам было не обязательно) Но спасибо, что нашел время 🙃",
+          "messageId": "message14928",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14923",
+          "sequenceIndex": 678
+        },
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 18:56:55 UTC+03:00",
+          "excerpt": "1. Изначально должен стабильно работать core продукт, llm/inference. сорри за базу - но Brand Awarness - и вообще продвижение бренда, имеет смысл только 2. после того как у вас есть стабильно рабочий продукт/сервис и есть худо бедно работающая экономика.",
+          "messageId": "message14929",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14926",
+          "sequenceIndex": 679
+        }
+      ],
       "currentLabel": "gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws",
       "evidenceLevel": "weak_context",
       "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...",
@@ -1609,6 +4022,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:08:15 UTC+03:00",
+          "excerpt": "попробую объяснить про \"насыпание\" из фонда - это не манна небесная, экономически - это размытие стоимости токенов и доли первых инвесторов, которые отдали за GNK в 3-8 раз больше 1-2-3$. каждая раздача - должна иметь четкую ощутимую цель - что на выходе из пользы будет - больше...",
+          "messageId": "message14925",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 675
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:24:48 UTC+03:00",
+          "excerpt": "у самурая только путь. Кроме денег нам нужно помнить и о времени, что мы теряем. Все решения нужно строить наперед, если мы верим, что проект вырастет. Так же мы хотим выглядеть как быстро развивающаюся экосистема. У гонки видно, что большое количество талантливых инженеров посв...",
+          "messageId": "message14926",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14925",
+          "sequenceIndex": 676
+        },
+        {
+          "author": "Fedor Tmkhv",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:53:26 UTC+03:00",
+          "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqea...",
+          "messageId": "message14927",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 677
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:54:20 UTC+03:00",
+          "excerpt": "Сообщение дало нужный эффект в день написания, отвечать по пунктам было не обязательно) Но спасибо, что нашел время 🙃",
+          "messageId": "message14928",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14923",
+          "sequenceIndex": 678
+        },
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 18:56:55 UTC+03:00",
+          "excerpt": "1. Изначально должен стабильно работать core продукт, llm/inference. сорри за базу - но Brand Awarness - и вообще продвижение бренда, имеет смысл только 2. после того как у вас есть стабильно рабочий продукт/сервис и есть худо бедно работающая экономика.",
+          "messageId": "message14929",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14926",
+          "sequenceIndex": 679
+        }
+      ],
       "currentLabel": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
       "evidenceLevel": "weak_context",
       "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...",
@@ -1641,6 +4121,99 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:42:49 UTC+03:00",
+          "excerpt": "Они должны быть все записаны на чейне, кто участвовал в PoC",
+          "messageId": "message15334",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15333",
+          "sequenceIndex": 89
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:54:51 UTC+03:00",
+          "excerpt": "И одна из нод почему-то не прошла PoC",
+          "messageId": "message15341",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 96
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:55:14 UTC+03:00",
+          "excerpt": "Она даже в эпоху не зашла",
+          "messageId": "message15342",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 97
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:31 UTC+03:00",
+          "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v...",
+          "messageId": "message15343",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15334",
+          "sequenceIndex": 98
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:34 UTC+03:00",
+          "excerpt": "Когда анализируете, надо учитывать делегацию, знаю, что так как все это делают в первый, раз это потребует училися",
+          "messageId": "message15344",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15337",
+          "sequenceIndex": 99
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:58:27 UTC+03:00",
+          "excerpt": "Мою ноду не включили в список, ml9 узел был inference вместо PoC",
+          "messageId": "message15345",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 100
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:58:34 UTC+03:00",
+          "excerpt": "Сюда",
+          "messageId": "message15346",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15343",
+          "sequenceIndex": 101
+        }
+      ],
       "currentLabel": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
       "evidenceLevel": "weak_context",
       "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 финальных членов НЕ отправляли PoC (preserved-only — продолжили inference во время PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...",
@@ -1673,6 +4246,74 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Mykola",
+          "authorSource": "explicit",
+          "date": "31.05.2026 17:20:21 UTC+03:00",
+          "excerpt": "Для тех у кого застревает запуск контейнеров на 8ках при TP=1. Попробуйте использовать переменную окружения ограничивающую количестово потоков на один инстанс - например OMP_NUM_THREADS=24",
+          "messageId": "message16243",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 946
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:34:54 UTC+03:00",
+          "excerpt": "Коллеги а что вчера было по Kimi ? Смотрю вес был 9,429 Confirm Ratio 100.00% Делегации на месте А выплата вместо обычных 4-5к всего 2238 GNK https://tracker.gonka.vip/?epoch=280&participant=gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc",
+          "messageId": "message16244",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 947
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:39:53 UTC+03:00",
+          "excerpt": "Кто-то здесь знает хостов с этими адресами? gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
+          "messageId": "message16245",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 948
+        },
+        {
+          "author": "Kytaets ⛩🐼",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:40:41 UTC+03:00",
+          "excerpt": "А что там?",
+          "messageId": "message16246",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16245",
+          "sequenceIndex": 949
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "31.05.2026 18:44:29 UTC+03:00",
+          "excerpt": "Видимо старая версия mlnode от Kaitakuai, инференс запросы замирают посередине на несколько минут, в процессе выполнения. Обновление контейнера у других участников помогло избавиться от этой проблемы",
+          "messageId": "message16247",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 950
+        }
+      ],
       "currentLabel": "gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
       "evidenceLevel": "weak_context",
       "excerpt": "Кто-то здесь знает хостов с этими адресами? gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka1jfv9n2af9y8xgnn6834mnp924vkpucmvchsq8d gonka1uhqpup9fev3zahlx6n326lp0krznc6usjtx6lu",
@@ -1705,7 +4346,8 @@
       "chat": "",
       "confidence": "",
       "contextKind": "",
-      "currentLabel": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+      "contextMessages": [],
+      "currentLabel": "xscp_x? · gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
       "evidenceLevel": "no_chat_signal",
       "excerpt": "",
       "inferenceUrl": "http://35.89.168.230:8000",
@@ -1737,6 +4379,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "inherited_previous_message",
+          "date": "03.05.2026 03:40:16 UTC+03:00",
+          "excerpt": "Мы одну 4xB200 специально оставили, показать что инференс работает (через node1, node2)",
+          "messageId": "message14282",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 50
+        },
+        {
+          "author": "Arturs Plisko",
+          "authorSource": "explicit",
+          "date": "03.05.2026 09:23:16 UTC+03:00",
+          "excerpt": "Я смотрю что часть нод что оставили у себя Kimi стали Inactive в эпохе",
+          "messageId": "message14283",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 51
+        },
+        {
+          "author": "Arturs Plisko",
+          "authorSource": "inherited_previous_message",
+          "date": "03.05.2026 09:25:42 UTC+03:00",
+          "excerpt": "Как минимум: gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+          "messageId": "message14284",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 52
+        },
+        {
+          "author": "Mykola",
+          "authorSource": "explicit",
+          "date": "03.05.2026 11:54:10 UTC+03:00",
+          "excerpt": "Да там вроде небольшая бага/фича логики когда новая модель not-Eligibility и её вес большой в весе ноды. Простыми словами её вес убирается в числителе но остается в знаменателе на сРоС.",
+          "messageId": "message14285",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14283",
+          "sequenceIndex": 53
+        },
+        {
+          "author": "Kytaets ⛩🐼",
+          "authorSource": "explicit",
+          "date": "03.05.2026 12:08:18 UTC+03:00",
+          "excerpt": "Мы оставили кими, но наверное тушить нужно - тк мисс рейт уже за 25%",
+          "messageId": "message14287",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 54
+        }
+      ],
       "currentLabel": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
       "evidenceLevel": "weak_context",
       "excerpt": "Как минимум: gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0 gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
@@ -1769,6 +4478,73 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:08:15 UTC+03:00",
+          "excerpt": "попробую объяснить про \"насыпание\" из фонда - это не манна небесная, экономически - это размытие стоимости токенов и доли первых инвесторов, которые отдали за GNK в 3-8 раз больше 1-2-3$. каждая раздача - должна иметь четкую ощутимую цель - что на выходе из пользы будет - больше...",
+          "messageId": "message14925",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 675
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:24:48 UTC+03:00",
+          "excerpt": "у самурая только путь. Кроме денег нам нужно помнить и о времени, что мы теряем. Все решения нужно строить наперед, если мы верим, что проект вырастет. Так же мы хотим выглядеть как быстро развивающаюся экосистема. У гонки видно, что большое количество талантливых инженеров посв...",
+          "messageId": "message14926",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14925",
+          "sequenceIndex": 676
+        },
+        {
+          "author": "Fedor Tmkhv",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:53:26 UTC+03:00",
+          "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqea...",
+          "messageId": "message14927",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 677
+        },
+        {
+          "author": "Danya Yan",
+          "authorSource": "explicit",
+          "date": "13.05.2026 17:54:20 UTC+03:00",
+          "excerpt": "Сообщение дало нужный эффект в день написания, отвечать по пунктам было не обязательно) Но спасибо, что нашел время 🙃",
+          "messageId": "message14928",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14923",
+          "sequenceIndex": 678
+        },
+        {
+          "author": "Alex Petrov",
+          "authorSource": "explicit",
+          "date": "13.05.2026 18:56:55 UTC+03:00",
+          "excerpt": "1. Изначально должен стабильно работать core продукт, llm/inference. сорри за базу - но Brand Awarness - и вообще продвижение бренда, имеет смысл только 2. после того как у вас есть стабильно рабочий продукт/сервис и есть худо бедно работающая экономика.",
+          "messageId": "message14929",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14926",
+          "sequenceIndex": 679
+        }
+      ],
       "currentLabel": "gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje",
       "evidenceLevel": "weak_context",
       "excerpt": "А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...",
@@ -1801,7 +4577,75 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
-      "currentLabel": "A? · gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
+      "contextMessages": [
+        {
+          "author": "Vas Ily",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:34:30 UTC+03:00",
+          "excerpt": "а сейчас как будто на треть обрезало",
+          "messageId": "message15921",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15886",
+          "sequenceIndex": 642
+        },
+        {
+          "author": "Vas Ily",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 11:36:48 UTC+03:00",
+          "excerpt": "причём вес сети уменьшился, то есть вроде нельзя сказать что это из-за наплыва желающих хостить kimi",
+          "messageId": "message15922",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 643
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "23.05.2026 11:53:31 UTC+03:00",
+          "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556...",
+          "messageId": "message15923",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 644
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "23.05.2026 12:02:29 UTC+03:00",
+          "excerpt": "Мой адрес среди этих нод, все работало корректно",
+          "messageId": "message15924",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15923",
+          "sequenceIndex": 645
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "23.05.2026 12:02:37 UTC+03:00",
+          "excerpt": "Отлключений не было",
+          "messageId": "message15925",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 646
+        }
+      ],
+      "currentLabel": "gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4",
       "evidenceLevel": "weak_context",
       "excerpt": "Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий",
       "inferenceUrl": "http://88.99.213.222:8000",
@@ -1833,6 +4677,74 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "02.05.2026 22:40:24 UTC+03:00",
+          "excerpt": "я кстати в итоге vpn создавал тк рядом не нашел b200",
+          "messageId": "message14231",
+          "relations": [
+            "previous_2",
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14230",
+          "sequenceIndex": 2
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "02.05.2026 22:42:30 UTC+03:00",
+          "excerpt": "@blofry будет в этот раз Deus Ex Hyperfusion в последние три минуты до итогов? Зайдут топ-5 майнеры с Кими в эту эпоху или не в этот раз?",
+          "messageId": "message14232",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 3
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "inherited_previous_message",
+          "date": "02.05.2026 22:43:03 UTC+03:00",
+          "excerpt": "ну вот и их при этом почти нет: B200 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 H200 gonka1umvyh0rz5fdmk9qhxurshhchennajced6f4s89 B300 gonka1dzdmx5ljrwkelrmgd7suv2q43epn293qacpgqn 4xB200 gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz H200 gonka1pllyukkeymx3hfd9mts3pryr9y6efs9esh...",
+          "messageId": "message14233",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14231",
+          "sequenceIndex": 4
+        },
+        {
+          "author": "Arturs Plisko",
+          "authorSource": "explicit",
+          "date": "02.05.2026 22:44:17 UTC+03:00",
+          "excerpt": "\"Не могу ни доказать ни опровергнуть\". Но все действия мы уже выполнили",
+          "messageId": "message14234",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message14232",
+          "sequenceIndex": 5
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "02.05.2026 22:45:10 UTC+03:00",
+          "excerpt": "Я вот такое распределение вижу Веса не отскейлкнные но количество https://gonkascan.com/?page=hardware",
+          "messageId": "message14235",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 6
+        }
+      ],
       "currentLabel": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
       "evidenceLevel": "weak_context",
       "excerpt": "ну вот и их при этом почти нет: B200 gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 H200 gonka1umvyh0rz5fdmk9qhxurshhchennajced6f4s89 B300 gonka1dzdmx5ljrwkelrmgd7suv2q43epn293qacpgqn 4xB200 gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz H200 gonka1pllyukkeymx3hfd9mts3pryr9y6efs9eshty87 B200 gonka1r5hdy9q5v783ef7td98k4c68cxl6a58h5sytfq",
@@ -1865,6 +4777,86 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "inherited_previous_message",
+          "date": "01.05.2026 01:28:03 UTC+03:00",
+          "excerpt": "мог бы адреса пошэрить?",
+          "messageId": "message13965",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13960",
+          "sequenceIndex": 730
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:29:14 UTC+03:00",
+          "excerpt": "Они получили effectiveWeight = 0 на всю эпоху и из-за этого не получили награду",
+          "messageId": "message13966",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13964",
+          "sequenceIndex": 731
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:30:44 UTC+03:00",
+          "excerpt": "Да, ты скорее всего прав, это все одни и те же кейсы",
+          "messageId": "message13967",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 732
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:37:44 UTC+03:00",
+          "excerpt": "с одной ML gonka1h3s37p0l23mg6ak9h9nmayh6r9f2vm6umj3qet gonka1zpw8tml8xl4fm6zm8zpf2u4pq4tehmd9e2vgq7 мультиноды gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc (в эту эпоху зашла с 5 ML, до этого там было 3ML) gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6 (3 ML)",
+          "messageId": "message13968",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13965",
+          "sequenceIndex": 733
+        },
+        {
+          "author": "Mitch",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:52:57 UTC+03:00",
+          "excerpt": "Кстатит, тестова утилита на сетевых теперь на всех выдает вот такое. Думаю что это вероятно нормально. Но давайте уточним. \"issues\": [ \"Missing 1 of 20 required permissions\" ], \"recommendations\": [ \"Run authz grant commands. See inference-chain/x/inference/permissions.go\" ]",
+          "messageId": "message13969",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 734
+        },
+        {
+          "author": "Gleb Morgachev",
+          "authorSource": "explicit",
+          "date": "01.05.2026 01:57:07 UTC+03:00",
+          "excerpt": "да, это не критично, если сделать еще раз: ./inferenced tx inference grant-ml-ops-permissions \\ gonka-account-key \\ <ml-operational-key-address> \\ --from gonka-account-key \\ --keyring-backend file \\ --gas 2000000 \\ --node <seed_api_url>/chain-rpc/ исчезнет",
+          "messageId": "message13970",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message13969",
+          "sequenceIndex": 735
+        }
+      ],
       "currentLabel": "gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6",
       "evidenceLevel": "weak_context",
       "excerpt": "с одной ML gonka1h3s37p0l23mg6ak9h9nmayh6r9f2vm6umj3qet gonka1zpw8tml8xl4fm6zm8zpf2u4pq4tehmd9e2vgq7 мультиноды gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc (в эту эпоху зашла с 5 ML, до этого там было 3ML) gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6 (3 ML)",
@@ -1897,6 +4889,99 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:42:49 UTC+03:00",
+          "excerpt": "Они должны быть все записаны на чейне, кто участвовал в PoC",
+          "messageId": "message15334",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15333",
+          "sequenceIndex": 89
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:54:51 UTC+03:00",
+          "excerpt": "И одна из нод почему-то не прошла PoC",
+          "messageId": "message15341",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 96
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:55:14 UTC+03:00",
+          "excerpt": "Она даже в эпоху не зашла",
+          "messageId": "message15342",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 97
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:31 UTC+03:00",
+          "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v...",
+          "messageId": "message15343",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15334",
+          "sequenceIndex": 98
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:34 UTC+03:00",
+          "excerpt": "Когда анализируете, надо учитывать делегацию, знаю, что так как все это делают в первый, раз это потребует училися",
+          "messageId": "message15344",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15337",
+          "sequenceIndex": 99
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:58:27 UTC+03:00",
+          "excerpt": "Мою ноду не включили в список, ml9 узел был inference вместо PoC",
+          "messageId": "message15345",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 100
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:58:34 UTC+03:00",
+          "excerpt": "Сюда",
+          "messageId": "message15346",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15343",
+          "sequenceIndex": 101
+        }
+      ],
       "currentLabel": "gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds",
       "evidenceLevel": "weak_context",
       "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 финальных членов НЕ отправляли PoC (preserved-only — продолжили inference во время PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...",
@@ -1929,6 +5014,100 @@
       "chat": "Gonka Devs",
       "confidence": "high",
       "contextKind": "reply_parent",
+      "contextMessages": [
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:08:51 UTC+03:00",
+          "excerpt": "Верно ли то, что только gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le обозначила себя как собирающая хостить минимакс?",
+          "messageId": "message16096",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16095",
+          "sequenceIndex": 809
+        },
+        {
+          "author": "Nik",
+          "authorSource": "inherited_previous_message",
+          "date": "27.05.2026 16:10:41 UTC+03:00",
+          "excerpt": "может по этому нет интентов :?",
+          "messageId": "message16101",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 814
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:11:26 UTC+03:00",
+          "excerpt": "это кими. Надо минимакс: ./inferenced tx inference declare-poc-intent MiniMaxAI/MiniMax-M2.7 \\ --from <YOUR-KEY> \\ --node http://node2.gonka.ai:8000/chain-rpc/ \\ --chain-id gonka-mainnet \\ --keyring-backend file \\ --gas auto \\ --gas-adjustment 1.3 \\ -y",
+          "messageId": "message16102",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 815
+        },
+        {
+          "author": "Arturs Plisko",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:11:39 UTC+03:00",
+          "excerpt": "Нет. Мы послали интент от gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, но по тому что я вижу он теми скриптами не виден",
+          "messageId": "message16103",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16096",
+          "sequenceIndex": 816
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:12:12 UTC+03:00",
+          "excerpt": "тут тоже нет https://node3.gonka.ai/chain-api/productscience/inference/inference/poc_delegation/gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
+          "messageId": "message16104",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16103",
+          "sequenceIndex": 817
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:12:14 UTC+03:00",
+          "excerpt": "Это я уже пробовал старую приспосабливать, думал может в новой ошибка была",
+          "messageId": "message16105",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16102",
+          "sequenceIndex": 818
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:13:07 UTC+03:00",
+          "excerpt": "С версии 0.2.13 отправляли команду?",
+          "messageId": "message16107",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16103",
+          "sequenceIndex": 820
+        }
+      ],
       "currentLabel": "gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
       "evidenceLevel": "public_owner_proof",
       "excerpt": "Нет. Мы послали интент от gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, но по тому что я вижу он теми скриптами не виден",
@@ -1961,6 +5140,99 @@
       "chat": "Gonka Devs",
       "confidence": "medium",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:42:49 UTC+03:00",
+          "excerpt": "Они должны быть все записаны на чейне, кто участвовал в PoC",
+          "messageId": "message15334",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15333",
+          "sequenceIndex": 89
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:54:51 UTC+03:00",
+          "excerpt": "И одна из нод почему-то не прошла PoC",
+          "messageId": "message15341",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 96
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:55:14 UTC+03:00",
+          "excerpt": "Она даже в эпоху не зашла",
+          "messageId": "message15342",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 97
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:31 UTC+03:00",
+          "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v...",
+          "messageId": "message15343",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15334",
+          "sequenceIndex": 98
+        },
+        {
+          "author": "David Liberman",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:56:34 UTC+03:00",
+          "excerpt": "Когда анализируете, надо учитывать делегацию, знаю, что так как все это делают в первый, раз это потребует училися",
+          "messageId": "message15344",
+          "relations": [
+            "next_1"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15337",
+          "sequenceIndex": 99
+        },
+        {
+          "author": "A",
+          "authorSource": "explicit",
+          "date": "17.05.2026 00:58:27 UTC+03:00",
+          "excerpt": "Мою ноду не включили в список, ml9 узел был inference вместо PoC",
+          "messageId": "message15345",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 100
+        },
+        {
+          "author": "A",
+          "authorSource": "inherited_previous_message",
+          "date": "17.05.2026 00:58:34 UTC+03:00",
+          "excerpt": "Сюда",
+          "messageId": "message15346",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message15343",
+          "sequenceIndex": 101
+        }
+      ],
       "currentLabel": "gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw",
       "evidenceLevel": "weak_context",
       "excerpt": "Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 финальных членов НЕ отправляли PoC (preserved-only — продолжили inference во время PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...",
@@ -1993,6 +5265,100 @@
       "chat": "Gonka Devs",
       "confidence": "high",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:08:51 UTC+03:00",
+          "excerpt": "Верно ли то, что только gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le обозначила себя как собирающая хостить минимакс?",
+          "messageId": "message16096",
+          "relations": [
+            "reply_parent"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16095",
+          "sequenceIndex": 809
+        },
+        {
+          "author": "Nik",
+          "authorSource": "inherited_previous_message",
+          "date": "27.05.2026 16:10:41 UTC+03:00",
+          "excerpt": "может по этому нет интентов :?",
+          "messageId": "message16101",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 814
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:11:26 UTC+03:00",
+          "excerpt": "это кими. Надо минимакс: ./inferenced tx inference declare-poc-intent MiniMaxAI/MiniMax-M2.7 \\ --from <YOUR-KEY> \\ --node http://node2.gonka.ai:8000/chain-rpc/ \\ --chain-id gonka-mainnet \\ --keyring-backend file \\ --gas auto \\ --gas-adjustment 1.3 \\ -y",
+          "messageId": "message16102",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 815
+        },
+        {
+          "author": "Arturs Plisko",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:11:39 UTC+03:00",
+          "excerpt": "Нет. Мы послали интент от gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, но по тому что я вижу он теми скриптами не виден",
+          "messageId": "message16103",
+          "relations": [
+            "target"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16096",
+          "sequenceIndex": 816
+        },
+        {
+          "author": "Votkon",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:12:12 UTC+03:00",
+          "excerpt": "тут тоже нет https://node3.gonka.ai/chain-api/productscience/inference/inference/poc_delegation/gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
+          "messageId": "message16104",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16103",
+          "sequenceIndex": 817
+        },
+        {
+          "author": "Nik",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:12:14 UTC+03:00",
+          "excerpt": "Это я уже пробовал старую приспосабливать, думал может в новой ошибка была",
+          "messageId": "message16105",
+          "relations": [
+            "next_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16102",
+          "sequenceIndex": 818
+        },
+        {
+          "author": "Evgenii Maksimenkov",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:13:07 UTC+03:00",
+          "excerpt": "С версии 0.2.13 отправляли команду?",
+          "messageId": "message16107",
+          "relations": [
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message16103",
+          "sequenceIndex": 820
+        }
+      ],
       "currentLabel": "Arturs Plisko? · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p",
       "evidenceLevel": "public_owner_proof",
       "excerpt": "Нет. Мы послали интент от gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p, но по тому что я вижу он теми скриптами не виден",
@@ -2025,6 +5391,75 @@
       "chat": "Gonka RU",
       "confidence": "high",
       "contextKind": "same_message",
+      "contextMessages": [
+        {
+          "author": "Timur Vyalshin",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:46:12 UTC+03:00",
+          "excerpt": "Я позвонил бабушкам, сказал, чтобы придержали свои пенсии)",
+          "messageId": "message37708",
+          "relations": [
+            "previous_2"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message37707",
+          "sequenceIndex": 552
+        },
+        {
+          "author": "Andrey Panasenko",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:50:13 UTC+03:00",
+          "excerpt": "Представь какая там ментальная ловушка. Человек неподготовленный заходит с таким заголовком, а там крутые специалисты обсуждают запускать маркетинг или не разочаровывать инвесторов раньше времени и пока пилить продукт дальше 😐",
+          "messageId": "message37709",
+          "relations": [
+            "previous_1"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 553
+        },
+        {
+          "author": "Ваня Лось",
+          "authorSource": "explicit",
+          "date": "27.05.2026 16:57:12 UTC+03:00",
+          "excerpt": "Всем привет! Если вы не хостите МиниМакс на своей ноде, то можете отправить poc-delegation на нашу (мы хостим сегодня), чтобы не потерять 10-15% от веса своей ноды. inferenced tx inference set-poc-delegation \\ MiniMaxAI/MiniMax-M2.7 \\ gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx...",
+          "messageId": "message37710",
+          "relations": [
+            "target"
+          ],
+          "replyText": "",
+          "replyToMessageId": "",
+          "sequenceIndex": 554
+        },
+        {
+          "author": "Slava MSE!",
+          "authorSource": "explicit",
+          "date": "27.05.2026 17:06:00 UTC+03:00",
+          "excerpt": "Я переслал вот сюда: https://t.me/gonka_hosts Присоединяйся )",
+          "messageId": "message37711",
+          "relations": [
+            "next_1",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message37710",
+          "sequenceIndex": 555
+        },
+        {
+          "author": "Slava MSE!",
+          "authorSource": "inherited_previous_message",
+          "date": "27.05.2026 17:08:20 UTC+03:00",
+          "excerpt": "А точно хостите?",
+          "messageId": "message37712",
+          "relations": [
+            "next_2",
+            "reply_child"
+          ],
+          "replyText": "In reply to this message",
+          "replyToMessageId": "message37710",
+          "sequenceIndex": 556
+        }
+      ],
       "currentLabel": "Ваня Лось? · gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
       "evidenceLevel": "strong_local_operator_signal",
       "excerpt": "Всем привет! Если вы не хостите МиниМакс на своей ноде, то можете отправить poc-delegation на нашу (мы хостим сегодня), чтобы не потерять 10-15% от веса своей ноды. inferenced tx inference set-poc-delegation \\ MiniMaxAI/MiniMax-M2.7 \\ gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx \\ --from gonka-account-key \\ --chain-id gonka-mainnet \\ --node http://node1.gonka.ai:8000/chain-rpc/ \\ --keyring-backend file \\ --gas auto --gas-adjustment 1.3 \\ --gas-prices 0ngonka \\ --broadcast-mode sync \\ --yes",

@@ -542,6 +542,47 @@ td.num {
   overflow-wrap: anywhere;
 }
 
+.chat-context {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.chat-context-row {
+  padding: 6px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.chat-context-row:first-child {
+  border-top: 0;
+}
+
+.chat-context-row.target {
+  color: var(--text);
+  background: rgba(77, 183, 168, 0.08);
+  margin: 0 -6px;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.chat-context-meta,
+.chat-context-reply {
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.chat-context-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  align-items: center;
+}
+
 a {
   color: var(--accent);
 }

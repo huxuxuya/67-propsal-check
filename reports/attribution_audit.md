@@ -4,12 +4,12 @@ This report ranks interested parties from committed public snapshots. It is not 
 
 ## Top Ranked Parties
 
-### #1 ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
+### #1 Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Addresses: gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 - Roles: epoch_commit_participant, recipient, voter
 - Total compensation: 66487.744752 GONKA
-- Overall priority: 67.698 (identity 25, benefit 13.298, governance 16, coordination 5.4, telegram 8, proposal 0); operational priority 81.698 (inference timing 8, inference/vote overlap 6)
+- Overall priority: 69.848 (identity 25, benefit 13.298, governance 16, coordination 5.55, telegram 10, proposal 0); operational priority 83.848 (inference timing 8, inference/vote overlap 6)
 - Confidence: high
 - Caveats: Address both received compensation and voted. | e287 inference timing is an operational signal, not governance voting power.
 
@@ -25,7 +25,7 @@ Top evidence:
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - Roles: epoch_commit_participant, operator, recipient, voter
 - Total compensation: 73073.708453 GONKA
-- Overall priority: 60.515 (identity 14, benefit 14.615, governance 16, coordination 3.9, telegram 12, proposal 0); operational priority 74.515 (inference timing 8, inference/vote overlap 6)
+- Overall priority: 60.815 (identity 14, benefit 14.615, governance 16, coordination 4.2, telegram 12, proposal 0); operational priority 74.815 (inference timing 8, inference/vote overlap 6)
 - Confidence: medium
 - Caveats: No strict public owner proof. | Address both received compensation and voted. | e287 inference timing is an operational signal, not governance voting power.
 
@@ -68,7 +68,23 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=55552
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=56352
 
-### #5 gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
+### #5 ma1teg0? · gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
+
+- Addresses: gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
+- Roles: epoch_commit_participant, recipient
+- Total compensation: 4044.099545 GONKA
+- Overall priority: 48.109 (identity 25, benefit 0.809, governance 0, coordination 14.3, telegram 8, proposal 0); operational priority 48.109 (inference timing 0, inference/vote overlap 0)
+- Confidence: high
+- Caveats: none
+
+Top evidence:
+- matched_validator_identity (high, proof): 673C81B66A67ED67
+- matched_validator_identity (high, proof): 673C81B66A67ED67
+- matched_validator_identity (high, proof): 673C81B66A67ED67
+- matched_validator_identity (high, proof): 673C81B66A67ED67
+- matched_validator_moniker (high, proof): gonka-3
+
+### #6 gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
 
 - Addresses: gonka1gvrrhjmy4w4mayvs2s5l23edj8ertcmtd2v4zr
 - Roles: epoch_commit_participant, recipient, voter
@@ -84,41 +100,28 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=8512
 
-### #6 gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
+### #7 gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
 
 - Addresses: gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
 - Roles: message_sender
 - Total compensation: 0 GONKA
-- Overall priority: 44.3 (identity 14, benefit 0.0, governance 18, coordination 0.3, telegram 2, proposal 10); operational priority 44.3 (inference timing 0, inference/vote overlap 0)
+- Overall priority: 44.75 (identity 14, benefit 0.0, governance 18, coordination 0.75, telegram 2, proposal 10); operational priority 44.75 (inference timing 0, inference/vote overlap 0)
 - Confidence: medium
 - Caveats: No strict public owner proof.
 
 Top evidence:
 - proposal_message_sender (high, signal): /inference.streamvesting.MsgBatchTransferWithVesting
+- discord_identity_excerpt (medium, signal): Hello everybody, is there any way I can increase productivity? root@v545071:/opt/gonka/deploy/join# curl -s http://localhost:9200/admin/v1/nodes | jq . [ { "node": { "host": "inference", "inference_segment": "", "inference_port": 5000, "poc_segment": "", "poc_port": 8080, "models": { "Qwen/Qwen2.5-7B-Instruct": { "args": [ "--quantization", "fp8", "--gpu-memory-utilization", "0.9" ] } }, "id": "node1", "max_concurrent": 500, "node_num": 1, "hardware": [ { "type": "NVIDIA L40S | 44GB", "count": 1 } ] }, "state": { "intended_status": "INFERENCE", "current_status": "INFERENCE", "poc_intended_status": "IDLE", "poc_current_status": "IDLE", "lock_count": 0, "failure_reason": "", "status_timestamp...
+- discord_identity_excerpt (medium, signal): Hi! Get exactly half the weight as other with the same L40S. What could be the reason? [ { "node": { "host": "49.213.134.9", "inference_segment": "", "inference_port": 32459, "poc_segment": "", "poc_port": 32456, "models": { "Qwen/Qwen2.5-7B-Instruct": { "args": [] } }, "id": "node1", "max_concurrent": 500, "node_num": 1, "hardware": [ { "type": "NVIDIA L40S | 44GB", "count": 4 } ] }, "state": { "intended_status": "INFERENCE", "current_status": "INFERENCE", "poc_intended_status": "IDLE", "poc_current_status": "IDLE", "lock_count": 0, "failure_reason": "", "status_timestamp": "2025-12-22T19:31:53.708956552Z", "admin_state": { "enabled": true, "epoch": 0 }, "epoch_models": { "Qwen/Qwen2.5-7B-...
+- discord_identity_excerpt (medium, signal): Привет! Получаю ровно в 2 раза меньше веса, по сравнению с такими же L40S. Посоветуйте решение пожалуйста [ { "node": { "host": "49.213.134.9", "inference_segment": "", "inference_port": 32459, "poc_segment": "", "poc_port": 32456, "models": { "Qwen/Qwen2.5-7B-Instruct": { "args": [] } }, "id": "node1", "max_concurrent": 500, "node_num": 1, "hardware": [ { "type": "NVIDIA L40S | 44GB", "count": 4 } ] }, "state": { "intended_status": "INFERENCE", "current_status": "INFERENCE", "poc_intended_status": "IDLE", "poc_current_status": "IDLE", "lock_count": 0, "failure_reason": "", "status_timestamp": "2025-12-22T19:31:53.708956552Z", "admin_state": { "enabled": true, "epoch": 0 }, "epoch_models":...
 - telegram_address_context (medium, signal): из вот этого кармана gonka10d07y265gmmuvt4z0w9aw880jnsr700j2h5m33
-
-### #7 gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
-
-- Addresses: gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
-- Roles: epoch_commit_participant, recipient
-- Total compensation: 4044.099545 GONKA
-- Overall priority: 42.309 (identity 25, benefit 0.809, governance 0, coordination 12.5, telegram 4, proposal 0); operational priority 42.309 (inference timing 0, inference/vote overlap 0)
-- Confidence: high
-- Caveats: none
-
-Top evidence:
-- matched_validator_identity (high, proof): 673C81B66A67ED67
-- matched_validator_identity (high, proof): 673C81B66A67ED67
-- matched_validator_identity (high, proof): 673C81B66A67ED67
-- matched_validator_identity (high, proof): 673C81B66A67ED67
-- matched_validator_moniker (high, proof): gonka-3
 
 ### #8 Arturs Plisko? · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 
 - Addresses: gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 - Roles: epoch_commit_participant, voter
 - Total compensation: 0 GONKA
-- Overall priority: 42.15 (identity 25, benefit 0.0, governance 8, coordination 3.15, telegram 6, proposal 0); operational priority 42.15 (inference timing 0, inference/vote overlap 0)
+- Overall priority: 44.3 (identity 25, benefit 0.0, governance 8, coordination 3.3, telegram 8, proposal 0); operational priority 44.3 (inference timing 0, inference/vote overlap 0)
 - Confidence: high
 - Caveats: none
 
@@ -221,7 +224,23 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=39328
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=13536
 
-### #15 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
+### #15 Ваня Лось? · gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
+
+- Addresses: gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
+- Roles: epoch_commit_participant, recipient, voter
+- Total compensation: 2392.222959 GONKA
+- Overall priority: 36.378 (identity 14, benefit 0.478, governance 16, coordination 3.9, telegram 2, proposal 0); operational priority 36.378 (inference timing 0, inference/vote overlap 0)
+- Confidence: medium
+- Caveats: No strict public owner proof. | Address both received compensation and voted.
+
+Top evidence:
+- compensation_output (high, signal): 2392.222959 GONKA
+- matched_validator_moniker (high, signal): gonkavaloper1zktn8j65wlys8a8e38hqhf4y3x6m4x047s835t
+- matched_validator_moniker (high, signal): gonkavaloper1zktn8j65wlys8a8e38hqhf4y3x6m4x047s835t
+- proposal_vote (high, signal): no_with_veto
+- telegram_self_claim (high, signal): Всем привет! Если вы не хостите МиниМакс на своей ноде, то можете отправить poc-delegation на нашу (мы хостим сегодня), чтобы не потерять 10-15% от веса своей ноды. inferenced tx inference set-poc-delegation \ MiniMaxAI/MiniMax-M2.7 \ gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx \ --from gonka-account-key \ --chain-id gonka-mainnet \ --node http://node1.gonka.ai:8000/chain-rpc/ \ --keyring-backend file \ --gas auto --gas-adjustment 1.3 \ --gas-prices 0ngonka \ --broadcast-mode sync \ --yes
+
+### #16 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 
 - Addresses: gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 - Roles: epoch_commit_participant, recipient, voter
@@ -237,23 +256,23 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e269 moonshotai/Kimi-K2.6 count=7296
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=14880
 
-### #16 Ваня Лось? · gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
+### #17 gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
 
-- Addresses: gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
-- Roles: epoch_commit_participant, recipient, voter
-- Total compensation: 2392.222959 GONKA
-- Overall priority: 36.078 (identity 14, benefit 0.478, governance 16, coordination 3.6, telegram 2, proposal 0); operational priority 36.078 (inference timing 0, inference/vote overlap 0)
+- Addresses: gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
+- Roles: delegator, epoch_commit_participant, recipient, voter
+- Total compensation: 1805.142498 GONKA
+- Overall priority: 33.961 (identity 14, benefit 0.361, governance 16, coordination 3.6, telegram 0, proposal 0); operational priority 47.961 (inference timing 8, inference/vote overlap 6)
 - Confidence: medium
-- Caveats: No strict public owner proof. | Address both received compensation and voted.
+- Caveats: No strict public owner proof. | Address both received compensation and voted. | e287 inference timing is an operational signal, not governance voting power.
 
 Top evidence:
-- compensation_output (high, signal): 2392.222959 GONKA
-- matched_validator_moniker (high, signal): gonkavaloper1zktn8j65wlys8a8e38hqhf4y3x6m4x047s835t
-- matched_validator_moniker (high, signal): gonkavaloper1zktn8j65wlys8a8e38hqhf4y3x6m4x047s835t
-- proposal_vote (high, signal): no_with_veto
-- telegram_self_claim (high, signal): Всем привет! Если вы не хостите МиниМакс на своей ноде, то можете отправить poc-delegation на нашу (мы хостим сегодня), чтобы не потерять 10-15% от веса своей ноды. inferenced tx inference set-poc-delegation \ MiniMaxAI/MiniMax-M2.7 \ gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx \ --from gonka-account-key \ --chain-id gonka-mainnet \ --node http://node1.gonka.ai:8000/chain-rpc/ \ --keyring-backend file \ --gas auto --gas-adjustment 1.3 \ --gas-prices 0ngonka \ --broadcast-mode sync \ --yes
+- compensation_output (high, signal): 1805.142498 GONKA
+- matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
+- matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
+- proposal_vote (high, signal): yes
+- discord_address_excerpt (medium, signal): gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj gonka1ccdm8j6sjyhq4qask049dwgaczs7f3pxte6zmp gonka1d7ghexkrnm00fh695zcd00xgfgwxe2vvamcsdt gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1fc9tzt83dgrqswlgay4668cuqjrk7zsqks2vm2 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz gonka1lr9mj6dgkv0h76c8y8w0l3esztyg9v2q8d6d8d gonka1myu058axjs62mc3e7n...
 
-### #17 gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5
+### #18 gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5
 
 - Addresses: gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5
 - Roles: delegator, epoch_commit_participant, recipient, voter
@@ -269,28 +288,12 @@ Top evidence:
 - proposal_vote (high, signal): no_with_veto
 - epoch_commit_participant (medium, signal): e267 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1152
 
-### #18 gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
-
-- Addresses: gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt
-- Roles: delegator, epoch_commit_participant, recipient, voter
-- Total compensation: 1805.142498 GONKA
-- Overall priority: 33.661 (identity 14, benefit 0.361, governance 16, coordination 3.3, telegram 0, proposal 0); operational priority 47.661 (inference timing 8, inference/vote overlap 6)
-- Confidence: medium
-- Caveats: No strict public owner proof. | Address both received compensation and voted. | e287 inference timing is an operational signal, not governance voting power.
-
-Top evidence:
-- compensation_output (high, signal): 1805.142498 GONKA
-- matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
-- matched_validator_moniker (high, signal): gonkavaloper1tja3g2da45efhe2p83gk3whtussmgmts3lex5x
-- proposal_vote (high, signal): yes
-- epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=60352
-
 ### #19 gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz
 
 - Addresses: gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz
 - Roles: delegator, epoch_commit_participant, recipient, voter
 - Total compensation: 1575.513417 GONKA
-- Overall priority: 33.465 (identity 14, benefit 0.315, governance 16, coordination 3.15, telegram 0, proposal 0); operational priority 33.465 (inference timing 0, inference/vote overlap 0)
+- Overall priority: 33.765 (identity 14, benefit 0.315, governance 16, coordination 3.45, telegram 0, proposal 0); operational priority 33.765 (inference timing 0, inference/vote overlap 0)
 - Confidence: medium
 - Caveats: No strict public owner proof. | Address both received compensation and voted.
 
@@ -299,7 +302,7 @@ Top evidence:
 - matched_validator_moniker (high, signal): gonkavaloper1hwvel7n3zuk6wruefuzc356l9myske9shc8fy0
 - matched_validator_moniker (high, signal): gonkavaloper1hwvel7n3zuk6wruefuzc356l9myske9shc8fy0
 - proposal_vote (high, signal): yes
-- epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=51552
+- discord_address_excerpt (medium, signal): gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u gonka14ljarev2nlzu4ej50vx7ylj2rvg4n20fnq2ysc gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj gonka1ccdm8j6sjyhq4qask049dwgaczs7f3pxte6zmp gonka1d7ghexkrnm00fh695zcd00xgfgwxe2vvamcsdt gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1fc9tzt83dgrqswlgay4668cuqjrk7zsqks2vm2 gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz gonka1lr9mj6dgkv0h76c8y8w0l3esztyg9v2q8d6d8d gonka1myu058axjs62mc3e7n...
 
 ### #20 asd.gnk · gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 

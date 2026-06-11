@@ -13,5 +13,5 @@ No row currently satisfies all three operational conditions (entered e287, voted
 
 ## Voted During e287 With Power
 
-- ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`: vote=no_with_veto power=28865 e287_weight=28865 entered=False exited=False
+- Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09 `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`: vote=no_with_veto power=28865 e287_weight=28865 entered=False exited=False
 - gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj `gonka1nmn039cgpkhmkzekpkfz3nkv9tcjckpn46jyrj`: vote=yes power=20647 e287_weight=20647 entered=False exited=False

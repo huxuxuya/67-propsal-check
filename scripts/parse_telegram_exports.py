@@ -52,6 +52,7 @@ class TelegramExportParser(HTMLParser):
         self.stack = []
         self.in_from = False
         self.in_text = False
+        self.in_reply = False
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -63,6 +64,8 @@ class TelegramExportParser(HTMLParser):
                 "author": "",
                 "date": "",
                 "text": "",
+                "replyText": "",
+                "replyToMessageId": "",
             }
         if not self.current:
             return
@@ -70,8 +73,15 @@ class TelegramExportParser(HTMLParser):
             self.in_from = True
         if tag == "div" and "text" in classes:
             self.in_text = True
+        if tag == "div" and "reply_to" in classes:
+            self.in_reply = True
         if tag == "div" and "date" in classes:
             self.current["date"] = attrs.get("title", "")
+        if tag == "a" and self.in_reply:
+            href = attrs.get("href", "")
+            reply_match = re.search(r"go_to_message(\d+)", href)
+            if reply_match:
+                self.current["replyToMessageId"] = reply_match.group(1)
 
     def handle_endtag(self, tag):
         if self.current and tag == "div":
@@ -79,9 +89,12 @@ class TelegramExportParser(HTMLParser):
                 self.in_from = False
             if self.in_text and self.stack and "text" in self.stack[-1][1]:
                 self.in_text = False
+            if self.in_reply and self.stack and "reply_to" in self.stack[-1][1]:
+                self.in_reply = False
             if self.stack and "message" in self.stack[-1][1]:
                 self.current["author"] = " ".join(self.current["author"].split())
                 self.current["text"] = " ".join(self.current["text"].split())
+                self.current["replyText"] = " ".join(self.current["replyText"].split())
                 self.messages.append(self.current)
                 self.current = None
         if self.stack:
@@ -92,6 +105,8 @@ class TelegramExportParser(HTMLParser):
             return
         if self.in_from:
             self.current["author"] += data
+        elif self.in_reply:
+            self.current["replyText"] += data
         elif self.in_text:
             self.current["text"] += data
 
@@ -118,6 +133,59 @@ def excerpt(text, max_len=420):
     if len(text) <= max_len:
         return text
     return text[: max_len - 1].rstrip() + "..."
+
+
+def context_excerpt(text, max_len=280):
+    return excerpt(text, max_len)
+
+
+def context_messages(messages, index, before=2, after=2):
+    by_id = {message.get("messageId", ""): (idx, message) for idx, message in enumerate(messages)}
+    target = messages[index]
+    selected = {}
+
+    def add(idx, relation):
+        if idx < 0 or idx >= len(messages):
+            return
+        message = messages[idx]
+        message_id = message.get("messageId", "")
+        current = selected.get(message_id)
+        if current:
+            if relation not in current["relations"]:
+                current["relations"].append(relation)
+            return
+        selected[message_id] = {
+            "messageId": message_id,
+            "date": message.get("date", ""),
+            "author": message.get("author", ""),
+            "authorSource": message.get("authorSource", ""),
+            "relations": [relation],
+            "replyToMessageId": message.get("replyToMessageId", ""),
+            "replyText": context_excerpt(message.get("replyText", ""), 180),
+            "excerpt": context_excerpt(message.get("text", "")),
+            "sequenceIndex": idx,
+        }
+
+    for offset in range(before, 0, -1):
+        add(index - offset, f"previous_{offset}")
+    add(index, "target")
+    for offset in range(1, after + 1):
+        add(index + offset, f"next_{offset}")
+
+    reply_id = target.get("replyToMessageId", "")
+    if reply_id and reply_id in by_id:
+        add(by_id[reply_id][0], "reply_parent")
+
+    child_count = 0
+    target_id = target.get("messageId", "")
+    for child_index, message in enumerate(messages):
+        if child_count >= 3:
+            break
+        if message.get("replyToMessageId") == target_id:
+            add(child_index, "reply_child")
+            child_count += 1
+
+    return sorted(selected.values(), key=lambda row: row["sequenceIndex"])
 
 
 def chat_name(path):
@@ -195,7 +263,8 @@ def main():
     summary = {"files": 0, "messages": 0, "messagesWithMatches": 0}
     for path in sorted(HISTORY.glob("Gonka */messages*.html")):
         summary["files"] += 1
-        for message in parse_file(path):
+        messages = parse_file(path)
+        for index, message in enumerate(messages):
             summary["messages"] += 1
             text = message.get("text", "")
             addresses = sorted(set(ADDRESS_RE.findall(text)))
@@ -213,6 +282,9 @@ def main():
                     "author": message.get("author", ""),
                     "authorSource": message.get("authorSource", "missing"),
                     "excerpt": excerpt(text),
+                    "replyText": excerpt(message.get("replyText", ""), 260),
+                    "replyToMessageId": message.get("replyToMessageId", ""),
+                    "contextMessages": context_messages(messages, index),
                     "addresses": addresses,
                     "urls": urls,
                     "usernames": usernames,

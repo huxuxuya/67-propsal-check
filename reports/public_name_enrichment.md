@@ -13,7 +13,7 @@ This report normalizes public naming sources for proposal #67 addresses. It uses
 
 ## Proposal Addresses With Public Names
 
-### ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
+### Ancapex? · ancapex | Mine from $1, no losses from node failures · gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09
 
 - Address: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
 - Roles: recipient, voter; compensation: 66487.744752 GONKA; voting power: 28865; vote: no_with_veto
@@ -47,7 +47,7 @@ Public sources:
 - validator_identity (high, proof): 7B07CCF42FA50009
 - participant_inference_url (medium, signal): http://46.4.101.189:8000
 
-### gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
+### ma1teg0? · gonka-3 · gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5
 
 - Address: `gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5`
 - Roles: recipient; compensation: 3018.840187 GONKA; voting power: 0; vote: did_not_vote
@@ -80,7 +80,7 @@ Public sources:
 - validator_website (medium, signal): https://formulaxpool.com
 - participant_inference_url (medium, signal): http://162.55.232.115:8000
 
-### gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
+### Arturs Plisko? · gonka-1 · gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le
 
 - Address: `gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le`
 - Roles: recipient; compensation: 1025.259358 GONKA; voting power: 0; vote: did_not_vote
@@ -444,7 +444,7 @@ Public sources:
 - validator_moniker (high, signal): gonkavaloper1830lqug50lse998x2lakk4pj5ypfumz5aap9cf
 - participant_inference_url (medium, signal): http://195.201.192.170:8000
 
-### gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239
+### xscp_x? · gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239
 
 - Address: `gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239`
 - Roles: recipient; compensation: 12612.234866 GONKA; voting power: 0; vote: did_not_vote
