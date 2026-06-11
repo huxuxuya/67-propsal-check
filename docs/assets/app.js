@@ -408,7 +408,6 @@ function renderOverview(data) {
   document.getElementById("recipientCount").textContent = `${data.summary.recipientsCount} non-zero recipients`;
   document.getElementById("finalTally").textContent = `Yes ${fmt.format(data.summary.finalTally.yes)} / Veto ${fmt.format(data.summary.finalTally.no_with_veto)}`;
   document.getElementById("recipientVoters").textContent = `${data.summary.recipientVotersCount} of ${data.summary.uniqueVotersCount}`;
-  document.getElementById("multiplier").textContent = `${fmt.format(data.summary.visibleDamageToFinalMultiplier)}x`;
 }
 
 function renderCompensationChart() {
