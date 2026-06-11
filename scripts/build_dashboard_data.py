@@ -390,7 +390,12 @@ def canonical_actor_for_address(address, row, claims):
     operator_signal = row.get("operatorSignalLabel") or ""
     operator_signal_display = row.get("operatorSignalDisplayLabel") or operator_signal
     proof_claims = [claim for claim in claims if claim.get("isAttributionProof")]
-    high_claims = [claim for claim in claims if claim.get("confidence") == "high"]
+    identity_claims = [
+        claim
+        for claim in claims
+        if claim.get("category") not in {"governance", "financial_or_epoch_activity"}
+    ]
+    high_claims = [claim for claim in identity_claims if claim.get("confidence") == "high"]
     infrastructure_claims = [
         claim
         for claim in claims
@@ -410,12 +415,19 @@ def canonical_actor_for_address(address, row, claims):
 
     if proof_claims:
         boundary = "public_owner_proof"
+        tier = "proof"
+    elif operator_signal:
+        boundary = "public_identity_signal"
+        tier = "telegram_signal"
     elif infrastructure_claims and not high_claims and not (public_name and public_name != address):
         boundary = "infrastructure_signal"
+        tier = "host_signal"
     elif high_claims or public_name and public_name != address:
         boundary = "public_identity_signal"
+        tier = "public_signal"
     else:
         boundary = "unknown"
+        tier = "context_only"
 
     return {
         "address": address,
@@ -424,6 +436,7 @@ def canonical_actor_for_address(address, row, claims):
         "publicName": public_name if public_name != address else "",
         "labelSource": label_source,
         "identityBoundary": boundary,
+        "attributionTier": tier,
         "claimCount": len(claims),
         "proofCount": len(proof_claims),
         "highConfidenceClaimCount": len(high_claims),
@@ -441,6 +454,7 @@ def apply_canonical_actor_fields(rows, address_key, canonical_by_address):
         row["publicName"] = actor["publicName"]
         row["labelSource"] = actor["labelSource"]
         row["identityBoundary"] = actor["identityBoundary"]
+        row["attributionTier"] = actor.get("attributionTier", "")
         row["label"] = actor["displayLabel"]
 
 
@@ -627,6 +641,8 @@ def normalize_claim_value(value):
 
 
 def evidence_category(source_type):
+    if source_type.startswith("telegram_"):
+        return "telegram_signal"
     if source_type in {"proposal_proposer", "proposal_message_sender", "proposal_vote", "proposal_output"}:
         return "governance"
     if source_type in {"compensation_output", "upstream_delegation", "epoch_commit_participant"}:
@@ -640,18 +656,76 @@ def evidence_category(source_type):
     return "public_identity"
 
 
-def make_claim(address, subject, source_type, source_value, source_file, confidence="medium", proof=False, caveat=""):
-    return {
+def attribution_tier(source_type, category, proof=False):
+    if proof:
+        return "proof"
+    if source_type in {
+        "telegram_self_claim",
+        "telegram_self_or_team_claim",
+        "telegram_operator_statement",
+        "telegram_operator_answer",
+        "telegram_operator_context",
+        "telegram_pool_roster",
+    }:
+        return "telegram_signal"
+    if source_type.startswith("telegram_"):
+        return "context_only"
+    if category in {"infrastructure_signal", "public_infrastructure"} or source_type in {
+        "participant_inference_url",
+        "same_inference_host",
+        "same_ip_prefix",
+        "same_asn",
+        "same_tls_cert",
+        "dns_resolves_to",
+    }:
+        return "host_signal"
+    if category == "public_identity":
+        return "public_signal"
+    return "context_only"
+
+
+def make_claim(address, subject, source_type, source_value, source_file, confidence="medium", proof=False, caveat="", metadata=None):
+    category = evidence_category(source_type)
+    claim = {
         "address": address,
         "subject": subject or address,
-        "category": evidence_category(source_type),
+        "category": category,
         "sourceType": source_type,
         "sourceValue": normalize_claim_value(source_value),
         "sourceFile": source_file,
         "sourceUrl": source_url_for_file(source_file),
         "confidence": confidence,
         "isAttributionProof": bool(proof),
+        "attributionTier": attribution_tier(source_type, category, proof),
         "caveat": caveat,
+    }
+    if metadata:
+        claim.update({key: value for key, value in metadata.items() if value not in (None, "")})
+    return claim
+
+
+def telegram_source_url(row):
+    source_file = row.get("sourceFile", "history")
+    message_id = row.get("messageId", "")
+    if not source_file or not message_id:
+        return source_url_for_file(source_file)
+    anchor = message_id if str(message_id).startswith("message") else f"message{message_id}"
+    return f"{source_file}#{anchor}"
+
+
+def telegram_claim_metadata(row):
+    source_url = row.get("sourceUrl") or telegram_source_url(row)
+    return {
+        "sourceUrl": source_url,
+        "telegramChat": row.get("chat", ""),
+        "telegramMessageId": row.get("messageId", ""),
+        "telegramMessageTime": row.get("messageTime") or row.get("date", ""),
+        "telegramAuthor": row.get("author", ""),
+        "telegramAuthorSource": row.get("authorSource", ""),
+        "telegramSignalStrength": row.get("signalStrength", ""),
+        "telegramContextTags": row.get("contextTags", []),
+        "telegramReplyToMessageId": row.get("replyToMessageId", ""),
+        "telegramExcerpt": row.get("excerpt", ""),
     }
 
 
@@ -1196,6 +1270,7 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
                     message.get("confidence", "medium"),
                     False,
                     message.get("caveat", "Telegram excerpt requires corroboration."),
+                    telegram_claim_metadata(message),
                 )
             )
 
@@ -1213,6 +1288,7 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
                 signal.get("confidence", "medium"),
                 False,
                 signal.get("caveat", "Local Telegram history links this address to an operator/pool context; this is not public owner proof."),
+                telegram_claim_metadata(signal),
             )
         )
 
@@ -1233,6 +1309,7 @@ def build_evidence_claims(proposal, recipients, votes, identity_evidence, identi
                 signal.get("confidence", "medium") or "medium",
                 False,
                 signal.get("caveat", "Local Telegram chat signal; not public owner proof without independent corroboration."),
+                telegram_claim_metadata(signal),
             )
         )
 
@@ -1290,6 +1367,10 @@ def apply_investigation_labels(recipients, votes, evidence_claims):
             "confidence": confidence,
             "sourceUrl": claim.get("sourceUrl", ""),
             "caveat": claim.get("caveat", ""),
+            "attributionTier": claim.get("attributionTier", "telegram_signal"),
+            "telegramMessageId": claim.get("telegramMessageId", ""),
+            "telegramMessageTime": claim.get("telegramMessageTime", ""),
+            "telegramAuthor": claim.get("telegramAuthor", ""),
         }
         current = operator_labels.get(address)
         if not current or priority[confidence] < priority.get(current.get("confidence", ""), 9):
@@ -1301,11 +1382,12 @@ def apply_investigation_labels(recipients, votes, evidence_claims):
         if not signal:
             return
         public_label_value = row.get("publicLabel") or address
-        signal_label = signal["label"] if signal["confidence"] == "high" else f"{signal['label']}?"
+        signal_label = signal["label"] if signal["label"].endswith("?") else f"{signal['label']}?"
         row["publicLabel"] = public_label_value
         row["operatorSignalLabel"] = signal["label"]
         row["operatorSignalDisplayLabel"] = signal_label
         row["operatorSignal"] = signal
+        row["attributionTier"] = signal.get("attributionTier", "telegram_signal")
         label_parts = [signal_label]
         if public_label_value and public_label_value not in {address, signal["label"]}:
             label_parts.append(public_label_value)
@@ -1337,6 +1419,7 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
                 "publicName": "",
                 "labelSource": "address",
                 "identityBoundary": "unknown",
+                "attributionTier": "context_only",
                 "strictClusterId": "",
                 "signalClusterId": "",
             }
@@ -1353,6 +1436,7 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
         actor["publicName"] = row.get("publicName", "")
         actor["labelSource"] = row.get("labelSource", "")
         actor["identityBoundary"] = row.get("identityBoundary", "")
+        actor["attributionTier"] = row.get("attributionTier", actor.get("attributionTier", "context_only"))
         actor["strictClusterId"] = row.get("strictClusterId", "")
         actor["signalClusterId"] = row.get("signalClusterId", "")
 
@@ -1367,6 +1451,7 @@ def build_actors(proposal, recipients, votes, identity_graph, onchain_graph, lab
         actor["publicName"] = row.get("publicName", "")
         actor["labelSource"] = row.get("labelSource", "")
         actor["identityBoundary"] = row.get("identityBoundary", "")
+        actor["attributionTier"] = row.get("attributionTier", actor.get("attributionTier", "context_only"))
         actor["strictClusterId"] = row.get("strictClusterId", "")
         actor["signalClusterId"] = row.get("signalClusterId", "")
 
@@ -1500,6 +1585,7 @@ def build_ranked_parties(actors, claims, identity_graph):
                 "actorShortLabel": row.get("actorShortLabel", row["label"]),
                 "identityBoundary": row.get("identityBoundary", ""),
                 "labelSource": row.get("labelSource", ""),
+                "attributionTier": row.get("attributionTier", ""),
                 "addresses": sorted(row["addresses"]),
                 "roles": sorted(row["roles"]),
                 "identityTypes": sorted(row["identityTypes"]),
@@ -1529,6 +1615,285 @@ def build_ranked_parties(actors, claims, identity_graph):
     for index, row in enumerate(ranked, start=1):
         row["rank"] = index
     return ranked
+
+
+def normalize_account_address(address):
+    address = address or ""
+    if address.startswith("gonkavaloper"):
+        return account_from_valoper(address)
+    return address
+
+
+def claim_sort_key(claim):
+    return (
+        {"proof": 0, "telegram_signal": 1, "public_signal": 2, "host_signal": 3, "context_only": 4}.get(claim.get("attributionTier"), 9),
+        {"high": 0, "medium": 1, "low": 2}.get(claim.get("confidence"), 3),
+        claim.get("sourceType", ""),
+        claim.get("sourceValue", ""),
+    )
+
+
+def claim_host_values(claim):
+    values = []
+    for value in [claim.get("sourceValue", ""), claim.get("sourceUrl", "")]:
+        host = host_from_url(value)
+        if host:
+            values.append(host)
+    return sorted(set(values))
+
+
+def address_hosts(row):
+    hosts = []
+    node_info = row.get("publicNodeInfo") or {}
+    for value in [row.get("inferenceUrl", ""), node_info.get("inferenceUrl", "")]:
+        host = host_from_url(value)
+        if host:
+            hosts.append(host)
+    return sorted(set(hosts))
+
+
+def build_attribution_dossiers(recipients, votes, actors, evidence_claims):
+    recipient_by_address = {row["address"]: row for row in recipients}
+    vote_by_address = {row["voter"]: row for row in votes}
+    actor_by_address = {row["address"]: row for row in actors}
+    claims_by_address = defaultdict(list)
+    for claim in evidence_claims:
+        if claim.get("address"):
+            claims_by_address[claim["address"]].append(claim)
+
+    all_addresses = sorted(set(recipient_by_address) | set(vote_by_address))
+    grouped = {}
+
+    for address in all_addresses:
+        recipient = recipient_by_address.get(address, {})
+        vote = vote_by_address.get(address, {})
+        actor = actor_by_address.get(address, {})
+        row = {**actor, **recipient, **vote, "address": address}
+        claims = claims_by_address.get(address, [])
+        proof_claims = [claim for claim in claims if claim.get("attributionTier") == "proof"]
+        telegram_claims = [claim for claim in claims if claim.get("attributionTier") == "telegram_signal"]
+        host_claims = [claim for claim in claims if claim.get("attributionTier") == "host_signal"]
+        hosts = set(address_hosts(recipient) + address_hosts(vote))
+        for claim in claims:
+            hosts.update(claim_host_values(claim))
+
+        if proof_claims:
+            candidate = actor.get("publicName") or row.get("publicLabel") or actor.get("actorShortLabel") or address
+            key = f"proof:{candidate}"
+            tier = "proof"
+        elif row.get("operatorSignalLabel"):
+            candidate = row.get("operatorSignalLabel", "")
+            key = f"telegram:{candidate}"
+            tier = "telegram_signal"
+        elif telegram_claims:
+            candidate = sorted(telegram_claims, key=claim_sort_key)[0].get("subject") or actor.get("actorShortLabel") or address
+            key = f"telegram:{candidate}"
+            tier = "telegram_signal"
+        elif hosts:
+            candidate = sorted(hosts)[0]
+            key = f"host:{candidate}"
+            tier = "host_signal"
+        else:
+            candidate = actor.get("actorShortLabel") or row.get("label") or address
+            key = f"address:{address}"
+            tier = row.get("attributionTier") or "context_only"
+
+        group = grouped.setdefault(
+            key,
+            {
+                "id": key,
+                "candidateLabel": candidate,
+                "displayLabel": candidate if tier == "proof" or candidate.endswith("?") else f"{candidate}?",
+                "attributionTier": tier,
+                "identityBoundary": "public_owner_proof" if tier == "proof" else row.get("identityBoundary", "unknown"),
+                "addresses": set(),
+                "hosts": set(),
+                "roles": set(),
+                "totalCompensationGonka": 0,
+                "totalVotingPower": 0,
+                "votePowerByOption": defaultdict(float),
+                "claims": [],
+                "addressRows": [],
+            },
+        )
+        group["addresses"].add(address)
+        group["hosts"].update(hosts)
+        group["roles"].update(actor.get("roles", []))
+        if recipient:
+            group["roles"].add("recipient")
+        if vote:
+            group["roles"].add("voter")
+        total_comp = recipient.get("totalGonka") or actor.get("totalCompensationGonka") or 0
+        voting_power = vote.get("votingPower") or actor.get("votingPower") or 0
+        group["totalCompensationGonka"] += total_comp
+        group["totalVotingPower"] += voting_power
+        vote_option = vote.get("primaryOption") or recipient.get("voteOption") or actor.get("voteOption") or "did_not_vote"
+        if voting_power:
+            group["votePowerByOption"][vote_option] += voting_power
+        group["claims"].extend(claims)
+        group["addressRows"].append(
+            {
+                "address": address,
+                "label": row.get("label") or actor.get("label") or address,
+                "actorShortLabel": row.get("actorShortLabel") or actor.get("actorShortLabel") or address,
+                "roles": sorted(set(actor.get("roles", [])) | ({"recipient"} if recipient else set()) | ({"voter"} if vote else set())),
+                "totalCompensationGonka": round(total_comp, 6),
+                "votingPower": round(voting_power, 6),
+                "voteOption": vote_option,
+                "identityBoundary": row.get("identityBoundary") or actor.get("identityBoundary", "unknown"),
+                "attributionTier": row.get("attributionTier") or actor.get("attributionTier", tier),
+                "inferenceUrl": recipient.get("inferenceUrl") or (vote.get("publicNodeInfo") or {}).get("inferenceUrl", ""),
+                "hosts": sorted(hosts),
+                "validatorKey": ((recipient.get("publicNodeInfo") or vote.get("publicNodeInfo") or {}).get("validatorKey", "")),
+            }
+        )
+
+    dossiers = []
+    for group in grouped.values():
+        claims = sorted(group["claims"], key=claim_sort_key)
+        proof_claims = [claim for claim in claims if claim.get("attributionTier") == "proof"]
+        telegram_claims = [claim for claim in claims if claim.get("attributionTier") == "telegram_signal"]
+        host_claims = [claim for claim in claims if claim.get("attributionTier") == "host_signal"]
+        context_claims = [claim for claim in claims if claim.get("attributionTier") == "context_only"]
+        tier_counts = Counter(claim.get("attributionTier", "context_only") for claim in claims)
+        caveats = []
+        if not proof_claims:
+            caveats.append("No public owner proof; treat as attribution lead.")
+        if telegram_claims:
+            caveats.append("Telegram signal needs independent corroboration before owner attribution.")
+        if host_claims:
+            caveats.append("Host/infrastructure links do not prove common ownership.")
+        dossiers.append(
+            {
+                "id": group["id"],
+                "candidateLabel": group["candidateLabel"],
+                "displayLabel": group["displayLabel"],
+                "attributionTier": "proof" if proof_claims else ("telegram_signal" if telegram_claims else ("host_signal" if host_claims else group["attributionTier"])),
+                "identityBoundary": "public_owner_proof" if proof_claims else group["identityBoundary"],
+                "addresses": sorted(group["addresses"]),
+                "addressRows": sorted(group["addressRows"], key=lambda row: (-row["totalCompensationGonka"], -row["votingPower"], row["address"])),
+                "hosts": sorted(group["hosts"]),
+                "roles": sorted(group["roles"]),
+                "totalCompensationGonka": round(group["totalCompensationGonka"], 6),
+                "totalVotingPower": round(group["totalVotingPower"], 6),
+                "votePowerByOption": {key: round(value, 6) for key, value in sorted(group["votePowerByOption"].items())},
+                "claimCount": len(claims),
+                "tierCounts": dict(tier_counts),
+                "proofClaims": proof_claims[:12],
+                "telegramClaims": telegram_claims[:20],
+                "hostClaims": host_claims[:12],
+                "contextClaims": context_claims[:12],
+                "topClaims": claims[:16],
+                "caveats": caveats,
+            }
+        )
+
+    dossiers.sort(
+        key=lambda row: (
+            {"proof": 0, "telegram_signal": 1, "host_signal": 2, "public_signal": 3, "context_only": 4}.get(row["attributionTier"], 9),
+            -row["totalVotingPower"],
+            -row["totalCompensationGonka"],
+            row["displayLabel"],
+        )
+    )
+    for index, row in enumerate(dossiers, start=1):
+        row["rank"] = index
+    return dossiers
+
+
+def build_telegram_coverage(telegram_evidence, chat_attribution, recipients, votes):
+    messages = telegram_evidence.get("messages") or []
+    participant_addresses = {row["address"] for row in recipients} | {row["voter"] for row in votes}
+
+    def message_addresses(message):
+        return sorted({normalize_account_address(address) for address in message.get("addresses") or [] if address})
+
+    linked_messages = []
+    unlinked_address_rows = []
+    participant_addresses_with_telegram = set()
+    by_file = {}
+    by_chat = Counter()
+    by_source_type = Counter()
+    by_strength = Counter()
+
+    for message in messages:
+        addresses = message_addresses(message)
+        matching = sorted(set(addresses) & participant_addresses)
+        if matching:
+            linked_messages.append(message)
+            participant_addresses_with_telegram.update(matching)
+        elif addresses:
+            unlinked_address_rows.append(
+                {
+                    "chat": message.get("chat", ""),
+                    "messageId": message.get("messageId", ""),
+                    "date": message.get("date", ""),
+                    "author": message.get("author", ""),
+                    "sourceFile": message.get("sourceFile", ""),
+                    "sourceUrl": telegram_source_url(message),
+                    "sourceType": message.get("sourceType", ""),
+                    "confidence": message.get("confidence", ""),
+                    "signalStrength": message.get("signalStrength", ""),
+                    "addresses": addresses,
+                    "urls": message.get("urls", []),
+                    "usernames": message.get("usernames", []),
+                    "excerpt": message.get("excerpt", ""),
+                }
+            )
+        source_file = message.get("sourceFile", "")
+        file_row = by_file.setdefault(
+            source_file,
+            {
+                "sourceFile": source_file,
+                "chat": message.get("chat", ""),
+                "rows": 0,
+                "participantLinkedRows": 0,
+                "addressRows": 0,
+                "strongRows": 0,
+                "contextRows": 0,
+                "weakRows": 0,
+            },
+        )
+        file_row["rows"] += 1
+        if matching:
+            file_row["participantLinkedRows"] += 1
+        if addresses:
+            file_row["addressRows"] += 1
+        strength = message.get("signalStrength", "")
+        if strength.startswith("strong"):
+            file_row["strongRows"] += 1
+        elif strength == "context":
+            file_row["contextRows"] += 1
+        elif strength == "weak":
+            file_row["weakRows"] += 1
+        by_chat[message.get("chat", "unknown")] += 1
+        by_source_type[message.get("sourceType", "unknown")] += 1
+        by_strength[message.get("signalStrength", "unknown")] += 1
+
+    participant_rows = chat_attribution.get("rows") or []
+    by_evidence_level = Counter(row.get("evidenceLevel", "unknown") for row in participant_rows)
+    participant_without_telegram = sorted(participant_addresses - participant_addresses_with_telegram)
+    unlinked_address_rows.sort(key=lambda row: (row["sourceFile"], row["messageId"], row["addresses"]))
+
+    return {
+        "summary": {
+            **(telegram_evidence.get("summary") or {}),
+            "rawMatchedMessages": len(messages),
+            "participantLinkedMessages": len(linked_messages),
+            "participantAddresses": len(participant_addresses),
+            "participantAddressesWithTelegram": len(participant_addresses_with_telegram),
+            "participantAddressesWithoutTelegram": len(participant_without_telegram),
+            "unlinkedTelegramAddressRows": len(unlinked_address_rows),
+            "chatAttributionRows": len(participant_rows),
+        },
+        "byChat": [{"chat": key, "rows": value} for key, value in sorted(by_chat.items())],
+        "bySourceType": [{"sourceType": key, "rows": value} for key, value in sorted(by_source_type.items())],
+        "bySignalStrength": [{"signalStrength": key, "rows": value} for key, value in sorted(by_strength.items())],
+        "byParticipantEvidenceLevel": [{"evidenceLevel": key, "rows": value} for key, value in sorted(by_evidence_level.items())],
+        "byFile": sorted(by_file.values(), key=lambda row: (row["chat"], row["sourceFile"])),
+        "participantAddressesWithoutTelegram": participant_without_telegram,
+        "unlinkedAddressRows": unlinked_address_rows[:300],
+    }
 
 
 def build_interest_clusters(actors, evidence_claims, identity_graph):
@@ -1715,6 +2080,7 @@ def build_benefit_power_matrix(recipients, votes, interest_clusters, evidence_cl
                 "actorShortLabel": recipient.get("actorShortLabel") or vote.get("actorShortLabel") or recipient.get("label") or vote.get("label") or address,
                 "identityBoundary": recipient.get("identityBoundary") or vote.get("identityBoundary") or evidence_boundary,
                 "labelSource": recipient.get("labelSource") or vote.get("labelSource") or "",
+                "attributionTier": recipient.get("attributionTier") or vote.get("attributionTier") or evidence_boundary,
                 "publicLabel": recipient.get("publicLabel") or vote.get("publicLabel") or "",
                 "operatorSignalLabel": recipient.get("operatorSignalLabel") or vote.get("operatorSignalLabel") or "",
                 "operatorSignalDisplayLabel": recipient.get("operatorSignalDisplayLabel") or vote.get("operatorSignalDisplayLabel") or "",
@@ -1861,6 +2227,7 @@ def build_public_name_enrichment(recipients, votes, identity_evidence, evidence_
                 "actorShortLabel": recipient.get("actorShortLabel") or vote.get("actorShortLabel") or recipient.get("label") or vote.get("label") or address,
                 "identityBoundary": recipient.get("identityBoundary") or vote.get("identityBoundary") or evidence_boundary,
                 "labelSource": recipient.get("labelSource") or vote.get("labelSource") or "",
+                "attributionTier": recipient.get("attributionTier") or vote.get("attributionTier") or evidence_boundary,
                 "bestPublicName": best_public_name,
                 "roles": sorted([role for role, present in {"recipient": bool(recipient), "voter": bool(vote)}.items() if present]),
                 "totalCompensationGonka": round(recipient.get("totalGonka") or 0, 6),
@@ -3726,6 +4093,8 @@ def main():
     voting_power_window = build_voting_power_window(votes, governance_power_evidence)
     voting_window_epoch_weights = build_voting_window_epoch_weights(votes)
     public_name_enrichment = build_public_name_enrichment(recipients, votes, identity_evidence, evidence_claims, gns_by_address)
+    attribution_dossiers = build_attribution_dossiers(recipients, votes, actors, evidence_claims)
+    telegram_coverage = build_telegram_coverage(telegram_evidence, chat_attribution, recipients, votes)
     telegram_attribution_audit = build_telegram_attribution_audit(recipients, votes, evidence_claims)
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
@@ -3778,6 +4147,9 @@ def main():
         "publicNameEnrichmentMultiAddressGroupCount": public_name_enrichment["summary"]["publicNameGroupsWithMultipleProposalAddresses"],
         "publicSocialCandidateCount": len(osint_sources.get("publicSocialCandidates") or []),
         "telegramEvidenceCount": len(telegram_evidence.get("messages") or []),
+        "telegramParticipantLinkedMessagesCount": telegram_coverage["summary"]["participantLinkedMessages"],
+        "telegramUnlinkedAddressRowsCount": telegram_coverage["summary"]["unlinkedTelegramAddressRows"],
+        "attributionDossierCount": len(attribution_dossiers),
         "historyOperatorSignalCount": len(history_operator_signals.get("rows") or []),
         "chatAttributionStrongSignalCount": chat_attribution.get("summary", {}).get("strongLocalOperatorRows", 0),
         "chatAttributionMediumSignalCount": chat_attribution.get("summary", {}).get("mediumOperatorContextRows", 0),
@@ -3832,6 +4204,8 @@ def main():
         "votingPowerWindow": voting_power_window,
         "votingWindowEpochWeights": voting_window_epoch_weights,
         "publicNameEnrichment": public_name_enrichment,
+        "attributionDossiers": attribution_dossiers,
+        "telegramCoverage": telegram_coverage,
         "telegramAttributionAudit": telegram_attribution_audit,
         "telegramEvidence": telegram_evidence.get("messages") or [],
         "historyOperatorSignals": history_operator_signals.get("rows") or [],

@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Proposal #67 Forensic Dashboard</title>
-    <link rel="stylesheet" href="assets/styles.css?v=20260611-2">
+    <link rel="stylesheet" href="assets/styles.css?v=20260611-8">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-    <script src="data/dashboard.js?v=20260611-2"></script>
+    <script src="data/dashboard.js?v=20260611-8"></script>
   </head>
   <body>
     <header class="topbar">
@@ -426,6 +426,73 @@
       <section class="table-grid">
         <div class="panel table-panel">
           <div class="panel-head">
+            <h2>Attribution Dossiers</h2>
+            <span id="attributionRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Candidate</th>
+                  <th>Addresses</th>
+                  <th>Hosts</th>
+                  <th>Comp / Power</th>
+                  <th>Evidence</th>
+                  <th>Caveats</th>
+                </tr>
+              </thead>
+              <tbody id="attributionTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Telegram Coverage</h2>
+            <span id="telegramCoverageRows">-</span>
+          </div>
+          <div class="coverage-summary" id="telegramCoverageSummary"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>File</th>
+                  <th>Chat</th>
+                  <th>Rows</th>
+                  <th>Linked</th>
+                  <th>Address rows</th>
+                  <th>Strong / context / weak</th>
+                </tr>
+              </thead>
+              <tbody id="telegramCoverageTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel table-panel">
+          <div class="panel-head">
+            <h2>Unlinked Telegram Address Leads</h2>
+            <span id="telegramUnlinkedRows">-</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Author</th>
+                  <th>Addresses</th>
+                  <th>Signal</th>
+                  <th>Excerpt</th>
+                </tr>
+              </thead>
+              <tbody id="telegramUnlinkedTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="table-grid">
+        <div class="panel table-panel">
+          <div class="panel-head">
             <h2>Telegram Evidence</h2>
             <span id="telegramRows">-</span>
           </div>
@@ -601,6 +668,6 @@
     </aside>
     <div class="scrim" id="scrim"></div>
 
-    <script src="assets/app.js?v=20260611-2"></script>
+    <script src="assets/app.js?v=20260611-8"></script>
   </body>
 </html>

@@ -5,36 +5,36 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 - rows: 63
 - addresses: 63
 - publicOwnerProofRows: 6
-- strongLocalOperatorRows: 8
+- strongLocalOperatorRows: 3
 - mediumOperatorContextRows: 1
-- weakContextRows: 31
+- weakContextRows: 36
 - noChatSignalRows: 17
 
-## strong_local_operator_signal: `gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau`
+## weak_context: `gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau`
 
-- Current label: gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
-- Chat candidate: A; source: telegram_self_claim (high)
+- Current label: A? · gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
+- Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient; compensation: 20610.390028 GONKA; voting power: 0
-- Source: `history/Gonka Devs/messages16.html` message15924 23.05.2026 12:02:29 UTC+03:00 by A
-- Excerpt: Мой адрес среди этих нод, все работало корректно
+- Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
+- Excerpt: Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
-## strong_local_operator_signal: `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`
+## weak_context: `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`
 
-- Current label: gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
-- Chat candidate: A; source: telegram_self_claim (high)
+- Current label: A? · gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
+- Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient voter; compensation: 11262.520198 GONKA; voting power: 57838
-- Source: `history/Gonka Devs/messages16.html` message15924 23.05.2026 12:02:29 UTC+03:00 by A
-- Excerpt: Мой адрес среди этих нод, все работало корректно
+- Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
+- Excerpt: Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
-## strong_local_operator_signal: `gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw`
+## weak_context: `gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw`
 
-- Current label: gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw
-- Chat candidate: A; source: telegram_self_claim (high)
+- Current label: A? · gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw
+- Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient; compensation: 11688.555563 GONKA; voting power: 0
-- Source: `history/Gonka Devs/messages16.html` message15924 23.05.2026 12:02:29 UTC+03:00 by A
-- Excerpt: Мой адрес среди этих нод, все работало корректно
+- Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
+- Excerpt: Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
 ## public_owner_proof: `gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09`
@@ -154,13 +154,13 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 - Excerpt: Всего отпраляло nonces 41 участник. 9 PoC submitters НЕ попали в финальный set эпохи 266 (отвалились/исключены после PoC): - gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np - gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d - gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9 - gonka1jrgm47v5eg876udmzg6j6glqcsd5x0vk6crpax - gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg - gonka1qa90tgczc0k5dvk4l5nvlf5y6phgm6mg22sfjv - gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje - gonka1xwkesaxvdadh9wt9yyladu0r260s7whklcktds - gonka1yal0ysgzc860zt3y8cds8656tnueusgymftvkw 14 финальных членов НЕ отправляли PoC (preserved-only — продолжили inference во время PoC): - gonka15p7s7w2hx0y8095lddd4ummm2y0kwpwljk00aq - gonka1830lqu...
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
-## strong_local_operator_signal: `gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n`
+## weak_context: `gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n`
 
-- Current label: gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n
-- Chat candidate: A; source: telegram_self_claim (high)
+- Current label: A? · gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n
+- Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient; compensation: 1753.409171 GONKA; voting power: 0
-- Source: `history/Gonka Devs/messages16.html` message15924 23.05.2026 12:02:29 UTC+03:00 by A
-- Excerpt: Мой адрес среди этих нод, все работало корректно
+- Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
+- Excerpt: Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
 ## weak_context: `gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0`
@@ -264,7 +264,7 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 
 ## strong_local_operator_signal: `gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg`
 
-- Current label: Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
+- Current label: Votkon? · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - Chat candidate: Votkon; source: telegram_operator_statement (high)
 - Roles: recipient voter; compensation: 73073.708453 GONKA; voting power: 92840
 - Source: `history/Gonka Devs/messages14.html` message14182 02.05.2026 12:16:47 UTC+03:00 by Votkon
@@ -350,13 +350,13 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 - Excerpt: А тут есть владельцы этих кошельков? gonka1wkgawwdzj623ss8eywayzdj6qcgr2llygactje gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5 gonka1jltjehxsnum94nt8c00ts7khmpy4lafv6gryzk gonka125n6kr5gvdup0lndfkps7t6rd6592panhrg3np gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg gonka163ug8zucqeag9v5ey4au34jqt7vejkmxsg74eu gonka19cjm4c5mt3j3qdr8vhytmm4hef3pnkvkm0x7m2 gonka1tl5m3vuqsx333v7095ymwjdc4vdk2wd9r5hqws gonka1mdy7nlecw4xaqdxmeh3qlqzakg9ftge9szfqgg gonka1m27e6qup7q8jmvnrn29kahd7vlx6r4l84z4thz gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e gonka1y4kyhqy022gt4kklxxflgqkutnx96ssww66zg6 gonka18xeqnspxpg2vncufnjne485rkaagwvz7whyn0d gonka12tfc6ccmadjqv6yaa3axxsuhy6zv6tupu78p8u Может кто то рассказать какая пр...
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
-## strong_local_operator_signal: `gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4`
+## weak_context: `gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4`
 
-- Current label: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
-- Chat candidate: A; source: telegram_self_claim (high)
+- Current label: A? · gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
+- Chat candidate: none; source: telegram_context_only (medium)
 - Roles: recipient voter; compensation: 10934.181496 GONKA; voting power: 0
-- Source: `history/Gonka Devs/messages16.html` message15924 23.05.2026 12:02:29 UTC+03:00 by A
-- Excerpt: Мой адрес среди этих нод, все работало корректно
+- Source: `history/Gonka Devs/messages16.html` message15923 23.05.2026 11:53:31 UTC+03:00 by Nik
+- Excerpt: Некоторые адреса не получили reward_coins за 272 только work_coins: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5 gonka1ce02jjduga8jvwj8jx39mxn0jr345vgkx7lk2n Возможно это не полный список. Видимых причин этого не нашел. UPD: оказывает miss rate высокий
 - Caveat: Local Telegram chat signal; not public owner proof without independent corroboration.
 
 ## weak_context: `gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz`
@@ -406,7 +406,7 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 
 ## public_owner_proof: `gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p`
 
-- Current label: Arturs Plisko · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
+- Current label: Arturs Plisko? · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 - Chat candidate: Arturs Plisko; source: telegram_self_claim (high)
 - Roles: voter; compensation: 0 GONKA; voting power: 5395
 - Source: `history/Gonka Devs/messages16.html` message16103 27.05.2026 16:11:39 UTC+03:00 by Arturs Plisko
@@ -415,7 +415,7 @@ Local Telegram chats are forensic context. A chat-only signal can identify an op
 
 ## strong_local_operator_signal: `gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx`
 
-- Current label: gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
+- Current label: Ваня Лось? · gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
 - Chat candidate: Ваня Лось; source: telegram_self_claim (high)
 - Roles: recipient voter; compensation: 2392.222959 GONKA; voting power: 4565
 - Source: `history/Gonka RU/messages35.html` message37710 27.05.2026 16:57:12 UTC+03:00 by Ваня Лось

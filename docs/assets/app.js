@@ -14,6 +14,7 @@ const state = {
   timelineMetric: "weight",
   timelineSort: "maxWeight",
   charts: {},
+  chartAddressRows: {},
 };
 
 const els = {
@@ -33,6 +34,9 @@ const els = {
   publicNameTable: document.getElementById("publicNameTable"),
   rankedTable: document.getElementById("rankedTable"),
   interestClusterTable: document.getElementById("interestClusterTable"),
+  attributionTable: document.getElementById("attributionTable"),
+  telegramCoverageTable: document.getElementById("telegramCoverageTable"),
+  telegramUnlinkedTable: document.getElementById("telegramUnlinkedTable"),
   evidenceTable: document.getElementById("evidenceTable"),
   hypothesisTable: document.getElementById("hypothesisTable"),
   anomalyTable: document.getElementById("anomalyTable"),
@@ -121,6 +125,34 @@ function identityBoundary(row) {
   return row?.identityBoundary || row?.evidenceBoundary || "unknown";
 }
 
+function attributionTier(row) {
+  if (!row) return "context_only";
+  if (row.attributionTier) return row.attributionTier;
+  if (row.isAttributionProof) return "proof";
+  const sourceType = row.sourceType || "";
+  if (sourceType.startsWith("telegram_")) return sourceType.includes("self") || sourceType.includes("operator") || sourceType.includes("pool") ? "telegram_signal" : "context_only";
+  const category = row.category || "";
+  if (category === "infrastructure_signal" || category === "public_infrastructure") return "host_signal";
+  if (identityBoundary(row) === "public_owner_proof") return "proof";
+  return "context_only";
+}
+
+function attributionTierLabel(tier) {
+  return {
+    proof: "proof",
+    telegram_signal: "telegram signal",
+    host_signal: "host signal",
+    public_signal: "public signal",
+    context_only: "context only",
+  }[tier] || tier || "context only";
+}
+
+function attributionTag(value) {
+  const tier = typeof value === "string" ? value : attributionTier(value);
+  const klass = tier === "proof" ? "good" : tier === "telegram_signal" || tier === "context_only" ? "warn" : "";
+  return `<span class="tag ${klass}">${escapeHtml(attributionTierLabel(tier))}</span>`;
+}
+
 function formatTime(value) {
   if (!value) return "";
   const date = new Date(value);
@@ -131,11 +163,132 @@ function formatTime(value) {
 function chartTooltip(options = {}) {
   return {
     appendToBody: true,
-    confine: false,
+    confine: true,
     renderMode: "html",
-    extraCssText: "max-width:min(440px, calc(100vw - 32px));white-space:normal;overflow-wrap:anywhere;z-index:9999;",
+    transitionDuration: 0,
+    hideDelay: 60,
+    enterable: false,
+    position: (point, params, dom, rect, size) => {
+      const gap = 16;
+      const content = size.contentSize || [360, 160];
+      const view = size.viewSize || [window.innerWidth, window.innerHeight];
+      let x = point[0] + gap;
+      let y = point[1] + gap;
+      if (x + content[0] + gap > view[0]) x = point[0] - content[0] - gap;
+      if (y + content[1] + gap > view[1]) y = point[1] - content[1] - gap;
+      return [Math.max(8, x), Math.max(8, y)];
+    },
+    extraCssText: "max-width:min(440px, calc(100vw - 32px));white-space:normal;overflow-wrap:anywhere;z-index:9999;pointer-events:none;",
     ...options,
   };
+}
+
+function copyText(value, button) {
+  const text = String(value || "");
+  if (!text) return;
+  const markCopied = () => {
+    if (!button) return;
+    const previous = button.textContent;
+    button.textContent = "copied";
+    button.classList.add("copied");
+    window.setTimeout(() => {
+      button.textContent = previous;
+      button.classList.remove("copied");
+    }, 900);
+  };
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(markCopied).catch(() => fallbackCopyText(text, markCopied));
+    return;
+  }
+  fallbackCopyText(text, markCopied);
+}
+
+function fallbackCopyText(text, done) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
+  if (done) done();
+}
+
+function enhanceAddressActions(root = document) {
+  root.querySelectorAll("[data-address]").forEach((button) => {
+    if (!button.dataset.addressBound) {
+      button.dataset.addressBound = "1";
+      button.title = "Open address details";
+      button.addEventListener("click", () => openDrawer(button.dataset.address));
+    }
+    if (button.dataset.copyEnhanced || button.classList.contains("search-index-open")) return;
+    button.dataset.copyEnhanced = "1";
+    const copy = document.createElement("button");
+    copy.type = "button";
+    copy.className = "copy-address-button";
+    copy.dataset.copyAddress = button.dataset.address;
+    copy.textContent = "copy";
+    copy.title = "Copy address";
+    button.insertAdjacentElement("afterend", copy);
+  });
+  root.querySelectorAll("[data-copy-address]").forEach((button) => {
+    if (button.dataset.copyBound) return;
+    button.dataset.copyBound = "1";
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      copyText(button.dataset.copyAddress, button);
+    });
+  });
+}
+
+function normalizeDashboardAddress(value) {
+  const text = String(value || "");
+  if (text.startsWith("gonkavaloper")) return `gonka${text.slice("gonkavaloper".length)}`;
+  return text;
+}
+
+function extractAddress(value, depth = 0) {
+  if (value == null || depth > 5) return "";
+  if (typeof value === "string") {
+    const match = value.match(/gonkavaloper1[0-9a-z]{38}|gonka1[0-9a-z]{38}/);
+    return match ? normalizeDashboardAddress(match[0]) : "";
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const address = extractAddress(item, depth + 1);
+      if (address) return address;
+    }
+    return "";
+  }
+  if (typeof value !== "object") return "";
+  for (const key of ["address", "voter", "topRecipient"]) {
+    const address = extractAddress(value[key], depth + 1);
+    if (address) return address;
+  }
+  if (Array.isArray(value.addresses) && value.addresses.length) {
+    const address = extractAddress(value.addresses[0], depth + 1);
+    if (address) return address;
+  }
+  for (const key of ["row", "data", "value", "id", "name"]) {
+    const address = extractAddress(value[key], depth + 1);
+    if (address) return address;
+  }
+  return "";
+}
+
+function installChartAddressHandlers() {
+  Object.entries(state.charts).forEach(([key, chart]) => {
+    if (!chart || chart.__addressHandlerInstalled) return;
+    chart.__addressHandlerInstalled = true;
+    chart.on("click", (params) => {
+      const mapped = state.chartAddressRows[key]?.[params?.dataIndex];
+      const address = extractAddress(params?.data) || extractAddress(mapped) || extractAddress(params);
+      if (address) openDrawer(address);
+    });
+  });
 }
 
 function voteSymbolSize(vote, maxPower) {
@@ -172,6 +325,7 @@ function initCharts() {
   })) {
     state.charts[key] = echarts.init(document.getElementById(id));
   }
+  installChartAddressHandlers();
   window.addEventListener("resize", () => Object.values(state.charts).forEach((chart) => chart.resize()));
 }
 
@@ -241,7 +395,15 @@ function textMatch(row, query) {
     actorLabel(row),
     actorShortLabel(row),
     row.publicName,
+    row.operatorSignalLabel,
+    row.operatorSignalDisplayLabel,
+    row.attributionTier,
     row.inferenceUrl,
+    row.publicNodeInfo?.inferenceUrl,
+    row.publicNodeInfo?.validatorKey,
+    row.publicNodeInfo?.matchedValidator?.moniker,
+    row.publicNodeInfo?.matchedValidator?.website,
+    row.publicNodeInfo?.matchedValidator?.identity,
     row.txHash,
     row.status,
     row.identityType,
@@ -264,6 +426,7 @@ function buildSearchIndexRows(data) {
         statuses: new Set(),
         votes: new Set(),
         sources: new Set(),
+        refs: new Set(),
         totalGonka: 0,
         votingPower: 0,
       });
@@ -273,6 +436,9 @@ function buildSearchIndexRows(data) {
   const addLabel = (row, value) => {
     if (value) row.labels.add(value);
   };
+  const addRef = (row, value) => {
+    if (value) row.refs.add(value);
+  };
 
   (data.recipients || []).forEach((item) => {
     const row = ensure(item.address);
@@ -280,6 +446,9 @@ function buildSearchIndexRows(data) {
     row.roles.add("recipient");
     row.sources.add("recipients");
     addLabel(row, actorLabel(item));
+    addRef(row, item.inferenceUrl);
+    addRef(row, item.publicNodeInfo?.validatorKey);
+    addRef(row, item.publicNodeInfo?.inferenceUrl);
     row.statuses.add(item.status || "unknown");
     row.votes.add(voteDisplayText(item));
     row.totalGonka = Math.max(row.totalGonka, item.totalGonka || 0);
@@ -292,6 +461,9 @@ function buildSearchIndexRows(data) {
     row.roles.add("voter");
     row.sources.add("votes");
     addLabel(row, actorLabel(item));
+    addRef(row, item.txHash);
+    addRef(row, item.publicNodeInfo?.validatorKey);
+    addRef(row, item.publicNodeInfo?.inferenceUrl);
     row.votes.add(voteDisplayText(item));
     row.votingPower = Math.max(row.votingPower, item.votingPower || 0);
   });
@@ -302,6 +474,8 @@ function buildSearchIndexRows(data) {
     row.sources.add("actors");
     (item.roles || []).forEach((role) => row.roles.add(role));
     addLabel(row, actorLabel(item));
+    addRef(row, item.labelSource);
+    addRef(row, item.attributionTier);
     row.totalGonka = Math.max(row.totalGonka, item.totalGonka || 0);
     row.votingPower = Math.max(row.votingPower, item.votingPower || 0);
   });
@@ -317,6 +491,26 @@ function buildSearchIndexRows(data) {
       if (!row) return;
       row.sources.add(item.id || "cluster");
       addLabel(row, actorLabel(item));
+      addRef(row, item.kind);
+    });
+  });
+
+  (data.attributionDossiers || []).forEach((item) => {
+    (item.addresses || []).forEach((address) => {
+      const row = ensure(address);
+      if (!row) return;
+      row.sources.add("attribution dossier");
+      addLabel(row, item.displayLabel || item.candidateLabel);
+      addRef(row, item.id);
+      addRef(row, item.attributionTier);
+      (item.hosts || []).forEach((host) => addRef(row, host));
+      (item.topClaims || []).forEach((claim) => {
+        addRef(row, claim.sourceType);
+        addRef(row, claim.sourceValue);
+        addRef(row, claim.sourceUrl);
+        addRef(row, claim.telegramMessageId);
+        addRef(row, claim.telegramAuthor);
+      });
     });
   });
 
@@ -325,6 +519,7 @@ function buildSearchIndexRows(data) {
     if (!row) return;
     row.sources.add(item.sourceType || "identity evidence");
     addLabel(row, item.publicLabel || item.sourceValue);
+    addRef(row, item.sourceValue);
   });
 
   (data.evidenceClaims || []).forEach((item) => {
@@ -332,6 +527,11 @@ function buildSearchIndexRows(data) {
     if (!row) return;
     row.sources.add(item.sourceType || "evidence claim");
     addLabel(row, item.subject || item.sourceValue);
+    addRef(row, item.sourceValue);
+    addRef(row, item.sourceUrl);
+    addRef(row, item.telegramMessageId);
+    addRef(row, item.telegramAuthor);
+    addRef(row, item.telegramChat);
   });
 
   (data.identityGraph?.edges || []).forEach((edge) => {
@@ -341,6 +541,7 @@ function buildSearchIndexRows(data) {
       if (!row) return;
       row.sources.add(edge.sourceType || "graph edge");
       addLabel(row, edge.sourceValue || edge.target);
+      addRef(row, edge.sourceValue);
     });
   });
 
@@ -350,6 +551,10 @@ function buildSearchIndexRows(data) {
       if (!row) return;
       row.sources.add("telegram evidence");
       addLabel(row, item.author || item.chat);
+      addRef(row, item.messageId);
+      addRef(row, item.sourceFile);
+      (item.urls || []).forEach((url) => addRef(row, url));
+      (item.usernames || []).forEach((username) => addRef(row, username));
     });
   });
 
@@ -367,21 +572,20 @@ function renderSearchIndex() {
       ...row.statuses,
       ...row.votes,
       ...row.sources,
+      ...row.refs,
     ].join(" ").toLowerCase().includes(query);
   });
   document.getElementById("searchIndexRows").textContent = `${rows.length} searchable addresses`;
   els.searchIndex.innerHTML = rows.map((row) => `
     <div class="search-index-row">
-      <span class="mono search-index-address">${escapeHtml(row.address)}</span>
+      <span class="mono search-index-address">${escapeHtml(row.address)}<button class="copy-address-button" type="button" data-copy-address="${escapeHtml(row.address)}">copy</button></span>
       <span class="search-index-meta">${escapeHtml([...row.labels].filter(Boolean).slice(0, 3).join(" | ") || "Unknown public owner")}</span>
       <span class="search-index-tags">${[...row.roles].sort().map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</span>
       <span class="search-index-stats">${row.totalGonka ? gonka(row.totalGonka) : ""}${row.votingPower ? ` · power ${fmt.format(row.votingPower)}` : ""}</span>
       <button class="row-button search-index-open" data-address="${escapeHtml(row.address)}">Open</button>
     </div>
   `).join("");
-  els.searchIndex.querySelectorAll("[data-address]").forEach((button) => {
-    button.addEventListener("click", () => openDrawer(button.dataset.address));
-  });
+  enhanceAddressActions(els.searchIndex);
 }
 
 function applyFilters() {
@@ -462,6 +666,7 @@ function renderCompensationChart() {
     return;
   }
   const maxPower = Math.max(...rows.map((row) => row.votingPower || 0), 0);
+  state.chartAddressRows.compensation = rows;
   const rowLabel = (row) => `${actorShortLabel(row)} #${row.rank}  ${shortAddress(row.address)}`;
   state.charts.compensation.setOption({
     legend: { top: 4, data: voteOptions.map((option) => optionLabels[option]), textStyle: { color: "#a7afba" } },
@@ -762,6 +967,7 @@ function renderTimeline() {
     .sort((a, b) => a.height - b.height || actorLabel(a).localeCompare(actorLabel(b)));
   const values = votes.map((vote, i) => [Date.parse(vote.blockTime || ""), i, vote.height]);
   const maxPower = Math.max(...votes.map((vote) => vote.votingPower || 0), 0);
+  state.chartAddressRows.timeline = votes;
   state.charts.timeline.setOption({
     grid: { left: 150, right: 42, top: 20, bottom: 42 },
     tooltip: chartTooltip({
@@ -824,6 +1030,7 @@ function renderVoterPowerChart() {
   const rows = (state.data.benefitPowerMatrix || [])
     .filter((row) => row.isVoter)
     .sort((a, b) => (b.votingPower || 0) - (a.votingPower || 0) || actorLabel(a).localeCompare(actorLabel(b)));
+  state.chartAddressRows.voterPower = rows;
   state.charts.voterPower.setOption({
     grid: { left: 282, right: 44, top: 24, bottom: 42 },
     tooltip: chartTooltip({
@@ -884,6 +1091,7 @@ function renderWindowPowerChart() {
     })
     .sort((a, b) => Date.parse(a.blockTime || "") - Date.parse(b.blockTime || "") || a.height - b.height || actorLabel(a).localeCompare(actorLabel(b)));
   document.getElementById("windowPowerRows").textContent = `${rows.length} shown`;
+  state.chartAddressRows.windowPower = rows;
   const maxPower = Math.max(
     1,
     ...rows.flatMap((row) => [row.startVotingPower || 0, row.endVotingPower || 0, e285Weight(row.voter), e286Weight(row.voter), e287Weight(row.voter)]),
@@ -1293,6 +1501,7 @@ function renderEntryExitChart() {
     ? clusterRows
     : (state.data.chartData?.timingLeads || []).filter((row) => entryExitClusterMatches({ ...row, addresses: [row.address], addressRows: [row] }, query)).slice(0, 16);
   const maxPower = Math.max(...rows.map((row) => row.governanceVotingPower || row.totalGovernanceVotingPower || 0), 0);
+  state.chartAddressRows.entryExit = rows;
   state.charts.entryExit.setOption({
     grid: { left: 170, right: 24, top: 24, bottom: 42 },
     tooltip: chartTooltip({
@@ -1350,6 +1559,136 @@ function renderEntryExitTable() {
   }).join("");
 }
 
+function attributionDossierMatches(row, query) {
+  if (!query) return true;
+  return [
+    row.id,
+    row.candidateLabel,
+    row.displayLabel,
+    row.attributionTier,
+    row.identityBoundary,
+    ...(row.addresses || []),
+    ...(row.hosts || []),
+    ...(row.roles || []),
+    ...(row.caveats || []),
+    ...(row.topClaims || []).map((item) => [
+      item.subject,
+      item.sourceType,
+      item.sourceValue,
+      item.sourceUrl,
+      item.telegramMessageId,
+      item.telegramAuthor,
+      item.telegramChat,
+    ].filter(Boolean).join(" ")),
+  ].filter(Boolean).join(" ").toLowerCase().includes(query);
+}
+
+function renderAttributionDossiers() {
+  if (!els.attributionTable) return;
+  const query = els.search.value.trim().toLowerCase();
+  const rows = (state.data.attributionDossiers || []).filter((row) => {
+    if (!attributionDossierMatches(row, query)) return false;
+    if (els.confidence.value !== "all" && !(row.topClaims || []).some((item) => item.confidence === els.confidence.value)) return false;
+    if (els.sourceType.value !== "all" && !(row.topClaims || []).some((item) => item.sourceType === els.sourceType.value)) return false;
+    return true;
+  });
+  document.getElementById("attributionRows").textContent = `${rows.length} dossiers`;
+  els.attributionTable.innerHTML = rows.slice(0, 160).map((row) => {
+    const tierCounts = row.tierCounts || {};
+    const evidence = [
+      `proof ${tierCounts.proof || 0}`,
+      `telegram ${tierCounts.telegram_signal || 0}`,
+      `host ${tierCounts.host_signal || 0}`,
+      `context ${tierCounts.context_only || 0}`,
+    ].map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join(" ");
+    const addressRows = (row.addressRows || []).slice(0, 8).map((item) => (
+      `<button class="row-button mono" data-address="${item.address}">${escapeHtml(item.address)}</button><br><span class="muted">${escapeHtml(actorShortLabel(item))} · ${item.roles.map(escapeHtml).join("/") || "no role"}</span>`
+    )).join("<br>");
+    return `
+      <tr>
+        <td class="num">${row.rank}</td>
+        <td>${escapeHtml(row.displayLabel || row.candidateLabel)}<br>${attributionTag(row.attributionTier)} <span class="tag">${escapeHtml(row.identityBoundary || "unknown")}</span></td>
+        <td>${addressRows}</td>
+        <td>${(row.hosts || []).slice(0, 8).map((host) => `<span class="tag">${escapeHtml(host)}</span>`).join(" ") || "-"}</td>
+        <td class="num">${gonka(row.totalCompensationGonka || 0)}<br><span class="muted">power ${fmt.format(row.totalVotingPower || 0)}</span></td>
+        <td>${evidence}<br><span class="muted">${(row.topClaims || []).slice(0, 3).map((item) => `${escapeHtml(item.sourceType)} ${item.telegramMessageId ? `#${escapeHtml(item.telegramMessageId)}` : ""}`).join("<br>")}</span></td>
+        <td>${(row.caveats || []).map(escapeHtml).join("<br>") || "none"}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function coverageRowMatches(row, query) {
+  if (!query) return true;
+  return [
+    row.sourceFile,
+    row.chat,
+  ].filter(Boolean).join(" ").toLowerCase().includes(query);
+}
+
+function renderTelegramCoverage() {
+  if (!els.telegramCoverageTable) return;
+  const coverage = state.data.telegramCoverage || {};
+  const summary = coverage.summary || {};
+  const query = els.search.value.trim().toLowerCase();
+  const rows = (coverage.byFile || []).filter((row) => coverageRowMatches(row, query));
+  document.getElementById("telegramCoverageRows").textContent = `${rows.length} files`;
+  const summaryEl = document.getElementById("telegramCoverageSummary");
+  if (summaryEl) {
+    summaryEl.innerHTML = [
+      `files ${summary.files ?? "-"}`,
+      `messages ${summary.messages ?? "-"}`,
+      `raw matches ${summary.rawMatchedMessages ?? "-"}`,
+      `linked ${summary.participantLinkedMessages ?? "-"}`,
+      `participants with Telegram ${summary.participantAddressesWithTelegram ?? "-"}`,
+      `unlinked address rows ${summary.unlinkedTelegramAddressRows ?? "-"}`,
+    ].map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join(" ");
+  }
+  els.telegramCoverageTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td class="mono">${escapeHtml(row.sourceFile || "-")}</td>
+      <td>${escapeHtml(row.chat || "-")}</td>
+      <td class="num">${fmt.format(row.rows || 0)}</td>
+      <td class="num">${fmt.format(row.participantLinkedRows || 0)}</td>
+      <td class="num">${fmt.format(row.addressRows || 0)}</td>
+      <td>${["strongRows", "contextRows", "weakRows"].map((key) => `<span class="tag">${escapeHtml(key.replace("Rows", ""))} ${fmt.format(row[key] || 0)}</span>`).join(" ")}</td>
+    </tr>
+  `).join("");
+}
+
+function unlinkedTelegramMatches(row, query) {
+  if (!query) return true;
+  return [
+    row.chat,
+    row.messageId,
+    row.date,
+    row.author,
+    row.sourceFile,
+    row.sourceType,
+    row.signalStrength,
+    row.excerpt,
+    ...(row.addresses || []),
+    ...(row.urls || []),
+    ...(row.usernames || []),
+  ].filter(Boolean).join(" ").toLowerCase().includes(query);
+}
+
+function renderTelegramUnlinkedTable() {
+  if (!els.telegramUnlinkedTable) return;
+  const query = els.search.value.trim().toLowerCase();
+  const rows = ((state.data.telegramCoverage || {}).unlinkedAddressRows || []).filter((row) => unlinkedTelegramMatches(row, query));
+  document.getElementById("telegramUnlinkedRows").textContent = `${rows.length} shown`;
+  els.telegramUnlinkedTable.innerHTML = rows.slice(0, 200).map((row) => `
+    <tr>
+      <td>${escapeHtml(row.date || "-")}<br><span class="mono muted">${escapeHtml(row.sourceFile || "")} ${escapeHtml(row.messageId || "")}</span></td>
+      <td>${escapeHtml(row.author || "-")}<br><span class="muted">${escapeHtml(row.chat || "")}</span></td>
+      <td>${(row.addresses || []).map((address) => `<span class="mono">${escapeHtml(address)}</span>`).join("<br>")}</td>
+      <td>${escapeHtml(row.sourceType || "-")}<br>${attributionTag({ sourceType: row.sourceType, attributionTier: row.sourceType?.startsWith("telegram_") && (row.signalStrength || "").startsWith("strong") ? "telegram_signal" : "context_only" })} <span class="tag">${escapeHtml(row.confidence || "")}</span></td>
+      <td>${escapeHtml(row.excerpt || "")}</td>
+    </tr>
+  `).join("");
+}
+
 function renderTelegramTable() {
   const query = els.search.value.trim().toLowerCase();
   const rows = (state.data.telegramEvidence || []).filter((row) => {
@@ -1400,6 +1739,7 @@ function rankedMatches(row, query) {
   return [
     row.label,
     row.confidence,
+    row.attributionTier,
     ...(row.addresses || []),
     ...(row.roles || []),
     ...(row.identityTypes || []),
@@ -1414,7 +1754,7 @@ function renderRankedTable() {
   els.rankedTable.innerHTML = rows.slice(0, 100).map((row) => `
     <tr>
       <td class="num">${row.rank}</td>
-      <td>${escapeHtml(actorLabel(row))}<br><span class="muted">${escapeHtml(row.identityTypes.join(", "))}</span></td>
+      <td>${escapeHtml(actorLabel(row))}<br>${attributionTag(row)}<br><span class="muted">${escapeHtml(row.identityTypes.join(", "))}</span></td>
       <td>${row.roles.map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</td>
       <td>${row.addresses.map((address) => `<button class="row-button mono" data-address="${address}">${escapeHtml(address)}</button>`).join("<br>")}</td>
       <td class="num">${gonka(row.totalCompensationGonka)}</td>
@@ -1441,9 +1781,9 @@ function renderEvidenceTable() {
       <td>${escapeHtml(row.subject || "-")}</td>
       <td>${row.address ? `<button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button>` : "<span class=\"muted\">repo/social</span>"}</td>
       <td><span class="tag">${escapeHtml(row.category)}</span></td>
-      <td>${escapeHtml(row.sourceType)}<br><span class="mono muted">${escapeHtml(row.sourceUrl)}</span></td>
+      <td>${escapeHtml(row.sourceType)}<br><span class="mono muted">${escapeHtml(row.telegramMessageId ? `${row.telegramChat || ""} ${row.telegramMessageId}` : row.sourceUrl)}</span></td>
       <td>${escapeHtml(row.sourceValue)}</td>
-      <td><span class="tag ${row.isAttributionProof ? "good" : ""}">${row.isAttributionProof ? "proof" : "signal"}</span> <span class="tag">${escapeHtml(row.confidence)}</span></td>
+      <td>${attributionTag(row)} <span class="tag">${escapeHtml(row.confidence)}</span></td>
     </tr>
   `).join("");
 }
@@ -1499,6 +1839,7 @@ function benefitPowerMatches(row, query) {
     row.address,
     row.label,
     row.voteOption,
+    row.attributionTier,
     row.clusterId,
     row.clusterKind,
     row.evidenceBoundary,
@@ -1522,7 +1863,7 @@ function renderBenefitPowerTable() {
     <tr>
       <td class="num">${row.rank}<br><span class="muted">${fmt.format(row.triageScore)}</span></td>
       <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
-      <td>${escapeHtml(actorLabel(row))}<br><span class="muted">${escapeHtml(row.clusterId || "no cluster")}</span></td>
+      <td>${escapeHtml(actorLabel(row))}<br>${attributionTag(row)}<br><span class="muted">${escapeHtml(row.clusterId || "no cluster")}</span></td>
       <td class="num">${gonka(row.totalCompensationGonka)}</td>
       <td class="num">${fmt.format(row.votingPower || 0)}<br><span class="muted">${escapeHtml(voteDisplayText(row))}</span></td>
       <td>${row.recipientVoterOverlap ? "<span class=\"tag warn\">recipient voter</span>" : row.isRecipient ? "<span class=\"tag\">recipient</span>" : row.isVoter ? "<span class=\"tag\">voter</span>" : "-"}</td>
@@ -1540,6 +1881,7 @@ function publicNameMatches(row, query) {
     row.bestPublicName,
     row.voteOption,
     row.evidenceBoundary,
+    row.attributionTier,
     row.validatorOperatorAddress,
     row.validatorMoniker,
     row.validatorWebsite,
@@ -1569,7 +1911,7 @@ function renderPublicNameTable() {
   els.publicNameTable.innerHTML = rows.map((row) => `
     <tr>
       <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
-      <td>${escapeHtml(actorLabel(row))}</td>
+      <td>${escapeHtml(actorLabel(row))}<br>${attributionTag(row)}</td>
       <td>${escapeHtml(row.bestPublicName || "none")}<br><span class="muted">${escapeHtml((row.reverseGnsNames || []).join(", ") || (row.gnsNames || []).join(", ") || "no GNS")}</span></td>
       <td>${(row.roles || []).map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</td>
       <td class="num">${gonka(row.totalCompensationGonka || 0)}<br><span class="muted">power ${fmt.format(row.votingPower || 0)} · ${escapeHtml(voteDisplayText(row))}</span></td>
@@ -1698,6 +2040,7 @@ function buildLabelRows(data) {
         totalGonka: 0,
         votes: new Set(),
         voteOptions: new Set(),
+        attributionTiers: new Set(),
       });
     }
     return labels.get(label);
@@ -1707,6 +2050,7 @@ function buildLabelRows(data) {
     const item = ensure(row.label || "Unknown public owner");
     item.addresses.add(row.address);
     item.identityTypes.add(row.identityType || "unknown");
+    item.attributionTiers.add(row.attributionTier || "context_only");
     item.recipientCount += 1;
     item.totalGonka += row.totalGonka || 0;
   });
@@ -1715,6 +2059,7 @@ function buildLabelRows(data) {
     const item = ensure(row.label || "Unknown public owner");
     item.addresses.add(row.voter);
     item.identityTypes.add(row.identityType || "unknown");
+    item.attributionTiers.add(row.attributionTier || "context_only");
     item.voterCount += 1;
     item.votes.add(voteDisplayText(row));
     const options = voteSplitOptions(row);
@@ -1729,6 +2074,7 @@ function buildLabelRows(data) {
       identityTypes: [...row.identityTypes].sort(),
       votes: [...row.votes].sort(),
       voteOptions: [...row.voteOptions].sort(),
+      attributionTiers: [...row.attributionTiers].sort(),
     }))
     .sort((a, b) => b.totalGonka - a.totalGonka || b.addresses.length - a.addresses.length || a.label.localeCompare(b.label));
 }
@@ -1743,6 +2089,7 @@ function renderLabelTable() {
     if (!query) return true;
     return [
       row.label,
+      ...row.attributionTiers,
       ...row.identityTypes,
       ...row.addresses,
       ...row.votes,
@@ -1752,7 +2099,7 @@ function renderLabelTable() {
   document.getElementById("labelRows").textContent = `${rows.length} shown`;
   els.labelTable.innerHTML = rows.map((row) => `
     <tr>
-      <td>${escapeHtml(actorLabel(row))}</td>
+      <td>${escapeHtml(actorLabel(row))}<br>${row.attributionTiers.map((tier) => attributionTag(tier)).join(" ")}</td>
       <td>${row.identityTypes.map((type) => `<span class="tag">${escapeHtml(type)}</span>`).join(" ")}</td>
       <td>${row.addresses.map((address) => `<button class="row-button mono" data-address="${address}">${escapeHtml(address)}</button>`).join("<br>")}</td>
       <td class="num">${row.recipientCount}</td>
@@ -1768,7 +2115,7 @@ function renderTables() {
     <tr>
       <td class="num">${row.rank}</td>
       <td><button class="row-button mono" data-address="${row.address}">${escapeHtml(row.address)}</button></td>
-      <td>${escapeHtml(actorLabel(row))}</td>
+      <td>${escapeHtml(actorLabel(row))}<br>${attributionTag(row)}</td>
       <td><span class="tag">${escapeHtml(row.status)}</span></td>
       <td>${voteDisplayHtml(row)}</td>
       <td>${escapeHtml(row.strictClusterId || row.signalClusterId || "-")}</td>
@@ -1789,7 +2136,7 @@ function renderTables() {
   els.voteTable.innerHTML = filteredVotes.map((row) => `
     <tr>
       <td class="num">${row.height}</td>
-      <td><button class="row-button mono" data-address="${row.voter}">${escapeHtml(row.voter)}</button></td>
+      <td><button class="row-button mono" data-address="${row.voter}">${escapeHtml(row.voter)}</button><br><span class="muted">${escapeHtml(actorLabel(row))}</span><br>${attributionTag(row)}</td>
       <td>${row.isRecipient ? "Yes" : "No"}</td>
       <td>${voteDisplayHtml(row)}</td>
       <td>${escapeHtml(row.strictClusterId || row.signalClusterId || "-")}</td>
@@ -1797,9 +2144,7 @@ function renderTables() {
     </tr>
   `).join("");
 
-  document.querySelectorAll("[data-address]").forEach((button) => {
-    button.addEventListener("click", () => openDrawer(button.dataset.address));
-  });
+  enhanceAddressActions();
 }
 
 function clusterEdges(cluster) {
@@ -1872,6 +2217,9 @@ function renderAll() {
   renderAnomalyTable();
   renderEntryExitTable();
   renderTelegramTable();
+  renderAttributionDossiers();
+  renderTelegramCoverage();
+  renderTelegramUnlinkedTable();
   renderBenefitPowerTable();
   renderPublicNameTable();
   renderRankedTable();
@@ -1883,9 +2231,23 @@ function renderAll() {
   renderMethodology();
   renderTables();
   renderClusterTables();
-  document.querySelectorAll("[data-address]").forEach((button) => {
-    button.addEventListener("click", () => openDrawer(button.dataset.address));
-  });
+  enhanceAddressActions();
+}
+
+function claimSourceLine(row) {
+  if (row.telegramMessageId || row.telegramAuthor || row.telegramChat) {
+    return [
+      row.telegramChat,
+      row.telegramMessageId,
+      row.telegramMessageTime,
+      row.telegramAuthor ? `by ${row.telegramAuthor}` : "",
+    ].filter(Boolean).join(" · ");
+  }
+  return row.sourceUrl || row.sourceFile || "";
+}
+
+function claimDetailHtml(row) {
+  return `<dt>${escapeHtml(row.sourceType)}</dt><dd>${escapeHtml(row.sourceValue)} ${attributionTag(row)} <span class="tag">${escapeHtml(row.confidence || "")}</span><br><span class="mono muted">${escapeHtml(claimSourceLine(row))}</span><br><span class="muted">${escapeHtml(row.caveat || "")}</span></dd>`;
 }
 
 function openDrawer(address) {
@@ -1895,6 +2257,7 @@ function openDrawer(address) {
   const evidenceClaims = (state.data.evidenceClaims || []).filter((row) => row.address === address);
   const actor = (state.data.actors || []).find((row) => row.address === address);
   const rankedParty = (state.data.rankedParties || []).find((row) => (row.addresses || []).includes(address));
+  const attributionDossiers = (state.data.attributionDossiers || []).filter((row) => (row.addresses || []).includes(address));
   const windowPower = ((state.data.votingPowerWindow || {}).rows || []).find((row) => row.voter === address);
   const nodeInfo = recipient?.publicNodeInfo || vote?.publicNodeInfo || {};
   const matchedValidator = nodeInfo.matchedValidator || {};
@@ -1908,14 +2271,28 @@ function openDrawer(address) {
   const label = recipient?.label || vote?.label || "Unknown public owner";
   els.drawerContent.innerHTML = `
     <h2>${escapeHtml(label)}</h2>
-    <p class="mono">${escapeHtml(address)}</p>
+    <p class="drawer-address-line"><span class="mono selectable-address">${escapeHtml(address)}</span><button class="copy-address-button" type="button" data-copy-address="${escapeHtml(address)}">copy</button></p>
+    <div class="drawer-section">
+      <h3>Attribution Dossier</h3>
+      ${attributionDossiers.length ? attributionDossiers.map((dossier) => {
+        const telegramClaims = (dossier.telegramClaims || []).slice(0, 8);
+        return `<dl class="kv">
+          <dt>Candidate</dt><dd>${escapeHtml(dossier.displayLabel || dossier.candidateLabel)} ${attributionTag(dossier.attributionTier)} <span class="tag">${escapeHtml(dossier.identityBoundary || "unknown")}</span></dd>
+          <dt>Addresses</dt><dd>${(dossier.addresses || []).map((item) => `<button class="row-button mono" data-address="${item}">${escapeHtml(item)}</button>`).join("<br>")}</dd>
+          <dt>Hosts</dt><dd>${(dossier.hosts || []).length ? dossier.hosts.map((host) => `<span class="tag">${escapeHtml(host)}</span>`).join(" ") : "none"}</dd>
+          <dt>Evidence</dt><dd>${["proof", "telegram_signal", "host_signal", "context_only"].map((tier) => `<span class="tag">${escapeHtml(attributionTierLabel(tier))} ${(dossier.tierCounts || {})[tier] || 0}</span>`).join(" ")}</dd>
+          <dt>Telegram</dt><dd>${telegramClaims.length ? telegramClaims.map((claim) => `${escapeHtml(claim.telegramChat || "")} ${escapeHtml(claim.telegramMessageId || "")}<br><span class="muted">${escapeHtml(claim.telegramMessageTime || "")} ${claim.telegramAuthor ? `by ${escapeHtml(claim.telegramAuthor)}` : ""}</span><br>${escapeHtml(claim.sourceValue || claim.telegramExcerpt || "")}`).join("<br><br>") : "none"}</dd>
+          <dt>Caveats</dt><dd>${(dossier.caveats || []).map(escapeHtml).join("<br>") || "none"}</dd>
+        </dl>`;
+      }).join("") : "<p>No attribution dossier for this address.</p>"}
+    </div>
     <div class="drawer-section">
       <h3>Actor Priority</h3>
       ${actor ? `<dl class="kv">
         <dt>Roles</dt><dd>${actor.roles.map((role) => `<span class="tag">${escapeHtml(role)}</span>`).join(" ")}</dd>
         <dt>Ranked party</dt><dd>${rankedParty ? `#${rankedParty.rank} ${escapeHtml(rankedParty.label)}` : "not ranked"}</dd>
         <dt>Priority</dt><dd>${rankedParty ? fmt.format(rankedParty.overallPriority) : "none"}</dd>
-        <dt>Confidence</dt><dd>${rankedParty ? escapeHtml(rankedParty.confidence) : "none"}</dd>
+        <dt>Confidence</dt><dd>${rankedParty ? escapeHtml(rankedParty.confidence) : "none"} ${rankedParty ? attributionTag(rankedParty) : ""}</dd>
         <dt>Caveats</dt><dd>${rankedParty?.caveats?.length ? rankedParty.caveats.map(escapeHtml).join("<br>") : "none"}</dd>
       </dl>` : "<p>No actor roles for this address.</p>"}
     </div>
@@ -1975,13 +2352,14 @@ function openDrawer(address) {
     </div>
     <div class="drawer-section">
       <h3>Evidence Claims</h3>
-      ${evidenceClaims.length ? `<dl class="kv">${evidenceClaims.slice(0, 80).map((row) => `<dt>${escapeHtml(row.sourceType)}</dt><dd>${escapeHtml(row.sourceValue)} <span class="tag">${escapeHtml(row.confidence)}</span> <span class="tag">${row.isAttributionProof ? "proof" : "signal"}</span><br><span class="muted">${escapeHtml(row.caveat || "")}</span></dd>`).join("")}</dl>` : "<p>No evidence claims for this address.</p>"}
+      ${evidenceClaims.length ? `<dl class="kv">${evidenceClaims.slice(0, 80).map(claimDetailHtml).join("")}</dl>` : "<p>No evidence claims for this address.</p>"}
     </div>
     <div class="drawer-section">
       <h3>Evidence Graph Edges</h3>
       ${graphEdges.length ? `<dl class="kv">${graphEdges.map((edge) => `<dt>${escapeHtml(edge.sourceType)}</dt><dd>${escapeHtml(edge.sourceValue)} <span class="tag">${escapeHtml(edge.confidence)}</span> <span class="tag">${edge.isAttributionProof ? "proof" : "signal"}</span><br><span class="mono">${escapeHtml(edge.sourceFile)}</span></dd>`).join("")}</dl>` : "<p>No graph edges for this address.</p>"}
     </div>
   `;
+  enhanceAddressActions(els.drawerContent);
   els.drawer.classList.add("open");
   els.scrim.classList.add("open");
   els.drawer.setAttribute("aria-hidden", "false");

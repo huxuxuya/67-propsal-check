@@ -20,7 +20,7 @@ Top evidence:
 - matched_validator_moniker (high, proof): ancapex | Mine from $1, no losses from node failures
 - validator_key_match (high, proof): 1MsHbnXp09bUZK/WEJVpwTOiZgKN+P5R7zuXXQUnYDM=
 
-### #2 Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
+### #2 Votkon? · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 
 - Addresses: gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 - Roles: epoch_commit_participant, operator, recipient, voter
@@ -36,7 +36,7 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - telegram_operator_statement (high, signal): Успевайте заделегировать Кими до след эпохи чтобы не потерять 15% ! Если ищите кому делегировать, то можно вот сюда: ./inferenced tx inference set-poc-delegation moonshotai/Kimi-K2.6 gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg \ --from <your-account-key> \ --node http://node2.gonka.ai:8000/chain-rpc/ \ --chain-id gonka-mainnet \ --keyring-backend file \ --gas auto \ --gas-adjustment 1.3 \ -y Это топ 1 сегмент по весу и он будет запускать Кими сегодня вечером. Я буду давать обнолвения в этот чат по прогрессу и если что-то пойдет не так тоже буду отписываться.
 
-### #3 A · gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
+### #3 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
 
 - Addresses: gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6 gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6
 - Roles: epoch_commit_participant, recipient, voter
@@ -113,7 +113,7 @@ Top evidence:
 - matched_validator_identity (high, proof): 673C81B66A67ED67
 - matched_validator_moniker (high, proof): gonka-3
 
-### #8 Arturs Plisko · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
+### #8 Arturs Plisko? · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 
 - Addresses: gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 - Roles: epoch_commit_participant, voter
@@ -205,7 +205,7 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=68352
 - epoch_commit_participant (medium, signal): e271 moonshotai/Kimi-K2.6 count=59712
 
-### #14 A · gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
+### #14 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 
 - Addresses: gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 - Roles: epoch_commit_participant, recipient, voter
@@ -217,11 +217,11 @@ Top evidence:
 Top evidence:
 - compensation_output (high, signal): 10934.181496 GONKA
 - proposal_vote (high, signal): no_with_veto
-- telegram_self_claim (high, signal): Мой адрес среди этих нод, все работало корректно
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=12832
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=39328
+- epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=13536
 
-### #15 A · gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
+### #15 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 
 - Addresses: gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 - Roles: epoch_commit_participant, recipient, voter
@@ -233,11 +233,11 @@ Top evidence:
 Top evidence:
 - compensation_output (high, signal): 11262.520198 GONKA
 - proposal_vote (high, signal): yes
-- telegram_self_claim (high, signal): Мой адрес среди этих нод, все работало корректно
 - epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=14528
 - epoch_commit_participant (medium, signal): e269 moonshotai/Kimi-K2.6 count=7296
+- epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=14880
 
-### #16 Ваня Лось · gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
+### #16 Ваня Лось? · gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
 
 - Addresses: gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
 - Roles: epoch_commit_participant, recipient, voter

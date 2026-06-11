@@ -227,6 +227,13 @@ select {
   white-space: nowrap;
 }
 
+.coverage-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 12px 10px;
+}
+
 .reward-flow-panel {
   grid-column: 1 / -1;
 }
@@ -364,6 +371,7 @@ td.num {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 12px;
   overflow-wrap: anywhere;
+  user-select: text;
 }
 
 .row-button {
@@ -373,6 +381,40 @@ td.num {
   padding: 0;
   text-align: left;
   cursor: pointer;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.copy-address-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel-2);
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.copy-address-button:hover,
+.copy-address-button.copied {
+  color: var(--accent);
+  border-color: rgba(77, 183, 168, 0.5);
+}
+
+.drawer-address-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 42px;
+}
+
+.selectable-address {
+  min-width: 0;
 }
 
 .tag {

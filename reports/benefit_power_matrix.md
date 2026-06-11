@@ -4,7 +4,7 @@ This report ranks addresses by combined compensation benefit, exact archive-deri
 
 ## Highest Priority Rows
 
-### #1 Votkon · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
+### #1 Votkon? · gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg
 
 - Address: `gonka1q5xt54wncgzk7dxv9x64uln68455g83wu9tugg`
 - Compensation: 73073.708453 GONKA; governance power: 92840; vote: yes
@@ -72,22 +72,22 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e266 moonshotai/Kimi-K2.6 count=55552
 - epoch_commit_participant (medium, signal): e267 moonshotai/Kimi-K2.6 count=56352
 
-### #5 A · gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
+### #5 gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv
 
 - Address: `gonka1007dchuqgdnute4qam70kmn56j2vfw38mhyrqv`
 - Compensation: 11262.520198 GONKA; governance power: 57838; vote: yes
 - Recipient: True; voter: True; overlap: True
 - Cluster: none (none)
-- Evidence boundary: public_signal (proof 0, high-confidence claims 3)
+- Evidence boundary: public_signal (proof 0, high-confidence claims 2)
 - Triage score: 26.078
 - Next actions: review conflict narrative | prioritize owner attribution | enrich beneficiary identity
 
 Top evidence:
 - compensation_output (high, signal): 11262.520198 GONKA
 - proposal_vote (high, signal): yes
-- telegram_self_claim (high, signal): Мой адрес среди этих нод, все работало корректно
 - epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=14528
 - epoch_commit_participant (medium, signal): e269 moonshotai/Kimi-K2.6 count=7296
+- epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=14880
 
 ### #6 gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu
 
@@ -191,22 +191,22 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=51552
 
-### #12 A · gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
+### #12 gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4
 
 - Address: `gonka1wt8sr9jxzpec65j7zkxsgh6edk3m6r8nlf5za4`
 - Compensation: 10934.181496 GONKA; governance power: 0; vote: no_with_veto
 - Recipient: True; voter: True; overlap: True
 - Cluster: none (none)
-- Evidence boundary: public_signal (proof 0, high-confidence claims 3)
+- Evidence boundary: public_signal (proof 0, high-confidence claims 2)
 - Triage score: 17.734
 - Next actions: review conflict narrative | enrich beneficiary identity
 
 Top evidence:
 - compensation_output (high, signal): 10934.181496 GONKA
 - proposal_vote (high, signal): no_with_veto
-- telegram_self_claim (high, signal): Мой адрес среди этих нод, все работало корректно
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=12832
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=39328
+- epoch_commit_participant (medium, signal): e270 moonshotai/Kimi-K2.6 count=13536
 
 ### #13 gonka1scskt6wpnjnumsah6kjphmdu87vjgvcxmn4rxv
 
@@ -225,7 +225,7 @@ Top evidence:
 - proposal_vote (high, signal): yes
 - epoch_commit_participant (medium, signal): e275 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=8320
 
-### #14 Ваня Лось · gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
+### #14 Ваня Лось? · gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx
 
 - Address: `gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx`
 - Compensation: 2392.222959 GONKA; governance power: 4565; vote: no_with_veto
@@ -310,7 +310,7 @@ Top evidence:
 - epoch_commit_participant (medium, signal): e265 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=1024
 - epoch_commit_participant (medium, signal): e265 moonshotai/Kimi-K2.6 count=57984
 
-### #19 Arturs Plisko · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
+### #19 Arturs Plisko? · Hyperfusion · gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p
 
 - Address: `gonka1ym3np7guxart483yfdxnlztuazx22cjt0e4a2p`
 - Compensation: 0 GONKA; governance power: 5395; vote: no_with_veto
@@ -412,13 +412,13 @@ Top evidence:
 - gns_name (high, proof): its.gnk -> gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 - gns_name (high, proof): may.gnk -> gonka1q9f3wphjnf633fevej30y4aw3nnw87hl0r7qe4
 
-### #25 A · gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
+### #25 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
 
 - Address: `gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau`
 - Compensation: 20610.390028 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
 - Cluster: signal-1 (signal_cluster)
-- Evidence boundary: infrastructure_or_public_signal (proof 0, high-confidence claims 4)
+- Evidence boundary: infrastructure_or_public_signal (proof 0, high-confidence claims 3)
 - Triage score: 5.153
 - Next actions: enrich beneficiary identity | corroborate infrastructure cluster
 
@@ -426,10 +426,10 @@ Top evidence:
 - compensation_output (high, signal): 20610.390028 GONKA
 - matched_validator_moniker (high, signal): gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23
 - matched_validator_moniker (high, signal): gonkavaloper10079cnl3nuh2k82mhkm04dj0slhtw9kmwelf23
-- telegram_self_claim (high, signal): Мой адрес среди этих нод, все работало корректно
 - epoch_commit_participant (medium, signal): e268 Qwen/Qwen3-235B-A22B-Instruct-2507-FP8 count=992
+- epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=14912
 
-### #26 A · gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
+### #26 A? · gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5
 
 - Address: `gonka15munkmx6x7k6rqqeexjet4556p7at39ks9qgr5`
 - Compensation: 18234.887511 GONKA; governance power: 0; vote: did_not_vote
@@ -531,13 +531,13 @@ Top evidence:
 - participant_inference_url (medium, signal): http://94.237.52.191:8000
 - participant_inference_url (medium, signal): http://94.237.52.191:8000
 
-### #32 A · gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw
+### #32 gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw
 
 - Address: `gonka1007g0ut3u4wjkay9hegqfev4pj90qgexwskmcw`
 - Compensation: 11688.555563 GONKA; governance power: 0; vote: did_not_vote
 - Recipient: True; voter: False; overlap: False
 - Cluster: none (none)
-- Evidence boundary: public_signal (proof 0, high-confidence claims 4)
+- Evidence boundary: public_signal (proof 0, high-confidence claims 3)
 - Triage score: 2.922
 - Next actions: enrich beneficiary identity
 
@@ -545,8 +545,8 @@ Top evidence:
 - compensation_output (high, signal): 11688.555563 GONKA
 - matched_validator_moniker (high, signal): gonkavaloper1007g0ut3u4wjkay9hegqfev4pj90qgexjs8u0r
 - matched_validator_moniker (high, signal): gonkavaloper1007g0ut3u4wjkay9hegqfev4pj90qgexjs8u0r
-- telegram_self_claim (high, signal): Мой адрес среди этих нод, все работало корректно
 - epoch_commit_participant (medium, signal): e268 moonshotai/Kimi-K2.6 count=14464
+- epoch_commit_participant (medium, signal): e269 moonshotai/Kimi-K2.6 count=7008
 
 ### #33 gonka1c6fwzedfsmpu4jnjekv4cn7mvr7x7fuqd6uqt9
 

@@ -29,6 +29,12 @@ SELF_CLAIM_RE = re.compile(
     r"\bот\s+моего\s+адреса\b",
     re.IGNORECASE,
 )
+AMBIGUOUS_NODE_SET_RE = re.compile(
+    r"\b(мой|моя|моей|наш|наша|нашей)\s+адрес\s+среди\s+этих\s+нод\b|"
+    r"\bсреди\s+этих\s+нод\b|"
+    r"\bодна\s+из\s+(этих\s+)?нод\b",
+    re.IGNORECASE,
+)
 OPERATOR_RE = re.compile(
     r"set-poc-delegation|"
     r"\b(делегировать|заделегировать|делегировали|делегации|делегацию)\b|"
@@ -334,6 +340,8 @@ def message_features(message):
 
 def classify_candidate(message, context_kind, candidate_label):
     text = message.get("text", "")
+    if context_kind != "same_message" and AMBIGUOUS_NODE_SET_RE.search(text):
+        return "weak_context", "telegram_ambiguous_node_set", "low"
     if SELF_CLAIM_RE.search(text):
         return "strong_local_operator_signal", "telegram_self_claim", "high"
     if OPERATOR_OWNERSHIP_RE.search(text):

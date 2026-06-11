@@ -2,7 +2,7 @@
 
 Clusters combine compensation, exact archive-derived governance voting power, vote direction, and public evidence boundaries. `public_owner_proof` clusters are stronger; `infrastructure_or_public_signal` and `shared_public_label_only` clusters are investigation leads and must not be treated as ownership proof by themselves.
 
-## #1 A · gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
+## #1 gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau
 
 - Cluster: signal-1 (signal_cluster; infrastructure_or_public_signal)
 - Addresses: gonka10079cnl3nuh2k82mhkm04dj0slhtw9kmjewwau gonka16r08lhm50zwjddmslfw2344z67r70vqul0dus6 gonka1wvv656pt2d8x2khcvytqeessck5uzjnxzsa8f6
