@@ -3431,6 +3431,105 @@ def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomal
     }
 
 
+def build_recipient_reward_history(recipients, participant_epoch_timeline, history_epochs=None, compensation_epochs=None):
+    history_epochs = history_epochs or list(range(255, 265))
+    compensation_epochs = compensation_epochs or EPOCHS
+    timeline_by_address = {
+        row.get("address"): row
+        for row in (participant_epoch_timeline or {}).get("rows", [])
+        if row.get("address")
+    }
+
+    def max_observed_weight(address):
+        timeline_row = timeline_by_address.get(address) or {}
+        weights = [
+            int(cell.get("weight") or cell.get("startWeight") or cell.get("confirmationWeight") or 0)
+            for cell in timeline_row.get("cells", [])
+            if cell.get("columnType") == "weight"
+        ]
+        return max(weights, default=0)
+
+    rows = []
+    for recipient in recipients:
+        address = recipient["address"]
+        claims = recipient.get("claimedRewardByEpoch") or {}
+        per_epoch_compensation = recipient.get("perEpoch") or {}
+        reward_cells = []
+        compensation_cells = []
+        previous_reward_total = 0.0
+        compensation_reward_total = 0.0
+        compensation_total = 0.0
+
+        for epoch in history_epochs:
+            key = f"e{epoch}"
+            claim = claims.get(key) or {}
+            rewarded = float(claim.get("rewardedGonka") or 0)
+            previous_reward_total += rewarded
+            reward_cells.append(
+                {
+                    "epoch": epoch,
+                    "key": key,
+                    "rewardedGonka": rewarded,
+                    "earnedGonka": float(claim.get("earnedGonka") or 0),
+                    "claimed": bool(claim.get("claimed")),
+                    "inferenceCount": int(claim.get("inferenceCount") or 0),
+                    "hasData": key in claims,
+                }
+            )
+
+        for epoch in compensation_epochs:
+            key = f"e{epoch}"
+            claim = claims.get(key) or {}
+            rewarded = float(claim.get("rewardedGonka") or 0)
+            compensation = float(per_epoch_compensation.get(key) or 0)
+            compensation_reward_total += rewarded
+            compensation_total += compensation
+            compensation_cells.append(
+                {
+                    "epoch": epoch,
+                    "key": key,
+                    "rewardedGonka": rewarded,
+                    "earnedGonka": float(claim.get("earnedGonka") or 0),
+                    "compensationGonka": compensation,
+                    "claimed": bool(claim.get("claimed")),
+                    "inferenceCount": int(claim.get("inferenceCount") or 0),
+                    "hasRewardData": key in claims,
+                }
+            )
+
+        rows.append(
+            {
+                "address": address,
+                "rank": recipient.get("rank"),
+                "actorDisplayLabel": recipient.get("actorDisplayLabel") or recipient.get("label") or address,
+                "actorShortLabel": recipient.get("actorShortLabel") or recipient.get("label") or address,
+                "voteOption": recipient.get("voteOption") or "did_not_vote",
+                "finalVoteOptions": recipient.get("finalVoteOptions") or [],
+                "maxObservedWeight": max_observed_weight(address),
+                "previousRewardGonka": round(previous_reward_total, 6),
+                "compensationPeriodRewardGonka": round(compensation_reward_total, 6),
+                "compensationGonka": round(compensation_total, 6),
+                "totalReceivedGonka": round(previous_reward_total + compensation_reward_total + compensation_total, 6),
+                "compensationToPreviousRewardRatio": round(compensation_total / previous_reward_total, 6) if previous_reward_total else None,
+                "rewardCells": reward_cells,
+                "compensationCells": compensation_cells,
+            }
+        )
+
+    rows.sort(key=lambda row: (-row["maxObservedWeight"], -row["compensationGonka"], row["address"]))
+    return {
+        "historyEpochs": history_epochs,
+        "compensationEpochs": compensation_epochs,
+        "summary": {
+            "recipientCount": len(rows),
+            "maxObservedWeight": max((row["maxObservedWeight"] for row in rows), default=0),
+            "maxPreviousRewardGonka": round(max((row["previousRewardGonka"] for row in rows), default=0), 6),
+            "maxCompensationGonka": round(max((row["compensationGonka"] for row in rows), default=0), 6),
+        },
+        "rows": rows,
+    }
+
+
 def build_telegram_attribution_audit(recipients, votes, evidence_claims):
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_by_address = {row["voter"]: row for row in votes}
@@ -4591,6 +4690,7 @@ def main():
     }
     chart_data = build_dashboard_chart_data(proposal, recipients, votes, epoch_summary, epoch_anomalies, dashboard_summary, attack_narrative)
     chart_data["modelCapFactors"] = model_cap_factors
+    chart_data["recipientRewardHistory"] = build_recipient_reward_history(recipients, chart_data.get("participantEpochTimeline", {}))
 
     dashboard = {
         "metadata": {

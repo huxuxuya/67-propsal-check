@@ -4,61 +4,91 @@ This report shows model-level ComputeGroupCap pressure by epoch. The main chart 
 
 ## Summary
 
-- Rows: 39
+- Rows: 49
 - Capped rows: 9
 - Missing subgroup rows: 0
 - Total clipped weight: 1,500,347
 - Max pressure ratio: 3.3078
 - Models: Kimi, MiniMax, Qwen
-- Epochs: 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281
+- Epochs: 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281
 - Params sources: archive_rpc_params
-- Params snapshots: 35
-- Source: RPC GONKA_RPC_URL; API fallback_public_api; generated 2026-06-12T08:17:34.355206+00:00
+- Params snapshots: 45
+- Source: RPC GONKA_RPC_URL; API fallback_public_api; generated 2026-06-12T21:59:25.740952+00:00
 
 ## Rows
 
-- e265 Kimi `moonshotai/Kimi-K2.6`: status=cap_reference_missing scale=n/a pressure=n/a raw=476,154 cap=exempt counted=476154 clipped=0 coeff=1.262086 participants=20 nodes=44 params=archive_rpc_params
-- e265 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=441,184 cap=exempt counted=441184 clipped=0 coeff=0.3593 participants=41 nodes=188 params=archive_rpc_params
+- e260 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.7101 raw=540,014 cap=760,475 counted=540014 clipped=0 coeff=1.262086 participants=18 nodes=49 params=archive_rpc_params
+- e260 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=538,014 cap=exempt counted=538014 clipped=0 coeff=0.3593 participants=52 nodes=214 params=archive_rpc_params
+- e261 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.5942 raw=475,197 cap=799,740 counted=475197 clipped=0 coeff=1.262086 participants=17 nodes=45 params=archive_rpc_params
+- e261 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=532,385 cap=exempt counted=532385 clipped=0 coeff=0.3593 participants=48 nodes=208 params=archive_rpc_params
+- e262 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.8140 raw=602,101 cap=739,708 counted=602101 clipped=0 coeff=1.262086 participants=21 nodes=57 params=archive_rpc_params
+- e262 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=515,321 cap=exempt counted=515321 clipped=0 coeff=0.3593 participants=46 nodes=204 params=archive_rpc_params
+- e263 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.7412 raw=609,346 cap=822,140 counted=609346 clipped=0 coeff=1.262086 participants=23 nodes=58 params=archive_rpc_params
+- e263 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=448,433 cap=exempt counted=448433 clipped=0 coeff=0.3593 participants=45 nodes=191 params=archive_rpc_params
+- e264 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.7423 raw=581,908 cap=783,967 counted=581908 clipped=0 coeff=1.262086 participants=23 nodes=59 params=archive_rpc_params
+- e264 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=450,776 cap=exempt counted=450776 clipped=0 coeff=0.3593 participants=44 nodes=192 params=archive_rpc_params
+- e265 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.6285 raw=476,154 cap=757,643 counted=476154 clipped=0 coeff=1.262086 participants=20 nodes=44 params=archive_rpc_params
+- e265 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=441,184 cap=exempt counted=441184 clipped=0 coeff=0.3593 participants=41 nodes=188 params=archive_rpc_params
 - e266 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.1115 raw=75,640 cap=678,132 counted=75640 clipped=0 coeff=1.262086 participants=8 nodes=9 params=archive_rpc_params
-- e266 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=318,374 cap=exempt counted=318374 clipped=0 coeff=0.3593 participants=40 nodes=141 params=archive_rpc_params
+- e266 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=318,374 cap=exempt counted=318374 clipped=0 coeff=0.3593 participants=40 nodes=141 params=archive_rpc_params
 - e267 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.3023 pressure=3.3078 raw=831,487 cap=251,369 counted=251369 clipped=580118 coeff=1.262086 participants=27 nodes=81 params=archive_rpc_params
-- e267 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=301,029 cap=exempt counted=301029 clipped=0 coeff=0.3593 participants=34 nodes=134 params=archive_rpc_params
+- e267 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=301,029 cap=exempt counted=301029 clipped=0 coeff=0.3593 participants=34 nodes=134 params=archive_rpc_params
 - e268 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.7154 pressure=1.3979 raw=567,626 cap=406,061 counted=406061 clipped=161565 coeff=1.262086 participants=20 nodes=52 params=archive_rpc_params
-- e268 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=322,358 cap=exempt counted=322358 clipped=0 coeff=0.3593 participants=43 nodes=129 params=archive_rpc_params
+- e268 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=322,358 cap=exempt counted=322358 clipped=0 coeff=0.3593 participants=43 nodes=129 params=archive_rpc_params
 - e269 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.9206 pressure=1.0863 raw=569,177 cap=523,979 counted=523979 clipped=45198 coeff=1.262086 participants=30 nodes=56 params=archive_rpc_params
-- e269 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=277,904 cap=exempt counted=277904 clipped=0 coeff=0.3593 participants=36 nodes=111 params=archive_rpc_params
+- e269 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=277,904 cap=exempt counted=277904 clipped=0 coeff=0.3593 participants=36 nodes=111 params=archive_rpc_params
 - e270 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.7748 pressure=1.2907 raw=657,653 cap=509,547 counted=509547 clipped=148106 coeff=1.262086 participants=23 nodes=70 params=archive_rpc_params
-- e270 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=269,439 cap=exempt counted=269439 clipped=0 coeff=0.3593 participants=32 nodes=109 params=archive_rpc_params
+- e270 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=269,439 cap=exempt counted=269439 clipped=0 coeff=0.3593 participants=32 nodes=109 params=archive_rpc_params
 - e271 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.8728 pressure=1.1457 raw=616,492 cap=538,100 counted=538100 clipped=78392 coeff=1.262086 participants=23 nodes=65 params=archive_rpc_params
-- e271 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=277,805 cap=exempt counted=277805 clipped=0 coeff=0.3593 participants=34 nodes=111 params=archive_rpc_params
+- e271 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=277,805 cap=exempt counted=277805 clipped=0 coeff=0.3593 participants=34 nodes=111 params=archive_rpc_params
 - e272 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.9294 pressure=1.0759 raw=642,361 cap=597,022 counted=597022 clipped=45339 coeff=1.262086 participants=23 nodes=65 params=archive_rpc_params
-- e272 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=267,305 cap=exempt counted=267305 clipped=0 coeff=0.3593 participants=35 nodes=109 params=archive_rpc_params
+- e272 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=267,305 cap=exempt counted=267305 clipped=0 coeff=0.3593 participants=35 nodes=109 params=archive_rpc_params
 - e273 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.7751 pressure=1.2902 raw=796,561 cap=617,387 counted=617387 clipped=179174 coeff=1.262086 participants=30 nodes=81 params=archive_rpc_params
-- e273 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=249,205 cap=exempt counted=249205 clipped=0 coeff=0.3593 participants=39 nodes=108 params=archive_rpc_params
+- e273 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=249,205 cap=exempt counted=249205 clipped=0 coeff=0.3593 participants=39 nodes=108 params=archive_rpc_params
 - e274 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.8595 pressure=1.1635 raw=662,085 cap=569,036 counted=569036 clipped=93049 coeff=1.262086 participants=24 nodes=73 params=archive_rpc_params
-- e274 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=259,801 cap=exempt counted=259801 clipped=0 coeff=0.3593 participants=38 nodes=110 params=archive_rpc_params
+- e274 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=259,801 cap=exempt counted=259801 clipped=0 coeff=0.3593 participants=38 nodes=110 params=archive_rpc_params
 - e275 Kimi `moonshotai/Kimi-K2.6`: status=capped scale=0.7725 pressure=1.2946 raw=744,509 cap=575,103 counted=575103 clipped=169406 coeff=1.262086 participants=24 nodes=80 params=archive_rpc_params
-- e275 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=256,442 cap=exempt counted=256442 clipped=0 coeff=0.3593 participants=39 nodes=112 params=archive_rpc_params
+- e275 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=256,442 cap=exempt counted=256442 clipped=0 coeff=0.3593 participants=39 nodes=112 params=archive_rpc_params
 - e276 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.8881 raw=490,820 cap=552,693 counted=490820 clipped=0 coeff=0.78 participants=23 nodes=83 params=archive_rpc_params
-- e276 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=264,384 cap=exempt counted=264384 clipped=0 coeff=0.3593 participants=39 nodes=126 params=archive_rpc_params
+- e276 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=264,384 cap=exempt counted=264384 clipped=0 coeff=0.3593 participants=39 nodes=126 params=archive_rpc_params
 - e277 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.3986 raw=238,541 cap=598,521 counted=238541 clipped=0 coeff=0.78 participants=22 nodes=38 params=archive_rpc_params
 - e277 MiniMax `MiniMaxAI/MiniMax-M2.7`: status=under_cap scale=1.0000 pressure=0.0027 raw=1,640 cap=598,521 counted=1640 clipped=0 coeff=0.3024 participants=1 nodes=1 params=archive_rpc_params
-- e277 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=275,219 cap=exempt counted=275219 clipped=0 coeff=0.3593 participants=42 nodes=129 params=archive_rpc_params
+- e277 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=275,219 cap=exempt counted=275219 clipped=0 coeff=0.3593 participants=42 nodes=129 params=archive_rpc_params
 - e278 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.5184 raw=195,394 cap=376,900 counted=195394 clipped=0 coeff=0.78 participants=21 nodes=32 params=archive_rpc_params
 - e278 MiniMax `MiniMaxAI/MiniMax-M2.7`: status=under_cap scale=1.0000 pressure=0.1332 raw=50,209 cap=376,900 counted=50209 clipped=0 coeff=0.3024 participants=11 nodes=19 params=archive_rpc_params
-- e278 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=238,587 cap=exempt counted=238587 clipped=0 coeff=0.3593 participants=41 nodes=118 params=archive_rpc_params
+- e278 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=238,587 cap=exempt counted=238587 clipped=0 coeff=0.3593 participants=41 nodes=118 params=archive_rpc_params
 - e279 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.5874 raw=195,613 cap=333,024 counted=195613 clipped=0 coeff=0.78 participants=18 nodes=33 params=archive_rpc_params
 - e279 MiniMax `MiniMaxAI/MiniMax-M2.7`: status=under_cap scale=1.0000 pressure=0.5684 raw=189,284 cap=333,024 counted=189284 clipped=0 coeff=0.3024 participants=18 nodes=79 params=archive_rpc_params
-- e279 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=197,360 cap=exempt counted=197360 clipped=0 coeff=0.3593 participants=39 nodes=97 params=archive_rpc_params
+- e279 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=197,360 cap=exempt counted=197360 clipped=0 coeff=0.3593 participants=39 nodes=97 params=archive_rpc_params
 - e280 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.4645 raw=190,359 cap=409,810 counted=190359 clipped=0 coeff=0.78 participants=19 nodes=33 params=archive_rpc_params
 - e280 MiniMax `MiniMaxAI/MiniMax-M2.7`: status=under_cap scale=1.0000 pressure=0.6918 raw=283,511 cap=409,810 counted=283511 clipped=0 coeff=0.3024 participants=19 nodes=104 params=archive_rpc_params
-- e280 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=118,095 cap=exempt counted=118095 clipped=0 coeff=0.3593 participants=35 nodes=72 params=archive_rpc_params
+- e280 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=118,095 cap=exempt counted=118095 clipped=0 coeff=0.3593 participants=35 nodes=72 params=archive_rpc_params
 - e281 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.7012 raw=299,997 cap=427,827 counted=299997 clipped=0 coeff=0.78 participants=23 nodes=45 params=archive_rpc_params
 - e281 MiniMax `MiniMaxAI/MiniMax-M2.7`: status=under_cap scale=1.0000 pressure=0.6958 raw=297,682 cap=427,827 counted=297682 clipped=0 coeff=0.3024 participants=21 nodes=113 params=archive_rpc_params
-- e281 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=n/a raw=125,380 cap=exempt counted=125380 clipped=0 coeff=0.3593 participants=37 nodes=69 params=archive_rpc_params
+- e281 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=125,380 cap=exempt counted=125380 clipped=0 coeff=0.3593 participants=37 nodes=69 params=archive_rpc_params
 
 ## Params Snapshots
 
+- e260 start height=4013415 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e260 start height=4013415 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e260 end height=4028405 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e260 end height=4028405 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e261 start height=4028806 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e261 start height=4028806 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e261 end height=4043796 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e261 end height=4043796 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e262 start height=4044197 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e262 start height=4044197 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e262 end height=4059187 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e262 end height=4059187 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e263 start height=4059588 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e263 start height=4059588 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e263 end height=4074578 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e263 end height=4074578 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e264 start height=4074979 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e264 start height=4074979 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e264 end height=4089969 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e264 end height=4089969 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
 - e265 start height=4090370 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
 - e265 start height=4090370 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
 - e265 end height=4105360 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen

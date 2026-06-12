@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Proposal #67 Forensic Dashboard</title>
-    <link rel="stylesheet" href="assets/styles.css?v=20260611-8">
+    <link rel="stylesheet" href="assets/styles.css?v=20260613-1">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-    <script src="data/dashboard.js?v=20260611-8"></script>
+    <script src="data/dashboard.js?v=20260613-1"></script>
   </head>
   <body>
     <header class="topbar">
@@ -146,23 +146,30 @@
           </div>
           <div class="chart compensation-chart" id="compensationChart"></div>
         </div>
-        <div class="panel wide">
+        <div class="panel full-width recipient-reward-history-panel">
           <div class="panel-head">
-            <h2>Recipient 10-Epoch Mix</h2>
+            <h2>Recipient Reward History vs Compensation</h2>
             <span id="recipientCompByWindowEpochs">-</span>
             <span id="recipientCompByWindowRows">-</span>
           </div>
-          <div class="chart" id="recipientCompByWindowChart"></div>
+          <div class="inline-legend recipient-reward-history-legend">
+            <span><i style="background:#d7a84f"></i>previous reward</span>
+            <span><i style="background:#d9655f"></i>attack / excluded gap</span>
+            <span><i style="background:#79b66a"></i>compensation</span>
+            <span><i style="background:#38404a"></i>no reward / no compensation</span>
+          </div>
+          <div class="chart recipient-reward-history-chart" id="recipientCompByWindowChart"></div>
           <div class="table-wrap compact-table">
             <table>
               <thead>
                 <tr>
                   <th>Recipient</th>
-                  <th>Max weight (window)</th>
-                  <th>Reward</th>
+                  <th>Max weight</th>
+                  <th>Previous 10 rewards</th>
+                  <th>Reward during package</th>
                   <th>Compensation</th>
-                  <th>Total paid</th>
-                  <th>Compensation share</th>
+                  <th>Total received</th>
+                  <th>Comp / previous reward</th>
                 </tr>
               </thead>
               <tbody id="recipientCompByWindowTable"></tbody>
@@ -237,11 +244,14 @@
               <div class="chart model-cap-mechanics-chart" id="scaleTimelineChart"></div>
             </div>
             <div class="chart-block">
-              <div class="chart-title">Cap Pressure Heatmap</div>
+              <div class="chart-title">Kimi vs 75% Network Cap</div>
+              <div class="chart-note">
+                After e269, this is not new damage to participants. This is the normal 75% model-cap protection: after the e266 weight drop, Kimi tried to come back with more than 75% of the previous network weight, so the chain counted the allowed part and clipped the excess until the network recovered.
+              </div>
               <div class="chart model-cap-mechanics-chart" id="capPressureHeatmapChart"></div>
             </div>
           </div>
-          <div class="table-wrap compact-table">
+          <div class="table-wrap compact-table hidden">
             <div class="table-title">Model Cap Mechanics (epoch x model breakdown)</div>
             <table>
               <thead>
@@ -785,6 +795,6 @@
     </aside>
     <div class="scrim" id="scrim"></div>
 
-    <script src="assets/app.js?v=20260611-8"></script>
+    <script src="assets/app.js?v=20260613-1"></script>
   </body>
 </html>

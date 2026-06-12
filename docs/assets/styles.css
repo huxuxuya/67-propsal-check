@@ -167,6 +167,14 @@ select {
   grid-column: span 1;
 }
 
+.panel.full-width {
+  grid-column: 1 / -1;
+}
+
+.hidden {
+  display: none !important;
+}
+
 .searchable-index-panel {
   margin-bottom: 14px;
 }
@@ -366,6 +374,49 @@ select {
 
 .forensic-timeline-chart {
   height: 940px;
+}
+
+.recipient-reward-history-chart {
+  height: 760px;
+}
+
+.inline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 14px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.inline-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.inline-legend i {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.weight-rail {
+  width: 160px;
+  height: 6px;
+  margin-top: 6px;
+  background: rgba(167, 175, 186, 0.16);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.weight-rail span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #4db7a8, #d7a84f);
 }
 
 .compact-table {

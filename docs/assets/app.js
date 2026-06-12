@@ -1542,75 +1542,112 @@ function renderModelCapMechanics() {
     })),
   }, true);
 
-  const heatmapValues = [];
-  labels.forEach((label, y) => epochs.forEach((epoch, x) => {
-    const row = byKey.get(`${epoch}|${label}`);
-    heatmapValues.push([x, y, row?.capUtilization ?? row?.pressureRatio ?? 0, row]);
-  }));
+  const kimiPressureRows = kimiRows
+    .filter((row) => row.previousEpochRootTotalWeight)
+    .map((row) => {
+      const previousTotal = row.previousEpochRootTotalWeight || 0;
+      const raw = row.rawConsensusWeight || 0;
+      const counted = row.countedWeight ?? row.cappedConsensusWeight ?? raw;
+      const clipped = row.clippedWeight || 0;
+      const capPct = (row.capFactor || 0.75) * 100;
+      return {
+        ...row,
+        rawPct: previousTotal ? (raw / previousTotal) * 100 : 0,
+        countedPct: previousTotal ? (counted / previousTotal) * 100 : 0,
+        clippedPct: previousTotal ? (clipped / previousTotal) * 100 : 0,
+        capPct,
+      };
+    });
   state.charts.capPressureHeatmap.setOption({
-    grid: { left: 72, right: 22, top: 44, bottom: 52 },
+    grid: { left: 68, right: 76, top: 58, bottom: 58 },
+    legend: { top: 8, textStyle: { color: "#a7afba" } },
     tooltip: chartTooltip({
-      formatter: (item) => {
-        const row = item.data?.[3];
+      trigger: "axis",
+      formatter: (params) => {
+        const row = kimiPressureRows[params[0]?.dataIndex];
         if (!row) return "";
-        const clipped = row.clippedWeight ? fmt.format(row.clippedWeight) : "-";
-        const utilization = row.capUtilization || row.pressureRatio;
-        const status = modelCapStatusLabel(row.status);
-        const utilizationText = utilization == null ? "-" : `${fmt.format(utilization)}x`;
-        const cappedDelta = row.countedWeight != null && row.rawConsensusWeight != null ? row.countedWeight - row.rawConsensusWeight : 0;
+        const capped = row.clippedWeight ? "cap clipped the excess" : "under cap";
         return [
-          `<strong>e${row.epoch} ${escapeHtml(row.modelLabel || row.modelId)}</strong>`,
-          `status ${escapeHtml(status)}`,
-          `cap utilization ${utilizationText}`,
-          `raw consensus ${fmt.format(row.rawConsensusWeight || 0)}`,
-          `cap ${fmt.format(row.capWeight || 0)}`,
-          `counted ${fmt.format(row.countedWeight || row.cappedConsensusWeight || 0)}`,
-          `clip ${clipped}`,
-          cappedDelta < 0 ? `delta from raw ${fmt.format(cappedDelta)} (reduced)` : "",
+          `<strong>e${row.epoch} Kimi</strong>`,
+          `${escapeHtml(capped)} · ${escapeHtml(modelCapStatusLabel(row.status))}`,
+          `wanted raw ${fmt.format(row.rawPct)}% of previous network weight`,
+          `allowed cap ${fmt.format(row.capPct)}% = ${fmt.format(row.capWeight || 0)} weight`,
+          `counted ${fmt.format(row.countedPct)}% = ${fmt.format(row.countedWeight || row.cappedConsensusWeight || 0)} weight`,
+          row.clippedWeight ? `clipped excess ${fmt.format(row.clippedPct)}% = ${fmt.format(row.clippedWeight || 0)} weight` : "",
+          `previous epoch total ${fmt.format(row.previousEpochRootTotalWeight || 0)}`,
+          `scale factor ${fmt.format(row.weightScaleFactor || 0)}x · participants ${fmt.format(row.participantCount || 0)} · nodes ${fmt.format(row.nodeCount || 0)}`,
         ].filter(Boolean).join("<br>");
       },
     }),
     xAxis: {
       type: "category",
-      data: epochs.map((epoch) => `e${epoch}`),
-      axisLabel: { color: "#a7afba" },
+      data: kimiPressureRows.map((row) => `e${row.epoch}`),
+      axisLabel: { color: "#a7afba", interval: 0 },
       splitLine: {
         show: true,
         lineStyle: { color: "rgba(128, 140, 154, 0.25)" },
       },
     },
-    yAxis: { type: "category", data: labels, axisLabel: { color: "#a7afba" } },
-    visualMap: {
+    yAxis: {
+      type: "value",
       min: 0,
-      max: Math.max(1, summary.maxPressureRatio || 1),
-      dimension: 2,
-      calculable: true,
-      orient: "horizontal",
-      left: "center",
-      bottom: 8,
-      textStyle: { color: "#a7afba" },
-      inRange: { color: ["#28333d", "#d7a84f", "#d9655f"] },
+      max: Math.max(100, Math.ceil(Math.max(...kimiPressureRows.map((row) => row.rawPct || 0), 75) / 25) * 25),
+      axisLabel: { color: "#a7afba", formatter: (value) => `${fmt.format(value)}%` },
+      name: "share of previous epoch total weight",
+      nameTextStyle: { color: "#a7afba" },
+      splitLine: { lineStyle: { color: "rgba(128, 140, 154, 0.16)" } },
     },
-    series: [{
-      name: "cap utilization",
-      type: "heatmap",
-      data: heatmapValues,
-      label: {
-        show: true,
-        color: "#f4f0e8",
-        formatter: (item) => {
-          const row = item.data?.[3];
-          if (!row) return "";
-          if (row.initialModel) return "exempt";
-          if (row.status === "cap_reference_missing") return "n/a";
-          if (row.clippedWeight) return `clip ${compact.format(row.clippedWeight)}`;
-          if ((row.capUtilization || row.pressureRatio) && (row.capUtilization || row.pressureRatio) >= 1) return `x${fmt.format(row.capUtilization || row.pressureRatio)}`;
-          if (row.status === "under_cap") return "under cap";
-          return "ok";
+    series: [
+      {
+        name: "Kimi counted",
+        type: "bar",
+        stack: "kimi-pressure",
+        data: kimiPressureRows.map((row) => row.countedPct),
+        barMaxWidth: 42,
+        itemStyle: { color: "#79b66a" },
+        label: {
+          show: true,
+          position: "inside",
+          color: "#071311",
+          fontWeight: 700,
+          formatter: (item) => item.value >= 10 ? `${fmt.format(item.value)}%` : "",
         },
       },
-      emphasis: { itemStyle: { borderColor: "#f4f0e8", borderWidth: 1 } },
-    }],
+      {
+        name: "Clipped excess",
+        type: "bar",
+        stack: "kimi-pressure",
+        data: kimiPressureRows.map((row) => row.clippedPct),
+        barMaxWidth: 42,
+        itemStyle: { color: "#d9655f" },
+        label: {
+          show: true,
+          position: "top",
+          color: "#f4f0e8",
+          formatter: (item) => item.value > 0 ? `cut ${fmt.format(item.value)}%` : "",
+        },
+      },
+      {
+        name: "Kimi wanted raw",
+        type: "line",
+        data: kimiPressureRows.map((row) => row.rawPct),
+        symbolSize: 8,
+        lineStyle: { color: "#f0ede5", width: 2.5 },
+        itemStyle: { color: "#f0ede5" },
+      },
+      {
+        name: "75% cap",
+        type: "line",
+        data: kimiPressureRows.map((row) => row.capPct || 75),
+        symbol: "none",
+        lineStyle: { color: "#d7a84f", width: 2.5, type: "dashed" },
+        markArea: {
+          silent: true,
+          itemStyle: { color: "rgba(121, 182, 106, 0.06)" },
+          data: [[{ yAxis: 0 }, { yAxis: 75 }]],
+        },
+      },
+    ],
   }, true);
 }
 
@@ -1693,116 +1730,161 @@ function renderHeatmap() {
   }, true);
 }
 
-function renderRecipientCompByWindow(size = 10) {
-  const { windowEpochs, windowKeys } = getRecentEpochWindow(size);
-  const epochLabel = windowKeys.length ? `${windowKeys[0]}…${windowKeys[windowKeys.length - 1]}` : "n/a";
-  const timelineRows = new Map((state.data.chartData?.participantEpochTimeline?.rows || []).map((row) => [row.address, row]));
-
-  const getMaxWeightInWindow = (address) => {
-    const timelineRow = timelineRows.get(address);
-    if (!timelineRow?.cells?.length) return 0;
-    return Math.max(
-      0,
-      ...timelineRow.cells
-        .filter((cell) => cell?.columnType === "weight" && windowEpochs.includes(cell.epoch || 0))
-        .map((cell) => Number(cell?.weight || 0))
-    );
+function renderRecipientCompByWindow() {
+  const payload = state.data.chartData?.recipientRewardHistory || { rows: [], historyEpochs: [], compensationEpochs: [], summary: {} };
+  const filteredAddresses = new Set(state.filteredRecipients.map((row) => row.address));
+  const rows = (payload.rows || [])
+    .filter((row) => filteredAddresses.has(row.address))
+    .sort((a, b) => (b.maxObservedWeight || 0) - (a.maxObservedWeight || 0) || (b.compensationGonka || 0) - (a.compensationGonka || 0));
+  const historyEpochs = payload.historyEpochs || [];
+  const compensationEpochs = payload.compensationEpochs || [];
+  const xLabels = [
+    ...historyEpochs.map((epoch) => `e${epoch}`),
+    ...compensationEpochs.map((epoch) => (epoch === 265 ? "e265 attack" : epoch === 266 ? "e266 excluded" : `e${epoch} cap`)),
+  ];
+  const maxReward = Math.max(
+    payload.summary?.maxPreviousRewardGonka || 0,
+    ...rows.flatMap((row) => [...(row.rewardCells || []), ...(row.compensationCells || [])].map((cell) => cell.rewardedGonka || 0)),
+    1
+  );
+  const maxCompensation = Math.max(payload.summary?.maxCompensationGonka || 0, ...rows.map((row) => row.compensationGonka || 0), 1);
+  const maxWeight = Math.max(payload.summary?.maxObservedWeight || 0, ...rows.map((row) => row.maxObservedWeight || 0), 1);
+  const heatmapRows = [];
+  const colorWithAlpha = (rgb, value, max) => {
+    const alpha = value > 0 ? Math.max(0.24, Math.min(0.95, 0.18 + Math.sqrt(value / max) * 0.77)) : 0.16;
+    return `rgba(${rgb}, ${alpha})`;
   };
 
-  const rows = state.filteredRecipients
-    .map((row) => {
-      let compensationWindow = 0;
-      let rewardWindow = 0;
-      for (const epoch of windowKeys) {
-        compensationWindow += Number(row.perEpoch?.[epoch] || 0);
-        const rewardData = row.claimedRewardByEpoch?.[epoch];
-        rewardWindow += Number(rewardData?.rewardedGonka || 0);
-      }
-      const maxWindowWeight = getMaxWeightInWindow(row.address);
-      const totalWindowPaid = compensationWindow + rewardWindow;
-      return {
-        ...row,
-        maxWindowWeight,
-        compensationWindow,
-        rewardWindow,
-        totalWindowPaid,
-        compensationShare: totalWindowPaid ? compensationWindow / totalWindowPaid : 0,
-      };
-    })
-    .filter((row) => row.compensationWindow || row.rewardWindow)
-    .sort((a, b) => b.maxWindowWeight - a.maxWindowWeight || b.totalWindowPaid - a.totalWindowPaid);
+  rows.forEach((row, y) => {
+    (row.rewardCells || []).forEach((cell, x) => {
+      const reward = cell.rewardedGonka || 0;
+      const missing = !cell.hasData;
+      heatmapRows.push({
+        value: [x, y, reward],
+        address: row.address,
+        row,
+        cell,
+        phase: missing ? "missing_history" : "previous_reward",
+        itemStyle: { color: missing ? "rgba(56, 64, 74, 0.14)" : reward > 0 ? colorWithAlpha("215, 168, 79", reward, maxReward) : "rgba(56, 64, 74, 0.32)" },
+      });
+    });
+    (row.compensationCells || []).forEach((cell, index) => {
+      const x = historyEpochs.length + index;
+      const compensation = cell.compensationGonka || 0;
+      const reward = cell.rewardedGonka || 0;
+      const phase = cell.epoch <= 266 ? "attack_or_excluded" : "cap_compensation";
+      const color = compensation > 0
+        ? colorWithAlpha("121, 182, 106", compensation, maxCompensation)
+        : reward > 0
+          ? colorWithAlpha("215, 168, 79", reward, maxReward)
+          : phase === "attack_or_excluded"
+            ? "rgba(217, 101, 95, 0.26)"
+            : "rgba(56, 64, 74, 0.28)";
+      heatmapRows.push({
+        value: [x, y, compensation || reward],
+        address: row.address,
+        row,
+        cell,
+        phase,
+        itemStyle: { color },
+      });
+    });
+  });
 
-  document.getElementById("recipientCompByWindowEpochs").textContent = `Window ${epochLabel}`;
+  const historyLabel = historyEpochs.length ? `e${historyEpochs[0]}–e${historyEpochs[historyEpochs.length - 1]}` : "n/a";
+  const compensationLabel = compensationEpochs.length ? `e${compensationEpochs[0]}–e${compensationEpochs[compensationEpochs.length - 1]}` : "n/a";
+  document.getElementById("recipientCompByWindowEpochs").textContent = `Rewards ${historyLabel} · compensation ${compensationLabel}`;
   document.getElementById("recipientCompByWindowRows").textContent = `${rows.length} shown`;
+  state.chartAddressRows.recipientCompByWindow = heatmapRows;
 
-  state.chartAddressRows.recipientCompByWindow = rows;
-  const rewardSeries = rows.map((row) => row.rewardWindow);
-  const compensationSeries = rows.map((row) => row.compensationWindow);
-  if (!rows.length) {
+  const chartEl = document.getElementById("recipientCompByWindowChart");
+  if (chartEl) chartEl.style.height = `${Math.max(560, rows.length * 27 + 120)}px`;
+  if (!rows.length || !xLabels.length) {
     state.charts.recipientCompByWindow.setOption({
-      title: { text: "No rows in selected window", left: "center", textStyle: { color: "#6d7682" } },
+      title: { text: "No reward history rows for current filters", left: "center", textStyle: { color: "#6d7682" } },
       xAxis: { show: false },
       yAxis: { show: false },
       series: [],
     }, true);
   } else {
+    state.charts.recipientCompByWindow.resize();
     state.charts.recipientCompByWindow.setOption({
       tooltip: chartTooltip({
-        trigger: "axis",
-        formatter: (params) => {
-          const row = rows[params[0].dataIndex];
-          if (!row) return "";
-          return `<strong>${escapeHtml(row.actorDisplayLabel || row.actorShortLabel || actorShortLabel(row))}</strong><br>${shortAddress(row.address)}<br>${fmt.format(row.maxWindowWeight)} max window weight<br>reward ${gonka(row.rewardWindow)}<br>compensation ${gonka(row.compensationWindow)}<br>total ${gonka(row.totalWindowPaid)}<br>compensation share ${fmt.format((row.compensationShare || 0) * 100)}%`;
+        formatter: (item) => {
+          const data = item.data || {};
+          const row = data.row || {};
+          const cell = data.cell || {};
+          const compensation = cell.compensationGonka || 0;
+          const reward = cell.rewardedGonka || 0;
+          const phase = {
+            previous_reward: "previous reward history",
+            missing_history: "reward history not fetched",
+            attack_or_excluded: "attack / excluded epoch",
+            cap_compensation: "cap compensation epoch",
+          }[data.phase] || data.phase;
+          const dataLine = data.phase === "missing_history" ? "<br>source data missing for this epoch/address" : "";
+          return `<strong>${escapeHtml(row.actorDisplayLabel || row.actorShortLabel || row.address)}</strong><br>${escapeHtml(row.address || "")}<br>epoch e${cell.epoch}<br>${escapeHtml(phase)}${dataLine}<br>reward ${gonka(reward)}<br>compensation ${gonka(compensation)}<br>claimed ${cell.claimed ? "yes" : "no"}<br>inferences ${fmt.format(cell.inferenceCount || 0)}<br>max observed weight ${fmt.format(row.maxObservedWeight || 0)}<br>previous 10 rewards ${gonka(row.previousRewardGonka || 0)}<br>total received ${gonka(row.totalReceivedGonka || 0)}`;
         },
       }),
-      grid: { left: 228, right: 54, top: 34, bottom: 28 },
+      grid: { left: 250, right: 28, top: 72, bottom: 48 },
       xAxis: {
-        type: "value",
-        axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) },
+        type: "category",
+        data: xLabels,
+        axisLabel: {
+          color: (value) => value.includes("attack") || value.includes("excluded") ? "#d9655f" : value.includes("cap") ? "#79b66a" : "#d7a84f",
+          interval: 0,
+          rotate: 32,
+        },
+        splitLine: { show: true, lineStyle: { color: "rgba(128, 140, 154, 0.22)" } },
       },
       yAxis: {
         type: "category",
         inverse: true,
-        data: rows.map((row) => `${row.actorShortLabel || row.actorDisplayLabel || shortAddress(row.address)}`),
-        axisLabel: {
-          align: "left",
-          margin: 232,
-          color: "#a7afba",
-          width: 220,
-          overflow: "truncate",
-        },
+        data: rows.map((row) => `${row.actorShortLabel || row.actorDisplayLabel || shortAddress(row.address)}  ${shortAddress(row.address)}`),
+        axisLabel: { align: "left", margin: 244, color: "#a7afba", width: 236, overflow: "truncate" },
       },
-      series: [
-        {
-          name: "reward",
-          type: "bar",
-          stack: "payment",
-          data: rewardSeries,
-          itemStyle: { color: "#d7a84f" },
-          emphasis: { focus: "series" },
+      series: [{
+        type: "heatmap",
+        data: heatmapRows,
+        label: {
+          show: true,
+          color: "#f4f0e8",
+          formatter: (item) => {
+            const cell = item.data?.cell || {};
+            const compensation = cell.compensationGonka || 0;
+            const reward = cell.rewardedGonka || 0;
+            if (compensation > maxCompensation * 0.025) return compact.format(compensation);
+            if (reward > maxReward * 0.06) return compact.format(reward);
+            return "";
+          },
         },
-        {
-          name: "compensation",
-          type: "bar",
-          stack: "payment",
-          data: compensationSeries,
-          itemStyle: { color: "#79b66a" },
-          emphasis: { focus: "series" },
-        },
-      ],
+        itemStyle: { borderColor: "#101114", borderWidth: 1 },
+        emphasis: { itemStyle: { borderColor: "#f4f0e8", borderWidth: 1.5 } },
+      }],
+      graphic: [{
+        type: "line",
+        shape: { x1: 250 + (historyEpochs.length / Math.max(xLabels.length, 1)) * (state.charts.recipientCompByWindow.getWidth() - 278), y1: 56, x2: 250 + (historyEpochs.length / Math.max(xLabels.length, 1)) * (state.charts.recipientCompByWindow.getWidth() - 278), y2: state.charts.recipientCompByWindow.getHeight() - 48 },
+        style: { stroke: "rgba(244, 240, 232, 0.45)", lineWidth: 2, lineDash: [5, 5] },
+        silent: true,
+      }],
     }, true);
   }
 
-  els.recipientCompByWindowTable.innerHTML = rows.map((row) => `
-    <tr>
-      <td><button class=\"row-button mono\" data-address=\"${escapeHtml(row.address)}\">${escapeHtml(row.actorDisplayLabel || row.actorShortLabel || row.address)}</button><div class=\"muted\">${shortAddress(row.address)}</div></td>
-      <td class=\"num\">${fmt.format(row.maxWindowWeight)}</td>
-      <td class=\"num\">${gonka(row.rewardWindow)}</td>
-      <td class=\"num\">${gonka(row.compensationWindow)}</td>
-      <td class=\"num\">${gonka(row.totalWindowPaid)}</td>
-      <td class=\"num\">${fmt.format((row.compensationShare || 0) * 100)}%</td>
-    </tr>
-  `).join("");
+  els.recipientCompByWindowTable.innerHTML = rows.map((row) => {
+    const weightPct = Math.max(3, Math.min(100, ((row.maxObservedWeight || 0) / maxWeight) * 100));
+    const ratio = row.compensationToPreviousRewardRatio == null ? "n/a" : `${fmt.format(row.compensationToPreviousRewardRatio)}x`;
+    return `
+      <tr>
+        <td><button class="row-button mono" data-address="${escapeHtml(row.address)}">${escapeHtml(row.actorDisplayLabel || row.actorShortLabel || row.address)}</button><div class="muted">${shortAddress(row.address)}</div><div class="weight-rail" title="Max observed weight ${fmt.format(row.maxObservedWeight || 0)}"><span style="width:${weightPct}%"></span></div></td>
+        <td class="num">${fmt.format(row.maxObservedWeight || 0)}</td>
+        <td class="num">${gonka(row.previousRewardGonka || 0)}</td>
+        <td class="num">${gonka(row.compensationPeriodRewardGonka || 0)}</td>
+        <td class="num">${gonka(row.compensationGonka || 0)}</td>
+        <td class="num">${gonka(row.totalReceivedGonka || 0)}</td>
+        <td class="num">${ratio}</td>
+      </tr>
+    `;
+  }).join("");
 }
 
 function renderMatrix() {
