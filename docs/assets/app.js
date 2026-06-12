@@ -2603,6 +2603,19 @@ function renderAll() {
   enhanceAddressActions();
 }
 
+function ensureTableTitles() {
+  document.querySelectorAll(".panel .table-wrap").forEach((wrap) => {
+    if (wrap.querySelector(".table-title")) return;
+    const panel = wrap.closest(".panel");
+    const heading = panel?.querySelector(":scope > .panel-head h2");
+    const title = heading ? heading.textContent.trim() : "Table";
+    const titleEl = document.createElement("div");
+    titleEl.className = "table-title";
+    titleEl.textContent = title;
+    wrap.prepend(titleEl);
+  });
+}
+
 function claimSourceLine(row) {
   if (row.chatMessageId || row.chatAuthor || row.chatName) {
     return [
@@ -2798,6 +2811,8 @@ function closeDrawer() {
   els.scrim.classList.remove("open");
   els.drawer.setAttribute("aria-hidden", "true");
 }
+
+ensureTableTitles();
 
 document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
 els.scrim.addEventListener("click", closeDrawer);
