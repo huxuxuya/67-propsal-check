@@ -1021,18 +1021,24 @@ function renderModelCapMechanics() {
   }
   const isFrozenScale = state.kimiScaleScenario === "frozen" || state.kimiScaleScenario === "frozenScale";
   const isConstantRaw = state.kimiScaleScenario === "constantRaw";
+  const isFixedScale125 = state.kimiScaleScenario === "fixedScale125";
   const beforeScaleLabel = isConstantRaw ? "constant raw" : "actual raw";
   const afterScaleSeriesName = isFrozenScale
     ? "After fixed scale (raw consensus)"
     : isConstantRaw
       ? "After fixed raw (actual scale)"
+      : isFixedScale125
+      ? "After fixed scale 1.25"
       : "After scale (raw consensus)";
   const finalCountSeriesName = isFrozenScale
     ? "Final counted (fixed scale)"
     : isConstantRaw
       ? "Final counted (constant raw)"
+      : isFixedScale125
+      ? "Final counted (fixed scale 1.25)"
       : "Final counted (after cap)";
   const resolveScenarioScale = (row) => {
+    if (isFixedScale125) return 1.25;
     if (!isFrozenScale) return row.weightScaleFactor || 0;
     const label = row.modelLabel || row.modelId;
     return frozenScaleByModel.get(label) ?? (row.weightScaleFactor || 0);
@@ -1084,14 +1090,14 @@ function renderModelCapMechanics() {
         const lines = [
           `<strong>${row.epochLabel} (Kimi) recovery path</strong>`,
           `1) Before scale (${row.rawMode}): <strong>${fmt.format(row.preScale)}</strong>`,
-          `2) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "After fixed scale (raw consensus)" : row.scenario === "constantRaw" ? "After fixed raw (raw × actual scale)" : "After scale (raw consensus)"}`,
+          `2) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "After fixed scale (raw consensus)" : row.scenario === "constantRaw" ? "After fixed raw (raw × actual scale)" : row.scenario === "fixedScale125" ? "After fixed scale 1.25" : "After scale (raw consensus)"}`,
           `   <strong>${fmt.format(row.scaled)}</strong>${row.scaleDelta ? `  (${row.scaleDelta > 0 ? "+" : ""}${fmt.format(row.scaleDelta)} by model scale)` : ""}`,
           row.scenario === "frozen" || row.scenario === "frozenScale" ? `   Baseline scale for this model is <strong>${fmt.format(row.actualScale)}x</strong>` : "",
           `3) Cap ceiling: ${row.capLimit == null ? "<i>not set</i>" : `<strong>${fmt.format(row.capLimit)}</strong> (${fmt.format(row.previousEpochRootTotalWeight)} × ${fmt.format(row.capFactor)})`}`,
-          `4) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "Final counted under fixed scale (after cap)" : row.scenario === "constantRaw" ? "Final counted (fixed raw, after cap)" : "Final counted (after cap)"}`,
+          `4) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "Final counted under fixed scale (after cap)" : row.scenario === "constantRaw" ? "Final counted (fixed raw, after cap)" : row.scenario === "fixedScale125" ? "Final counted (fixed scale 1.25)" : "Final counted (after cap)"}`,
           `<strong>${fmt.format(row.final)}</strong>`,
           clipped > 0 ? `Clipped by cap: <strong>${fmt.format(clipped)}</strong> (${fmt.format(clippedPct)}%)` : "Clipped by cap: <strong>0</strong>",
-          row.scenario === "frozen" || row.scenario === "frozenScale" || row.scenario === "constantRaw" ? `Actual trajectory would be ${fmt.format(row.actualScaled)} → <strong>${fmt.format(row.actualFinal)}</strong> (${fmt.format(clippedActual)} clipped)` : "",
+          row.scenario === "frozen" || row.scenario === "frozenScale" || row.scenario === "constantRaw" || row.scenario === "fixedScale125" ? `Actual trajectory would be ${fmt.format(row.actualScaled)} → <strong>${fmt.format(row.actualFinal)}</strong> (${fmt.format(clippedActual)} clipped)` : "",
           `Status: ${escapeHtml(modelCapStatusLabel(row.status))}`,
           row.capUtilization ? `Utilization: <strong>${fmt.format(row.capUtilization)}x</strong>` : "",
         ];
