@@ -276,6 +276,10 @@ select {
   height: 360px;
 }
 
+.model-cap-chart {
+  height: 420px;
+}
+
 .heatmap {
   height: 430px;
 }

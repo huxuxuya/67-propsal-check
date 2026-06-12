@@ -41,6 +41,7 @@ const els = {
   hypothesisTable: document.getElementById("hypothesisTable"),
   anomalyTable: document.getElementById("anomalyTable"),
   entryExitTable: document.getElementById("entryExitTable"),
+  modelCapTable: document.getElementById("modelCapTable"),
   telegramTable: document.getElementById("telegramTable"),
   labelTable: document.getElementById("labelTable"),
   searchIndex: document.getElementById("searchIndex"),
@@ -315,6 +316,7 @@ function initCharts() {
     attackTimeline: "attackTimelineChart",
     waterfall: "waterfallChart",
     epoch: "epochChart",
+    modelCap: "modelCapChart",
     heatmap: "heatmapChart",
     matrix: "matrixChart",
     matrixStats: "matrixStats",
@@ -812,6 +814,128 @@ function renderEpochChart() {
         itemStyle: { color: "#5da9e9" },
         lineStyle: { color: "#5da9e9" },
       },
+    ],
+  }, true);
+}
+
+function modelCapColor(label, index = 0) {
+  const value = String(label || "").toLowerCase();
+  if (value.includes("kimi")) return "#d9655f";
+  if (value.includes("qwen")) return "#5da9e9";
+  if (value.includes("minimax")) return "#d7a84f";
+  return ["#79b66a", "#8f7ad3", "#e78f61"][index % 3];
+}
+
+function modelCapStatusLabel(status) {
+  return {
+    capped: "Capped",
+    under_cap: "Under cap",
+    initial_exempt: "Initial model exempt",
+    sole_group_uncapped: "Sole group uncapped",
+    cap_reference_missing: "Cap reference missing",
+    missing_subgroup: "Missing subgroup",
+  }[status] || status || "Unknown";
+}
+
+function renderModelCapChart() {
+  const payload = state.data.chartData?.modelCapFactors || { rows: [], summary: {} };
+  const rows = (payload.rows || []).filter((row) => row.epoch && row.modelId && row.status !== "missing_subgroup");
+  const epochs = [...new Set(rows.map((row) => row.epoch))].sort((a, b) => a - b);
+  const labels = [...new Set(rows.map((row) => row.modelLabel || row.modelId))].sort();
+  const byKey = new Map(rows.map((row) => [`${row.epoch}|${row.modelLabel || row.modelId}`, row]));
+  const rowCount = document.getElementById("modelCapRows");
+  if (rowCount) rowCount.textContent = `${rows.length} rows`;
+
+  if (!rows.length) {
+    state.charts.modelCap.setOption({
+      title: { text: "Model cap archive data is not loaded", left: "center", top: "middle", textStyle: { color: "#a7afba", fontSize: 13, fontWeight: 400 } },
+      xAxis: { show: false },
+      yAxis: { show: false },
+      series: [],
+    }, true);
+    if (els.modelCapTable) els.modelCapTable.innerHTML = "";
+    return;
+  }
+
+  const statusRows = rows
+    .slice()
+    .sort((a, b) => a.epoch - b.epoch || (a.modelLabel || "").localeCompare(b.modelLabel || ""))
+    .map((row) => {
+      const cap = row.capWeight == null ? "exempt" : fmt.format(row.capWeight || 0);
+      const statusClass = row.status === "capped" ? "warn" : row.status === "initial_exempt" ? "good" : "";
+      const scale = row.appliedScale == null ? "-" : `${fmt.format((row.appliedScale || 0) * 100)}%`;
+      return `
+        <tr>
+          <td class="num">e${row.epoch}</td>
+          <td title="${escapeHtml(row.modelId)}">${escapeHtml(row.modelLabel || row.modelId)}</td>
+          <td><span class="tag ${statusClass}">${escapeHtml(modelCapStatusLabel(row.status))}</span></td>
+          <td class="num">${scale}</td>
+          <td class="num">${fmt.format(row.rawConsensusWeight || 0)}</td>
+          <td class="num">${cap}</td>
+          <td class="num">${row.pressureRatio ? `${fmt.format(row.pressureRatio)}x` : "-"}</td>
+        </tr>
+      `;
+    }).join("");
+  if (els.modelCapTable) els.modelCapTable.innerHTML = statusRows;
+
+  state.charts.modelCap.setOption({
+    grid: { left: 72, right: 32, top: 36, bottom: 54 },
+    legend: { top: 6, textStyle: { color: "#a7afba" } },
+    tooltip: chartTooltip({
+      trigger: "axis",
+      formatter: (params) => {
+        const epoch = epochs[params[0]?.dataIndex] || "";
+        const lines = [`<strong>Epoch ${epoch}</strong>`];
+        for (const item of params) {
+          const row = byKey.get(`${epoch}|${item.seriesName}`);
+          if (!row) continue;
+          const cap = row.capWeight == null ? "exempt" : fmt.format(row.capWeight || 0);
+          const scale = row.appliedScale == null ? "-" : `${fmt.format((row.appliedScale || 0) * 100)}% scale`;
+          lines.push(
+            `<span style="color:${item.color}">●</span> ${escapeHtml(row.modelLabel || row.modelId)}: ${scale}`,
+            `${escapeHtml(modelCapStatusLabel(row.status))}`,
+            `raw consensus ${fmt.format(row.rawConsensusWeight || 0)} · cap ${cap}`,
+            `raw subgroup ${fmt.format(row.subgroupRawWeight || 0)} · coeff ${fmt.format(row.weightScaleFactor || 0)}`,
+            `pressure ${row.pressureRatio ? `${fmt.format(row.pressureRatio)}x` : "-"} · participants ${fmt.format(row.participantCount || 0)} · nodes ${fmt.format(row.nodeCount || 0)}`,
+            `height ${fmt.format(row.height || 0)} · source ${escapeHtml(row.source || "")} · params ${escapeHtml(row.paramsSource || "")}`
+          );
+        }
+        return lines.join("<br>");
+      },
+    }),
+    xAxis: { type: "category", data: epochs.map((epoch) => `e${epoch}`), axisLabel: { color: "#a7afba" } },
+    yAxis: {
+      type: "value",
+      min: 0,
+      max: 1.05,
+      axisLabel: { color: "#a7afba", formatter: (v) => `${Math.round(v * 100)}%` },
+      name: "applied scale",
+      nameTextStyle: { color: "#a7afba" },
+    },
+    series: [
+      {
+        name: "100% reference",
+        type: "line",
+        data: epochs.map(() => 1),
+        symbol: "none",
+        lineStyle: { color: "#6d7682", type: "dashed", width: 1 },
+        tooltip: { show: false },
+        markArea: {
+          silent: true,
+          itemStyle: { color: "rgba(217, 101, 95, 0.08)" },
+          data: [[{ xAxis: "e265", name: "attack" }, { xAxis: "e265" }], [{ xAxis: "e266", name: "N-1 collapse" }, { xAxis: "e266" }]],
+        },
+      },
+      ...labels.map((label, index) => ({
+        name: label,
+        type: "line",
+        data: epochs.map((epoch) => byKey.get(`${epoch}|${label}`)?.appliedScale ?? null),
+        connectNulls: false,
+        symbolSize: 8,
+        lineStyle: { width: 3, color: modelCapColor(label, index) },
+        itemStyle: { color: modelCapColor(label, index) },
+        areaStyle: { color: modelCapColor(label, index), opacity: 0.06 },
+      })),
     ],
   }, true);
 }
@@ -2261,6 +2385,7 @@ function renderAll() {
   renderCompensationChart();
   renderWaterfall();
   renderEpochChart();
+  renderModelCapChart();
   renderHeatmap();
   renderMatrix();
   renderTimeline();

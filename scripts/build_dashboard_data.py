@@ -509,6 +509,23 @@ def load_optional_json(path, default):
     return load_json(path)
 
 
+def read_model_cap_factors():
+    payload = load_optional_json(DATA / "model_cap_factors" / "model_cap_factors.json", {})
+    rows = payload.get("rows") or []
+    rows = sorted(rows, key=lambda row: (int(row.get("epoch") or 0), row.get("modelLabel", ""), row.get("modelId", "")))
+    summary = {
+        "rowCount": len(rows),
+        "cappedRowCount": sum(1 for row in rows if row.get("status") == "capped"),
+        "missingRowCount": sum(1 for row in rows if row.get("status") == "missing_subgroup"),
+        "models": sorted({row.get("modelLabel") or row.get("modelId") for row in rows if row.get("modelId")}),
+        "epochs": sorted({int(row.get("epoch")) for row in rows if row.get("epoch") is not None}),
+        "paramsSources": sorted({row.get("paramsSource") for row in rows if row.get("paramsSource")}),
+        "source": payload.get("source") or {},
+        "errors": payload.get("errors") or [],
+    }
+    return {"rows": rows, "summary": summary}
+
+
 def read_onchain_graph_snapshot():
     return load_optional_json(DATA / "onchain_graph" / "proposal_67_local_graph.json", {})
 
@@ -3551,6 +3568,85 @@ def write_voting_power_window_report(voting_power_window):
             f.write(f"- {row['label']} `{row['voter']}`: vote={row['primaryOption']} tx_height={row['height']} start_power={row['startVotingPower']} end_power={row['endVotingPower']} status={row['windowPowerStatus']}\n")
 
 
+def write_model_cap_factor_report(model_cap_factors):
+    reports = ROOT / "reports"
+    reports.mkdir(exist_ok=True)
+    rows = model_cap_factors.get("rows") or []
+    with (reports / "model_cap_factor_timeline.csv").open("w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "epoch",
+                "height",
+                "modelLabel",
+                "modelId",
+                "status",
+                "capApplies",
+                "capFactor",
+                "previousEpochRootTotalWeight",
+                "rootTotalWeight",
+                "subgroupRawWeight",
+                "weightScaleFactor",
+                "rawConsensusWeight",
+                "capWeight",
+                "cappedConsensusWeight",
+                "appliedScale",
+                "pressureRatio",
+                "participantCount",
+                "nodeCount",
+                "source",
+                "paramsSource",
+                "paramsError",
+            ],
+        )
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({key: row.get(key, "") for key in writer.fieldnames})
+
+    summary = model_cap_factors.get("summary") or {}
+    source = summary.get("source") or {}
+    lines = [
+        "# Model Cap Factor Timeline",
+        "",
+        "This report shows model-level ComputeGroupCap pressure by epoch. The main chart metric is applied scale: `min(1, cap_weight / raw_consensus_weight)`. A lower value means the model subgroup was compressed harder by cap.",
+        "",
+        "## Summary",
+        "",
+        f"- Rows: {summary.get('rowCount', 0)}",
+        f"- Capped rows: {summary.get('cappedRowCount', 0)}",
+        f"- Missing subgroup rows: {summary.get('missingRowCount', 0)}",
+        f"- Models: {', '.join(summary.get('models') or []) or 'none'}",
+        f"- Epochs: {', '.join(str(epoch) for epoch in summary.get('epochs') or []) or 'none'}",
+        f"- Params sources: {', '.join(summary.get('paramsSources') or []) or 'none'}",
+        f"- Source: RPC {source.get('rpcNode', '')}; API {source.get('apiNode', '')}; generated {source.get('generatedAt', '')}",
+        "",
+        "## Rows",
+        "",
+    ]
+    for row in rows:
+        cap = row.get("capWeight")
+        cap_text = "exempt" if cap is None else f"{cap:,}"
+        raw = row.get("rawConsensusWeight")
+        raw_text = f"{raw:,}" if isinstance(raw, (int, float)) else ""
+        scale = row.get("appliedScale")
+        pressure = row.get("pressureRatio")
+        scale_text = f"{scale:.4f}" if isinstance(scale, (int, float)) else "n/a"
+        pressure_text = f"{pressure:.4f}" if isinstance(pressure, (int, float)) else "n/a"
+        lines.append(
+            f"- e{row.get('epoch')} {row.get('modelLabel')} `{row.get('modelId')}`: "
+            f"status={row.get('status')} scale={scale_text} "
+            f"pressure={pressure_text} raw={raw_text} cap={cap_text} "
+            f"coeff={row.get('weightScaleFactor')} participants={row.get('participantCount')} nodes={row.get('nodeCount')} "
+            f"params={row.get('paramsSource', '')}"
+        )
+    errors = summary.get("errors") or []
+    if errors:
+        lines.extend(["", "## Fetch Errors", ""])
+        for error in errors:
+            lines.append(f"- e{error.get('epoch')} height={error.get('height', '')}: {error.get('error')} {error.get('message', '')}")
+    (reports / "model_cap_factor_timeline.md").write_text("\n".join(lines).rstrip() + "\n")
+
+
 def write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters=None, interest_clusters=None, benefit_power_matrix=None, public_name_enrichment=None, epoch_anomalies=None):
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
@@ -4366,12 +4462,14 @@ def main():
     telegram_evidence_rows = build_combined_telegram_evidence(telegram_evidence, history_operator_signals, chat_attribution)
     discord_coverage = build_discord_coverage(discord_evidence, discord_attribution, recipients, votes)
     telegram_attribution_audit = build_telegram_attribution_audit(recipients, votes, evidence_claims)
+    model_cap_factors = read_model_cap_factors()
     attack_narrative = build_attack_narrative(proposal, votes, epoch_summary, epoch_anomalies)
     hypotheses = build_hypotheses(ranked_parties, epoch_anomalies, telegram_evidence, proposal)
     (DATA / "public_name_enrichment.json").write_text(json.dumps(public_name_enrichment, indent=2, sort_keys=True) + "\n")
     write_attribution_reports(ranked_parties, evidence_claims, epoch_entry_exit_clusters, interest_clusters, benefit_power_matrix, public_name_enrichment, epoch_anomalies)
     write_telegram_attribution_report(telegram_attribution_audit)
     write_voting_power_window_report(voting_power_window)
+    write_model_cap_factor_report(model_cap_factors)
 
     dashboard_summary = {
         "totalCompensationGonka": as_float(aggregate_total),
@@ -4450,6 +4548,7 @@ def main():
         "grcOffchainVote": {"include": 2, "exclude": 6, "abstain": 1, "votersIdentified": False},
     }
     chart_data = build_dashboard_chart_data(proposal, recipients, votes, epoch_summary, epoch_anomalies, dashboard_summary, attack_narrative)
+    chart_data["modelCapFactors"] = model_cap_factors
 
     dashboard = {
         "metadata": {
