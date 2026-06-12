@@ -1018,31 +1018,93 @@ function renderModelCapMechanics() {
   }, true);
 
   const waterfallEpochs = epochs.filter((epoch) => epoch >= 267);
-  const waterfallLabels = [];
-  const rawValues = [];
-  const consensusValues = [];
-  const countedValues = [];
-  for (const epoch of waterfallEpochs) {
-    for (const label of labels) {
-      const row = byKey.get(`${epoch}|${label}`);
-      if (!row) continue;
-      waterfallLabels.push(`e${epoch} ${label}`);
-      rawValues.push(row.subgroupRawWeight || 0);
-      consensusValues.push(row.rawConsensusWeight || 0);
-      countedValues.push(row.countedWeight || row.cappedConsensusWeight || 0);
-    }
+  const formatSigned = (value) => (value >= 0 ? `+${fmt.format(value)}` : `-${fmt.format(Math.abs(value))}`);
+  const waterfallSeries = [];
+  for (const [index, label] of labels.entries()) {
+    const rowsByEpoch = new Map(waterfallEpochs.map((epoch) => [epoch, byKey.get(`${epoch}|${label}`)]));
+    const rawSeries = waterfallEpochs.map((epoch) => {
+      const row = rowsByEpoch.get(epoch);
+      if (!row) return null;
+      return row.subgroupRawWeight || 0;
+    });
+    const scaleSeries = waterfallEpochs.map((epoch) => {
+      const row = rowsByEpoch.get(epoch);
+      if (!row) return null;
+      return (row.rawConsensusWeight || 0) - (row.subgroupRawWeight || 0);
+    });
+    const countedSeries = waterfallEpochs.map((epoch) => {
+      const row = rowsByEpoch.get(epoch);
+      if (!row) return null;
+      return (row.countedWeight || row.cappedConsensusWeight || 0) - (row.rawConsensusWeight || 0);
+    });
+    const modelColor = modelCapColor(label, index);
+    waterfallSeries.push({
+      name: `${label} • raw`,
+      type: "bar",
+      stack: `waterfall:${label}`,
+      data: rawSeries,
+      barGap: "10%",
+      barCategoryGap: "35%",
+      itemStyle: { color: modelColor },
+      emphasis: { itemStyle: { color: modelColor } },
+    });
+    waterfallSeries.push({
+      name: `${label} • scale`,
+      type: "bar",
+      stack: `waterfall:${label}`,
+      data: scaleSeries,
+      itemStyle: { color: (params) => (params.value >= 0 ? "#79b66a" : "#d7a84f") },
+      emphasis: { itemStyle: { opacity: 0.9 } },
+    });
+    waterfallSeries.push({
+      name: `${label} • cap`,
+      type: "bar",
+      stack: `waterfall:${label}`,
+      data: countedSeries,
+      itemStyle: { color: (params) => (params.value >= 0 ? "#79b66a" : "#d9655f") },
+      emphasis: { itemStyle: { opacity: 0.9 } },
+    });
   }
   state.charts.capWaterfall.setOption({
-    grid: { left: 72, right: 24, top: 42, bottom: 92 },
-    legend: { top: 6, textStyle: { color: "#a7afba" } },
-    tooltip: chartTooltip({ trigger: "axis" }),
-    xAxis: { type: "category", data: waterfallLabels, axisLabel: { color: "#a7afba", rotate: 45, interval: 0 } },
-    yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) }, name: "weight", nameTextStyle: { color: "#a7afba" } },
-    series: [
-      { name: "raw subgroup", type: "bar", data: rawValues, itemStyle: { color: "#6d7682" } },
-      { name: "scaled consensus", type: "bar", data: consensusValues, itemStyle: { color: "#5da9e9" } },
-      { name: "counted after cap", type: "bar", data: countedValues, itemStyle: { color: "#79b66a" } },
-    ],
+    grid: { left: 80, right: 24, top: 52, bottom: 84 },
+    legend: {
+      top: 6,
+      textStyle: { color: "#a7afba" },
+      type: "scroll",
+      selectedMode: true,
+    },
+    tooltip: chartTooltip({
+      trigger: "axis",
+      formatter: (params) => {
+        const epoch = waterfallEpochs[params[0]?.dataIndex];
+        const lines = [`<strong>Epoch ${epoch}</strong>`];
+        for (const [index, label] of labels.entries()) {
+          const row = byKey.get(`${epoch}|${label}`);
+          if (!row) continue;
+          const raw = row.subgroupRawWeight || 0;
+          const consensus = row.rawConsensusWeight || 0;
+          const counted = row.countedWeight || row.cappedConsensusWeight || 0;
+          const scaleDelta = consensus - raw;
+          const capDelta = counted - consensus;
+          lines.push(`<span style="color:${modelCapColor(label, index)}">●</span> ${escapeHtml(label)}: raw ${fmt.format(raw)}, scale ${formatSigned(scaleDelta)}, cap ${formatSigned(capDelta)}, final ${fmt.format(counted)}`);
+        }
+        return lines.join("<br>");
+      },
+    }),
+    xAxis: {
+      type: "category",
+      data: waterfallEpochs.map((epoch) => `e${epoch}`),
+      axisLabel: { color: "#a7afba" },
+      name: "epoch",
+      nameTextStyle: { color: "#a7afba" },
+    },
+    yAxis: {
+      type: "value",
+      axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) },
+      name: "weight",
+      nameTextStyle: { color: "#a7afba" },
+    },
+    series: waterfallSeries,
   }, true);
 
   const paramRows = (payload.paramModelRows || []).filter((row) => row.position === "start" || row.position === "change" || row.position === "end");
