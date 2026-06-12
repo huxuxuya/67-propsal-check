@@ -992,28 +992,88 @@ function renderModelCapMechanics() {
 
   state.charts.capRecovery.setOption({
     grid: { left: 76, right: 36, top: 42, bottom: 48 },
-    legend: { top: 6, textStyle: { color: "#a7afba" } },
+    legend: {
+      top: 6,
+      textStyle: { color: "#a7afba" },
+      selected: {
+        "Previous epoch total": true,
+        "Kimi cap limit (prev epoch total × cap factor)": true,
+        "Kimi raw consensus (before cap)": true,
+        "Kimi final counted (after cap)": true,
+      },
+    },
     tooltip: chartTooltip({
       trigger: "axis",
       formatter: (params) => {
         const row = kimiRows[params[0]?.dataIndex];
-        const lines = [`<strong>Epoch ${row?.epoch || ""}</strong>`];
-        for (const item of params) {
-          lines.push(`<span style="color:${item.color}">●</span> ${escapeHtml(item.seriesName)}: ${fmt.format(item.value || 0)}`);
+        if (!row) return "";
+        const rawConsensus = row.rawConsensusWeight || 0;
+        const cap = row.capWeight == null ? 0 : row.capWeight;
+        const counted = row.countedWeight || row.cappedConsensusWeight || 0;
+        const clipped = rawConsensus - counted;
+        const lines = [`<strong>Epoch ${row.epoch || ""} (Kimi)</strong>`];
+        lines.push(`<span style="color:${params[0]?.color || "#8f7ad3"}">●</span> Previous epoch total: ${fmt.format(row.previousEpochRootTotalWeight || 0)}`);
+        lines.push(`<span style="color:#d7a84f">●</span> Cap limit: ${fmt.format(cap)}${cap ? ` ( ${fmt.format(row.previousEpochRootTotalWeight || 0)} × ${fmt.format(row.capFactor || 0)} )` : ""}`);
+        lines.push(`<span style="color:#d9655f">●</span> Raw consensus: ${fmt.format(rawConsensus)}`);
+        lines.push(`<span style="color:#79b66a">●</span> Final counted: ${fmt.format(counted)}`);
+        lines.push(`Clip used: ${clipped > 0 ? fmt.format(clipped) : "0"}`);
+        lines.push(`Status: ${escapeHtml(modelCapStatusLabel(row.status))}`);
+        if (!clipped) {
+          lines.push("No cap cut: raw was not above cap.");
         }
         if (row) {
-          lines.push(`status ${escapeHtml(modelCapStatusLabel(row.status))}`, `cap = ${fmt.format(row.previousEpochRootTotalWeight || 0)} × ${fmt.format(row.capFactor || 0)}`);
+          lines.push(`Scale from raw to final: ${fmt.format((row.weightScaleFactor || 0) * 100)}%`);
         }
         return lines.join("<br>");
       },
     }),
-    xAxis: { type: "category", data: kimiRows.map((row) => `e${row.epoch}`), axisLabel: { color: "#a7afba" } },
-    yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) }, name: "weight", nameTextStyle: { color: "#a7afba" } },
+    xAxis: {
+      type: "category",
+      data: kimiRows.map((row) => `e${row.epoch}`),
+      axisLabel: { color: "#a7afba" },
+      splitLine: { show: true, lineStyle: { color: "rgba(128, 140, 154, 0.25)" } },
+    },
+    yAxis: {
+      type: "value",
+      min: 0,
+      axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) },
+      name: "weight",
+      nameTextStyle: { color: "#a7afba" },
+    },
     series: [
-      { name: "prev root total", type: "line", data: kimiRows.map((row) => row.previousEpochRootTotalWeight || null), symbolSize: 7, lineStyle: { color: "#8f7ad3", width: 2 }, itemStyle: { color: "#8f7ad3" } },
-      { name: "cap limit", type: "line", data: kimiRows.map((row) => row.capWeight ?? null), symbolSize: 8, lineStyle: { color: "#d7a84f", width: 3 }, itemStyle: { color: "#d7a84f" } },
-      { name: "Kimi raw consensus", type: "line", data: kimiRows.map((row) => row.rawConsensusWeight || 0), symbolSize: 8, lineStyle: { color: "#d9655f", width: 3 }, itemStyle: { color: "#d9655f" }, areaStyle: { color: "#d9655f", opacity: 0.07 } },
-      { name: "Kimi counted", type: "line", data: kimiRows.map((row) => row.countedWeight || row.cappedConsensusWeight || 0), symbolSize: 8, lineStyle: { color: "#79b66a", width: 3 }, itemStyle: { color: "#79b66a" } },
+      {
+        name: "Previous epoch total",
+        type: "line",
+        data: kimiRows.map((row) => row.previousEpochRootTotalWeight || null),
+        symbolSize: 7,
+        lineStyle: { color: "#8f7ad3", width: 2 },
+        itemStyle: { color: "#8f7ad3" },
+      },
+      {
+        name: "Kimi cap limit (prev epoch total × cap factor)",
+        type: "line",
+        data: kimiRows.map((row) => row.capWeight ?? null),
+        symbolSize: 8,
+        lineStyle: { color: "#d7a84f", width: 3 },
+        itemStyle: { color: "#d7a84f" },
+      },
+      {
+        name: "Kimi raw consensus (before cap)",
+        type: "line",
+        data: kimiRows.map((row) => row.rawConsensusWeight || 0),
+        symbolSize: 8,
+        lineStyle: { color: "#d9655f", width: 3 },
+        itemStyle: { color: "#d9655f" },
+        areaStyle: { color: "#d9655f", opacity: 0.07 },
+      },
+      {
+        name: "Kimi final counted (after cap)",
+        type: "line",
+        data: kimiRows.map((row) => row.countedWeight || row.cappedConsensusWeight || 0),
+        symbolSize: 8,
+        lineStyle: { color: "#79b66a", width: 3 },
+        itemStyle: { color: "#79b66a" },
+      },
     ],
   }, true);
 
