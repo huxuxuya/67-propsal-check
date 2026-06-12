@@ -161,6 +161,42 @@
           </div>
           <div class="chart" id="epochChart"></div>
         </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Compensation Formula</h2>
+          </div>
+          <div class="chart" id="waterfallChart"></div>
+        </div>
+        <div class="panel wide model-cap-mechanics-panel">
+          <div class="panel-head">
+            <h2>Model Cap Mechanics</h2>
+            <span id="modelCapMechanicsSummary">-</span>
+          </div>
+          <div class="model-cap-mechanics-grid">
+            <div class="chart model-cap-mechanics-chart" id="capRecoveryChart"></div>
+            <div class="chart model-cap-mechanics-chart" id="capWaterfallChart"></div>
+            <div class="chart model-cap-mechanics-chart" id="scaleTimelineChart"></div>
+            <div class="chart model-cap-mechanics-chart" id="capPressureHeatmapChart"></div>
+          </div>
+          <div class="table-wrap compact-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Epoch</th>
+                  <th>Model</th>
+                  <th>Raw</th>
+                  <th>Scale</th>
+                  <th>Consensus</th>
+                  <th>Cap</th>
+                  <th>Counted</th>
+                  <th>Clipped</th>
+                  <th>Headroom</th>
+                </tr>
+              </thead>
+              <tbody id="modelCapMechanicsTable"></tbody>
+            </table>
+          </div>
+        </div>
         <div class="panel wide">
           <div class="panel-head">
             <h2>Model Cap Factor by Epoch</h2>
@@ -183,12 +219,6 @@
               <tbody id="modelCapTable"></tbody>
             </table>
           </div>
-        </div>
-        <div class="panel">
-          <div class="panel-head">
-            <h2>Compensation Formula</h2>
-          </div>
-          <div class="chart" id="waterfallChart"></div>
         </div>
         <div class="panel wide">
           <div class="panel-head">

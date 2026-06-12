@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM = ROOT / "upstream" / "gonka-kimi-restitution"
 DATA = ROOT / "data"
 OUT = DATA / "model_cap_factors"
-DEFAULT_EPOCHS = list(range(265, 277))
+DEFAULT_EPOCHS = list(range(265, 282))
 DEFAULT_API_NODE = "http://node1.gonka.ai:8000"
 DEFAULT_RPC_NODE = "http://node1.gonka.ai:26657"
 QWEN_MODEL = "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8"
@@ -46,15 +46,32 @@ def epoch_end_height_from_script(epoch):
     return int(match.group(1).replace("_", "")) if match else 0
 
 
-def epoch_end_height(epoch):
+def load_epoch_group(epoch, rpc_node=""):
+    local = load_upstream_epoch_group(epoch, "healthy" if epoch == 265 else "")
+    if local:
+        return local
+    if not rpc_node:
+        return {}
+    try:
+        return fetch_epoch_group_from_rpc(rpc_node, epoch, 0).get("epoch_group_data", {})
+    except Exception:
+        return {}
+
+
+def epoch_end_height(epoch, rpc_node):
     scripted = epoch_end_height_from_script(epoch)
     if scripted:
         return scripted
-    next_group = load_upstream_epoch_group(epoch + 1)
+    group = load_epoch_group(epoch, rpc_node)
+    next_group = load_epoch_group(epoch + 1, rpc_node)
     if next_group.get("poc_start_block_height"):
         return int(next_group["poc_start_block_height"]) - 1
-    group = load_upstream_epoch_group(epoch)
     return int(group.get("last_block_height") or group.get("effective_block_height") or group.get("poc_start_block_height") or 0)
+
+
+def epoch_start_height(epoch, rpc_node):
+    group = load_epoch_group(epoch, rpc_node)
+    return int(group.get("effective_block_height") or group.get("poc_start_block_height") or 0)
 
 
 def decimal_value(value, default=Decimal(0)):
@@ -199,6 +216,54 @@ def fetch_params_from_rpc(rpc, height):
     }
 
 
+def params_signature(params):
+    return json.dumps(
+        {
+            "capFactor": str(params.get("capFactor", "")),
+            "initialModelId": params.get("initialModelId", ""),
+            "weightScaleFactors": {key: str(value) for key, value in sorted((params.get("weightScaleFactors") or {}).items())},
+        },
+        sort_keys=True,
+    )
+
+
+def params_snapshot(epoch, height, position, params):
+    return {
+        "epoch": epoch,
+        "height": height,
+        "position": position,
+        "capFactor": decimal_float(params["capFactor"]),
+        "initialModelId": params.get("initialModelId", ""),
+        "initialModelLabel": model_label(params.get("initialModelId", "")),
+        "paramsSource": params.get("paramsSource", ""),
+        "models": [
+            {
+                "modelId": model_id,
+                "modelLabel": model_label(model_id),
+                "weightScaleFactor": decimal_float(value),
+            }
+            for model_id, value in sorted((params.get("weightScaleFactors") or {}).items(), key=lambda item: model_label(item[0]))
+        ],
+    }
+
+
+def find_params_change_height(rpc, start_height, end_height, start_signature, end_signature):
+    if not start_height or not end_height or start_height >= end_height or start_signature == end_signature:
+        return None
+    left = start_height + 1
+    right = end_height
+    found = None
+    while left <= right:
+        mid = (left + right) // 2
+        mid_signature = params_signature(fetch_params_from_rpc(rpc, mid))
+        if mid_signature == end_signature:
+            found = mid
+            right = mid - 1
+        else:
+            left = mid + 1
+    return found
+
+
 def fetch_json(node, path, height=None, timeout=30):
     url = f"{node.rstrip('/')}/{path.lstrip('/')}"
     headers = {"x-cosmos-block-height": str(height)} if height else {}
@@ -295,11 +360,13 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
     cached_raw = ((cached.get("raw") or {}).get("epochs") or {}) if isinstance(cached, dict) else {}
     rows = []
     raw_epochs = {}
+    param_snapshots = []
     errors = []
     fetched_at = datetime.now(timezone.utc).isoformat()
 
     for epoch in epochs:
-        height = epoch_end_height(epoch)
+        height = epoch_end_height(epoch, rpc_node)
+        start_height = epoch_start_height(epoch, rpc_node)
         if not height:
             errors.append({"epoch": epoch, "error": "missing_epoch_end_height"})
             continue
@@ -310,11 +377,15 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                 root = cache_epoch["root"]["epoch_group_data"]
                 params = normalize_cached_params(cache_epoch.get("paramsNormalized")) or normalize_params(cache_epoch["params"])
                 subgroups = {item["modelId"]: item["epoch_group_data"] for item in cache_epoch.get("subgroups", [])}
+                param_snapshots.extend(cache_epoch.get("paramSnapshots", []))
                 raw_epochs[str(epoch)] = cache_epoch
             else:
                 root_payload = fetch_epoch_group_from_rpc(rpc_node, epoch, height, "")
                 root = root_payload.get("epoch_group_data") or {}
+                start_params = None
                 try:
+                    if start_height:
+                        start_params = fetch_params_from_rpc(rpc_node, start_height)
                     params = fetch_params_from_rpc(rpc_node, height)
                     params_payload = params.get("rawDecoded") or {}
                 except Exception as exc:
@@ -327,12 +398,27 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                             "restError": {"error": type(rest_exc).__name__, "message": str(rest_exc)},
                         }
                         params = fallback_params(epoch, f"RPC {type(exc).__name__}: {exc}; REST {type(rest_exc).__name__}: {rest_exc}")
+                if start_params is None:
+                    start_params = params
+
+                epoch_param_snapshots = []
+                if start_height:
+                    epoch_param_snapshots.append(params_snapshot(epoch, start_height, "start", start_params))
+                if height != start_height:
+                    epoch_param_snapshots.append(params_snapshot(epoch, height, "end", params))
+                if params_signature(start_params) != params_signature(params):
+                    change_height = find_params_change_height(rpc_node, start_height, height, params_signature(start_params), params_signature(params))
+                    if change_height:
+                        epoch_param_snapshots.append(params_snapshot(epoch, change_height, "change", fetch_params_from_rpc(rpc_node, change_height)))
+                param_snapshots.extend(epoch_param_snapshots)
+
                 subgroups = {}
                 for model_id in root.get("sub_group_models") or []:
                     subgroups[model_id] = (fetch_epoch_group_from_rpc(rpc_node, epoch, height, model_id).get("epoch_group_data") or {})
 
                 raw_epochs[str(epoch)] = {
                     "height": height,
+                    "startHeight": start_height,
                     "root": root_payload,
                     "params": params_payload,
                     "paramsNormalized": {
@@ -342,10 +428,13 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                         "paramsSource": params.get("paramsSource", ""),
                         "paramsError": params.get("paramsError", ""),
                     },
+                    "paramSnapshots": epoch_param_snapshots,
                     "subgroups": [{"modelId": model_id, "epoch_group_data": group} for model_id, group in sorted(subgroups.items())],
                 }
 
             prev_root = load_upstream_epoch_group(epoch - 1, "end" if epoch - 1 == 265 else "")
+            if not prev_root:
+                prev_root = load_epoch_group(epoch - 1, rpc_node)
             previous_total = int(prev_root.get("total_weight") or 0)
             root_total = int(root.get("total_weight") or 0)
             cap_factor = params["capFactor"]
@@ -414,6 +503,12 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                         "rawConsensusWeight": raw_consensus,
                         "capWeight": cap_weight if cap_applies and previous_total else None,
                         "cappedConsensusWeight": capped_weight,
+                        "countedWeight": capped_weight,
+                        "scaleDelta": raw_consensus - raw_weight,
+                        "clippedWeight": max(0, raw_consensus - capped_weight) if cap_applies and previous_total else 0,
+                        "capUtilization": decimal_float(Decimal(raw_consensus) / Decimal(cap_weight)) if cap_applies and cap_weight else None,
+                        "capHeadroom": max(0, cap_weight - raw_consensus) if cap_applies and cap_weight and raw_consensus <= cap_weight else None,
+                        "capLimitFromPreviousEpoch": cap_weight if previous_total else None,
                         "appliedScale": decimal_float(applied_scale) if applied_scale is not None else None,
                         "pressureRatio": decimal_float(pressure) if pressure is not None else None,
                         "participantCount": len(group.get("validation_weights") or []),
@@ -431,6 +526,7 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
             "scope": f"model cap factors e{min(epochs)}-e{max(epochs)}",
         },
         "rows": sorted(rows, key=lambda row: (row.get("epoch", 0), row.get("modelLabel", ""), row.get("modelId", ""))),
+        "paramSnapshots": sorted(param_snapshots, key=lambda row: (row.get("epoch", 0), row.get("height", 0), row.get("position", ""))),
         "errors": errors,
         "raw": {"epochs": raw_epochs},
     }

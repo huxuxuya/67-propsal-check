@@ -42,6 +42,7 @@ const els = {
   anomalyTable: document.getElementById("anomalyTable"),
   entryExitTable: document.getElementById("entryExitTable"),
   modelCapTable: document.getElementById("modelCapTable"),
+  modelCapMechanicsTable: document.getElementById("modelCapMechanicsTable"),
   telegramTable: document.getElementById("telegramTable"),
   labelTable: document.getElementById("labelTable"),
   searchIndex: document.getElementById("searchIndex"),
@@ -317,6 +318,10 @@ function initCharts() {
     waterfall: "waterfallChart",
     epoch: "epochChart",
     modelCap: "modelCapChart",
+    capRecovery: "capRecoveryChart",
+    capWaterfall: "capWaterfallChart",
+    scaleTimeline: "scaleTimelineChart",
+    capPressureHeatmap: "capPressureHeatmapChart",
     heatmap: "heatmapChart",
     matrix: "matrixChart",
     matrixStats: "matrixStats",
@@ -937,6 +942,188 @@ function renderModelCapChart() {
         areaStyle: { color: modelCapColor(label, index), opacity: 0.06 },
       })),
     ],
+  }, true);
+}
+
+function renderModelCapMechanics() {
+  const payload = state.data.chartData?.modelCapFactors || { rows: [], paramModelRows: [], summary: {} };
+  const rows = (payload.rows || []).filter((row) => row.epoch && row.modelId && row.status !== "missing_subgroup");
+  const kimiRows = rows.filter((row) => (row.modelLabel || "").toLowerCase() === "kimi").sort((a, b) => a.epoch - b.epoch);
+  const epochs = [...new Set(rows.map((row) => row.epoch))].sort((a, b) => a - b);
+  const labels = [...new Set(rows.map((row) => row.modelLabel || row.modelId))].sort();
+  const byKey = new Map(rows.map((row) => [`${row.epoch}|${row.modelLabel || row.modelId}`, row]));
+  const summary = payload.summary || {};
+  const summaryEl = document.getElementById("modelCapMechanicsSummary");
+  if (summaryEl) {
+    summaryEl.textContent = `${fmt.format(summary.cappedRowCount || 0)} capped · ${fmt.format(summary.totalClippedWeight || 0)} clipped`;
+  }
+
+  if (!rows.length) {
+    for (const chart of [state.charts.capRecovery, state.charts.capWaterfall, state.charts.scaleTimeline, state.charts.capPressureHeatmap]) {
+      chart.setOption({ title: { text: "Model cap mechanics data is not loaded", left: "center", top: "middle", textStyle: { color: "#a7afba", fontSize: 13, fontWeight: 400 } }, xAxis: { show: false }, yAxis: { show: false }, series: [] }, true);
+    }
+    if (els.modelCapMechanicsTable) els.modelCapMechanicsTable.innerHTML = "";
+    return;
+  }
+
+  if (els.modelCapMechanicsTable) {
+    els.modelCapMechanicsTable.innerHTML = rows
+      .slice()
+      .sort((a, b) => a.epoch - b.epoch || (a.modelLabel || "").localeCompare(b.modelLabel || ""))
+      .map((row) => {
+        const cap = row.capWeight == null ? "exempt" : fmt.format(row.capWeight || 0);
+        const clipped = row.clippedWeight ? fmt.format(row.clippedWeight) : "-";
+        const headroom = row.capHeadroom == null ? "-" : fmt.format(row.capHeadroom || 0);
+        return `
+          <tr>
+            <td class="num">e${row.epoch}</td>
+            <td title="${escapeHtml(row.modelId)}">${escapeHtml(row.modelLabel || row.modelId)}</td>
+            <td class="num">${fmt.format(row.subgroupRawWeight || 0)}</td>
+            <td class="num">${fmt.format(row.weightScaleFactor || 0)}x</td>
+            <td class="num">${fmt.format(row.rawConsensusWeight || 0)}</td>
+            <td class="num">${cap}</td>
+            <td class="num">${fmt.format(row.countedWeight || row.cappedConsensusWeight || 0)}</td>
+            <td class="num">${clipped}</td>
+            <td class="num">${headroom}</td>
+          </tr>
+        `;
+      }).join("");
+  }
+
+  state.charts.capRecovery.setOption({
+    grid: { left: 76, right: 36, top: 42, bottom: 48 },
+    legend: { top: 6, textStyle: { color: "#a7afba" } },
+    tooltip: chartTooltip({
+      trigger: "axis",
+      formatter: (params) => {
+        const row = kimiRows[params[0]?.dataIndex];
+        const lines = [`<strong>Epoch ${row?.epoch || ""}</strong>`];
+        for (const item of params) {
+          lines.push(`<span style="color:${item.color}">●</span> ${escapeHtml(item.seriesName)}: ${fmt.format(item.value || 0)}`);
+        }
+        if (row) {
+          lines.push(`status ${escapeHtml(modelCapStatusLabel(row.status))}`, `cap = ${fmt.format(row.previousEpochRootTotalWeight || 0)} × ${fmt.format(row.capFactor || 0)}`);
+        }
+        return lines.join("<br>");
+      },
+    }),
+    xAxis: { type: "category", data: kimiRows.map((row) => `e${row.epoch}`), axisLabel: { color: "#a7afba" } },
+    yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) }, name: "weight", nameTextStyle: { color: "#a7afba" } },
+    series: [
+      { name: "prev root total", type: "line", data: kimiRows.map((row) => row.previousEpochRootTotalWeight || null), symbolSize: 7, lineStyle: { color: "#8f7ad3", width: 2 }, itemStyle: { color: "#8f7ad3" } },
+      { name: "cap limit", type: "line", data: kimiRows.map((row) => row.capWeight ?? null), symbolSize: 8, lineStyle: { color: "#d7a84f", width: 3 }, itemStyle: { color: "#d7a84f" } },
+      { name: "Kimi raw consensus", type: "line", data: kimiRows.map((row) => row.rawConsensusWeight || 0), symbolSize: 8, lineStyle: { color: "#d9655f", width: 3 }, itemStyle: { color: "#d9655f" }, areaStyle: { color: "#d9655f", opacity: 0.07 } },
+      { name: "Kimi counted", type: "line", data: kimiRows.map((row) => row.countedWeight || row.cappedConsensusWeight || 0), symbolSize: 8, lineStyle: { color: "#79b66a", width: 3 }, itemStyle: { color: "#79b66a" } },
+    ],
+  }, true);
+
+  const waterfallEpochs = epochs.filter((epoch) => epoch >= 267);
+  const waterfallLabels = [];
+  const rawValues = [];
+  const consensusValues = [];
+  const countedValues = [];
+  for (const epoch of waterfallEpochs) {
+    for (const label of labels) {
+      const row = byKey.get(`${epoch}|${label}`);
+      if (!row) continue;
+      waterfallLabels.push(`e${epoch} ${label}`);
+      rawValues.push(row.subgroupRawWeight || 0);
+      consensusValues.push(row.rawConsensusWeight || 0);
+      countedValues.push(row.countedWeight || row.cappedConsensusWeight || 0);
+    }
+  }
+  state.charts.capWaterfall.setOption({
+    grid: { left: 72, right: 24, top: 42, bottom: 92 },
+    legend: { top: 6, textStyle: { color: "#a7afba" } },
+    tooltip: chartTooltip({ trigger: "axis" }),
+    xAxis: { type: "category", data: waterfallLabels, axisLabel: { color: "#a7afba", rotate: 45, interval: 0 } },
+    yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) }, name: "weight", nameTextStyle: { color: "#a7afba" } },
+    series: [
+      { name: "raw subgroup", type: "bar", data: rawValues, itemStyle: { color: "#6d7682" } },
+      { name: "scaled consensus", type: "bar", data: consensusValues, itemStyle: { color: "#5da9e9" } },
+      { name: "counted after cap", type: "bar", data: countedValues, itemStyle: { color: "#79b66a" } },
+    ],
+  }, true);
+
+  const paramRows = (payload.paramModelRows || []).filter((row) => row.position === "start" || row.position === "change" || row.position === "end");
+  const paramEpochs = [...new Set(paramRows.map((row) => `${row.epoch}:${row.position}`))].sort((a, b) => {
+    const [epochA, posA] = a.split(":");
+    const [epochB, posB] = b.split(":");
+    const order = { start: 0, change: 1, end: 2 };
+    return Number(epochA) - Number(epochB) || (order[posA] || 0) - (order[posB] || 0);
+  });
+  const paramLabels = paramEpochs.map((key) => {
+    const [epoch, position] = key.split(":");
+    return position === "end" ? `e${epoch}` : `e${epoch} ${position}`;
+  });
+  const paramModels = [...new Set(paramRows.map((row) => row.modelLabel || row.modelId))].sort();
+  const paramByKey = new Map(paramRows.map((row) => [`${row.epoch}:${row.position}|${row.modelLabel || row.modelId}`, row]));
+  state.charts.scaleTimeline.setOption({
+    grid: { left: 62, right: 24, top: 42, bottom: 62 },
+    legend: { top: 6, textStyle: { color: "#a7afba" } },
+    tooltip: chartTooltip({
+      trigger: "axis",
+      formatter: (params) => {
+        const key = paramEpochs[params[0]?.dataIndex] || "";
+        const lines = [`<strong>${escapeHtml(paramLabels[params[0]?.dataIndex] || "")}</strong>`];
+        for (const item of params) {
+          const row = paramByKey.get(`${key}|${item.seriesName}`);
+          if (!row) continue;
+          lines.push(`<span style="color:${item.color}">●</span> ${escapeHtml(row.modelLabel || row.modelId)}: ${fmt.format(row.weightScaleFactor || 0)}x`, `height ${fmt.format(row.height || 0)} · cap ${fmt.format(row.capFactor || 0)} · initial ${escapeHtml(row.initialModelLabel || "")}`);
+        }
+        return lines.join("<br>");
+      },
+    }),
+    xAxis: { type: "category", data: paramLabels, axisLabel: { color: "#a7afba", rotate: 30 } },
+    yAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "scale factor", nameTextStyle: { color: "#a7afba" } },
+    series: paramModels.map((label, index) => ({
+      name: label,
+      type: "line",
+      step: "end",
+      connectNulls: true,
+      symbolSize: 7,
+      data: paramEpochs.map((key) => paramByKey.get(`${key}|${label}`)?.weightScaleFactor ?? null),
+      lineStyle: { width: 3, color: modelCapColor(label, index) },
+      itemStyle: { color: modelCapColor(label, index) },
+    })),
+  }, true);
+
+  const heatmapValues = [];
+  labels.forEach((label, y) => epochs.forEach((epoch, x) => {
+    const row = byKey.get(`${epoch}|${label}`);
+    heatmapValues.push([x, y, row?.capUtilization ?? row?.pressureRatio ?? 0, row]);
+  }));
+  state.charts.capPressureHeatmap.setOption({
+    grid: { left: 72, right: 22, top: 44, bottom: 52 },
+    tooltip: chartTooltip({
+      formatter: (item) => {
+        const row = item.data?.[3];
+        if (!row) return "";
+        const clipped = row.clippedWeight ? fmt.format(row.clippedWeight) : "-";
+        return [`<strong>e${row.epoch} ${escapeHtml(row.modelLabel || row.modelId)}</strong>`, `${escapeHtml(modelCapStatusLabel(row.status))}`, `utilization ${row.capUtilization ? `${fmt.format(row.capUtilization)}x` : "-"}`, `clipped ${clipped}`, `counted ${fmt.format(row.countedWeight || row.cappedConsensusWeight || 0)}`].join("<br>");
+      },
+    }),
+    xAxis: { type: "category", data: epochs.map((epoch) => `e${epoch}`), axisLabel: { color: "#a7afba" } },
+    yAxis: { type: "category", data: labels, axisLabel: { color: "#a7afba" } },
+    visualMap: { min: 0, max: Math.max(1, summary.maxPressureRatio || 1), dimension: 2, calculable: true, orient: "horizontal", left: "center", bottom: 8, textStyle: { color: "#a7afba" }, inRange: { color: ["#28333d", "#d7a84f", "#d9655f"] } },
+    series: [{
+      name: "cap utilization",
+      type: "heatmap",
+      data: heatmapValues,
+      label: {
+        show: true,
+        color: "#f4f0e8",
+        formatter: (item) => {
+          const row = item.data?.[3];
+          if (!row) return "";
+          if (row.initialModel) return "exempt";
+          if (row.status === "cap_reference_missing") return "n/a";
+          if (row.clippedWeight) return compact.format(row.clippedWeight);
+          return "under";
+        },
+      },
+      emphasis: { itemStyle: { borderColor: "#f4f0e8", borderWidth: 1 } },
+    }],
   }, true);
 }
 
@@ -2386,6 +2573,7 @@ function renderAll() {
   renderWaterfall();
   renderEpochChart();
   renderModelCapChart();
+  renderModelCapMechanics();
   renderHeatmap();
   renderMatrix();
   renderTimeline();

@@ -513,17 +513,41 @@ def read_model_cap_factors():
     payload = load_optional_json(DATA / "model_cap_factors" / "model_cap_factors.json", {})
     rows = payload.get("rows") or []
     rows = sorted(rows, key=lambda row: (int(row.get("epoch") or 0), row.get("modelLabel", ""), row.get("modelId", "")))
+    param_snapshots = sorted(
+        payload.get("paramSnapshots") or [],
+        key=lambda row: (int(row.get("epoch") or 0), int(row.get("height") or 0), row.get("position", "")),
+    )
+    param_model_rows = []
+    for snapshot in param_snapshots:
+        for model in snapshot.get("models") or []:
+            param_model_rows.append(
+                {
+                    "epoch": snapshot.get("epoch"),
+                    "height": snapshot.get("height"),
+                    "position": snapshot.get("position"),
+                    "capFactor": snapshot.get("capFactor"),
+                    "initialModelId": snapshot.get("initialModelId"),
+                    "initialModelLabel": snapshot.get("initialModelLabel"),
+                    "paramsSource": snapshot.get("paramsSource"),
+                    "modelId": model.get("modelId"),
+                    "modelLabel": model.get("modelLabel"),
+                    "weightScaleFactor": model.get("weightScaleFactor"),
+                }
+            )
     summary = {
         "rowCount": len(rows),
         "cappedRowCount": sum(1 for row in rows if row.get("status") == "capped"),
         "missingRowCount": sum(1 for row in rows if row.get("status") == "missing_subgroup"),
+        "totalClippedWeight": sum(float(row.get("clippedWeight") or 0) for row in rows),
+        "maxPressureRatio": max([float(row.get("pressureRatio") or 0) for row in rows] or [0]),
         "models": sorted({row.get("modelLabel") or row.get("modelId") for row in rows if row.get("modelId")}),
         "epochs": sorted({int(row.get("epoch")) for row in rows if row.get("epoch") is not None}),
         "paramsSources": sorted({row.get("paramsSource") for row in rows if row.get("paramsSource")}),
+        "paramSnapshotCount": len(param_snapshots),
         "source": payload.get("source") or {},
         "errors": payload.get("errors") or [],
     }
-    return {"rows": rows, "summary": summary}
+    return {"rows": rows, "paramSnapshots": param_snapshots, "paramModelRows": param_model_rows, "summary": summary}
 
 
 def read_onchain_graph_snapshot():
@@ -3590,6 +3614,12 @@ def write_model_cap_factor_report(model_cap_factors):
                 "rawConsensusWeight",
                 "capWeight",
                 "cappedConsensusWeight",
+                "countedWeight",
+                "scaleDelta",
+                "clippedWeight",
+                "capUtilization",
+                "capHeadroom",
+                "capLimitFromPreviousEpoch",
                 "appliedScale",
                 "pressureRatio",
                 "participantCount",
@@ -3615,9 +3645,12 @@ def write_model_cap_factor_report(model_cap_factors):
         f"- Rows: {summary.get('rowCount', 0)}",
         f"- Capped rows: {summary.get('cappedRowCount', 0)}",
         f"- Missing subgroup rows: {summary.get('missingRowCount', 0)}",
+        f"- Total clipped weight: {summary.get('totalClippedWeight', 0):,.0f}",
+        f"- Max pressure ratio: {summary.get('maxPressureRatio', 0):.4f}",
         f"- Models: {', '.join(summary.get('models') or []) or 'none'}",
         f"- Epochs: {', '.join(str(epoch) for epoch in summary.get('epochs') or []) or 'none'}",
         f"- Params sources: {', '.join(summary.get('paramsSources') or []) or 'none'}",
+        f"- Params snapshots: {summary.get('paramSnapshotCount', 0)}",
         f"- Source: RPC {source.get('rpcNode', '')}; API {source.get('apiNode', '')}; generated {source.get('generatedAt', '')}",
         "",
         "## Rows",
@@ -3636,9 +3669,18 @@ def write_model_cap_factor_report(model_cap_factors):
             f"- e{row.get('epoch')} {row.get('modelLabel')} `{row.get('modelId')}`: "
             f"status={row.get('status')} scale={scale_text} "
             f"pressure={pressure_text} raw={raw_text} cap={cap_text} "
-            f"coeff={row.get('weightScaleFactor')} participants={row.get('participantCount')} nodes={row.get('nodeCount')} "
+            f"counted={row.get('countedWeight')} clipped={row.get('clippedWeight')} coeff={row.get('weightScaleFactor')} participants={row.get('participantCount')} nodes={row.get('nodeCount')} "
             f"params={row.get('paramsSource', '')}"
         )
+    param_model_rows = model_cap_factors.get("paramModelRows") or []
+    if param_model_rows:
+        lines.extend(["", "## Params Snapshots", ""])
+        for row in param_model_rows:
+            lines.append(
+                f"- e{row.get('epoch')} {row.get('position')} height={row.get('height')} "
+                f"{row.get('modelLabel')} `{row.get('modelId')}` scale={row.get('weightScaleFactor')} "
+                f"cap_factor={row.get('capFactor')} initial={row.get('initialModelLabel')}"
+            )
     errors = summary.get("errors") or []
     if errors:
         lines.extend(["", "## Fetch Errors", ""])

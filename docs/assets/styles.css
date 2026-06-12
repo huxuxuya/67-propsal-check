@@ -242,6 +242,11 @@ select {
   grid-column: 1 / -1;
 }
 
+.model-cap-mechanics-panel {
+  grid-column: 1 / -1 !important;
+  width: 100%;
+}
+
 .panel-head {
   min-height: 50px;
   display: flex;
@@ -278,6 +283,16 @@ select {
 
 .model-cap-chart {
   height: 420px;
+}
+
+.model-cap-mechanics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.model-cap-mechanics-chart {
+  min-height: 360px;
 }
 
 .heatmap {
@@ -627,7 +642,8 @@ a {
   .overview,
   .filters,
   .chart-grid,
-  .table-grid {
+  .table-grid,
+  .model-cap-mechanics-grid {
     grid-template-columns: 1fr;
   }
 
