@@ -1204,12 +1204,43 @@ function renderModelCapMechanics() {
         const row = item.data?.[3];
         if (!row) return "";
         const clipped = row.clippedWeight ? fmt.format(row.clippedWeight) : "-";
-        return [`<strong>e${row.epoch} ${escapeHtml(row.modelLabel || row.modelId)}</strong>`, `${escapeHtml(modelCapStatusLabel(row.status))}`, `utilization ${row.capUtilization ? `${fmt.format(row.capUtilization)}x` : "-"}`, `clipped ${clipped}`, `counted ${fmt.format(row.countedWeight || row.cappedConsensusWeight || 0)}`].join("<br>");
+        const utilization = row.capUtilization || row.pressureRatio;
+        const status = modelCapStatusLabel(row.status);
+        const utilizationText = utilization == null ? "-" : `${fmt.format(utilization)}x`;
+        const cappedDelta = row.countedWeight != null && row.rawConsensusWeight != null ? row.countedWeight - row.rawConsensusWeight : 0;
+        return [
+          `<strong>e${row.epoch} ${escapeHtml(row.modelLabel || row.modelId)}</strong>`,
+          `status ${escapeHtml(status)}`,
+          `cap utilization ${utilizationText}`,
+          `raw consensus ${fmt.format(row.rawConsensusWeight || 0)}`,
+          `cap ${fmt.format(row.capWeight || 0)}`,
+          `counted ${fmt.format(row.countedWeight || row.cappedConsensusWeight || 0)}`,
+          `clip ${clipped}`,
+          cappedDelta < 0 ? `delta from raw ${fmt.format(cappedDelta)} (reduced)` : "",
+        ].filter(Boolean).join("<br>");
       },
     }),
-    xAxis: { type: "category", data: epochs.map((epoch) => `e${epoch}`), axisLabel: { color: "#a7afba" } },
+    xAxis: {
+      type: "category",
+      data: epochs.map((epoch) => `e${epoch}`),
+      axisLabel: { color: "#a7afba" },
+      splitLine: {
+        show: true,
+        lineStyle: { color: "rgba(128, 140, 154, 0.25)" },
+      },
+    },
     yAxis: { type: "category", data: labels, axisLabel: { color: "#a7afba" } },
-    visualMap: { min: 0, max: Math.max(1, summary.maxPressureRatio || 1), dimension: 2, calculable: true, orient: "horizontal", left: "center", bottom: 8, textStyle: { color: "#a7afba" }, inRange: { color: ["#28333d", "#d7a84f", "#d9655f"] } },
+    visualMap: {
+      min: 0,
+      max: Math.max(1, summary.maxPressureRatio || 1),
+      dimension: 2,
+      calculable: true,
+      orient: "horizontal",
+      left: "center",
+      bottom: 8,
+      textStyle: { color: "#a7afba" },
+      inRange: { color: ["#28333d", "#d7a84f", "#d9655f"] },
+    },
     series: [{
       name: "cap utilization",
       type: "heatmap",
@@ -1222,8 +1253,10 @@ function renderModelCapMechanics() {
           if (!row) return "";
           if (row.initialModel) return "exempt";
           if (row.status === "cap_reference_missing") return "n/a";
-          if (row.clippedWeight) return compact.format(row.clippedWeight);
-          return "under";
+          if (row.clippedWeight) return `clip ${compact.format(row.clippedWeight)}`;
+          if ((row.capUtilization || row.pressureRatio) && (row.capUtilization || row.pressureRatio) >= 1) return `x${fmt.format(row.capUtilization || row.pressureRatio)}`;
+          if (row.status === "under_cap") return "under cap";
+          return "ok";
         },
       },
       emphasis: { itemStyle: { borderColor: "#f4f0e8", borderWidth: 1 } },
