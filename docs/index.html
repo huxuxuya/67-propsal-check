@@ -174,7 +174,13 @@
           </div>
           <div class="model-cap-mechanics-grid">
             <div class="chart-block">
-              <div class="chart-title">Kimi Cap Recovery</div>
+              <div class="chart-block-head">
+                <div class="chart-title">Kimi Cap Recovery</div>
+                <div class="segmented" role="tablist" aria-label="Kimi scale scenario">
+                  <button class="active" data-kimi-scale-scenario="actual" type="button">Actual</button>
+                  <button data-kimi-scale-scenario="frozen" type="button">No scale drift</button>
+                </div>
+              </div>
               <div class="chart model-cap-mechanics-chart" id="capRecoveryChart"></div>
             </div>
             <div class="chart-block">

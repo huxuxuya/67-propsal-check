@@ -295,6 +295,18 @@ select {
   display: grid;
 }
 
+.chart-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 10px 2px;
+}
+
+.chart-block-head .chart-title {
+  padding: 0;
+}
+
 .chart-title {
   color: var(--muted);
   font-size: 12px;
