@@ -176,9 +176,16 @@
             <div class="chart-block">
               <div class="chart-block-head">
                 <div class="chart-title">Kimi Cap Recovery</div>
-                <div class="segmented" role="tablist" aria-label="Kimi scale scenario">
-                  <button class="active" data-kimi-scale-scenario="actual" type="button">Actual</button>
-                  <button data-kimi-scale-scenario="frozen" type="button">No scale drift</button>
+                <div class="chart-block-controls">
+                  <div class="segmented" role="tablist" aria-label="Kimi scale scenario">
+                    <button class="active" data-kimi-scale-scenario="actual" type="button">Actual</button>
+                    <button data-kimi-scale-scenario="frozen" type="button">No scale drift</button>
+                    <button data-kimi-scale-scenario="constantRaw" type="button">Constant raw</button>
+                  </div>
+                  <label class="inline-number-control" title="Use a fixed raw weight for every epoch">
+                    <span>Raw</span>
+                    <input id="kimiFixedRawWeight" type="number" min="0" step="1000" value="400000">
+                  </label>
                 </div>
               </div>
               <div class="chart model-cap-mechanics-chart" id="capRecoveryChart"></div>

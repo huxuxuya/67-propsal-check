@@ -303,8 +303,31 @@ select {
   padding: 0 10px 2px;
 }
 
+.chart-block-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .chart-block-head .chart-title {
   padding: 0;
+}
+
+.inline-number-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.inline-number-control input {
+  width: 120px;
+  min-height: 30px;
+  padding: 4px 8px;
 }
 
 .chart-title {
