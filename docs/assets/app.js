@@ -990,46 +990,57 @@ function renderModelCapMechanics() {
       }).join("");
   }
 
+  const capRecoveryRows = kimiRows.map((row) => ({
+    epochLabel: `e${row.epoch}`,
+    preScale: row.subgroupRawWeight || 0,
+    scaled: row.rawConsensusWeight || 0,
+    capLimit: row.capWeight == null ? null : row.capWeight,
+    final: row.countedWeight || row.cappedConsensusWeight || 0,
+    status: row.status,
+    capUtilization: row.capUtilization || 0,
+    previousEpochRootTotalWeight: row.previousEpochRootTotalWeight || 0,
+    capFactor: row.capFactor || 0,
+    scaleDelta: (row.rawConsensusWeight || 0) - (row.subgroupRawWeight || 0),
+  }));
+
   state.charts.capRecovery.setOption({
-    grid: { left: 76, right: 36, top: 42, bottom: 48 },
+    grid: { left: 78, right: 36, top: 44, bottom: 56 },
+    tooltip: chartTooltip({
+      trigger: "axis",
+      axisPointer: { type: "shadow" },
+      formatter: (params) => {
+        if (!params?.length) return "";
+        const index = params[0]?.dataIndex;
+        const row = capRecoveryRows[index];
+        if (!row) return "";
+        const clipped = row.scaled > row.final ? row.scaled - row.final : 0;
+        const clippedPct = row.scaled ? (clipped / row.scaled) * 100 : 0;
+        const lines = [
+          `<strong>${row.epochLabel} (Kimi) recovery path</strong>`,
+          `1) Before scale (subgroup raw): <strong>${fmt.format(row.preScale)}</strong>`,
+          `2) After scale (raw consensus): <strong>${fmt.format(row.scaled)}</strong>${row.scaleDelta ? `  (${row.scaleDelta > 0 ? "+" : ""}${fmt.format(row.scaleDelta)} by model scale)` : ""}`,
+          `3) Cap ceiling: ${row.capLimit == null ? "<i>not set</i>" : `<strong>${fmt.format(row.capLimit)}</strong> (${fmt.format(row.previousEpochRootTotalWeight)} × ${fmt.format(row.capFactor)})`}`,
+          `4) Final counted (after cap): <strong>${fmt.format(row.final)}</strong>`,
+          clipped > 0 ? `Clipped by cap: <strong>${fmt.format(clipped)}</strong> (${fmt.format(clippedPct)}%)` : "Clipped by cap: <strong>0</strong>",
+          `Status: ${escapeHtml(modelCapStatusLabel(row.status))}`,
+          row.capUtilization ? `Utilization: <strong>${fmt.format(row.capUtilization)}x</strong>` : "",
+        ];
+        return lines.filter(Boolean).join("<br>");
+      },
+    }),
     legend: {
       top: 6,
       textStyle: { color: "#a7afba" },
       selected: {
-        "Previous epoch total": true,
-        "Kimi cap limit (prev epoch total × cap factor)": true,
-        "Kimi raw consensus (before cap)": true,
-        "Kimi final counted (after cap)": true,
+        "Before scale (raw subgroup)": true,
+        "After scale (raw consensus)": true,
+        "Cap limit (prev epoch × factor)": true,
+        "Final counted (after cap)": true,
       },
     },
-    tooltip: chartTooltip({
-      trigger: "axis",
-      formatter: (params) => {
-        const row = kimiRows[params[0]?.dataIndex];
-        if (!row) return "";
-        const rawConsensus = row.rawConsensusWeight || 0;
-        const cap = row.capWeight == null ? 0 : row.capWeight;
-        const counted = row.countedWeight || row.cappedConsensusWeight || 0;
-        const clipped = rawConsensus - counted;
-        const lines = [`<strong>Epoch ${row.epoch || ""} (Kimi)</strong>`];
-        lines.push(`<span style="color:${params[0]?.color || "#8f7ad3"}">●</span> Previous epoch total: ${fmt.format(row.previousEpochRootTotalWeight || 0)}`);
-        lines.push(`<span style="color:#d7a84f">●</span> Cap limit: ${fmt.format(cap)}${cap ? ` ( ${fmt.format(row.previousEpochRootTotalWeight || 0)} × ${fmt.format(row.capFactor || 0)} )` : ""}`);
-        lines.push(`<span style="color:#d9655f">●</span> Raw consensus: ${fmt.format(rawConsensus)}`);
-        lines.push(`<span style="color:#79b66a">●</span> Final counted: ${fmt.format(counted)}`);
-        lines.push(`Clip used: ${clipped > 0 ? fmt.format(clipped) : "0"}`);
-        lines.push(`Status: ${escapeHtml(modelCapStatusLabel(row.status))}`);
-        if (!clipped) {
-          lines.push("No cap cut: raw was not above cap.");
-        }
-        if (row) {
-          lines.push(`Scale from raw to final: ${fmt.format((row.weightScaleFactor || 0) * 100)}%`);
-        }
-        return lines.join("<br>");
-      },
-    }),
     xAxis: {
       type: "category",
-      data: kimiRows.map((row) => `e${row.epoch}`),
+      data: capRecoveryRows.map((row) => row.epochLabel),
       axisLabel: { color: "#a7afba" },
       splitLine: { show: true, lineStyle: { color: "rgba(128, 140, 154, 0.25)" } },
     },
@@ -1039,39 +1050,44 @@ function renderModelCapMechanics() {
       axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) },
       name: "weight",
       nameTextStyle: { color: "#a7afba" },
+      splitLine: { lineStyle: { color: "rgba(128, 140, 154, 0.2)" } },
     },
     series: [
       {
-        name: "Previous epoch total",
+        name: "Before scale (raw subgroup)",
         type: "line",
-        data: kimiRows.map((row) => row.previousEpochRootTotalWeight || null),
+        data: capRecoveryRows.map((row) => row.preScale),
         symbolSize: 7,
-        lineStyle: { color: "#8f7ad3", width: 2 },
-        itemStyle: { color: "#8f7ad3" },
+        lineStyle: { color: "#7a8793", width: 2, type: "dotted" },
+        itemStyle: { color: "#7a8793" },
+        showSymbol: true,
       },
       {
-        name: "Kimi cap limit (prev epoch total × cap factor)",
+        name: "After scale (raw consensus)",
         type: "line",
-        data: kimiRows.map((row) => row.capWeight ?? null),
-        symbolSize: 8,
-        lineStyle: { color: "#d7a84f", width: 3 },
-        itemStyle: { color: "#d7a84f" },
-      },
-      {
-        name: "Kimi raw consensus (before cap)",
-        type: "line",
-        data: kimiRows.map((row) => row.rawConsensusWeight || 0),
+        data: capRecoveryRows.map((row) => row.scaled),
         symbolSize: 8,
         lineStyle: { color: "#d9655f", width: 3 },
         itemStyle: { color: "#d9655f" },
-        areaStyle: { color: "#d9655f", opacity: 0.07 },
+        showSymbol: false,
       },
       {
-        name: "Kimi final counted (after cap)",
+        name: "Cap limit (prev epoch × factor)",
         type: "line",
-        data: kimiRows.map((row) => row.countedWeight || row.cappedConsensusWeight || 0),
+        data: capRecoveryRows.map((row) => row.capLimit),
         symbolSize: 8,
-        lineStyle: { color: "#79b66a", width: 3 },
+        symbol: "circle",
+        lineStyle: { color: "#d7a84f", width: 2, type: "dashed" },
+        itemStyle: { color: "#d7a84f" },
+        showSymbol: true,
+      },
+      {
+        name: "Final counted (after cap)",
+        type: "line",
+        data: capRecoveryRows.map((row) => row.final),
+        symbol: "diamond",
+        symbolSize: 8,
+        lineStyle: { color: "#79b66a", width: 3.5 },
         itemStyle: { color: "#79b66a" },
       },
     ],
