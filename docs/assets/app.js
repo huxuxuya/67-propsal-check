@@ -14,6 +14,7 @@ const state = {
   timelineMetric: "weight",
   timelineSort: "maxWeight",
   kimiScaleScenario: "actual",
+  kimiScaleLocked: false,
   kimiFixedRawWeight: 400000,
   charts: {},
   chartAddressRows: {},
@@ -396,14 +397,36 @@ function setupFilters(data) {
       renderAttackTimeline();
     });
   });
+  const kimiScaleLockInput = document.getElementById("kimiScaleLock125");
+  const kimiFixedRawInput = document.getElementById("kimiFixedRawWeight");
+  const syncKimiScaleLock = () => {
+    const inConstantRaw = state.kimiScaleScenario === "constantRaw";
+    if (!kimiScaleLockInput) return;
+    if (!inConstantRaw) {
+      state.kimiScaleLocked = false;
+      kimiScaleLockInput.checked = false;
+    }
+    kimiScaleLockInput.disabled = !inConstantRaw;
+    if (kimiFixedRawInput) kimiFixedRawInput.disabled = !inConstantRaw;
+  };
   document.querySelectorAll("[data-kimi-scale-scenario]").forEach((button) => {
     button.addEventListener("click", () => {
       state.kimiScaleScenario = button.dataset.kimiScaleScenario || "actual";
       document.querySelectorAll("[data-kimi-scale-scenario]").forEach((item) => item.classList.toggle("active", item === button));
+      if (state.kimiScaleScenario !== "constantRaw") {
+        state.kimiScaleLocked = false;
+        if (kimiScaleLockInput) kimiScaleLockInput.checked = false;
+      }
+      syncKimiScaleLock();
       renderModelCapMechanics();
     });
   });
-  const kimiFixedRawInput = document.getElementById("kimiFixedRawWeight");
+  if (kimiScaleLockInput) {
+    kimiScaleLockInput.addEventListener("change", () => {
+      state.kimiScaleLocked = Boolean(kimiScaleLockInput.checked && state.kimiScaleScenario === "constantRaw");
+      renderModelCapMechanics();
+    });
+  }
   if (kimiFixedRawInput) {
     const normalizeKimiRawInput = () => {
       const parsed = Number(kimiFixedRawInput.value);
@@ -414,6 +437,7 @@ function setupFilters(data) {
     };
     kimiFixedRawInput.addEventListener("change", normalizeKimiRawInput);
     kimiFixedRawInput.addEventListener("input", normalizeKimiRawInput);
+    syncKimiScaleLock();
     normalizeKimiRawInput();
   }
 }
@@ -1021,24 +1045,29 @@ function renderModelCapMechanics() {
   }
   const isFrozenScale = state.kimiScaleScenario === "frozen" || state.kimiScaleScenario === "frozenScale";
   const isConstantRaw = state.kimiScaleScenario === "constantRaw";
-  const isFixedScale125 = state.kimiScaleScenario === "fixedScale125";
+  const isLegacyFixedScale = state.kimiScaleScenario === "fixedScale125";
+  const isScaleLocked = isConstantRaw && state.kimiScaleLocked;
   const beforeScaleLabel = isConstantRaw ? "constant raw" : "actual raw";
   const afterScaleSeriesName = isFrozenScale
     ? "After fixed scale (raw consensus)"
     : isConstantRaw
-      ? "After fixed raw (actual scale)"
-      : isFixedScale125
+      ? isScaleLocked || isLegacyFixedScale
+        ? "After fixed raw (1.25 scale)"
+        : "After fixed raw (actual scale)"
+      : isLegacyFixedScale
       ? "After fixed scale 1.25"
       : "After scale (raw consensus)";
   const finalCountSeriesName = isFrozenScale
     ? "Final counted (fixed scale)"
     : isConstantRaw
-      ? "Final counted (constant raw)"
-      : isFixedScale125
+      ? isScaleLocked || isLegacyFixedScale
+        ? "Final counted (fixed raw + 1.25 scale)"
+        : "Final counted (constant raw)"
+      : isLegacyFixedScale
       ? "Final counted (fixed scale 1.25)"
       : "Final counted (after cap)";
   const resolveScenarioScale = (row) => {
-    if (isFixedScale125) return 1.25;
+    if (isScaleLocked || isLegacyFixedScale) return 1.25;
     if (!isFrozenScale) return row.weightScaleFactor || 0;
     const label = row.modelLabel || row.modelId;
     return frozenScaleByModel.get(label) ?? (row.weightScaleFactor || 0);
@@ -1046,7 +1075,7 @@ function renderModelCapMechanics() {
   const fixedRaw = Math.max(0, Math.floor(state.kimiFixedRawWeight || 0));
   const baselineRaw = fixedRaw > 0 ? fixedRaw : (kimiRows[0]?.subgroupRawWeight || 0);
   const capRecoveryRows = kimiRows.map((row) => {
-    const scenarioScale = isFrozenScale ? resolveScenarioScale(row) : (row.weightScaleFactor || 0);
+    const scenarioScale = resolveScenarioScale(row);
     const rowRaw = isConstantRaw ? baselineRaw : (row.subgroupRawWeight || 0);
     const scenarioScaled = Math.floor((rowRaw || 0) * scenarioScale);
     const actualScale = row.weightScaleFactor || 0;
@@ -1066,6 +1095,7 @@ function renderModelCapMechanics() {
       actualFinal,
       actualScale,
       status: row.status,
+      scaleLocked: isScaleLocked || isLegacyFixedScale,
       capUtilization: row.capUtilization || 0,
       previousEpochRootTotalWeight: row.previousEpochRootTotalWeight || 0,
       capFactor: row.capFactor || 0,
@@ -1090,11 +1120,11 @@ function renderModelCapMechanics() {
         const lines = [
           `<strong>${row.epochLabel} (Kimi) recovery path</strong>`,
           `1) Before scale (${row.rawMode}): <strong>${fmt.format(row.preScale)}</strong>`,
-          `2) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "After fixed scale (raw consensus)" : row.scenario === "constantRaw" ? "After fixed raw (raw × actual scale)" : row.scenario === "fixedScale125" ? "After fixed scale 1.25" : "After scale (raw consensus)"}`,
+          `2) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "After fixed scale (raw consensus)" : row.scenario === "constantRaw" ? row.scaleLocked ? "After fixed raw (1.25 scale)" : "After fixed raw (raw × actual scale)" : row.scenario === "fixedScale125" ? "After fixed scale 1.25" : "After scale (raw consensus)"}`,
           `   <strong>${fmt.format(row.scaled)}</strong>${row.scaleDelta ? `  (${row.scaleDelta > 0 ? "+" : ""}${fmt.format(row.scaleDelta)} by model scale)` : ""}`,
           row.scenario === "frozen" || row.scenario === "frozenScale" ? `   Baseline scale for this model is <strong>${fmt.format(row.actualScale)}x</strong>` : "",
           `3) Cap ceiling: ${row.capLimit == null ? "<i>not set</i>" : `<strong>${fmt.format(row.capLimit)}</strong> (${fmt.format(row.previousEpochRootTotalWeight)} × ${fmt.format(row.capFactor)})`}`,
-          `4) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "Final counted under fixed scale (after cap)" : row.scenario === "constantRaw" ? "Final counted (fixed raw, after cap)" : row.scenario === "fixedScale125" ? "Final counted (fixed scale 1.25)" : "Final counted (after cap)"}`,
+          `4) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "Final counted under fixed scale (after cap)" : row.scenario === "constantRaw" ? row.scaleLocked ? "Final counted (fixed raw + 1.25 scale)" : "Final counted (fixed raw, after cap)" : row.scenario === "fixedScale125" ? "Final counted (fixed scale 1.25)" : "Final counted (after cap)"}`,
           `<strong>${fmt.format(row.final)}</strong>`,
           clipped > 0 ? `Clipped by cap: <strong>${fmt.format(clipped)}</strong> (${fmt.format(clippedPct)}%)` : "Clipped by cap: <strong>0</strong>",
           row.scenario === "frozen" || row.scenario === "frozenScale" || row.scenario === "constantRaw" || row.scenario === "fixedScale125" ? `Actual trajectory would be ${fmt.format(row.actualScaled)} → <strong>${fmt.format(row.actualFinal)}</strong> (${fmt.format(clippedActual)} clipped)` : "",

@@ -181,11 +181,14 @@
                     <button class="active" data-kimi-scale-scenario="actual" type="button">Actual</button>
                     <button data-kimi-scale-scenario="frozen" type="button">No scale drift</button>
                     <button data-kimi-scale-scenario="constantRaw" type="button">Constant raw</button>
-                    <button data-kimi-scale-scenario="fixedScale125" type="button">Scale = 1.25</button>
                   </div>
                   <label class="inline-number-control" title="Use a fixed raw weight for every epoch">
                     <span>Raw</span>
                     <input id="kimiFixedRawWeight" type="number" min="0" step="1000" value="400000">
+                  </label>
+                  <label class="inline-number-control" title="Apply a fixed scale factor for this simulation">
+                    <input id="kimiScaleLock125" type="checkbox">
+                    <span>Fix scale = 1.25</span>
                   </label>
                 </div>
               </div>
