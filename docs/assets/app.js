@@ -1018,6 +1018,38 @@ function renderModelCapMechanics() {
   }, true);
 
   const waterfallEpochs = epochs.filter((epoch) => epoch >= 267);
+  const packageEpochSet = new Set(((state.data.epochs || [])
+    .filter((row) => row.componentSource === "cap_e267_e276")
+    .map((row) => Number(row.epoch))
+  ));
+  if (packageEpochSet.size === 0) {
+    for (let e = 267; e <= 276; e += 1) packageEpochSet.add(e);
+  }
+  const buildRanges = (values, maxGap = 1) => {
+    const sorted = [...new Set(values)].map(Number).sort((a, b) => a - b);
+    if (!sorted.length) return [];
+    const ranges = [];
+    let start = sorted[0];
+    let end = sorted[0];
+    for (let i = 1; i < sorted.length; i += 1) {
+      const value = sorted[i];
+      if (value <= end + maxGap) {
+        end = value;
+      } else {
+        ranges.push([start, end]);
+        start = end = value;
+      }
+    }
+    ranges.push([start, end]);
+    return ranges;
+  };
+  const compensationRanges = buildRanges([...packageEpochSet]);
+  const compensationMarkAreas = compensationRanges
+    .filter((range) => range[0] <= range[1])
+    .map(([start, end]) => [
+      { name: "Compensation package", xAxis: `e${start}`, yAxis: "min" },
+      { xAxis: `e${end}`, yAxis: "max" },
+    ]);
   const formatSigned = (value) => (value >= 0 ? `+${fmt.format(value)}` : `-${fmt.format(Math.abs(value))}`);
   const waterfallSeries = [];
   for (const [index, label] of labels.entries()) {
@@ -1077,6 +1109,7 @@ function renderModelCapMechanics() {
       trigger: "axis",
       formatter: (params) => {
         const epoch = waterfallEpochs[params[0]?.dataIndex];
+        const isCompensationEpoch = packageEpochSet.has(epoch);
         const lines = [`<strong>Epoch ${epoch}</strong>`];
         for (const [index, label] of labels.entries()) {
           const row = byKey.get(`${epoch}|${label}`);
@@ -1086,7 +1119,7 @@ function renderModelCapMechanics() {
           const counted = row.countedWeight || row.cappedConsensusWeight || 0;
           const scaleDelta = consensus - raw;
           const capDelta = counted - consensus;
-          lines.push(`<span style="color:${modelCapColor(label, index)}">●</span> ${escapeHtml(label)}: raw ${fmt.format(raw)}, scale ${formatSigned(scaleDelta)}, cap ${formatSigned(capDelta)}, final ${fmt.format(counted)}`);
+          lines.push(`<span style="color:${modelCapColor(label, index)}">●</span> ${escapeHtml(label)}: raw ${fmt.format(raw)}, scale ${formatSigned(scaleDelta)}, cap ${formatSigned(capDelta)}, final ${fmt.format(counted)}${isCompensationEpoch ? " · <b>compensation package</b>" : ""}`);
         }
         return lines.join("<br>");
       },
@@ -1095,6 +1128,10 @@ function renderModelCapMechanics() {
       type: "category",
       data: waterfallEpochs.map((epoch) => `e${epoch}`),
       axisLabel: { color: "#a7afba" },
+      splitLine: {
+        show: true,
+        lineStyle: { color: "rgba(128, 140, 154, 0.28)" },
+      },
       name: "epoch",
       nameTextStyle: { color: "#a7afba" },
     },
@@ -1105,6 +1142,11 @@ function renderModelCapMechanics() {
       nameTextStyle: { color: "#a7afba" },
     },
     series: waterfallSeries,
+    markArea: {
+      silent: true,
+      itemStyle: { color: "rgba(217, 101, 95, 0.08)" },
+      data: compensationMarkAreas,
+    },
   }, true);
 
   const paramRows = (payload.paramModelRows || []).filter((row) => row.position === "start" || row.position === "change" || row.position === "end");
