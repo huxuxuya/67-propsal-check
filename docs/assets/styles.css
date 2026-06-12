@@ -358,6 +358,13 @@ select {
   max-height: 520px;
 }
 
+.table-title {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 10px 4px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
