@@ -291,6 +291,17 @@ select {
   gap: 12px;
 }
 
+.chart-block {
+  display: grid;
+}
+
+.chart-title {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 10px 2px;
+}
+
 .model-cap-mechanics-chart {
   min-height: 360px;
 }
