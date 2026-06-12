@@ -380,6 +380,16 @@ select {
   height: 760px;
 }
 
+.recipient-reward-history-panel.is-collapsed .recipient-reward-history-legend,
+.recipient-reward-history-panel.is-collapsed .recipient-reward-history-chart,
+.recipient-reward-history-panel.is-collapsed .table-wrap {
+  display: none;
+}
+
+.recipient-reward-history-note {
+  padding: 14px;
+}
+
 .inline-legend {
   display: flex;
   flex-wrap: wrap;

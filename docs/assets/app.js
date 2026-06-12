@@ -1731,6 +1731,14 @@ function renderHeatmap() {
 }
 
 function renderRecipientCompByWindow() {
+  const panel = document.querySelector(".recipient-reward-history-panel");
+  if (panel?.classList.contains("is-collapsed")) {
+    document.getElementById("recipientCompByWindowEpochs").textContent = "Calculations in progress";
+    document.getElementById("recipientCompByWindowRows").textContent = "collapsed";
+    state.chartAddressRows.recipientCompByWindow = [];
+    if (els.recipientCompByWindowTable) els.recipientCompByWindowTable.innerHTML = "";
+    return;
+  }
   const payload = state.data.chartData?.recipientRewardHistory || { rows: [], historyEpochs: [], compensationEpochs: [], summary: {} };
   const filteredAddresses = new Set(state.filteredRecipients.map((row) => row.address));
   const rows = (payload.rows || [])
