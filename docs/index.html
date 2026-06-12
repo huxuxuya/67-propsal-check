@@ -146,6 +146,29 @@
           </div>
           <div class="chart compensation-chart" id="compensationChart"></div>
         </div>
+        <div class="panel wide">
+          <div class="panel-head">
+            <h2>Recipient 10-Epoch Mix</h2>
+            <span id="recipientCompByWindowEpochs">-</span>
+            <span id="recipientCompByWindowRows">-</span>
+          </div>
+          <div class="chart" id="recipientCompByWindowChart"></div>
+          <div class="table-wrap compact-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Recipient</th>
+                  <th>Max weight (window)</th>
+                  <th>Reward</th>
+                  <th>Compensation</th>
+                  <th>Total paid</th>
+                  <th>Compensation share</th>
+                </tr>
+              </thead>
+              <tbody id="recipientCompByWindowTable"></tbody>
+            </table>
+          </div>
+        </div>
         <div class="panel wide reward-flow-panel">
           <div class="panel-head">
             <h2>Reward / Power Mirror by Vote</h2>

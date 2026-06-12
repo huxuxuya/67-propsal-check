@@ -56,6 +56,7 @@ const els = {
   voteTable: document.getElementById("voteTable"),
   strictClusterTable: document.getElementById("strictClusterTable"),
   signalClusterTable: document.getElementById("signalClusterTable"),
+  recipientCompByWindowTable: document.getElementById("recipientCompByWindowTable"),
   drawer: document.getElementById("drawer"),
   drawerContent: document.getElementById("drawerContent"),
   scrim: document.getElementById("scrim"),
@@ -189,6 +190,18 @@ function chartTooltip(options = {}) {
     },
     extraCssText: "max-width:min(440px, calc(100vw - 32px));white-space:normal;overflow-wrap:anywhere;z-index:9999;pointer-events:none;",
     ...options,
+  };
+}
+
+function getRecentEpochWindow(size = 10) {
+  const epochRows = (state.data?.epochs || [])
+    .map((row) => Number(row?.epoch))
+    .filter((value) => Number.isFinite(value))
+    .sort((a, b) => a - b);
+  const windowEpochs = epochRows.slice(Math.max(0, epochRows.length - size));
+  return {
+    windowEpochs,
+    windowKeys: windowEpochs.map((epoch) => `e${epoch}`),
   };
 }
 
@@ -336,6 +349,7 @@ function initCharts() {
     windowPower: "windowPowerChart",
     actorGraph: "actorGraphChart",
     entryExit: "entryExitChart",
+    recipientCompByWindow: "recipientCompByWindowChart",
   })) {
     state.charts[key] = echarts.init(document.getElementById(id));
   }
@@ -1677,6 +1691,118 @@ function renderHeatmap() {
       },
     }],
   }, true);
+}
+
+function renderRecipientCompByWindow(size = 10) {
+  const { windowEpochs, windowKeys } = getRecentEpochWindow(size);
+  const epochLabel = windowKeys.length ? `${windowKeys[0]}…${windowKeys[windowKeys.length - 1]}` : "n/a";
+  const timelineRows = new Map((state.data.chartData?.participantEpochTimeline?.rows || []).map((row) => [row.address, row]));
+
+  const getMaxWeightInWindow = (address) => {
+    const timelineRow = timelineRows.get(address);
+    if (!timelineRow?.cells?.length) return 0;
+    return Math.max(
+      0,
+      ...timelineRow.cells
+        .filter((cell) => cell?.columnType === "weight" && windowEpochs.includes(cell.epoch || 0))
+        .map((cell) => Number(cell?.weight || 0))
+    );
+  };
+
+  const rows = state.filteredRecipients
+    .map((row) => {
+      let compensationWindow = 0;
+      let rewardWindow = 0;
+      for (const epoch of windowKeys) {
+        compensationWindow += Number(row.perEpoch?.[epoch] || 0);
+        const rewardData = row.claimedRewardByEpoch?.[epoch];
+        rewardWindow += Number(rewardData?.rewardedGonka || 0);
+      }
+      const maxWindowWeight = getMaxWeightInWindow(row.address);
+      const totalWindowPaid = compensationWindow + rewardWindow;
+      return {
+        ...row,
+        maxWindowWeight,
+        compensationWindow,
+        rewardWindow,
+        totalWindowPaid,
+        compensationShare: totalWindowPaid ? compensationWindow / totalWindowPaid : 0,
+      };
+    })
+    .filter((row) => row.compensationWindow || row.rewardWindow)
+    .sort((a, b) => b.maxWindowWeight - a.maxWindowWeight || b.totalWindowPaid - a.totalWindowPaid);
+
+  document.getElementById("recipientCompByWindowEpochs").textContent = `Window ${epochLabel}`;
+  document.getElementById("recipientCompByWindowRows").textContent = `${rows.length} shown`;
+
+  state.chartAddressRows.recipientCompByWindow = rows;
+  const rewardSeries = rows.map((row) => row.rewardWindow);
+  const compensationSeries = rows.map((row) => row.compensationWindow);
+  if (!rows.length) {
+    state.charts.recipientCompByWindow.setOption({
+      title: { text: "No rows in selected window", left: "center", textStyle: { color: "#6d7682" } },
+      xAxis: { show: false },
+      yAxis: { show: false },
+      series: [],
+    }, true);
+  } else {
+    state.charts.recipientCompByWindow.setOption({
+      tooltip: chartTooltip({
+        trigger: "axis",
+        formatter: (params) => {
+          const row = rows[params[0].dataIndex];
+          if (!row) return "";
+          return `<strong>${escapeHtml(row.actorDisplayLabel || row.actorShortLabel || actorShortLabel(row))}</strong><br>${shortAddress(row.address)}<br>${fmt.format(row.maxWindowWeight)} max window weight<br>reward ${gonka(row.rewardWindow)}<br>compensation ${gonka(row.compensationWindow)}<br>total ${gonka(row.totalWindowPaid)}<br>compensation share ${fmt.format((row.compensationShare || 0) * 100)}%`;
+        },
+      }),
+      grid: { left: 228, right: 54, top: 34, bottom: 28 },
+      xAxis: {
+        type: "value",
+        axisLabel: { color: "#a7afba", formatter: (value) => compact.format(value) },
+      },
+      yAxis: {
+        type: "category",
+        inverse: true,
+        data: rows.map((row) => `${row.actorShortLabel || row.actorDisplayLabel || shortAddress(row.address)}`),
+        axisLabel: {
+          align: "left",
+          margin: 232,
+          color: "#a7afba",
+          width: 220,
+          overflow: "truncate",
+        },
+      },
+      series: [
+        {
+          name: "reward",
+          type: "bar",
+          stack: "payment",
+          data: rewardSeries,
+          itemStyle: { color: "#d7a84f" },
+          emphasis: { focus: "series" },
+        },
+        {
+          name: "compensation",
+          type: "bar",
+          stack: "payment",
+          data: compensationSeries,
+          itemStyle: { color: "#79b66a" },
+          emphasis: { focus: "series" },
+        },
+      ],
+    }, true);
+  }
+
+  els.recipientCompByWindowTable.innerHTML = rows.map((row) => `
+    <tr>
+      <td><button class=\"row-button mono\" data-address=\"${escapeHtml(row.address)}\">${escapeHtml(row.actorDisplayLabel || row.actorShortLabel || row.address)}</button><div class=\"muted\">${shortAddress(row.address)}</div></td>
+      <td class=\"num\">${fmt.format(row.maxWindowWeight)}</td>
+      <td class=\"num\">${gonka(row.rewardWindow)}</td>
+      <td class=\"num\">${gonka(row.compensationWindow)}</td>
+      <td class=\"num\">${gonka(row.totalWindowPaid)}</td>
+      <td class=\"num\">${fmt.format((row.compensationShare || 0) * 100)}%</td>
+    </tr>
+  `).join("");
 }
 
 function renderMatrix() {
@@ -3048,6 +3174,7 @@ function renderAll() {
   renderModelCapChart();
   renderModelCapMechanics();
   renderHeatmap();
+  renderRecipientCompByWindow();
   renderMatrix();
   renderTimeline();
   renderTally();
