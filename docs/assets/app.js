@@ -16,6 +16,8 @@ const state = {
   kimiScaleScenario: "actual",
   kimiScaleLocked: false,
   kimiFixedRawWeight: 400000,
+  kimiDipRawWeight: 50000,
+  kimiFixedQwenWeight: 300000,
   charts: {},
   chartAddressRows: {},
 };
@@ -399,6 +401,8 @@ function setupFilters(data) {
   });
   const kimiScaleLockInput = document.getElementById("kimiScaleLock125");
   const kimiFixedRawInput = document.getElementById("kimiFixedRawWeight");
+  const kimiDipRawInput = document.getElementById("kimiDipRawWeight");
+  const kimiFixedQwenInput = document.getElementById("kimiFixedQwenWeight");
   const syncKimiScaleLock = () => {
     const inConstantRaw = state.kimiScaleScenario === "constantRaw";
     if (!kimiScaleLockInput) return;
@@ -408,6 +412,8 @@ function setupFilters(data) {
     }
     kimiScaleLockInput.disabled = !inConstantRaw;
     if (kimiFixedRawInput) kimiFixedRawInput.disabled = !inConstantRaw;
+    if (kimiDipRawInput) kimiDipRawInput.disabled = !inConstantRaw;
+    if (kimiFixedQwenInput) kimiFixedQwenInput.disabled = !inConstantRaw;
   };
   document.querySelectorAll("[data-kimi-scale-scenario]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -437,8 +443,41 @@ function setupFilters(data) {
     };
     kimiFixedRawInput.addEventListener("change", normalizeKimiRawInput);
     kimiFixedRawInput.addEventListener("input", normalizeKimiRawInput);
-    syncKimiScaleLock();
-    normalizeKimiRawInput();
+  }
+  if (kimiDipRawInput) {
+    const normalizeKimiDipRawInput = () => {
+      const parsed = Number(kimiDipRawInput.value);
+      const safe = Number.isFinite(parsed) && parsed >= 0 ? parsed : state.kimiDipRawWeight;
+      state.kimiDipRawWeight = Math.max(0, Math.floor(safe));
+      if (!Number.isFinite(parsed) || parsed < 0) kimiDipRawInput.value = String(state.kimiDipRawWeight);
+      renderModelCapMechanics();
+    };
+    kimiDipRawInput.addEventListener("change", normalizeKimiDipRawInput);
+    kimiDipRawInput.addEventListener("input", normalizeKimiDipRawInput);
+  }
+  if (kimiFixedQwenInput) {
+    const normalizeKimiQwenInput = () => {
+      const parsed = Number(kimiFixedQwenInput.value);
+      const safe = Number.isFinite(parsed) && parsed >= 0 ? parsed : state.kimiFixedQwenWeight;
+      state.kimiFixedQwenWeight = Math.max(0, Math.floor(safe));
+      if (!Number.isFinite(parsed) || parsed < 0) kimiFixedQwenInput.value = String(state.kimiFixedQwenWeight);
+      renderModelCapMechanics();
+    };
+    kimiFixedQwenInput.addEventListener("change", normalizeKimiQwenInput);
+    kimiFixedQwenInput.addEventListener("input", normalizeKimiQwenInput);
+  }
+  syncKimiScaleLock();
+  if (kimiFixedRawInput) {
+    const parsed = Number(kimiFixedRawInput.value);
+    if (Number.isFinite(parsed) && parsed > 0) state.kimiFixedRawWeight = Math.floor(parsed);
+  }
+  if (kimiDipRawInput) {
+    const parsed = Number(kimiDipRawInput.value);
+    if (Number.isFinite(parsed) && parsed >= 0) state.kimiDipRawWeight = Math.floor(parsed);
+  }
+  if (kimiFixedQwenInput) {
+    const parsed = Number(kimiFixedQwenInput.value);
+    if (Number.isFinite(parsed) && parsed >= 0) state.kimiFixedQwenWeight = Math.floor(parsed);
   }
 }
 
@@ -1047,13 +1086,13 @@ function renderModelCapMechanics() {
   const isConstantRaw = state.kimiScaleScenario === "constantRaw";
   const isLegacyFixedScale = state.kimiScaleScenario === "fixedScale125";
   const isScaleLocked = isConstantRaw && state.kimiScaleLocked;
-  const beforeScaleLabel = isConstantRaw ? "constant raw" : "actual raw";
+  const beforeScaleLabel = isConstantRaw ? "shock raw" : "actual raw";
   const afterScaleSeriesName = isFrozenScale
     ? "After fixed scale (raw consensus)"
     : isConstantRaw
       ? isScaleLocked || isLegacyFixedScale
-        ? "After fixed raw (1.25 scale)"
-        : "After fixed raw (actual scale)"
+        ? "After shock raw (1.25 scale)"
+        : "After shock raw (actual scale)"
       : isLegacyFixedScale
       ? "After fixed scale 1.25"
       : "After scale (raw consensus)";
@@ -1061,8 +1100,8 @@ function renderModelCapMechanics() {
     ? "Final counted (fixed scale)"
     : isConstantRaw
       ? isScaleLocked || isLegacyFixedScale
-        ? "Final counted (fixed raw + 1.25 scale)"
-        : "Final counted (constant raw)"
+        ? "Final counted (shock raw + 1.25 scale)"
+        : "Final counted (shock raw)"
       : isLegacyFixedScale
       ? "Final counted (fixed scale 1.25)"
       : "Final counted (after cap)";
@@ -1073,11 +1112,14 @@ function renderModelCapMechanics() {
     return frozenScaleByModel.get(label) ?? (row.weightScaleFactor || 0);
   };
   const fixedRaw = Math.max(0, Math.floor(state.kimiFixedRawWeight || 0));
+  const dipRaw = Math.max(0, Math.floor(state.kimiDipRawWeight || 0));
+  const fixedQwen = Math.max(0, Math.floor(state.kimiFixedQwenWeight || 0));
   const baselineRaw = fixedRaw > 0 ? fixedRaw : (kimiRows[0]?.subgroupRawWeight || 0);
-  const isSimulatedCap = isConstantRaw && (isScaleLocked || isLegacyFixedScale);
+  const simulatedRawForEpoch = (epoch) => (epoch === 266 ? dipRaw : baselineRaw);
+  const isSimulatedCap = isConstantRaw;
   const preSimRows = kimiRows.map((row) => {
     const scenarioScale = resolveScenarioScale(row);
-    const rowRaw = isConstantRaw ? baselineRaw : (row.subgroupRawWeight || 0);
+    const rowRaw = isConstantRaw ? simulatedRawForEpoch(row.epoch) : (row.subgroupRawWeight || 0);
     const scenarioScaled = Math.floor((rowRaw || 0) * scenarioScale);
     const actualScale = row.weightScaleFactor || 0;
     const actualScaled = Math.floor((row.subgroupRawWeight || 0) * actualScale);
@@ -1097,31 +1139,54 @@ function renderModelCapMechanics() {
       scaleLocked: isScaleLocked || isLegacyFixedScale,
       capUtilization: row.capUtilization || 0,
       previousEpochRootTotalWeight: row.previousEpochRootTotalWeight || 0,
+      rootTotalWeight: row.rootTotalWeight || 0,
       capFactor: row.capFactor || 0,
       scaleDelta: scenarioScaled - (rowRaw || 0),
       clippedActual: actualFinal < actualScaled ? actualScaled - actualFinal : 0,
     };
   });
-  const preSimRowsByEpoch = new Map(preSimRows.map((entry) => [entry.row.epoch, entry]));
+  // Chain cap uses previous epoch final total_weight, so simulations must pass forward final counted weight.
+  const simulatedRootByEpoch = new Map();
   const capRecoveryRows = preSimRows.map((entry) => {
     const { row, scaled } = entry;
     const canApplyCap = row.capWeight != null && row.capApplies !== false;
     const previousEpochRoot = row.previousEpochRootTotalWeight || 0;
-    const previousEpochRow = preSimRowsByEpoch.get(row.epoch - 1);
-    const previousEpochRootSimulated = isSimulatedCap && canApplyCap && previousEpochRow
-      ? Math.max(0, previousEpochRoot - (previousEpochRow.row.rawConsensusWeight || 0) + previousEpochRow.scaled)
+    const previousSimulatedRoot = simulatedRootByEpoch.get(row.epoch - 1);
+    const previousEpochRootSimulated = isSimulatedCap
+      ? (previousSimulatedRoot ?? previousEpochRoot)
       : previousEpochRoot;
     const capLimit = canApplyCap && isSimulatedCap
       ? Math.floor((row.capFactor || 0) * previousEpochRootSimulated)
       : (row.capWeight == null ? null : row.capWeight);
+    const final = capLimit == null ? scaled : Math.min(scaled, capLimit);
+    const simulatedRootTotalWeight = isSimulatedCap
+      ? fixedQwen + final
+      : (row.rootTotalWeight || 0);
+    simulatedRootByEpoch.set(row.epoch, simulatedRootTotalWeight);
     return {
       ...entry,
       capLimit,
       capLimitBasis: previousEpochRootSimulated,
-      capLimitSource: canApplyCap && isSimulatedCap ? "simulated" : "actual",
-      final: capLimit == null ? scaled : Math.min(scaled, capLimit),
-      clipped: capLimit == null ? 0 : Math.max(0, scaled - Math.min(scaled, capLimit)),
+      capLimitSource: isSimulatedCap ? "simulated" : "actual",
+      simulatedRootTotalWeight,
+      final,
+      clipped: capLimit == null ? 0 : Math.max(0, scaled - final),
     };
+  });
+  const capCompositionRows = capRecoveryRows.map((entry) => {
+    const epoch = entry.row.epoch;
+    const qwenRow = byKey.get(`${epoch}|Qwen`);
+    const qwenActual = qwenRow ? (qwenRow.countedWeight ?? qwenRow.cappedConsensusWeight ?? qwenRow.rawConsensusWeight ?? 0) : 0;
+    const qwen = isSimulatedCap ? fixedQwen : qwenActual;
+    const kimi = entry.final || 0;
+    const other = isSimulatedCap
+      ? 0
+      : rows
+        .filter((row) => row.epoch === epoch && !["Kimi", "Qwen"].includes(row.modelLabel || row.modelId))
+        .reduce((sum, row) => sum + (row.countedWeight ?? row.cappedConsensusWeight ?? row.rawConsensusWeight ?? 0), 0);
+    const modelTotal = qwen + kimi + other;
+    const rootTotal = isSimulatedCap ? entry.simulatedRootTotalWeight : (entry.row.rootTotalWeight || modelTotal);
+    return { epoch, qwen, kimi, other, modelTotal, rootTotal };
   });
 
   state.charts.capRecovery.setOption({
@@ -1139,16 +1204,23 @@ function renderModelCapMechanics() {
         const clippedPct = row.scaled ? (clipped / row.scaled) * 100 : 0;
         const capLimitBasis = row.capLimitBasis == null ? row.previousEpochRootTotalWeight : row.capLimitBasis;
         const capLimitTag = row.capLimitSource === "simulated" ? "simulated" : "actual";
+        const rootBasisText = row.capLimitSource === "simulated"
+          ? `   Chain-style basis: simulated e${row.row.epoch - 1} total_weight <strong>${fmt.format(capLimitBasis)}</strong>`
+          : `   Chain-style basis: actual e${row.row.epoch - 1} total_weight <strong>${fmt.format(capLimitBasis)}</strong>`;
         const lines = [
           `<strong>${row.epochLabel} (Kimi) recovery path</strong>`,
           `1) Before scale (${row.rawMode}): <strong>${fmt.format(row.preScale)}</strong>`,
-          `2) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "After fixed scale (raw consensus)" : row.scenario === "constantRaw" ? row.scaleLocked ? "After fixed raw (1.25 scale)" : "After fixed raw (raw × actual scale)" : row.scenario === "fixedScale125" ? "After fixed scale 1.25" : "After scale (raw consensus)"}`,
+          `2) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "After fixed scale (raw consensus)" : row.scenario === "constantRaw" ? row.scaleLocked ? "After shock raw (1.25 scale)" : "After shock raw (raw × actual scale)" : row.scenario === "fixedScale125" ? "After fixed scale 1.25" : "After scale (raw consensus)"}`,
           `   <strong>${fmt.format(row.scaled)}</strong>${row.scaleDelta ? `  (${row.scaleDelta > 0 ? "+" : ""}${fmt.format(row.scaleDelta)} by model scale)` : ""}`,
           row.scenario === "frozen" || row.scenario === "frozenScale" ? `   Baseline scale for this model is <strong>${fmt.format(row.actualScale)}x</strong>` : "",
           `3) Cap ceiling: ${row.capLimit == null ? "<i>not set</i>" : `<strong>${fmt.format(row.capLimit)}</strong> (${fmt.format(capLimitBasis)} × ${fmt.format(row.capFactor)} · ${capLimitTag})`}`,
-          `4) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "Final counted under fixed scale (after cap)" : row.scenario === "constantRaw" ? row.scaleLocked ? "Final counted (fixed raw + 1.25 scale)" : "Final counted (fixed raw, after cap)" : row.scenario === "fixedScale125" ? "Final counted (fixed scale 1.25)" : "Final counted (after cap)"}`,
+          row.capLimit == null ? "" : rootBasisText,
+          `4) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "Final counted under fixed scale (after cap)" : row.scenario === "constantRaw" ? row.scaleLocked ? "Final counted (shock raw + 1.25 scale)" : "Final counted (shock raw, after cap)" : row.scenario === "fixedScale125" ? "Final counted (fixed scale 1.25)" : "Final counted (after cap)"}`,
           `<strong>${fmt.format(row.final)}</strong>`,
           clipped > 0 ? `Clipped by cap: <strong>${fmt.format(clipped)}</strong> (${fmt.format(clippedPct)}%)` : "Clipped by cap: <strong>0</strong>",
+          row.capLimitSource === "simulated" ? `Simulated total_weight passed forward: <strong>${fmt.format(row.simulatedRootTotalWeight || 0)}</strong> (${fmt.format(state.kimiFixedQwenWeight || 0)} Qwen + ${fmt.format(row.final || 0)} Kimi)` : "",
+          capCompositionRows[index] && row.capLimitSource === "simulated" ? `Simulated total composition: Qwen <strong>${fmt.format(capCompositionRows[index].qwen)}</strong> + Kimi <strong>${fmt.format(capCompositionRows[index].kimi)}</strong> = <strong>${fmt.format(capCompositionRows[index].rootTotal)}</strong>` : "",
+          capCompositionRows[index] && row.capLimitSource !== "simulated" ? `Model weights after cap: Qwen <strong>${fmt.format(capCompositionRows[index].qwen)}</strong> + Kimi <strong>${fmt.format(capCompositionRows[index].kimi)}</strong>${capCompositionRows[index].other ? ` + Other <strong>${fmt.format(capCompositionRows[index].other)}</strong>` : ""} = <strong>${fmt.format(capCompositionRows[index].modelTotal)}</strong><br>Root total_weight: <strong>${fmt.format(capCompositionRows[index].rootTotal)}</strong>` : "",
           row.scenario === "frozen" || row.scenario === "frozenScale" || row.scenario === "constantRaw" || row.scenario === "fixedScale125" ? `Actual trajectory would be ${fmt.format(row.actualScaled)} → <strong>${fmt.format(row.actualFinal)}</strong> (${fmt.format(clippedActual)} clipped)` : "",
           `Status: ${escapeHtml(modelCapStatusLabel(row.status))}`,
           row.capUtilization ? `Utilization: <strong>${fmt.format(row.capUtilization)}x</strong>` : "",
@@ -1160,8 +1232,12 @@ function renderModelCapMechanics() {
       top: 6,
       textStyle: { color: "#a7afba" },
       selected: {
+        "After-cap stack: Qwen": true,
+        "After-cap stack: Kimi": true,
+        "After-cap stack: Other": capCompositionRows.some((row) => row.other > 0),
         "Before scale (raw subgroup)": true,
         [afterScaleSeriesName]: true,
+        "Prev total weight (cap basis)": true,
         "Cap limit (prev epoch × factor)": true,
         [finalCountSeriesName]: true,
       },
@@ -1182,6 +1258,36 @@ function renderModelCapMechanics() {
     },
     series: [
       {
+        name: "After-cap stack: Qwen",
+        type: "bar",
+        stack: "cap-total-composition",
+        data: capCompositionRows.map((row) => row.qwen),
+        barWidth: 18,
+        itemStyle: { color: "rgba(93, 169, 233, 0.28)" },
+        emphasis: { itemStyle: { color: "rgba(93, 169, 233, 0.42)" } },
+        z: 0,
+      },
+      {
+        name: "After-cap stack: Kimi",
+        type: "bar",
+        stack: "cap-total-composition",
+        data: capCompositionRows.map((row) => row.kimi),
+        barWidth: 18,
+        itemStyle: { color: "rgba(121, 182, 106, 0.3)" },
+        emphasis: { itemStyle: { color: "rgba(121, 182, 106, 0.46)" } },
+        z: 0,
+      },
+      {
+        name: "After-cap stack: Other",
+        type: "bar",
+        stack: "cap-total-composition",
+        data: capCompositionRows.map((row) => row.other || null),
+        barWidth: 18,
+        itemStyle: { color: "rgba(143, 122, 211, 0.24)" },
+        emphasis: { itemStyle: { color: "rgba(143, 122, 211, 0.4)" } },
+        z: 0,
+      },
+      {
         name: "Before scale (raw subgroup)",
         type: "line",
         data: capRecoveryRows.map((row) => row.preScale),
@@ -1198,6 +1304,16 @@ function renderModelCapMechanics() {
         lineStyle: { color: "#d9655f", width: 3 },
         itemStyle: { color: "#d9655f" },
         showSymbol: false,
+      },
+      {
+        name: "Prev total weight (cap basis)",
+        type: "line",
+        data: capRecoveryRows.map((row) => row.capLimit == null ? null : row.capLimitBasis),
+        symbolSize: 7,
+        symbol: "triangle",
+        lineStyle: { color: "#5da9e9", width: 2, type: "dotted" },
+        itemStyle: { color: "#5da9e9" },
+        showSymbol: true,
       },
       {
         name: "Cap limit (prev epoch × factor)",
@@ -1221,7 +1337,7 @@ function renderModelCapMechanics() {
     ],
   }, true);
 
-  const waterfallEpochs = epochs.filter((epoch) => epoch >= 267);
+  const waterfallEpochs = epochs.filter((epoch) => epoch >= 265);
   const packageEpochSet = new Set(((state.data.epochs || [])
     .filter((row) => row.componentSource === "cap_e267_e276")
     .map((row) => Number(row.epoch))
@@ -1254,83 +1370,65 @@ function renderModelCapMechanics() {
       { name: "Compensation package", xAxis: `e${start}`, yAxis: "min" },
       { xAxis: `e${end}`, yAxis: "max" },
     ]);
-  const formatSigned = (value) => (value >= 0 ? `+${fmt.format(value)}` : `-${fmt.format(Math.abs(value))}`);
-  const waterfallSeries = [];
-  for (const [index, label] of labels.entries()) {
-    const rowsByEpoch = new Map(waterfallEpochs.map((epoch) => [epoch, byKey.get(`${epoch}|${label}`)]));
-    const rawSeries = waterfallEpochs.map((epoch) => {
-      const row = rowsByEpoch.get(epoch);
-      if (!row) return null;
-      return row.subgroupRawWeight || 0;
-    });
-    const scaleSeries = waterfallEpochs.map((epoch) => {
-      const row = rowsByEpoch.get(epoch);
-      if (!row) return null;
-      return (row.rawConsensusWeight || 0) - (row.subgroupRawWeight || 0);
-    });
-    const countedSeries = waterfallEpochs.map((epoch) => {
-      const row = rowsByEpoch.get(epoch);
-      if (!row) return null;
-      return (row.countedWeight || row.cappedConsensusWeight || 0) - (row.rawConsensusWeight || 0);
-    });
-    const modelColor = modelCapColor(label, index);
-    waterfallSeries.push({
-      name: `${label} • raw`,
-      type: "bar",
-      stack: `waterfall:${label}`,
-      data: rawSeries,
-      barGap: "10%",
-      barCategoryGap: "35%",
-      itemStyle: { color: modelColor },
-      emphasis: { itemStyle: { color: modelColor } },
-    });
-    waterfallSeries.push({
-      name: `${label} • scale`,
-      type: "bar",
-      stack: `waterfall:${label}`,
-      data: scaleSeries,
-      itemStyle: { color: (params) => (params.value >= 0 ? "#79b66a" : "#d7a84f") },
-      emphasis: { itemStyle: { opacity: 0.9 } },
-    });
-    waterfallSeries.push({
-      name: `${label} • cap`,
-      type: "bar",
-      stack: `waterfall:${label}`,
-      data: countedSeries,
-      itemStyle: { color: (params) => (params.value >= 0 ? "#79b66a" : "#d9655f") },
-      emphasis: { itemStyle: { opacity: 0.9 } },
-    });
-  }
+  const kimiCutRows = waterfallEpochs.map((epoch) => {
+    const row = byKey.get(`${epoch}|Kimi`);
+    if (!row) return { epoch, missing: true };
+    const raw = row.subgroupRawWeight || 0;
+    const afterScale = row.rawConsensusWeight || 0;
+    const final = row.countedWeight ?? row.cappedConsensusWeight ?? afterScale;
+    const clipped = Math.max(0, afterScale - final);
+    const cap = row.capWeight == null ? null : row.capWeight;
+    const previousRoot = row.previousEpochRootTotalWeight || 0;
+    const clippedPct = afterScale ? (clipped / afterScale) * 100 : 0;
+    const requiredPreviousRoot = row.capFactor ? Math.ceil(afterScale / row.capFactor) : 0;
+    return {
+      epoch,
+      raw,
+      afterScale,
+      final,
+      clipped,
+      cap,
+      previousRoot,
+      capFactor: row.capFactor || 0,
+      scale: row.weightScaleFactor || 0,
+      clippedPct,
+      requiredPreviousRoot,
+      missingPreviousRoot: Math.max(0, requiredPreviousRoot - previousRoot),
+      status: row.status,
+      participantCount: row.participantCount || 0,
+      nodeCount: row.nodeCount || 0,
+    };
+  });
   state.charts.capWaterfall.setOption({
-    grid: { left: 80, right: 24, top: 52, bottom: 84 },
+    grid: { left: 80, right: 28, top: 52, bottom: 84 },
     legend: {
       top: 6,
       textStyle: { color: "#a7afba" },
-      type: "scroll",
       selectedMode: true,
     },
     tooltip: chartTooltip({
       trigger: "axis",
       formatter: (params) => {
         const epoch = waterfallEpochs[params[0]?.dataIndex];
+        const row = kimiCutRows[params[0]?.dataIndex];
+        if (!row || row.missing) return `<strong>Epoch ${epoch}</strong><br>No Kimi cap row`;
         const isCompensationEpoch = packageEpochSet.has(epoch);
-        const lines = [`<strong>Epoch ${epoch}</strong>`];
-        for (const [index, label] of labels.entries()) {
-          const row = byKey.get(`${epoch}|${label}`);
-          if (!row) continue;
-          const raw = row.subgroupRawWeight || 0;
-          const consensus = row.rawConsensusWeight || 0;
-          const counted = row.countedWeight || row.cappedConsensusWeight || 0;
-          const scaleDelta = consensus - raw;
-          const capDelta = counted - consensus;
-          lines.push(`<span style="color:${modelCapColor(label, index)}">●</span> ${escapeHtml(label)}: raw ${fmt.format(raw)}, scale ${formatSigned(scaleDelta)}, cap ${formatSigned(capDelta)}, final ${fmt.format(counted)}${isCompensationEpoch ? " · <b>compensation package</b>" : ""}`);
-        }
+        const lines = [
+          `<strong>Epoch ${epoch} Kimi cap cut</strong>${isCompensationEpoch ? " · <b>compensation package</b>" : ""}`,
+          `Raw Kimi: <strong>${fmt.format(row.raw)}</strong>`,
+          `After scale: <strong>${fmt.format(row.afterScale)}</strong> (${fmt.format(row.scale)}x)`,
+          `Cap limit: ${row.cap == null ? "<i>not set</i>" : `<strong>${fmt.format(row.cap)}</strong> = ${fmt.format(row.previousRoot)} × ${fmt.format(row.capFactor)}`}`,
+          `Final after cap: <strong>${fmt.format(row.final)}</strong>`,
+          `Clipped: <strong>${fmt.format(row.clipped)}</strong> (${fmt.format(row.clippedPct)}%)`,
+          row.missingPreviousRoot ? `Previous total needed to avoid cap: <strong>${fmt.format(row.requiredPreviousRoot)}</strong> · missing ${fmt.format(row.missingPreviousRoot)}` : "",
+          `Participants ${fmt.format(row.participantCount)} · nodes ${fmt.format(row.nodeCount)} · ${escapeHtml(modelCapStatusLabel(row.status))}`,
+        ];
         return lines.join("<br>");
       },
     }),
     xAxis: {
       type: "category",
-      data: waterfallEpochs.map((epoch) => `e${epoch}`),
+      data: kimiCutRows.map((row) => `e${row.epoch}`),
       axisLabel: { color: "#a7afba" },
       splitLine: {
         show: true,
@@ -1345,7 +1443,41 @@ function renderModelCapMechanics() {
       name: "weight",
       nameTextStyle: { color: "#a7afba" },
     },
-    series: waterfallSeries,
+    series: [
+      {
+        name: "Kimi final after cap",
+        type: "bar",
+        stack: "kimi-cap-cut",
+        data: kimiCutRows.map((row) => row.missing ? null : row.final),
+        barWidth: 24,
+        itemStyle: { color: "#79b66a" },
+      },
+      {
+        name: "Kimi clipped by cap",
+        type: "bar",
+        stack: "kimi-cap-cut",
+        data: kimiCutRows.map((row) => row.missing ? null : row.clipped || 0),
+        barWidth: 24,
+        itemStyle: { color: "#d9655f" },
+      },
+      {
+        name: "Kimi after scale",
+        type: "line",
+        data: kimiCutRows.map((row) => row.missing ? null : row.afterScale),
+        symbolSize: 8,
+        lineStyle: { color: "#f0ede5", width: 2 },
+        itemStyle: { color: "#f0ede5" },
+      },
+      {
+        name: "Cap limit",
+        type: "line",
+        data: kimiCutRows.map((row) => row.missing ? null : row.cap),
+        symbol: "circle",
+        symbolSize: 8,
+        lineStyle: { color: "#d7a84f", width: 2.5, type: "dashed" },
+        itemStyle: { color: "#d7a84f" },
+      },
+    ],
     markArea: {
       silent: true,
       itemStyle: { color: "rgba(217, 101, 95, 0.08)" },
