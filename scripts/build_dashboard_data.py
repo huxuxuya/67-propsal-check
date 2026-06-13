@@ -619,6 +619,11 @@ def _build_no_attack_participant_rows(raw_epochs, rows_by_epoch):
         for row in rows_by_epoch.get(266, [])
         if row.get("modelId")
     }
+    scale_by_model_255 = {
+        row.get("modelId"): row.get("weightScaleFactor")
+        for row in rows_by_epoch.get(255, [])
+        if row.get("modelId")
+    }
     scale_by_model_e267 = {
         row.get("modelId"): row.get("weightScaleFactor")
         for row in rows_by_epoch.get(267, [])
@@ -629,25 +634,32 @@ def _build_no_attack_participant_rows(raw_epochs, rows_by_epoch):
     model_ids = sorted({
         *(row.get("modelId") for row in rows_by_epoch.get(266, []) if row.get("modelId")),
         *(row.get("modelId") for row in rows_by_epoch.get(267, []) if row.get("modelId")),
+        *(row.get("modelId") for row in rows_by_epoch.get(255, []) if row.get("modelId")),
         *(model_id for model_id, _address in entry_rows),
     }, key=_model_label)
+    actual_e255 = {}
     actual_e266 = {}
     actual_e267 = {}
     for model_id in model_ids:
+        actual_e255.update(_model_participant_rows(raw_epochs, 255, model_id))
         actual_e266.update(_model_participant_rows(raw_epochs, 266, model_id))
         actual_e267.update(_model_participant_rows(raw_epochs, 267, model_id))
 
     rows = []
-    for key in sorted(set(entry_rows) | set(actual_e266) | set(actual_e267), key=lambda item: (_model_label(item[0]), item[1])):
+    for key in sorted(set(entry_rows) | set(actual_e255) | set(actual_e266) | set(actual_e267), key=lambda item: (_model_label(item[0]), item[1])):
         model_id, address = key
         entry = entry_rows.get(key, {})
+        base255 = actual_e255.get(key, {})
         end266 = actual_e266.get(key, {})
         actual267 = actual_e267.get(key, {})
         scale_266 = _decimal_or_zero(entry.get("weightScaleFactor") or scale_by_model_e266.get(model_id) or 1)
+        scale_255 = _decimal_or_zero(base255.get("weightScaleFactor") or scale_by_model_255.get(model_id) or scale_266 or 1)
         scale_267 = _decimal_or_zero(scale_by_model_e267.get(model_id) or scale_266 or 1)
 
         entry_raw = int(entry.get("entryRawWeight") or 0)
         entry_scaled = int(entry.get("entryScaledWeight") or (_decimal_or_zero(entry_raw) * scale_266))
+        baseline_255_raw = int(base255.get("weight") or 0)
+        baseline_255_scaled = int(_decimal_or_zero(baseline_255_raw) * scale_255)
         actual_266_raw = int(end266.get("weight") or 0)
         actual_266_scaled = int(_decimal_or_zero(actual_266_raw) * scale_266)
         actual_267_raw = int(actual267.get("weight") or 0)
@@ -682,6 +694,10 @@ def _build_no_attack_participant_rows(raw_epochs, rows_by_epoch):
                 "address": address,
                 "modelId": model_id,
                 "modelLabel": _model_label(model_id),
+                "e255ActualRawWeight": baseline_255_raw,
+                "e255ActualScaledWeight": baseline_255_scaled,
+                "weightScaleFactorE255": float(scale_255),
+                "e255Status": "in_e255" if baseline_255_raw else "not_in_e255",
                 "entryRawWeight": entry_raw,
                 "entryScaledWeight": entry_scaled,
                 "entryCommitRows": int(entry.get("entryCommitRows") or 0),
@@ -720,6 +736,8 @@ def _build_no_attack_participant_rows(raw_epochs, rows_by_epoch):
             {
                 "modelId": model_id,
                 "modelLabel": _model_label(model_id),
+                "e255ActualRawWeight": sum(row["e255ActualRawWeight"] for row in model_rows),
+                "e255ActualScaledWeight": sum(row["e255ActualScaledWeight"] for row in model_rows),
                 "entryRawWeight": sum(row["entryRawWeight"] for row in model_rows),
                 "entryScaledWeight": sum(row["entryScaledWeight"] for row in model_rows),
                 "e266ActualRawWeight": sum(row["e266ActualRawWeight"] for row in model_rows),
@@ -773,6 +791,7 @@ def build_no_attack_e266_cap_scenario(rows, raw_epochs):
 
     simulated_root_by_epoch = {}
     scenario_rows = []
+    e255_actual_total = 0
     e265_rebuilt_total = 0
     e266_actual_total = 0
     e266_simulated_total = 0
@@ -841,6 +860,8 @@ def build_no_attack_e266_cap_scenario(rows, raw_epochs):
         if epoch == 266:
             e266_actual_total = actual_root_total
             e266_simulated_total = simulated_total
+        if epoch == 255:
+            e255_actual_total = actual_root_total
         for item in epoch_rows:
             item["simulatedRootTotalWeight"] = pass_forward_total
             scenario_rows.append(item)
@@ -850,6 +871,7 @@ def build_no_attack_e266_cap_scenario(rows, raw_epochs):
         "label": "No e266 attack",
         "description": "e266 is rebuilt from reconstructed entry commit weight; e267 keeps actual model membership and carries forward any e266 entry participant/model row missing from e267.",
         "summary": {
+            "e255ActualRootTotalWeight": e255_actual_total,
             "e265RebuiltTotalWeight": e265_rebuilt_total,
             "e266ActualRootTotalWeight": e266_actual_total,
             "e266SimulatedRootTotalWeight": e266_simulated_total,

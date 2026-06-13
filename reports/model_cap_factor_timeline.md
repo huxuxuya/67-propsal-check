@@ -4,19 +4,29 @@ This report shows model-level ComputeGroupCap pressure by epoch. The main chart 
 
 ## Summary
 
-- Rows: 49
+- Rows: 59
 - Capped rows: 9
 - Missing subgroup rows: 0
 - Total clipped weight: 1,500,347
 - Max pressure ratio: 3.3078
 - Models: Kimi, MiniMax, Qwen
-- Epochs: 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281
+- Epochs: 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281
 - Params sources: archive_rpc_params
-- Params snapshots: 45
-- Source: RPC GONKA_RPC_URL; API disabled_no_GONKA_API_URL; generated 2026-06-13T17:15:29.397966+00:00
+- Params snapshots: 55
+- Source: RPC GONKA_RPC_URL; API disabled_no_GONKA_API_URL; generated 2026-06-13T17:28:07.241728+00:00
 
 ## Rows
 
+- e255 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.6413 raw=494,519 cap=771,153 counted=494519 clipped=0 coeff=1.262086 participants=14 nodes=47 params=archive_rpc_params
+- e255 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=705,822 cap=exempt counted=705822 clipped=0 coeff=0.3593 participants=59 nodes=251 params=archive_rpc_params
+- e256 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.5896 raw=524,325 cap=889,230 counted=524325 clipped=0 coeff=1.262086 participants=16 nodes=49 params=archive_rpc_params
+- e256 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=680,508 cap=exempt counted=680508 clipped=0 coeff=0.3593 participants=56 nodes=246 params=archive_rpc_params
+- e257 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.5569 raw=497,112 cap=892,659 counted=497112 clipped=0 coeff=1.262086 participants=19 nodes=48 params=archive_rpc_params
+- e257 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=614,892 cap=exempt counted=614892 clipped=0 coeff=0.3593 participants=55 nodes=228 params=archive_rpc_params
+- e258 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.6625 raw=543,706 cap=820,731 counted=543706 clipped=0 coeff=1.262086 participants=20 nodes=52 params=archive_rpc_params
+- e258 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=613,460 cap=exempt counted=613460 clipped=0 coeff=0.3593 participants=55 nodes=225 params=archive_rpc_params
+- e259 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.5214 raw=446,084 cap=855,566 counted=446084 clipped=0 coeff=1.262086 participants=16 nodes=42 params=archive_rpc_params
+- e259 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=580,550 cap=exempt counted=580550 clipped=0 coeff=0.3593 participants=52 nodes=219 params=archive_rpc_params
 - e260 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.7101 raw=540,014 cap=760,475 counted=540014 clipped=0 coeff=1.262086 participants=18 nodes=49 params=archive_rpc_params
 - e260 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8`: status=initial_exempt scale=1.0000 pressure=0.0000 raw=538,014 cap=exempt counted=538014 clipped=0 coeff=0.3593 participants=52 nodes=214 params=archive_rpc_params
 - e261 Kimi `moonshotai/Kimi-K2.6`: status=under_cap scale=1.0000 pressure=0.5942 raw=475,197 cap=799,740 counted=475197 clipped=0 coeff=1.262086 participants=17 nodes=45 params=archive_rpc_params
@@ -69,6 +79,26 @@ This report shows model-level ComputeGroupCap pressure by epoch. The main chart 
 
 ## Params Snapshots
 
+- e255 start height=3936460 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e255 start height=3936460 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e255 end height=3951450 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e255 end height=3951450 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e256 start height=3951851 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e256 start height=3951851 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e256 end height=3966841 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e256 end height=3966841 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e257 start height=3967242 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e257 start height=3967242 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e257 end height=3982232 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e257 end height=3982232 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e258 start height=3982633 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e258 start height=3982633 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e258 end height=3997623 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e258 end height=3997623 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e259 start height=3998024 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e259 start height=3998024 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
+- e259 end height=4013014 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
+- e259 end height=4013014 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
 - e260 start height=4013415 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen
 - e260 start height=4013415 Qwen `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` scale=0.3593 cap_factor=0.75 initial=Qwen
 - e260 end height=4028405 Kimi `moonshotai/Kimi-K2.6` scale=1.262086 cap_factor=0.75 initial=Qwen

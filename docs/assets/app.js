@@ -956,6 +956,8 @@ function modelCapStatusLabel(status) {
 
 function noAttackStatusLabel(status) {
   return {
+    in_e255: "In e255",
+    not_in_e255: "Not in e255",
     excluded_in_e266_restored: "Restored in e266",
     weight_reduced_in_e266_restored: "Weight restored",
     kept_in_e266: "Kept in e266",
@@ -984,6 +986,7 @@ function renderNoAttackEvidence(payload) {
   const kimi = modelSummary("Kimi");
   const qwen = modelSummary("Qwen");
   const entryTotal = byModel.reduce((sum, row) => sum + (row.entryScaledWeight || 0), 0);
+  const baselineTotal = byModel.reduce((sum, row) => sum + (row.e255ActualScaledWeight || 0), 0);
   const restoredTotal = byModel.reduce((sum, row) => sum + (row.e266RestoredScaledWeight || 0), 0);
   const carriedTotal = byModel.reduce((sum, row) => sum + (row.e267CarryScaledWeight || 0), 0);
   const carriedRows = byModel.reduce((sum, row) => sum + (row.carriedRows || 0), 0);
@@ -1004,6 +1007,11 @@ function renderNoAttackEvidence(payload) {
 
   if (els.noAttackFlow) {
     els.noAttackFlow.innerHTML = [
+      {
+        title: "e255 baseline",
+        metric: fmt.format(baselineTotal),
+        text: "actual baseline before the attack (scaled)",
+      },
       {
         title: "e266 with attack",
         metric: fmt.format(summary.e266ActualRootTotalWeight || 0),
@@ -1037,11 +1045,14 @@ function renderNoAttackEvidence(payload) {
     els.noAttackModelMatrix.innerHTML = `
       <div class="no-attack-matrix-head">
         <div>Model</div>
+        <div>Epoch 255 baseline</div>
         <div>Epoch 266: with attack -> no attack</div>
         <div>Epoch 267: actual -> simulated</div>
       </div>
       ${modelRows.map((row) => {
         const color = modelCapColor(row.modelLabel);
+        const e255Actual = row.e255ActualScaledWeight || 0;
+        const e255ActualRaw = row.e255ActualRawWeight || 0;
         const e266Actual = row.e266ActualScaledWeight || 0;
         const e266NoAttack = row.entryScaledWeight || 0;
         const e266Delta = e266NoAttack - e266Actual;
@@ -1054,6 +1065,11 @@ function renderNoAttackEvidence(payload) {
               <span class="muted">${fmt.format(row.entryRows || 0)} entry rows</span>
             </div>
             <div class="no-attack-epoch-cell">
+              <div class="bar-compare">
+                <span class="bar-label">baseline</span>
+                <span class="bar-track"><i style="width:${barWidth(e255Actual)}; background:${color}; opacity:.22"></i></span>
+                <strong>${fmt.format(e255Actual)}</strong><span class="muted"> / raw ${fmt.format(e255ActualRaw)}</span>
+              </div>
               <div class="bar-compare">
                 <span class="bar-label">with attack</span>
                 <span class="bar-track"><i style="width:${barWidth(e266Actual)}; background:${color}; opacity:.38"></i></span>
@@ -1104,13 +1120,14 @@ function renderNoAttackEvidence(payload) {
           <tr>
             <td><button class="row-button mono" data-address="${escapeHtml(row.address)}">${escapeHtml(row.address)}</button>${nodes}</td>
             <td><span class="tag" style="border-color:${modelCapColor(row.modelLabel)}">${escapeHtml(row.modelLabel || row.modelId)}</span><br><span class="muted">${fmt.format(row.entryCommitRows || 0)} entry commits</span></td>
+            <td class="num">${fmt.format(row.e255ActualRawWeight || 0)}<br><span class="muted">scaled ${fmt.format(row.e255ActualScaledWeight || 0)}; scale ${fmt.format(row.weightScaleFactorE255 || 0)}x</span></td>
             <td class="num">${fmt.format(row.entryRawWeight || 0)}</td>
             <td class="num">${fmt.format(row.entryScaledWeight || 0)}<br><span class="muted">scale ${fmt.format(row.weightScaleFactorE266 || 0)}x</span></td>
             <td class="num">${fmt.format(row.e266ActualScaledWeight || 0)}<br><span class="muted">raw ${fmt.format(row.e266ActualRawWeight || 0)}</span></td>
             <td class="num">${fmt.format(row.e266RestoredScaledWeight || 0)}</td>
             <td class="num">${fmt.format(row.e267ActualScaledWeight || 0)}<br><span class="muted">raw ${fmt.format(row.e267ActualRawWeight || 0)}</span></td>
             <td class="num">${fmt.format(row.e267SimulatedScaledWeight || 0)}${row.e267CarryScaledWeight ? `<br><span class="muted">carry ${fmt.format(row.e267CarryScaledWeight)}</span>` : ""}</td>
-            <td><span class="status-chip ${noAttackStatusClass(status)}">${escapeHtml(noAttackStatusLabel(status))}</span><br><span class="muted">${escapeHtml(noAttackStatusLabel(row.e267Status))}</span></td>
+            <td><span class="status-chip ${noAttackStatusClass(status)}">${escapeHtml(noAttackStatusLabel(status))}</span><br><span class="muted">${escapeHtml(noAttackStatusLabel(row.e267Status))}</span><br><span class="muted">${escapeHtml(noAttackStatusLabel(row.e255Status || ""))}</span></td>
           </tr>
         `;
       }).join("");

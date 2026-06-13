@@ -289,7 +289,7 @@
                 <div class="no-attack-evidence">
                   <div class="chart-title">No e266 Attack Reconstruction</div>
                   <div class="chart-note">
-                    e266 is rebuilt from participant/model commits at epoch entry: raw commit count × model scale factor. e267 keeps actual rows and only carries forward entry participant/model rows that did not appear in e267.
+                    Baseline uses e255 participation and scale, then rebuilds e266 from participant/model commits at epoch entry: raw commit count × model scale factor. e267 keeps actual rows and only carries forward entry participant/model rows that did not appear in e267.
                   </div>
                   <div class="no-attack-flow" id="noAttackFlow"></div>
                   <div class="no-attack-model-matrix" id="noAttackModelMatrix"></div>
@@ -299,6 +299,7 @@
                         <tr>
                           <th>Participant</th>
                           <th>Model</th>
+                          <th>e255 baseline</th>
                           <th>e266 entry raw</th>
                           <th>e266 reconstructed</th>
                           <th>e266 actual</th>
