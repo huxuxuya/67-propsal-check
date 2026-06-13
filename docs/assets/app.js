@@ -1622,7 +1622,7 @@ function renderModelCapMechanics() {
     ],
   }, true);
 
-  const waterfallEpochs = epochs.filter((epoch) => epoch >= 264);
+  const waterfallEpochs = epochs.filter((epoch) => epoch >= 260);
   const packageEpochSet = new Set(((state.data.epochs || [])
     .filter((row) => row.componentSource === "cap_e267_e276")
     .map((row) => Number(row.epoch))
