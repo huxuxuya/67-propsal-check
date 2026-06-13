@@ -146,11 +146,27 @@
           </div>
           <div class="chart compensation-chart" id="compensationChart"></div>
         </div>
-        <div class="panel">
+        <div class="panel wide">
           <div class="panel-head">
-            <h2>Aggregate Voting Power</h2>
+            <h2>Voter Governance Power by Address</h2>
           </div>
-          <div class="chart" id="tallyChart"></div>
+          <div class="voter-governance-body">
+            <div class="chart voter-power-chart" id="voterPowerChart"></div>
+            <div class="table-wrap compact-table" data-table-collapsible="1" data-table-collapsed="true" data-table-id="voter-governance-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Voter</th>
+                    <th>Address</th>
+                    <th>Vote</th>
+                    <th>Power</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody id="voterPowerTable"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
         <div class="panel wide">
           <div class="panel-head">
@@ -370,27 +386,11 @@
             </div>
           </div>
         </div>
-        <div class="panel wide">
+        <div class="panel">
           <div class="panel-head">
-            <h2>Voter Governance Power by Address</h2>
+            <h2>Aggregate Voting Power</h2>
           </div>
-          <div class="voter-governance-body">
-            <div class="chart voter-power-chart" id="voterPowerChart"></div>
-            <div class="table-wrap compact-table" data-table-collapsible="1" data-table-collapsed="true" data-table-id="voter-governance-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Voter</th>
-                    <th>Address</th>
-                    <th>Vote</th>
-                    <th>Power</th>
-                    <th>Evidence</th>
-                  </tr>
-                </thead>
-                <tbody id="voterPowerTable"></tbody>
-              </table>
-            </div>
-          </div>
+          <div class="chart" id="tallyChart"></div>
         </div>
         <div class="panel wide">
           <div class="panel-head">
