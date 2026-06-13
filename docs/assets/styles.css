@@ -167,6 +167,10 @@ select {
   grid-column: span 1;
 }
 
+.panel.stack-under {
+  grid-column: 1 / 2;
+}
+
 .panel.full-width {
   grid-column: 1 / -1;
 }
