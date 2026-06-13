@@ -18,6 +18,10 @@ UPSTREAM = ROOT / "upstream" / "gonka-kimi-restitution"
 DATA = ROOT / "data"
 OUT = DATA / "cpoc_epoch_snapshots"
 DEFAULT_EPOCHS = list(range(265, 277))
+DEFAULT_MODELS = [
+    "moonshotai/Kimi-K2.6",
+    "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+]
 
 
 def load_json(path):
@@ -162,6 +166,14 @@ def as_text(value):
         return ""
 
 
+def model_slug(model_id):
+    return (
+        model_id.replace("/", "__")
+        .replace(":", "_")
+        .replace(" ", "_")
+    )
+
+
 def run_query(binary, rpc, epoch, height):
     cmd = [
         binary,
@@ -180,8 +192,11 @@ def run_query(binary, rpc, epoch, height):
     return json.loads(result.stdout)
 
 
-def epoch_group_data_request_hex(epoch):
-    return "0x" + proto_varint(1, int(epoch)).hex()
+def epoch_group_data_request_hex(epoch, model_id=""):
+    payload = proto_varint(1, int(epoch))
+    if model_id:
+        payload += proto_bytes(2, model_id.encode())
+    return "0x" + payload.hex()
 
 
 def http_get_json(node, path, params=None, headers=None):
@@ -305,12 +320,12 @@ def decode_epoch_group_response(value_b64):
     return {"epoch_group_data": {}}
 
 
-def fetch_epoch_group_from_rpc(rpc, epoch, height):
+def fetch_epoch_group_from_rpc(rpc, epoch, height, model_id=""):
     payload = abci_query(
         rpc,
         "/inference.inference.Query/EpochGroupData",
         height,
-        epoch_group_data_request_hex(epoch),
+        epoch_group_data_request_hex(epoch, model_id),
     )
     response = ((payload.get("result") or {}).get("response") or {})
     if response.get("code") not in (None, 0):
@@ -408,16 +423,18 @@ def fetch_at_height(binary, rpc, epoch, height, cache):
     return cache[key]
 
 
-def fetch_snapshot(snapshot_source, binary, rpc, api_node, epoch, height, cache):
-    key = (snapshot_source, epoch, height)
+def fetch_snapshot(snapshot_source, binary, rpc, api_node, epoch, height, cache, model_id=""):
+    key = (snapshot_source, epoch, height, model_id)
     if key in cache:
         return cache[key]
-    if snapshot_source == "inferenced":
+    if model_id and snapshot_source != "rpc":
+        payload = fetch_epoch_group_from_rpc(rpc, epoch, height, model_id)
+    elif snapshot_source == "inferenced":
         payload = run_query(binary, rpc, epoch, height)
     elif snapshot_source == "api":
         payload = fetch_epoch_group_from_api(api_node, epoch, height)
     elif snapshot_source == "rpc":
-        payload = fetch_epoch_group_from_rpc(rpc, epoch, height)
+        payload = fetch_epoch_group_from_rpc(rpc, epoch, height, model_id)
     else:
         raise ValueError(f"Unsupported snapshot source: {snapshot_source}")
     group = unwrap_epoch_group(payload)
@@ -470,6 +487,8 @@ def main():
     parser.add_argument("--node", default=gonka_rpc_url())
     parser.add_argument("--api-node", default=None)
     parser.add_argument("--require-snapshots", action="store_true")
+    parser.add_argument("--include-model-snapshots", action="store_true")
+    parser.add_argument("--models", nargs="+", default=DEFAULT_MODELS)
     args = parser.parse_args()
 
     if args.scan_step < 1:
@@ -522,6 +541,12 @@ def main():
             path = write_snapshot(epoch_dir, f"start_{start_snapshot_height}.json", payload)
             entries[0]["file"] = str(path.relative_to(OUT))
             entries[0]["snapshotStatus"] = "fetched"
+            if args.include_model_snapshots:
+                entries[0]["modelFiles"] = {}
+                for model_id in args.models:
+                    payload = fetch_snapshot("rpc", binary, args.node, api_node, epoch, start_snapshot_height, cache, model_id)
+                    path = write_snapshot(epoch_dir / "models" / model_slug(model_id), f"start_{start_snapshot_height}.json", payload)
+                    entries[0]["modelFiles"][model_id] = str(path.relative_to(OUT))
         elif args.require_snapshots:
             raise SystemExit(f"Snapshot required but snapshot source is none for epoch {epoch} start")
         for index, row in enumerate(event_rows, start=1):
@@ -539,6 +564,12 @@ def main():
                     path = write_snapshot(epoch_dir, f"cpoc_{index:02d}_{height}.json", payload)
                     entry["file"] = str(path.relative_to(OUT))
                     entry["snapshotStatus"] = "fetched"
+                    if args.include_model_snapshots:
+                        entry["modelFiles"] = {}
+                        for model_id in args.models:
+                            payload = fetch_snapshot("rpc", binary, args.node, api_node, epoch, height, cache, model_id)
+                            path = write_snapshot(epoch_dir / "models" / model_slug(model_id), f"cpoc_{index:02d}_{height}.json", payload)
+                            entry["modelFiles"][model_id] = str(path.relative_to(OUT))
                 except Exception as exc:
                     entry["snapshotStatus"] = "error"
                     entry["snapshotError"] = type(exc).__name__

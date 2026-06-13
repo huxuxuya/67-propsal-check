@@ -7,6 +7,10 @@
           "height": 4090370,
           "index": 0,
           "kind": "start",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e265/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/start_4090370.json",
+            "moonshotai/Kimi-K2.6": "e265/models/moonshotai__Kimi-K2.6/start_4090370.json"
+          },
           "pocStartHeight": 4089970,
           "snapshotStatus": "fetched"
         },
@@ -16,6 +20,10 @@
           "height": 4090250,
           "index": 1,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e265/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_01_4090250.json",
+            "moonshotai/Kimi-K2.6": "e265/models/moonshotai__Kimi-K2.6/cpoc_01_4090250.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -24,6 +32,10 @@
           "height": 4090371,
           "index": 2,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e265/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_02_4090371.json",
+            "moonshotai/Kimi-K2.6": "e265/models/moonshotai__Kimi-K2.6/cpoc_02_4090371.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -32,6 +44,10 @@
           "height": 4095963,
           "index": 3,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e265/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_03_4095963.json",
+            "moonshotai/Kimi-K2.6": "e265/models/moonshotai__Kimi-K2.6/cpoc_03_4095963.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -40,6 +56,10 @@
           "height": 4099160,
           "index": 4,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e265/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_04_4099160.json",
+            "moonshotai/Kimi-K2.6": "e265/models/moonshotai__Kimi-K2.6/cpoc_04_4099160.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -48,6 +68,10 @@
           "height": 4103171,
           "index": 5,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e265/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_05_4103171.json",
+            "moonshotai/Kimi-K2.6": "e265/models/moonshotai__Kimi-K2.6/cpoc_05_4103171.json"
+          },
           "snapshotStatus": "fetched"
         }
       ],
@@ -63,6 +87,10 @@
           "height": 4105761,
           "index": 0,
           "kind": "start",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e266/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/start_4105761.json",
+            "moonshotai/Kimi-K2.6": "e266/models/moonshotai__Kimi-K2.6/start_4105761.json"
+          },
           "pocStartHeight": 4105361,
           "snapshotStatus": "fetched"
         },
@@ -72,6 +100,10 @@
           "height": 4105641,
           "index": 1,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e266/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_01_4105641.json",
+            "moonshotai/Kimi-K2.6": "e266/models/moonshotai__Kimi-K2.6/cpoc_01_4105641.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -80,6 +112,10 @@
           "height": 4105762,
           "index": 2,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e266/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_02_4105762.json",
+            "moonshotai/Kimi-K2.6": "e266/models/moonshotai__Kimi-K2.6/cpoc_02_4105762.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -88,6 +124,10 @@
           "height": 4115375,
           "index": 3,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e266/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_03_4115375.json",
+            "moonshotai/Kimi-K2.6": "e266/models/moonshotai__Kimi-K2.6/cpoc_03_4115375.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -96,6 +136,10 @@
           "height": 4117265,
           "index": 4,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e266/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_04_4117265.json",
+            "moonshotai/Kimi-K2.6": "e266/models/moonshotai__Kimi-K2.6/cpoc_04_4117265.json"
+          },
           "snapshotStatus": "fetched"
         }
       ],
@@ -111,6 +155,10 @@
           "height": 4121152,
           "index": 0,
           "kind": "start",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e267/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/start_4121152.json",
+            "moonshotai/Kimi-K2.6": "e267/models/moonshotai__Kimi-K2.6/start_4121152.json"
+          },
           "pocStartHeight": 4120752,
           "snapshotStatus": "fetched"
         },
@@ -120,6 +168,10 @@
           "height": 4121032,
           "index": 1,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e267/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_01_4121032.json",
+            "moonshotai/Kimi-K2.6": "e267/models/moonshotai__Kimi-K2.6/cpoc_01_4121032.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -128,6 +180,10 @@
           "height": 4121153,
           "index": 2,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e267/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_02_4121153.json",
+            "moonshotai/Kimi-K2.6": "e267/models/moonshotai__Kimi-K2.6/cpoc_02_4121153.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -136,6 +192,10 @@
           "height": 4122552,
           "index": 3,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e267/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_03_4122552.json",
+            "moonshotai/Kimi-K2.6": "e267/models/moonshotai__Kimi-K2.6/cpoc_03_4122552.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -144,6 +204,10 @@
           "height": 4127009,
           "index": 4,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e267/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_04_4127009.json",
+            "moonshotai/Kimi-K2.6": "e267/models/moonshotai__Kimi-K2.6/cpoc_04_4127009.json"
+          },
           "snapshotStatus": "fetched"
         },
         {
@@ -152,6 +216,10 @@
           "height": 4133946,
           "index": 5,
           "kind": "cpoc",
+          "modelFiles": {
+            "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": "e267/models/Qwen__Qwen3-235B-A22B-Instruct-2507-FP8/cpoc_05_4133946.json",
+            "moonshotai/Kimi-K2.6": "e267/models/moonshotai__Kimi-K2.6/cpoc_05_4133946.json"
+          },
           "snapshotStatus": "fetched"
         }
       ],
@@ -609,7 +677,7 @@
       "startSnapshotHeight": 4259671
     }
   ],
-  "generatedAt": "2026-06-10T17:46:35.428450+00:00",
+  "generatedAt": "2026-06-13T19:27:42.181348+00:00",
   "source": {
     "apiNode": "http://204.12.168.157:8000",
     "binary": null,

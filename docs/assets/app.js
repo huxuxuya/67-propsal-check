@@ -873,11 +873,12 @@ function renderWaterfall() {
   const summary = state.data.summary;
   const epochById = new Map((state.data.epochs || []).map((row) => [row.epoch, row]));
   const components = [
-    { epoch: 265, name: "e265 attack", value: epochById.get(265)?.totalGonka || summary.visibleDamageE265Gonka || 0, color: "#d9655f", description: "Direct attack/damage epoch" },
-    { epoch: 266, name: "e266 excluded", value: epochById.get(266)?.totalGonka || 0, color: "#e78f61", description: "Attacked participants could not enter the next epoch" },
+    { epoch: 265, name: "e265 attack", value: epochById.get(265)?.totalGonka || summary.visibleDamageE265Gonka || 0, color: "#d9655f", description: "Direct attack/damage epoch", ...(epochById.get(265) || {}) },
+    { epoch: 266, name: "e266 excluded", value: epochById.get(266)?.totalGonka || 0, color: "#e78f61", description: "Attacked participants could not enter the next epoch", ...(epochById.get(266) || {}) },
     ...(state.data.epochs || [])
       .filter((row) => row.epoch >= 267 && row.epoch <= 276)
       .map((row) => ({
+        ...row,
         epoch: row.epoch,
         name: `e${row.epoch}`,
         value: row.totalGonka || 0,
@@ -894,16 +895,25 @@ function renderWaterfall() {
         const total = summary.totalCompensationGonka || 1;
         const row = components[p.dataIndex] || {};
         const recipients = row.recipientsCount ? `<br>${fmt.format(row.recipientsCount)} recipients` : "";
-        return `<strong>${escapeHtml(row.name || p.name)}</strong><br>${escapeHtml(row.description || "")}<br>${gonka(row.value || 0)}${recipients}<br>${fmt.format(((row.value || 0) / total) * 100)}% of final payout<br>final total ${gonka(summary.totalCompensationGonka || 0)}`;
+        const weight = row.calculationWeight ? `<br>calculation weight ${fmt.format(row.calculationWeight)}` : "";
+        const denominator = row.denominatorWeight ? `<br>denominator weight ${fmt.format(row.denominatorWeight)}` : "";
+        const source = row.weightSource ? `<br><span class="muted">${escapeHtml(row.weightSource)}</span>` : "";
+        return `<strong>${escapeHtml(row.name || p.name)}</strong><br>${escapeHtml(row.description || "")}<br>${gonka(row.value || 0)}${recipients}${weight}${denominator}${source}<br>${fmt.format(((row.value || 0) / total) * 100)}% of final payout<br>final total ${gonka(summary.totalCompensationGonka || 0)}`;
       },
     }),
     xAxis: { type: "category", data: components.map((row) => row.name), axisLabel: { color: "#a7afba", interval: 0, rotate: 32 } },
     yAxis: { type: "value", axisLabel: { color: "#a7afba", formatter: (v) => compact.format(v) }, name: "GONKA paid", nameTextStyle: { color: "#a7afba" } },
     series: [{
       type: "bar",
-      data: components.map((row) => ({ value: row.value, itemStyle: { color: row.color } })),
+      data: components.map((row) => ({ ...row, value: row.value, itemStyle: { color: row.color } })),
       barMaxWidth: 58,
-      label: { show: true, position: "top", color: "#eef0f2", formatter: (p) => compact.format(p.value) },
+      label: {
+        show: true,
+        position: "top",
+        color: "#eef0f2",
+        lineHeight: 14,
+        formatter: (p) => `${compact.format(p.value)}\nW ${compact.format(p.data.calculationWeight || 0)}`,
+      },
     }],
   }, true);
 }
@@ -1018,22 +1028,33 @@ function renderNoAttackEvidence(payload) {
     cpoc_confirmation_scan: "CPoC confirmation",
     model_weight: "counted weight",
     cap_basis: "counted weight",
+    package_weight: "package weight",
+    package_model_weight: "model weight",
   };
   const metricBadge = {
     cpoc_confirmation: "CPoC",
     cpoc_confirmation_scan: "CPoC scan",
     model_weight: "Entry",
     cap_basis: "Cap",
+    package_weight: "Package",
+    package_model_weight: "Package",
   };
-  const totalDelta = comparisonRows.reduce((sum, row) => sum + Math.max(0, row.delta || 0), 0);
-  const totalAffected = comparisonRows.reduce((sum, row) => sum + (row.affectedParticipants || 0), 0);
-  const totalCompensation = comparisonRows.reduce((sum, row) => sum + (row.compensationGonka || 0), 0);
-  const models = [...new Set(comparisonRows.map((row) => row.modelLabel || row.modelId).filter(Boolean))].sort();
+  const models = [...new Set(comparisonRows
+    .filter((row) => row.metricType !== "package_weight")
+    .map((row) => row.modelLabel || row.modelId)
+    .filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b));
   const epochs = [265, 266, 267];
   const comparisonByModelEpoch = new Map(comparisonRows.map((row) => [`${row.modelLabel || row.modelId}|${row.epoch}`, row]));
+  const packageE266Row = comparisonRows.find((row) => row.epoch === 266 && row.metricType === "package_weight");
   const storyCell = (row, color) => {
     if (!row) return `<div class="recon-cell is-empty"><span>No saved data</span></div>`;
     const deltaClass = (row.delta || 0) >= 0 ? "warn-text" : "good-text";
+    const restoredDelta = row.restoredDelta ? `<br>restored delta ${fmt.format(row.restoredDelta)}` : "";
+    const participantLines = (row.participants || []).slice(0, 3).map((item) => (
+      `<br><span class="mono">${escapeHtml(item.address || "")}</span> ${fmt.format(item.modelLostDelta || 0)}`
+    )).join("");
+    const participantTail = (row.participants || []).length > 3 ? `<br>+${fmt.format(row.participants.length - 3)} more` : "";
     return `
       <div class="recon-cell">
         <div class="recon-cell-head">
@@ -1058,49 +1079,31 @@ function renderNoAttackEvidence(payload) {
         <div class="recon-meta">
           ${fmt.format(row.affectedParticipants || 0)} affected
           ${row.compensationGonka ? ` · ${gonka(row.compensationGonka)} comp` : ""}
+          ${restoredDelta}
           <br>${escapeHtml(row.sourceLabel || "")}
           ${row.detail ? `<br>${escapeHtml(row.detail)}` : ""}
+          ${participantLines}${participantTail}
         </div>
       </div>
     `;
   };
 
   if (els.noAttackFlow) {
-    els.noAttackFlow.innerHTML = [
-      {
-        title: "Mode",
-        metric: selectedVariant.label || selectedVariantKey,
-        text: selectedVariant.description || "",
-      },
-      {
-        title: "Restored delta",
-        metric: fmt.format(totalDelta),
-        text: "sum of visible deltas in the selected reconstruction mode",
-      },
-      {
-        title: "Affected rows",
-        metric: fmt.format(totalAffected),
-        text: selectedVariantKey === "fullCpoc" ? "participants degraded in saved CPoC checkpoints" : "participants/rows used by package reconstruction",
-      },
-      {
-        title: "Package compensation",
-        metric: gonka(totalCompensation),
-        text: "shown only when the selected rows carry direct compensation amounts",
-      },
-    ].map((card) => `
-      <div class="no-attack-card">
-        <strong>${escapeHtml(card.title)}</strong>
-        <div class="metric">${escapeHtml(card.metric)}</div>
-        <span class="muted">${escapeHtml(card.text)}</span>
-      </div>
-    `).join("");
+    els.noAttackFlow.innerHTML = "";
   }
 
   if (els.noAttackModelMatrix) {
     els.noAttackModelMatrix.innerHTML = `
-      <div class="no-attack-axis-note">
-        One row is one model. One column is one epoch. Each cell shows what happened versus the selected reconstruction source.
-      </div>
+      ${packageE266Row ? `
+        <div class="no-attack-source-note">
+          <strong>e266 package reconstruction:</strong>
+          ${fmt.format(packageE266Row.attackedValue || 0)} → ${fmt.format(packageE266Row.reconstructedValue || 0)}
+          <span class="${(packageE266Row.delta || 0) >= 0 ? "warn-text" : "good-text"}">
+            (${packageE266Row.delta >= 0 ? "+" : "-"}${fmt.format(Math.abs(packageE266Row.delta || 0))} ${escapeHtml(metricLabel[packageE266Row.metricType] || "weight")})
+          </span>
+          ${packageE266Row.compensationGonka ? ` · ${gonka(packageE266Row.compensationGonka)} comp` : ""}
+        </div>
+      ` : ""}
       <div class="no-attack-matrix-head">
         <div>Model</div>
         <div>e265</div>

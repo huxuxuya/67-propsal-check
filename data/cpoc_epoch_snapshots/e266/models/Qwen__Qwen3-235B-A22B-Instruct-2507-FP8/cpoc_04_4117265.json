@@ -1,0 +1,934 @@
+{
+  "epoch_group_data": {
+    "confirmation_weight_scales": [],
+    "epoch_group_id": "1037",
+    "epoch_index": "266",
+    "epoch_policy": "gonka1ryef23rnftj62l0ftgs0ee3sk05etcwh3yg254zvupfnc4kgzjqswe67me",
+    "member_seed_signatures": [],
+    "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+    "poc_start_block_height": "4105361",
+    "sub_group_models": [],
+    "total_weight": "886097",
+    "validation_weights": [
+      {
+        "confirmation_weight": "8127",
+        "member_address": "gonka10mmdjau4dnj8krs7sh7t7635ttnmq9u3vqgz09",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "11395"
+          },
+          {
+            "node_id": "node7",
+            "poc_weight": "11225"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "6908",
+        "weight": "22620"
+      },
+      {
+        "confirmation_weight": "12450",
+        "member_address": "gonka168rtjfkszuhcggg4dfyse4yh7xn9zwfglnkns2",
+        "ml_nodes": [
+          {
+            "node_id": "mlnode-000",
+            "poc_weight": "1313"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "45732",
+        "weight": "1313"
+      },
+      {
+        "confirmation_weight": "38248",
+        "member_address": "gonka17gpuntq09zsaqtmpe544gc32tk4424dwv5t34f",
+        "ml_nodes": [
+          {
+            "node_id": "D3",
+            "poc_weight": "9633"
+          },
+          {
+            "node_id": "D6",
+            "poc_weight": "9322"
+          },
+          {
+            "node_id": "G1",
+            "poc_weight": "10000"
+          },
+          {
+            "node_id": "G2",
+            "poc_weight": "10000"
+          },
+          {
+            "node_id": "G4",
+            "poc_weight": "9972"
+          },
+          {
+            "node_id": "G5",
+            "poc_weight": "9944"
+          },
+          {
+            "node_id": "U10",
+            "poc_weight": "7542"
+          },
+          {
+            "node_id": "U20",
+            "poc_weight": "7570"
+          },
+          {
+            "node_id": "U2a",
+            "poc_weight": "2400"
+          },
+          {
+            "node_id": "U2b",
+            "poc_weight": "2598"
+          },
+          {
+            "node_id": "U3",
+            "poc_weight": "7711"
+          },
+          {
+            "node_id": "U48",
+            "poc_weight": "8022"
+          },
+          {
+            "node_id": "node57",
+            "poc_weight": "8078"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "38583",
+        "weight": "102792"
+      },
+      {
+        "confirmation_weight": "3244",
+        "member_address": "gonka187tn9y92ur6tu0zf69u94hwl0q77m47y0k36hv",
+        "ml_nodes": [
+          {
+            "node_id": "ice-2",
+            "poc_weight": "3029"
+          },
+          {
+            "node_id": "ice-5",
+            "poc_weight": "6001"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "2758",
+        "weight": "9030"
+      },
+      {
+        "confirmation_weight": "912",
+        "member_address": "gonka1amlmhjym02shahjv8ldmupg4cx0qc66q6f85rj",
+        "ml_nodes": [
+          {
+            "node_id": "node-1",
+            "poc_weight": "2539"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "776",
+        "weight": "2539"
+      },
+      {
+        "confirmation_weight": "1166",
+        "member_address": "gonka1dkl4mah5erqggvhqkpc8j3qs5tyuetgdy552cp",
+        "ml_nodes": [
+          {
+            "node_id": "node-235-1",
+            "poc_weight": "3247"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "992",
+        "weight": "3247"
+      },
+      {
+        "confirmation_weight": "364",
+        "member_address": "gonka1gyk0aahvr3qeju4zx0nplfreej6cy4jjk8svc5",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "1014"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "310",
+        "weight": "1014"
+      },
+      {
+        "confirmation_weight": "18541",
+        "member_address": "gonka1hwvel7n3zuk6wruefuzc356l9myske9stckwnz",
+        "ml_nodes": [
+          {
+            "node_id": "fp001",
+            "poc_weight": "7367"
+          },
+          {
+            "node_id": "fp002",
+            "poc_weight": "7404"
+          },
+          {
+            "node_id": "fp003",
+            "poc_weight": "7367"
+          },
+          {
+            "node_id": "fp004",
+            "poc_weight": "7367"
+          },
+          {
+            "node_id": "fp005",
+            "poc_weight": "7367"
+          },
+          {
+            "node_id": "fp006",
+            "poc_weight": "7366"
+          },
+          {
+            "node_id": "fp007",
+            "poc_weight": "7366"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "15760",
+        "weight": "51604"
+      },
+      {
+        "confirmation_weight": "331",
+        "member_address": "gonka1j7x6dv42xehe9e5au4ku3wvzwtqlegfjhlvzj6",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "923"
+          }
+        ],
+        "reputation": 20,
+        "voting_power": "282",
+        "weight": "923"
+      },
+      {
+        "confirmation_weight": "5379",
+        "member_address": "gonka1kx9mca3xm8u8ypzfuhmxey66u0ufxhs7nm6wc5",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "5909"
+          }
+        ],
+        "voting_power": "5379",
+        "weight": "5909"
+      },
+      {
+        "confirmation_weight": "833",
+        "member_address": "gonka1myu058axjs62mc3e7na9krwvqpfl9z3gtcw9es",
+        "ml_nodes": [
+          {
+            "node_id": "node-21",
+            "poc_weight": "2321"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "709",
+        "weight": "2321"
+      },
+      {
+        "confirmation_weight": "621",
+        "member_address": "gonka1p2lhgng7tcqju7emk989s5fpdr7k2c3ek6h26m",
+        "ml_nodes": [
+          {
+            "node_id": "node2",
+            "poc_weight": "1731"
+          }
+        ],
+        "voting_power": "590",
+        "weight": "1731"
+      },
+      {
+        "confirmation_weight": "1035",
+        "member_address": "gonka1qnj39ysxpzknvrr5dw9rdl7cx5q7dpkwerryrs",
+        "ml_nodes": [
+          {
+            "node_id": "node-ML",
+            "poc_weight": "2882"
+          }
+        ],
+        "reputation": 39,
+        "voting_power": "880",
+        "weight": "2882"
+      },
+      {
+        "confirmation_weight": "4908",
+        "member_address": "gonka1rcpc45n6zch9qlkn4m3cwngekad89xu8mcr09v",
+        "ml_nodes": [
+          {
+            "node_id": "node-1",
+            "poc_weight": "6984"
+          },
+          {
+            "node_id": "node-101",
+            "poc_weight": "6677"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "4172",
+        "weight": "13661"
+      },
+      {
+        "confirmation_weight": "2073",
+        "member_address": "gonka1tlvg4kjx7ljd5thgd5fkgh39q6lu8cmxupktgg",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "5770"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "1763",
+        "weight": "5770"
+      },
+      {
+        "confirmation_weight": "1183",
+        "member_address": "gonka1tmk2tzdneht6smu34pkmqdvu7p34qavvmwtwq2",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "3294"
+          }
+        ],
+        "reputation": 56,
+        "voting_power": "1006",
+        "weight": "3294"
+      },
+      {
+        "confirmation_weight": "2363",
+        "member_address": "gonka1ujnc662v6g69jm6fgxnr79a2m7ehzeut059239",
+        "ml_nodes": [
+          {
+            "node_id": "node100-2",
+            "poc_weight": "6578"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "2009",
+        "weight": "6578"
+      },
+      {
+        "confirmation_weight": "2973",
+        "member_address": "gonka1wthc28t25pg63hzvl07rl8e8r6km6hesl6jhsz",
+        "ml_nodes": [
+          {
+            "node_id": "biz-qwen-01",
+            "poc_weight": "4097"
+          },
+          {
+            "node_id": "team-qwen-01",
+            "poc_weight": "4178"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "2528",
+        "weight": "8275"
+      },
+      {
+        "confirmation_weight": "1020",
+        "member_address": "gonka1y2a9p56kv044327uycmqdexl7zs82fs5ryv5le",
+        "ml_nodes": [
+          {
+            "node_id": "node-235b",
+            "poc_weight": "2841"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "867",
+        "weight": "2841"
+      },
+      {
+        "confirmation_weight": "13391",
+        "member_address": "gonka1zktn8j65wlys8a8e38hqhf4y3x6m4x04zskkrx",
+        "ml_nodes": [
+          {
+            "node_id": "gpc_1",
+            "poc_weight": "7566"
+          },
+          {
+            "node_id": "lmo_1",
+            "poc_weight": "7653"
+          },
+          {
+            "node_id": "lmo_2",
+            "poc_weight": "7595"
+          },
+          {
+            "node_id": "lmo_3",
+            "poc_weight": "7652"
+          },
+          {
+            "node_id": "lmo_4",
+            "poc_weight": "5768"
+          },
+          {
+            "node_id": "ovh_ma",
+            "poc_weight": "1036"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "11383",
+        "weight": "37270"
+      },
+      {
+        "confirmation_weight": "13726",
+        "member_address": "gonka12pcu9mcrpa4w4sjd9y3dsksnvu495ss6f9r4ra",
+        "ml_nodes": [
+          {
+            "node_id": "node10",
+            "poc_weight": "7635"
+          },
+          {
+            "node_id": "node6",
+            "poc_weight": "7635"
+          },
+          {
+            "node_id": "node7",
+            "poc_weight": "7664"
+          },
+          {
+            "node_id": "node8",
+            "poc_weight": "7606"
+          },
+          {
+            "node_id": "node9",
+            "poc_weight": "7663"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "11668",
+        "weight": "38203"
+      },
+      {
+        "confirmation_weight": "1844",
+        "member_address": "gonka13a4v8gxxjav5t4xq5y9cv9d8rfnvkjfw5adqz3",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "5133"
+          }
+        ],
+        "voting_power": "1568",
+        "weight": "5133"
+      },
+      {
+        "confirmation_weight": "921",
+        "member_address": "gonka14ef2pxjge75gflqftn7m2wy0xv59gq9uc7qnct",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "2566"
+          }
+        ],
+        "voting_power": "156",
+        "weight": "2566"
+      },
+      {
+        "confirmation_weight": "2080",
+        "member_address": "gonka14tqh62mangwzrma2lgg2dm375rcjzn2ydy8ttm",
+        "ml_nodes": [
+          {
+            "node_id": "main",
+            "poc_weight": "5790"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "1768",
+        "weight": "5790"
+      },
+      {
+        "confirmation_weight": "19868",
+        "member_address": "gonka17pw6099q758qwzewtrqmqpf5c2lrhr97fwqexu",
+        "ml_nodes": [
+          {
+            "node_id": "co-wm-a100-1",
+            "poc_weight": "2736"
+          },
+          {
+            "node_id": "la-aa-qwen-1",
+            "poc_weight": "2591"
+          },
+          {
+            "node_id": "la-aa-qwen-2",
+            "poc_weight": "2591"
+          },
+          {
+            "node_id": "la-aa-qwen-3",
+            "poc_weight": "2678"
+          },
+          {
+            "node_id": "la-is-4h100-1",
+            "poc_weight": "2591"
+          },
+          {
+            "node_id": "la-is-8h100-1",
+            "poc_weight": "5182"
+          },
+          {
+            "node_id": "la-is-a100-1",
+            "poc_weight": "2678"
+          },
+          {
+            "node_id": "la-is-a100-2",
+            "poc_weight": "2678"
+          },
+          {
+            "node_id": "la-ku-qwen-1",
+            "poc_weight": "2677"
+          },
+          {
+            "node_id": "la-ku-qwen-2",
+            "poc_weight": "2299"
+          },
+          {
+            "node_id": "la-ku-qwen-3",
+            "poc_weight": "2677"
+          },
+          {
+            "node_id": "la-xm-qwen-1-n",
+            "poc_weight": "2590"
+          },
+          {
+            "node_id": "la-xm-qwen-2-n",
+            "poc_weight": "2590"
+          },
+          {
+            "node_id": "la-xm-qwen-3-n",
+            "poc_weight": "2590"
+          },
+          {
+            "node_id": "la-xm-qwen-4-n",
+            "poc_weight": "2677"
+          },
+          {
+            "node_id": "la-xm-qwen-5-n",
+            "poc_weight": "2590"
+          },
+          {
+            "node_id": "la-xm-qwen-6-n",
+            "poc_weight": "2677"
+          },
+          {
+            "node_id": "vul-kol-A100-1",
+            "poc_weight": "2735"
+          },
+          {
+            "node_id": "vul-kol-A100-2",
+            "poc_weight": "2735"
+          },
+          {
+            "node_id": "vul-kol-A100-3",
+            "poc_weight": "2735"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "16888",
+        "weight": "55297"
+      },
+      {
+        "confirmation_weight": "6714",
+        "member_address": "gonka19ghzvgfr065s3fr5awuvs3nhy9fq4n7wrr9kel",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "2336"
+          },
+          {
+            "node_id": "node2",
+            "poc_weight": "2336"
+          },
+          {
+            "node_id": "node3",
+            "poc_weight": "2336"
+          },
+          {
+            "node_id": "node4",
+            "poc_weight": "2336"
+          },
+          {
+            "node_id": "node5",
+            "poc_weight": "2336"
+          },
+          {
+            "node_id": "node6",
+            "poc_weight": "2336"
+          },
+          {
+            "node_id": "node7",
+            "poc_weight": "2336"
+          },
+          {
+            "node_id": "node8",
+            "poc_weight": "2336"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "6379",
+        "weight": "18688"
+      },
+      {
+        "confirmation_weight": "1275",
+        "member_address": "gonka1cuwejs77gectp3n32wg8q27hlsa4m3hqspf4ww",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "3551"
+          }
+        ],
+        "reputation": 3,
+        "voting_power": "1084",
+        "weight": "3551"
+      },
+      {
+        "confirmation_weight": "477",
+        "member_address": "gonka1d694r00czmq75txghwjcuk07lxvc8d4ekgsha0",
+        "ml_nodes": [
+          {
+            "node_id": "mlnode-039",
+            "poc_weight": "1328"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "454",
+        "weight": "1328"
+      },
+      {
+        "confirmation_weight": "621",
+        "member_address": "gonka1d7p03cu2y2yt3vytq9wlfm6tlz0lfhlgv9h82p",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "1731"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "4449",
+        "weight": "1731"
+      },
+      {
+        "confirmation_weight": "136705",
+        "member_address": "gonka1duuaqdx06sx8v2dzggltwwmqyuw8lvjkjq7xll",
+        "ml_nodes": [
+          {
+            "node_id": "FT-1",
+            "poc_weight": "10063"
+          },
+          {
+            "node_id": "FT-10",
+            "poc_weight": "10005"
+          },
+          {
+            "node_id": "FT-11",
+            "poc_weight": "10034"
+          },
+          {
+            "node_id": "FT-12",
+            "poc_weight": "9976"
+          },
+          {
+            "node_id": "FT-13",
+            "poc_weight": "10005"
+          },
+          {
+            "node_id": "FT-14",
+            "poc_weight": "10034"
+          },
+          {
+            "node_id": "FT-15",
+            "poc_weight": "10034"
+          },
+          {
+            "node_id": "FT-16",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-17",
+            "poc_weight": "9975"
+          },
+          {
+            "node_id": "FT-18",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-19",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-2",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-20",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-21",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-22",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-23",
+            "poc_weight": "9975"
+          },
+          {
+            "node_id": "FT-24",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-25",
+            "poc_weight": "9975"
+          },
+          {
+            "node_id": "FT-26",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-27",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-28",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-29",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-3",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-30",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-31",
+            "poc_weight": "10033"
+          },
+          {
+            "node_id": "FT-32",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-33",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-34",
+            "poc_weight": "9975"
+          },
+          {
+            "node_id": "FT-35",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-36",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-37",
+            "poc_weight": "9975"
+          },
+          {
+            "node_id": "FT-38",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-4",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-5",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-6",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-7",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-8",
+            "poc_weight": "10004"
+          },
+          {
+            "node_id": "FT-9",
+            "poc_weight": "10033"
+          }
+        ],
+        "reputation": 53,
+        "voting_power": "97659",
+        "weight": "380478"
+      },
+      {
+        "confirmation_weight": "1372",
+        "member_address": "gonka1f0u3y2wneer8zhz3ypw4x54h38cpa0qsy8ts3e",
+        "ml_nodes": [
+          {
+            "node_id": "node207",
+            "poc_weight": "3820"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "8595",
+        "weight": "3820"
+      },
+      {
+        "confirmation_weight": "1340",
+        "member_address": "gonka1fvly5jrewyjmjfgwah3khy9rttq4cqajcesv9p",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "3731"
+          }
+        ],
+        "voting_power": "1139",
+        "weight": "3731"
+      },
+      {
+        "confirmation_weight": "2005",
+        "member_address": "gonka1qu9mna5xlvlnw9455ygtjq92wuzkzm237w8l08",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "5581"
+          }
+        ],
+        "reputation": 89,
+        "voting_power": "1048",
+        "weight": "5581"
+      },
+      {
+        "confirmation_weight": "621",
+        "member_address": "gonka1qwfrtz9c7kcrfkrrlne2pkcye74mj6ce33xdkl",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "1731"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "528",
+        "weight": "1731"
+      },
+      {
+        "confirmation_weight": "21243",
+        "member_address": "gonka1tja3g2da45efhe2p83gk3whtussmgmtsdlgprt",
+        "ml_nodes": [
+          {
+            "node_id": "at001",
+            "poc_weight": "7388"
+          },
+          {
+            "node_id": "at003",
+            "poc_weight": "7388"
+          },
+          {
+            "node_id": "at004",
+            "poc_weight": "7415"
+          },
+          {
+            "node_id": "at009",
+            "poc_weight": "7387"
+          },
+          {
+            "node_id": "at010",
+            "poc_weight": "7387"
+          },
+          {
+            "node_id": "at012",
+            "poc_weight": "7387"
+          },
+          {
+            "node_id": "at013",
+            "poc_weight": "7387"
+          },
+          {
+            "node_id": "at014",
+            "poc_weight": "7387"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "18057",
+        "weight": "59126"
+      },
+      {
+        "confirmation_weight": "2112",
+        "member_address": "gonka1u4zxypjgcr8khlzefwjr0vwdaj2uzruw2cehj3",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "5880"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "1796",
+        "weight": "5880"
+      },
+      {
+        "confirmation_weight": "986",
+        "member_address": "gonka1uf5cg7ef0ns6877nl27y0s6rt06cdmn40k5a88",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "2746"
+          }
+        ],
+        "reputation": 66,
+        "voting_power": "839",
+        "weight": "2746"
+      },
+      {
+        "confirmation_weight": "611",
+        "member_address": "gonka1vjz8csqsr0ph0lv0yylc4auypnzrld7y6l2feu",
+        "ml_nodes": [
+          {
+            "node_id": "U18",
+            "poc_weight": "1701"
+          }
+        ],
+        "reputation": 56,
+        "voting_power": "520",
+        "weight": "1701"
+      },
+      {
+        "confirmation_weight": "235",
+        "member_address": "gonka1w29nvdy6caqtrw30whz9h6ghl0xszwh3egndah",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "656"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "200",
+        "weight": "656"
+      },
+      {
+        "confirmation_weight": "986",
+        "member_address": "gonka1x7zh2277spp7jfqjhv0g5mnezg290xdr4kpfnk",
+        "ml_nodes": [
+          {
+            "node_id": "node1",
+            "poc_weight": "2746"
+          }
+        ],
+        "reputation": 100,
+        "voting_power": "839",
+        "weight": "2746"
+      }
+    ]
+  }
+}
