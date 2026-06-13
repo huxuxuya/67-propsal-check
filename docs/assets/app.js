@@ -993,6 +993,11 @@ function renderNoAttackEvidence(payload) {
   const carriedTotal = byModel.reduce((sum, row) => sum + (row.e267CarryScaledWeight || 0), 0);
   const carriedRows = byModel.reduce((sum, row) => sum + (row.carriedRows || 0), 0);
   const entrySource = summary.entrySource || {};
+  const epoch265ByModel = new Map(
+    scenarioRows
+      .filter((row) => row.epoch === 265)
+      .map((row) => [row.modelLabel || row.modelId, row]),
+  );
   const epochModelRows = scenarioRows
     .filter((row) => (row.modelLabel || "").toLowerCase() === "kimi" || (row.modelLabel || "").toLowerCase() === "qwen")
     .slice()
@@ -1005,6 +1010,7 @@ function renderNoAttackEvidence(payload) {
   const maxModelWeight = Math.max(
     1,
     ...byModel.flatMap((row) => [
+      (epoch265ByModel.get(row.modelLabel || row.modelId)?.scaledWeight || 0),
       row.entryScaledWeight || 0,
       row.e266ActualScaledWeight || 0,
       row.e267ActualScaledWeight || 0,
@@ -1061,16 +1067,26 @@ function renderNoAttackEvidence(payload) {
     els.noAttackModelMatrix.innerHTML = `
       <div class="no-attack-matrix-head">
         <div>Model</div>
+        <div>Epoch 265 actual</div>
         <div>Epoch 255 baseline</div>
         <div>Epoch 266: with attack -> no attack</div>
         <div>Epoch 267: actual -> simulated</div>
       </div>
       ${modelRows.map((row) => {
         const color = modelCapColor(row.modelLabel);
-        const e255Actual = row.e255ActualScaledWeight || 0;
-        const e255ActualRaw = row.e255ActualRawWeight || 0;
+        const e265 = epoch265ByModel.get(row.modelLabel || row.modelId) || {};
+        const e265Raw = e265.rawWeight || 0;
+        const e265Scaled = e265.scaledWeight || 0;
         const e266Actual = row.e266ActualScaledWeight || 0;
         const e266NoAttack = row.entryScaledWeight || 0;
+        const e265Source = e265.rawSource || "actual_epoch";
+        const e265SourceLabel = {
+          actual_epoch: "actual",
+          reconstructed_from_e266_entry_commits: "rebuilt",
+          actual_e267_plus_e266_entry_carry: "carried",
+        };
+        const e255Actual = row.e255ActualScaledWeight || 0;
+        const e255ActualRaw = row.e255ActualRawWeight || 0;
         const e266Delta = e266NoAttack - e266Actual;
         const e267Actual = row.e267ActualScaledWeight || 0;
         const e267NoAttack = e267Actual + (row.e267CarryScaledWeight || 0);
@@ -1079,6 +1095,13 @@ function renderNoAttackEvidence(payload) {
             <div class="no-attack-model-name">
               <span class="tag" style="border-color:${color}">${escapeHtml(row.modelLabel || row.modelId)}</span>
               <span class="muted">${fmt.format(row.entryRows || 0)} entry rows</span>
+            </div>
+            <div class="no-attack-epoch-cell">
+              <div class="bar-compare">
+                <span class="bar-label">${e265SourceLabel[e265Source] || e265Source}</span>
+                <span class="bar-track"><i style="width:${barWidth(e265Scaled)}; background:${color}; opacity:.2"></i></span>
+                <strong>${fmt.format(e265Scaled)}</strong><span class="muted">raw ${fmt.format(e265Raw)}</span>
+              </div>
             </div>
             <div class="no-attack-epoch-cell">
               <div class="bar-compare">
