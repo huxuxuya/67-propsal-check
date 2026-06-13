@@ -1,4 +1,6 @@
 epoch,height,modelLabel,modelId,status,capApplies,capFactor,previousEpochRootTotalWeight,rootTotalWeight,subgroupRawWeight,weightScaleFactor,rawConsensusWeight,capWeight,cappedConsensusWeight,countedWeight,scaleDelta,clippedWeight,capUtilization,capHeadroom,capLimitFromPreviousEpoch,appliedScale,pressureRatio,participantCount,nodeCount,source,paramsSource,paramsError
+264,4089969,Kimi,moonshotai/Kimi-K2.6,under_cap,True,0.75,1045290,1010191,461069,1.262086,581908,783967,581908,581908,120839,0,0.742261,202059,783967,1.0,0.742261,23,59,archive_rpc,archive_rpc_params,
+264,4089969,Qwen,Qwen/Qwen3-235B-A22B-Instruct-2507-FP8,initial_exempt,False,0.75,1045290,1010191,1254596,0.3593,450776,,450776,450776,-803820,0,,,783967,1.0,0.0,44,192,archive_rpc,archive_rpc_params,
 265,4105360,Kimi,moonshotai/Kimi-K2.6,under_cap,True,0.75,1010191,904177,377276,1.262086,476154,757643,476154,476154,98878,0,0.628467,281489,757643,1.0,0.628467,20,44,archive_rpc,archive_rpc_params,
 265,4105360,Qwen,Qwen/Qwen3-235B-A22B-Instruct-2507-FP8,initial_exempt,False,0.75,1010191,904177,1227899,0.3593,441184,,441184,441184,-786715,0,,,757643,1.0,0.0,41,188,archive_rpc,archive_rpc_params,
 266,4120751,Kimi,moonshotai/Kimi-K2.6,under_cap,True,0.75,904177,335159,59933,1.262086,75640,678132,75640,75640,15707,0,0.111542,602492,678132,1.0,0.111542,8,9,archive_rpc,archive_rpc_params,
