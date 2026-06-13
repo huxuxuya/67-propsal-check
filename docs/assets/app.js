@@ -50,6 +50,7 @@ const els = {
   modelCapMechanicsTable: document.getElementById("modelCapMechanicsTable"),
   noAttackFlow: document.getElementById("noAttackFlow"),
   noAttackModelMatrix: document.getElementById("noAttackModelMatrix"),
+  noAttackEpochSummaryTable: document.getElementById("noAttackEpochSummaryTable"),
   noAttackParticipantTable: document.getElementById("noAttackParticipantTable"),
   telegramTable: document.getElementById("telegramTable"),
   labelTable: document.getElementById("labelTable"),
@@ -982,6 +983,7 @@ function renderNoAttackEvidence(payload) {
   const summary = scenario.summary || {};
   const byModel = summary.participantSummaryByModel || [];
   const participantRows = scenario.participantRows || [];
+  const scenarioRows = scenario.rows || [];
   const modelSummary = (label) => byModel.find((row) => (row.modelLabel || "").toLowerCase() === label.toLowerCase()) || {};
   const kimi = modelSummary("Kimi");
   const qwen = modelSummary("Qwen");
@@ -991,6 +993,15 @@ function renderNoAttackEvidence(payload) {
   const carriedTotal = byModel.reduce((sum, row) => sum + (row.e267CarryScaledWeight || 0), 0);
   const carriedRows = byModel.reduce((sum, row) => sum + (row.carriedRows || 0), 0);
   const entrySource = summary.entrySource || {};
+  const epochModelRows = scenarioRows
+    .filter((row) => (row.modelLabel || "").toLowerCase() === "kimi" || (row.modelLabel || "").toLowerCase() === "qwen")
+    .slice()
+    .sort((a, b) => (a.epoch || 0) - (b.epoch || 0) || (a.modelLabel || "").localeCompare(b.modelLabel || ""));
+  const rawSourceLabel = {
+    actual_epoch: "Actual epoch",
+    reconstructed_from_e266_entry_commits: "Rebuilt from e266 entries",
+    actual_e267_plus_e266_entry_carry: "Actual e267 + carry from e266 entries",
+  };
   const maxModelWeight = Math.max(
     1,
     ...byModel.flatMap((row) => [
@@ -1011,6 +1022,11 @@ function renderNoAttackEvidence(payload) {
         title: "e255 baseline",
         metric: fmt.format(baselineTotal),
         text: "actual baseline before the attack (scaled)",
+      },
+      {
+        title: "e265 reference",
+        metric: fmt.format(summary.e265RebuiltTotalWeight || 0),
+        text: "epoch 265 pre-attack reference total root weight",
       },
       {
         title: "e266 with attack",
@@ -1107,6 +1123,30 @@ function renderNoAttackEvidence(payload) {
         Entry reconstruction source: ${escapeHtml(entrySource.measure || "unknown")} from ${escapeHtml(entrySource.source || "unknown")}. Reconstructed entry before cap: ${fmt.format(entryTotal)}; restored e266 participant/model loss: ${fmt.format(restoredTotal)}.
       </div>
     `;
+  }
+
+  if (els.noAttackEpochSummaryTable) {
+    els.noAttackEpochSummaryTable.innerHTML = epochModelRows
+      .map((row) => {
+        const actualRaw = row.actualRawWeight || 0;
+        const scenarioRaw = row.rawWeight || 0;
+        const diff = scenarioRaw - actualRaw;
+        const clipped = row.clippedWeight || 0;
+        const source = rawSourceLabel[row.rawSource] || row.rawSource || "unknown";
+        return `
+          <tr>
+            <td class="num">e${row.epoch || 0}</td>
+            <td><span class="tag" style="border-color:${modelCapColor(row.modelLabel)}">${escapeHtml(row.modelLabel || row.modelId)}</span></td>
+            <td>${escapeHtml(source)}</td>
+            <td class="num">${fmt.format(actualRaw)}${diff ? `<span class=\"muted\"> / ${diff < 0 ? "−" : "+"}${fmt.format(Math.abs(diff))}</span>` : ""}</td>
+            <td class="num">${fmt.format(scenarioRaw)}</td>
+            <td class="num">${fmt.format(row.weightScaleFactor || 0)}x</td>
+            <td class="num">${fmt.format(row.scaledWeight || 0)}</td>
+            <td class="num">${fmt.format(row.countedWeight || 0)}</td>
+            <td class="num">${fmt.format(clipped)}</td>
+          </tr>
+        `;
+      }).join("");
   }
 
   if (els.noAttackParticipantTable) {
