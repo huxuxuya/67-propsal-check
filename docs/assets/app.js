@@ -3577,6 +3577,7 @@ function initCollapsibleTables() {
     const collapsed = wrap.dataset.tableCollapsed === "true";
     if (collapsed) {
       wrap.classList.add("hidden");
+      panel.classList.add("is-collapsed-table");
     }
 
     const toggle = document.createElement("button");
@@ -3589,6 +3590,7 @@ function initCollapsibleTables() {
     toggle.addEventListener("click", () => {
       wrap.classList.toggle("hidden");
       wrap.dataset.tableCollapsed = String(wrap.classList.contains("hidden"));
+      panel.classList.toggle("is-collapsed-table", wrap.classList.contains("hidden"));
       toggle.textContent = label();
       toggle.setAttribute("aria-expanded", String(!wrap.classList.contains("hidden")));
     });

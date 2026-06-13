@@ -611,6 +611,10 @@ select {
   min-height: 420px;
 }
 
+.table-panel.is-collapsed-table {
+  min-height: 0;
+}
+
 .table-wrap {
   overflow: auto;
   max-height: 520px;
