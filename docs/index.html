@@ -401,7 +401,7 @@
             <h2>Hypotheses</h2>
             <span id="hypothesisRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="hypotheses-table">
             <table>
               <thead>
                 <tr>
@@ -420,7 +420,7 @@
             <h2>Voting-End Inference Timing</h2>
             <span id="anomalyRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="voting-end-inference-table">
             <table>
               <thead>
                 <tr>
@@ -444,7 +444,7 @@
             <h2>Voting-End Timing Leads</h2>
             <span id="entryExitRows">-</span>
           </div>
-          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="evidence-explorer-table">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
@@ -471,7 +471,7 @@
             <h2>Benefit + Power Matrix</h2>
             <span id="benefitPowerRows">-</span>
           </div>
-          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="attribution-dossiers-table">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
@@ -517,7 +517,7 @@
             <h2>Ranked Interested Parties</h2>
             <span id="rankedRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="ranked-interested-parties-table">
             <table>
               <thead>
                 <tr>
@@ -540,7 +540,7 @@
             <h2>Real Evidence Clusters</h2>
             <span id="interestClusterRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="real-evidence-clusters-table">
             <table>
               <thead>
                 <tr>
@@ -563,7 +563,7 @@
             <h2>Evidence Explorer</h2>
             <span id="evidenceRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="evidence-explorer-table">
             <table>
               <thead>
                 <tr>
@@ -587,7 +587,7 @@
             <h2>Attribution Dossiers</h2>
             <span id="attributionRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="attribution-dossiers-table">
             <table>
               <thead>
                 <tr>
@@ -610,7 +610,7 @@
             <span id="telegramCoverageRows">-</span>
           </div>
           <div class="coverage-summary" id="telegramCoverageSummary"></div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="telegram-coverage-table">
             <table>
               <thead>
                 <tr>
@@ -631,7 +631,7 @@
             <h2>Unlinked Telegram Address Leads</h2>
             <span id="telegramUnlinkedRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="telegram-unlinked-leads-table">
             <table>
               <thead>
                 <tr>
@@ -654,7 +654,7 @@
             <h2>Telegram Evidence</h2>
             <span id="telegramRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="telegram-evidence-table">
             <table>
               <thead>
                 <tr>
@@ -677,7 +677,7 @@
             <h2>Public Labels</h2>
             <span id="labelRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="public-labels-table">
             <table>
               <thead>
                 <tr>
@@ -698,7 +698,7 @@
             <h2>Epoch Totals</h2>
             <span id="epochRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="epoch-totals-table">
             <table>
               <thead>
                 <tr>
@@ -766,7 +766,7 @@
             <h2>Strict Identity Clusters</h2>
             <span id="strictClusterRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="strict-identity-clusters-table">
             <table>
               <thead>
                 <tr>
@@ -787,7 +787,7 @@
             <h2>Signal Clusters</h2>
             <span id="signalClusterRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="signal-clusters-table">
             <table>
               <thead>
                 <tr>
@@ -805,10 +805,13 @@
         </div>
       </section>
 
-      <section class="notes">
-        <h2>Methodology Boundaries</h2>
-        <div id="methodologyNotes"></div>
-        <p>GRC off-chain voters are not identified in the upstream repository. Public labels come from validator metadata, validator-key matches, GNS .gnk names, and participant inference URLs; unknown owners remain marked as unknown. Strict clusters use public self-declared identity evidence. Signal clusters may use infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate and are not private attribution. Per-voter governance voting power is computed from archive staking validators and delegations, not estimated from inference epochs.</p>
+      <section class="notes panel table-panel">
+        <div class="panel-head">
+          <h2>Methodology Boundaries</h2>
+        </div>
+        <div class="table-wrap compact-table" data-table-collapsible="1" data-table-collapsed="true" data-table-id="methodology-boundaries-table">
+          <div id="methodologyNotes"></div>
+        </div>
       </section>
 
       <section class="panel searchable-index-panel" aria-label="Searchable address index">

@@ -3341,6 +3341,7 @@ function renderMethodology() {
     <dl class="kv methodology-kv">
       ${rows.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}
     </dl>
+    <p>${escapeHtml("GRC off-chain voters are not identified in the upstream repository. Public labels come from validator metadata, validator-key matches, GNS .gnk names, and participant inference URLs; unknown owners remain marked as unknown. Strict clusters use public self-declared identity evidence. Signal clusters may use infrastructure clues such as shared host, IP, RDAP organization, or TLS certificate and are not private attribution. Per-voter governance voting power is computed from archive staking validators and delegations, not estimated from inference epochs.")}</p>
   `;
 }
 
