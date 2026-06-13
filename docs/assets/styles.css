@@ -259,6 +259,11 @@ select {
   width: 100%;
 }
 
+.model-cap-mechanics-body {
+  width: 100%;
+  min-width: 0;
+}
+
 .panel-head {
   min-height: 50px;
   display: flex;
@@ -298,6 +303,8 @@ select {
 }
 
 .model-cap-mechanics-grid {
+  width: 100%;
+  min-width: 0;
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
@@ -357,6 +364,8 @@ select {
 }
 
 .model-cap-mechanics-chart {
+  width: 100%;
+  min-width: 0;
   min-height: 360px;
 }
 

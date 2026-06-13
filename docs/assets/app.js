@@ -360,6 +360,16 @@ function initCharts() {
   window.addEventListener("resize", () => Object.values(state.charts).forEach((chart) => chart.resize()));
 }
 
+function resizeAllChartsNow() {
+  requestAnimationFrame(() => {
+    Object.values(state.charts).forEach((chart) => {
+      if (chart && typeof chart.resize === "function") {
+        chart.resize();
+      }
+    });
+  });
+}
+
 function fillSelect(select, values, labels = {}) {
   values.forEach((value) => {
     const option = document.createElement("option");
@@ -3596,6 +3606,7 @@ function initCollapsibleTables() {
       panel.classList.toggle("is-collapsed-table", wrap.classList.contains("hidden"));
       toggle.textContent = label();
       toggle.setAttribute("aria-expanded", String(!wrap.classList.contains("hidden")));
+      resizeAllChartsNow();
     });
 
     heading.appendChild(toggle);
