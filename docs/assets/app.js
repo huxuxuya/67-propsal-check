@@ -3794,6 +3794,7 @@ function closeDrawer() {
 }
 
 ensureTableTitles();
+initCollapsibleTables();
 
 document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
 els.scrim.addEventListener("click", closeDrawer);
