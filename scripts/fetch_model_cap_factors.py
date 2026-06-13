@@ -377,6 +377,7 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                 root = cache_epoch["root"]["epoch_group_data"]
                 params = normalize_cached_params(cache_epoch.get("paramsNormalized")) or normalize_params(cache_epoch["params"])
                 subgroups = {item["modelId"]: item["epoch_group_data"] for item in cache_epoch.get("subgroups", [])}
+                start_subgroups = {item["modelId"]: item["epoch_group_data"] for item in cache_epoch.get("startSubgroups", [])}
                 param_snapshots.extend(cache_epoch.get("paramSnapshots", []))
                 raw_epochs[str(epoch)] = cache_epoch
             else:
@@ -389,15 +390,22 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                     params = fetch_params_from_rpc(rpc_node, height)
                     params_payload = params.get("rawDecoded") or {}
                 except Exception as exc:
-                    try:
-                        params_payload = fetch_params(api_node, height)
-                        params = normalize_params(params_payload)
-                    except Exception as rest_exc:
+                    if api_node:
+                        try:
+                            params_payload = fetch_params(api_node, height)
+                            params = normalize_params(params_payload)
+                        except Exception as rest_exc:
+                            params_payload = {
+                                "rpcError": {"error": type(exc).__name__, "message": str(exc)},
+                                "restError": {"error": type(rest_exc).__name__, "message": str(rest_exc)},
+                            }
+                            params = fallback_params(epoch, f"RPC {type(exc).__name__}: {exc}; REST {type(rest_exc).__name__}: {rest_exc}")
+                    else:
                         params_payload = {
                             "rpcError": {"error": type(exc).__name__, "message": str(exc)},
-                            "restError": {"error": type(rest_exc).__name__, "message": str(rest_exc)},
+                            "restSkipped": "GONKA_API_URL is not set; node1 REST fallback is disabled",
                         }
-                        params = fallback_params(epoch, f"RPC {type(exc).__name__}: {exc}; REST {type(rest_exc).__name__}: {rest_exc}")
+                        params = fallback_params(epoch, f"RPC {type(exc).__name__}: {exc}; REST fallback disabled")
                 if start_params is None:
                     start_params = params
 
@@ -413,8 +421,24 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                 param_snapshots.extend(epoch_param_snapshots)
 
                 subgroups = {}
+                start_subgroups = {}
                 for model_id in root.get("sub_group_models") or []:
                     subgroups[model_id] = (fetch_epoch_group_from_rpc(rpc_node, epoch, height, model_id).get("epoch_group_data") or {})
+                    if start_height:
+                        try:
+                            start_subgroups[model_id] = (
+                                fetch_epoch_group_from_rpc(rpc_node, epoch, start_height, model_id).get("epoch_group_data") or {}
+                            )
+                        except Exception as exc:
+                            errors.append(
+                                {
+                                    "epoch": epoch,
+                                    "height": start_height,
+                                    "modelId": model_id,
+                                    "error": type(exc).__name__,
+                                    "message": f"start subgroup fetch failed: {exc}",
+                                }
+                            )
 
                 raw_epochs[str(epoch)] = {
                     "height": height,
@@ -429,6 +453,7 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                         "paramsError": params.get("paramsError", ""),
                     },
                     "paramSnapshots": epoch_param_snapshots,
+                    "startSubgroups": [{"modelId": model_id, "epoch_group_data": group} for model_id, group in sorted(start_subgroups.items())],
                     "subgroups": [{"modelId": model_id, "epoch_group_data": group} for model_id, group in sorted(subgroups.items())],
                 }
 
@@ -521,7 +546,7 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
     payload = {
         "source": {
             "rpcNode": gonka_rpc_source_label("fallback_public_rpc"),
-            "apiNode": gonka_api_source_label("fallback_public_api"),
+            "apiNode": gonka_api_source_label("disabled_no_GONKA_API_URL"),
             "generatedAt": fetched_at,
             "scope": f"model cap factors e{min(epochs)}-e{max(epochs)}",
         },
@@ -539,7 +564,12 @@ def main():
     parser.add_argument("--use-cache", action="store_true", help="Rebuild normalized rows from existing raw cache when present.")
     args = parser.parse_args()
 
-    payload = build_rows(args.epochs, gonka_rpc_url(DEFAULT_RPC_NODE), gonka_api_url(DEFAULT_API_NODE), args.use_cache)
+    rpc_source = gonka_rpc_source_label("fallback_public_rpc")
+    if rpc_source != "GONKA_RPC_URL":
+        raise SystemExit("GONKA_RPC_URL is required for archive model-cap fetches; refusing to use node1 fallback.")
+
+    api_node = gonka_api_url("") if gonka_api_source_label("") == "GONKA_API_URL" else ""
+    payload = build_rows(args.epochs, gonka_rpc_url(DEFAULT_RPC_NODE), api_node, args.use_cache)
     write_json(OUT / "model_cap_factors.json", payload)
     print(json.dumps({"rows": len(payload["rows"]), "errors": len(payload["errors"]), "out": str(OUT / "model_cap_factors.json")}, indent=2))
 

@@ -212,6 +212,7 @@
                 <div class="chart-block-controls">
                   <div class="segmented" role="tablist" aria-label="Kimi scale scenario">
                     <button class="active" data-kimi-scale-scenario="actual" type="button">Actual</button>
+                    <button data-kimi-scale-scenario="noAttackE266" type="button">No e266 attack</button>
                     <button data-kimi-scale-scenario="frozen" type="button">No scale drift</button>
                     <button data-kimi-scale-scenario="constantRaw" type="button">Shock raw</button>
                   </div>
@@ -235,8 +236,35 @@
               </div>
               <div class="chart-note">
                 ComputeGroupCap is an anti-dominance guard: a non-initial model group like Kimi can only count up to 75% of the previous epoch's total network weight. When Kimi tries to return above that limit, the excess is clipped until the network total catches up.
+                “No e266 attack” rebuilds e266 from reconstructed entry commit weight, then carries that simulated total_weight forward into later cap checks.
               </div>
               <div class="chart model-cap-mechanics-chart" id="capRecoveryChart"></div>
+              <div class="no-attack-evidence">
+                <div class="chart-title">No e266 Attack Reconstruction</div>
+                <div class="chart-note">
+                  e266 is rebuilt from participant/model commits at epoch entry: raw commit count × model scale factor. e267 keeps actual rows and only carries forward entry participant/model rows that did not appear in e267.
+                </div>
+                <div class="no-attack-flow" id="noAttackFlow"></div>
+                <div class="no-attack-model-matrix" id="noAttackModelMatrix"></div>
+                <div class="table-wrap compact-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Participant</th>
+                        <th>Model</th>
+                        <th>e266 entry raw</th>
+                        <th>e266 reconstructed</th>
+                        <th>e266 actual</th>
+                        <th>Restored</th>
+                        <th>e267 actual</th>
+                        <th>e267 simulated</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="noAttackParticipantTable"></tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div class="chart-block">
               <div class="chart-title">Kimi Cap Cut by Epoch</div>

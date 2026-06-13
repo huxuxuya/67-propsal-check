@@ -48,6 +48,9 @@ const els = {
   entryExitTable: document.getElementById("entryExitTable"),
   modelCapTable: document.getElementById("modelCapTable"),
   modelCapMechanicsTable: document.getElementById("modelCapMechanicsTable"),
+  noAttackFlow: document.getElementById("noAttackFlow"),
+  noAttackModelMatrix: document.getElementById("noAttackModelMatrix"),
+  noAttackParticipantTable: document.getElementById("noAttackParticipantTable"),
   telegramTable: document.getElementById("telegramTable"),
   labelTable: document.getElementById("labelTable"),
   searchIndex: document.getElementById("searchIndex"),
@@ -941,6 +944,170 @@ function modelCapStatusLabel(status) {
   }[status] || status || "Unknown";
 }
 
+function noAttackStatusLabel(status) {
+  return {
+    excluded_in_e266_restored: "Restored in e266",
+    weight_reduced_in_e266_restored: "Weight restored",
+    kept_in_e266: "Kept in e266",
+    actual_e266_without_entry_commit: "Actual only",
+    not_in_e266: "Not in e266",
+    returned_in_e267: "Returned in e267",
+    carried_into_e267: "Carried into e267",
+    new_in_e267: "New in e267",
+    missing_in_e267: "Missing in e267",
+  }[status] || status || "Unknown";
+}
+
+function noAttackStatusClass(status) {
+  if (["carried_into_e267", "returned_in_e267", "kept_in_e266"].includes(status)) return "good";
+  if (["excluded_in_e266_restored", "weight_reduced_in_e266_restored"].includes(status)) return "warn";
+  if (["missing_in_e267"].includes(status)) return "bad";
+  return "";
+}
+
+function renderNoAttackEvidence(payload) {
+  const scenario = payload.noAttackE266Scenario || { summary: {}, participantRows: [] };
+  const summary = scenario.summary || {};
+  const byModel = summary.participantSummaryByModel || [];
+  const participantRows = scenario.participantRows || [];
+  const modelSummary = (label) => byModel.find((row) => (row.modelLabel || "").toLowerCase() === label.toLowerCase()) || {};
+  const kimi = modelSummary("Kimi");
+  const qwen = modelSummary("Qwen");
+  const entryTotal = byModel.reduce((sum, row) => sum + (row.entryScaledWeight || 0), 0);
+  const restoredTotal = byModel.reduce((sum, row) => sum + (row.e266RestoredScaledWeight || 0), 0);
+  const carriedTotal = byModel.reduce((sum, row) => sum + (row.e267CarryScaledWeight || 0), 0);
+  const carriedRows = byModel.reduce((sum, row) => sum + (row.carriedRows || 0), 0);
+  const entrySource = summary.entrySource || {};
+  const maxModelWeight = Math.max(
+    1,
+    ...byModel.flatMap((row) => [
+      row.entryScaledWeight || 0,
+      row.e266ActualScaledWeight || 0,
+      row.e267ActualScaledWeight || 0,
+      (row.e267ActualScaledWeight || 0) + (row.e267CarryScaledWeight || 0),
+    ]),
+  );
+  const barWidth = (value) => `${Math.max(2, Math.min(100, ((value || 0) / maxModelWeight) * 100))}%`;
+  const modelRows = byModel
+    .slice()
+    .sort((a, b) => (a.modelLabel || "").localeCompare(b.modelLabel || ""));
+
+  if (els.noAttackFlow) {
+    els.noAttackFlow.innerHTML = [
+      {
+        title: "e266 with attack",
+        metric: fmt.format(summary.e266ActualRootTotalWeight || 0),
+        text: "actual end-of-epoch total_weight after the attack",
+      },
+      {
+        title: "e266 no attack",
+        metric: fmt.format(summary.e266SimulatedRootTotalWeight || 0),
+        text: `counted after cap from reconstructed entry weight`,
+      },
+      {
+        title: "e267 actual basis",
+        metric: fmt.format(summary.e267ActualCapBasis || 0),
+        text: "actual e266 collapse became the normal e267 cap basis",
+      },
+      {
+        title: "e267 no-attack carry",
+        metric: fmt.format(carriedTotal),
+        text: `${fmt.format(carriedRows)} participant/model rows carried into e267`,
+      },
+    ].map((card) => `
+      <div class="no-attack-card">
+        <strong>${escapeHtml(card.title)}</strong>
+        <div class="metric">${escapeHtml(card.metric)}</div>
+        <span class="muted">${escapeHtml(card.text)}</span>
+      </div>
+    `).join("");
+  }
+
+  if (els.noAttackModelMatrix) {
+    els.noAttackModelMatrix.innerHTML = `
+      <div class="no-attack-matrix-head">
+        <div>Model</div>
+        <div>Epoch 266: with attack -> no attack</div>
+        <div>Epoch 267: actual -> simulated</div>
+      </div>
+      ${modelRows.map((row) => {
+        const color = modelCapColor(row.modelLabel);
+        const e266Actual = row.e266ActualScaledWeight || 0;
+        const e266NoAttack = row.entryScaledWeight || 0;
+        const e266Delta = e266NoAttack - e266Actual;
+        const e267Actual = row.e267ActualScaledWeight || 0;
+        const e267NoAttack = e267Actual + (row.e267CarryScaledWeight || 0);
+        return `
+          <div class="no-attack-matrix-row">
+            <div class="no-attack-model-name">
+              <span class="tag" style="border-color:${color}">${escapeHtml(row.modelLabel || row.modelId)}</span>
+              <span class="muted">${fmt.format(row.entryRows || 0)} entry rows</span>
+            </div>
+            <div class="no-attack-epoch-cell">
+              <div class="bar-compare">
+                <span class="bar-label">with attack</span>
+                <span class="bar-track"><i style="width:${barWidth(e266Actual)}; background:${color}; opacity:.38"></i></span>
+                <strong>${fmt.format(e266Actual)}</strong>
+              </div>
+              <div class="bar-compare">
+                <span class="bar-label">no attack</span>
+                <span class="bar-track"><i style="width:${barWidth(e266NoAttack)}; background:${color}"></i></span>
+                <strong>${fmt.format(e266NoAttack)}</strong>
+              </div>
+              <div class="matrix-note ${e266Delta >= 0 ? "warn-text" : "muted"}">
+                restored lost participant/model weight ${fmt.format(row.e266RestoredScaledWeight || 0)}
+                ${e266Delta < 0 ? `; aggregate no-attack is ${fmt.format(Math.abs(e266Delta))} lower because actual e266 includes rows without entry commits` : ""}
+              </div>
+            </div>
+            <div class="no-attack-epoch-cell">
+              <div class="bar-compare">
+                <span class="bar-label">actual e267</span>
+                <span class="bar-track"><i style="width:${barWidth(e267Actual)}; background:${color}; opacity:.38"></i></span>
+                <strong>${fmt.format(e267Actual)}</strong>
+              </div>
+              <div class="bar-compare">
+                <span class="bar-label">simulated</span>
+                <span class="bar-track"><i style="width:${barWidth(e267NoAttack)}; background:${color}"></i></span>
+                <strong>${fmt.format(e267NoAttack)}</strong>
+              </div>
+              <div class="matrix-note ${row.e267CarryScaledWeight ? "good-text" : "muted"}">
+                ${fmt.format(row.carriedRows || 0)} not-entered rows carried, weight ${fmt.format(row.e267CarryScaledWeight || 0)}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("")}
+      <div class="no-attack-source-note">
+        Entry reconstruction source: ${escapeHtml(entrySource.measure || "unknown")} from ${escapeHtml(entrySource.source || "unknown")}. Reconstructed entry before cap: ${fmt.format(entryTotal)}; restored e266 participant/model loss: ${fmt.format(restoredTotal)}.
+      </div>
+    `;
+  }
+
+  if (els.noAttackParticipantTable) {
+    els.noAttackParticipantTable.innerHTML = participantRows
+      .slice()
+      .sort((a, b) => (b.e266RestoredScaledWeight || 0) - (a.e266RestoredScaledWeight || 0) || (b.e267CarryScaledWeight || 0) - (a.e267CarryScaledWeight || 0) || (a.modelLabel || "").localeCompare(b.modelLabel || "") || (a.address || "").localeCompare(b.address || ""))
+      .map((row) => {
+        const status = row.e267Status === "carried_into_e267" ? row.e267Status : row.e266Status;
+        const nodes = (row.nodes || []).length ? `<div class="muted">${escapeHtml((row.nodes || []).join(", "))}${row.nodeCount > (row.nodes || []).length ? ` +${fmt.format(row.nodeCount - row.nodes.length)} nodes` : ""}</div>` : "";
+        return `
+          <tr>
+            <td><button class="row-button mono" data-address="${escapeHtml(row.address)}">${escapeHtml(row.address)}</button>${nodes}</td>
+            <td><span class="tag" style="border-color:${modelCapColor(row.modelLabel)}">${escapeHtml(row.modelLabel || row.modelId)}</span><br><span class="muted">${fmt.format(row.entryCommitRows || 0)} entry commits</span></td>
+            <td class="num">${fmt.format(row.entryRawWeight || 0)}</td>
+            <td class="num">${fmt.format(row.entryScaledWeight || 0)}<br><span class="muted">scale ${fmt.format(row.weightScaleFactorE266 || 0)}x</span></td>
+            <td class="num">${fmt.format(row.e266ActualScaledWeight || 0)}<br><span class="muted">raw ${fmt.format(row.e266ActualRawWeight || 0)}</span></td>
+            <td class="num">${fmt.format(row.e266RestoredScaledWeight || 0)}</td>
+            <td class="num">${fmt.format(row.e267ActualScaledWeight || 0)}<br><span class="muted">raw ${fmt.format(row.e267ActualRawWeight || 0)}</span></td>
+            <td class="num">${fmt.format(row.e267SimulatedScaledWeight || 0)}${row.e267CarryScaledWeight ? `<br><span class="muted">carry ${fmt.format(row.e267CarryScaledWeight)}</span>` : ""}</td>
+            <td><span class="status-chip ${noAttackStatusClass(status)}">${escapeHtml(noAttackStatusLabel(status))}</span><br><span class="muted">${escapeHtml(noAttackStatusLabel(row.e267Status))}</span></td>
+          </tr>
+        `;
+      }).join("");
+    enhanceAddressActions(els.noAttackParticipantTable);
+  }
+}
+
 function renderModelCapChart() {
   const payload = state.data.chartData?.modelCapFactors || { rows: [], summary: {} };
   const rows = (payload.rows || []).filter((row) => row.epoch && row.modelId && row.status !== "missing_subgroup");
@@ -1098,11 +1265,15 @@ function renderModelCapMechanics() {
   }
   const isFrozenScale = state.kimiScaleScenario === "frozen" || state.kimiScaleScenario === "frozenScale";
   const isConstantRaw = state.kimiScaleScenario === "constantRaw";
+  const isNoAttackE266 = state.kimiScaleScenario === "noAttackE266";
   const isLegacyFixedScale = state.kimiScaleScenario === "fixedScale125";
   const isScaleLocked = isConstantRaw && state.kimiScaleLocked;
-  const beforeScaleLabel = isConstantRaw ? "shock raw" : "actual raw";
+  const beforeScaleLabel = isNoAttackE266 ? "rebuilt/actual raw" : isConstantRaw ? "shock raw" : "actual raw";
+  const beforeScaleSeriesName = `Before scale (${beforeScaleLabel})`;
   const afterScaleSeriesName = isFrozenScale
     ? "After fixed scale (raw consensus)"
+    : isNoAttackE266
+      ? "After scale (no e266 attack)"
     : isConstantRaw
       ? isScaleLocked || isLegacyFixedScale
         ? "After shock raw (1.25 scale)"
@@ -1112,6 +1283,8 @@ function renderModelCapMechanics() {
       : "After scale (raw consensus)";
   const finalCountSeriesName = isFrozenScale
     ? "Final counted (fixed scale)"
+    : isNoAttackE266
+      ? "Final counted (no e266 attack)"
     : isConstantRaw
       ? isScaleLocked || isLegacyFixedScale
         ? "Final counted (shock raw + 1.25 scale)"
@@ -1131,7 +1304,49 @@ function renderModelCapMechanics() {
   const baselineRaw = fixedRaw > 0 ? fixedRaw : (kimiRows[0]?.subgroupRawWeight || 0);
   const simulatedRawForEpoch = (epoch) => (epoch === 266 ? dipRaw : baselineRaw);
   const isSimulatedCap = isConstantRaw;
-  const preSimRows = kimiRows.map((row) => {
+  const noAttackScenario = payload.noAttackE266Scenario || { rows: [], summary: {} };
+  const noAttackRows = noAttackScenario.rows || [];
+  renderNoAttackEvidence(payload);
+  const noAttackByEpochModel = new Map(noAttackRows.map((row) => [`${row.epoch}|${row.modelLabel || row.modelId}`, row]));
+  const actualKimiByEpoch = new Map(kimiRows.map((row) => [row.epoch, row]));
+  const preSimRows = isNoAttackE266 ? noAttackRows
+    .filter((row) => (row.modelLabel || "").toLowerCase() === "kimi")
+    .sort((a, b) => a.epoch - b.epoch)
+    .map((scenarioRow) => {
+      const actualRow = actualKimiByEpoch.get(scenarioRow.epoch) || {};
+      const actualScaled = actualRow.rawConsensusWeight || 0;
+      const actualFinal = actualRow.countedWeight ?? actualRow.cappedConsensusWeight ?? actualScaled;
+      return {
+        row: { ...actualRow, epoch: scenarioRow.epoch, capFactor: scenarioRow.capFactor, status: scenarioRow.status },
+        epochLabel: `e${scenarioRow.epoch}`,
+        preScale: scenarioRow.rawWeight || 0,
+        rawMode: scenarioRow.rawSource === "reconstructed_from_e266_entry_commits"
+          ? "e266 entry commits"
+          : scenarioRow.rawSource === "actual_e267_plus_e266_entry_carry"
+            ? "actual e267 + e266 entry carry"
+            : "actual raw",
+        rawBaseValue: scenarioRow.rawWeight || 0,
+        scenario: state.kimiScaleScenario,
+        scaled: scenarioRow.scaledWeight || 0,
+        actualScaled,
+        actualFinal,
+        actualScale: actualRow.weightScaleFactor || scenarioRow.weightScaleFactor || 0,
+        status: scenarioRow.status,
+        scaleLocked: false,
+        capUtilization: scenarioRow.capLimit ? (scenarioRow.scaledWeight || 0) / scenarioRow.capLimit : 0,
+        previousEpochRootTotalWeight: scenarioRow.actualPreviousEpochRootTotalWeight || 0,
+        rootTotalWeight: scenarioRow.actualRootTotalWeight || 0,
+        capFactor: scenarioRow.capFactor || 0,
+        scaleDelta: (scenarioRow.scaledWeight || 0) - (scenarioRow.rawWeight || 0),
+        clippedActual: actualFinal < actualScaled ? actualScaled - actualFinal : 0,
+        capLimit: scenarioRow.capLimit,
+        capLimitBasis: scenarioRow.capBasis,
+        capLimitSource: "noAttackE266",
+        simulatedRootTotalWeight: scenarioRow.simulatedRootTotalWeight || 0,
+        final: scenarioRow.countedWeight || 0,
+        clipped: scenarioRow.clippedWeight || 0,
+      };
+    }) : kimiRows.map((row) => {
     const scenarioScale = resolveScenarioScale(row);
     const rowRaw = isConstantRaw ? simulatedRawForEpoch(row.epoch) : (row.subgroupRawWeight || 0);
     const scenarioScaled = Math.floor((rowRaw || 0) * scenarioScale);
@@ -1161,7 +1376,7 @@ function renderModelCapMechanics() {
   });
   // Chain cap uses previous epoch final total_weight, so simulations must pass forward final counted weight.
   const simulatedRootByEpoch = new Map();
-  const capRecoveryRows = preSimRows.map((entry) => {
+  const capRecoveryRows = isNoAttackE266 ? preSimRows : preSimRows.map((entry) => {
     const { row, scaled } = entry;
     const canApplyCap = row.capWeight != null && row.capApplies !== false;
     const previousEpochRoot = row.previousEpochRootTotalWeight || 0;
@@ -1189,6 +1404,17 @@ function renderModelCapMechanics() {
   });
   const capCompositionRows = capRecoveryRows.map((entry) => {
     const epoch = entry.row.epoch;
+    if (isNoAttackE266) {
+      const epochScenarioRows = noAttackRows.filter((row) => row.epoch === epoch);
+      const qwen = noAttackByEpochModel.get(`${epoch}|Qwen`)?.countedWeight || 0;
+      const kimi = entry.final || 0;
+      const other = epochScenarioRows
+        .filter((row) => !["Kimi", "Qwen"].includes(row.modelLabel || row.modelId))
+        .reduce((sum, row) => sum + (row.countedWeight || 0), 0);
+      const modelTotal = qwen + kimi + other;
+      const rootTotal = entry.simulatedRootTotalWeight || modelTotal;
+      return { epoch, qwen, kimi, other, modelTotal, rootTotal };
+    }
     const qwenRow = byKey.get(`${epoch}|Qwen`);
     const qwenActual = qwenRow ? (qwenRow.countedWeight ?? qwenRow.cappedConsensusWeight ?? qwenRow.rawConsensusWeight ?? 0) : 0;
     const qwen = isSimulatedCap ? fixedQwen : qwenActual;
@@ -1217,25 +1443,60 @@ function renderModelCapMechanics() {
         const clippedActual = row.actualScaled > row.actualFinal ? row.actualScaled - row.actualFinal : 0;
         const clippedPct = row.scaled ? (clipped / row.scaled) * 100 : 0;
         const capLimitBasis = row.capLimitBasis == null ? row.previousEpochRootTotalWeight : row.capLimitBasis;
-        const capLimitTag = row.capLimitSource === "simulated" ? "simulated" : "actual";
+        const capLimitTag = row.capLimitSource === "simulated"
+          ? "simulated"
+          : row.capLimitSource === "noAttackE266"
+            ? "no-attack simulation"
+            : "actual";
         const rootBasisText = row.capLimitSource === "simulated"
           ? `   Chain-style basis: simulated e${row.row.epoch - 1} total_weight <strong>${fmt.format(capLimitBasis)}</strong>`
-          : `   Chain-style basis: actual e${row.row.epoch - 1} total_weight <strong>${fmt.format(capLimitBasis)}</strong>`;
+          : row.capLimitSource === "noAttackE266"
+            ? row.row.epoch === 266
+              ? `   No-attack basis: actual e265 total_weight <strong>${fmt.format(capLimitBasis)}</strong>`
+              : `   No-attack basis: simulated e${row.row.epoch - 1} total_weight <strong>${fmt.format(capLimitBasis)}</strong>`
+            : `   Chain-style basis: actual e${row.row.epoch - 1} total_weight <strong>${fmt.format(capLimitBasis)}</strong>`;
+        const scaleStepLabel = row.scenario === "frozen" || row.scenario === "frozenScale"
+          ? "After fixed scale (raw consensus)"
+          : row.scenario === "noAttackE266"
+            ? "After scale (no e266 attack)"
+            : row.scenario === "constantRaw"
+              ? row.scaleLocked ? "After shock raw (1.25 scale)" : "After shock raw (raw × actual scale)"
+              : row.scenario === "fixedScale125"
+                ? "After fixed scale 1.25"
+                : "After scale (raw consensus)";
+        const finalStepLabel = row.scenario === "frozen" || row.scenario === "frozenScale"
+          ? "Final counted under fixed scale (after cap)"
+          : row.scenario === "noAttackE266"
+            ? "Final counted in no-attack simulation (after cap)"
+            : row.scenario === "constantRaw"
+              ? row.scaleLocked ? "Final counted (shock raw + 1.25 scale)" : "Final counted (shock raw, after cap)"
+              : row.scenario === "fixedScale125"
+                ? "Final counted (fixed scale 1.25)"
+                : "Final counted (after cap)";
+        const noAttackNote = row.scenario === "noAttackE266"
+          ? row.row.epoch === 266
+            ? "No-attack mode: e266 is rebuilt from entry commits multiplied by the model scale factor."
+            : row.row.epoch === 267
+              ? "No-attack mode: actual e267 model rows are kept, and missing e266 entry rows are carried forward."
+              : "No-attack mode: actual raw model weights are kept; the cap basis comes from the simulated previous epoch."
+          : "";
         const lines = [
           `<strong>${row.epochLabel} (Kimi) recovery path</strong>`,
           `1) Before scale (${row.rawMode}): <strong>${fmt.format(row.preScale)}</strong>`,
-          `2) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "After fixed scale (raw consensus)" : row.scenario === "constantRaw" ? row.scaleLocked ? "After shock raw (1.25 scale)" : "After shock raw (raw × actual scale)" : row.scenario === "fixedScale125" ? "After fixed scale 1.25" : "After scale (raw consensus)"}`,
+          noAttackNote,
+          `2) ${scaleStepLabel}`,
           `   <strong>${fmt.format(row.scaled)}</strong>${row.scaleDelta ? `  (${row.scaleDelta > 0 ? "+" : ""}${fmt.format(row.scaleDelta)} by model scale)` : ""}`,
           row.scenario === "frozen" || row.scenario === "frozenScale" ? `   Baseline scale for this model is <strong>${fmt.format(row.actualScale)}x</strong>` : "",
           `3) Cap ceiling: ${row.capLimit == null ? "<i>not set</i>" : `<strong>${fmt.format(row.capLimit)}</strong> (${fmt.format(capLimitBasis)} × ${fmt.format(row.capFactor)} · ${capLimitTag})`}`,
           row.capLimit == null ? "" : rootBasisText,
-          `4) ${row.scenario === "frozen" || row.scenario === "frozenScale" ? "Final counted under fixed scale (after cap)" : row.scenario === "constantRaw" ? row.scaleLocked ? "Final counted (shock raw + 1.25 scale)" : "Final counted (shock raw, after cap)" : row.scenario === "fixedScale125" ? "Final counted (fixed scale 1.25)" : "Final counted (after cap)"}`,
+          `4) ${finalStepLabel}`,
           `<strong>${fmt.format(row.final)}</strong>`,
           clipped > 0 ? `Clipped by cap: <strong>${fmt.format(clipped)}</strong> (${fmt.format(clippedPct)}%)` : "Clipped by cap: <strong>0</strong>",
           row.capLimitSource === "simulated" ? `Simulated total_weight passed forward: <strong>${fmt.format(row.simulatedRootTotalWeight || 0)}</strong> (${fmt.format(state.kimiFixedQwenWeight || 0)} Qwen + ${fmt.format(row.final || 0)} Kimi)` : "",
+          row.capLimitSource === "noAttackE266" ? `No-attack total_weight passed forward: <strong>${fmt.format(row.simulatedRootTotalWeight || 0)}</strong>` : "",
           capCompositionRows[index] && row.capLimitSource === "simulated" ? `Simulated total composition: Qwen <strong>${fmt.format(capCompositionRows[index].qwen)}</strong> + Kimi <strong>${fmt.format(capCompositionRows[index].kimi)}</strong> = <strong>${fmt.format(capCompositionRows[index].rootTotal)}</strong>` : "",
           capCompositionRows[index] && row.capLimitSource !== "simulated" ? `Model weights after cap: Qwen <strong>${fmt.format(capCompositionRows[index].qwen)}</strong> + Kimi <strong>${fmt.format(capCompositionRows[index].kimi)}</strong>${capCompositionRows[index].other ? ` + Other <strong>${fmt.format(capCompositionRows[index].other)}</strong>` : ""} = <strong>${fmt.format(capCompositionRows[index].modelTotal)}</strong><br>Root total_weight: <strong>${fmt.format(capCompositionRows[index].rootTotal)}</strong>` : "",
-          row.scenario === "frozen" || row.scenario === "frozenScale" || row.scenario === "constantRaw" || row.scenario === "fixedScale125" ? `Actual trajectory would be ${fmt.format(row.actualScaled)} → <strong>${fmt.format(row.actualFinal)}</strong> (${fmt.format(clippedActual)} clipped)` : "",
+          row.scenario === "frozen" || row.scenario === "frozenScale" || row.scenario === "constantRaw" || row.scenario === "fixedScale125" || row.scenario === "noAttackE266" ? `Actual trajectory would be ${fmt.format(row.actualScaled)} → <strong>${fmt.format(row.actualFinal)}</strong> (${fmt.format(clippedActual)} clipped)` : "",
           `Status: ${escapeHtml(modelCapStatusLabel(row.status))}`,
           row.capUtilization ? `Utilization: <strong>${fmt.format(row.capUtilization)}x</strong>` : "",
         ];
@@ -1249,7 +1510,7 @@ function renderModelCapMechanics() {
         "After-cap stack: Qwen": true,
         "After-cap stack: Kimi": true,
         "After-cap stack: Other": capCompositionRows.some((row) => row.other > 0),
-        "Before scale (raw subgroup)": true,
+        [beforeScaleSeriesName]: true,
         [afterScaleSeriesName]: true,
         "Prev total weight (cap basis)": true,
         "Cap limit (prev epoch × factor)": true,
@@ -1302,7 +1563,7 @@ function renderModelCapMechanics() {
         z: 0,
       },
       {
-        name: "Before scale (raw subgroup)",
+        name: beforeScaleSeriesName,
         type: "line",
         data: capRecoveryRows.map((row) => row.preScale),
         symbolSize: 7,

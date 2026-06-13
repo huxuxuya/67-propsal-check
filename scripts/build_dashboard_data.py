@@ -509,6 +509,360 @@ def load_optional_json(path, default):
     return load_json(path)
 
 
+def _decimal_or_zero(value):
+    if value is None:
+        return Decimal(0)
+    return Decimal(str(value))
+
+
+def _model_label(model_id):
+    value = (model_id or "").lower()
+    if "kimi" in value or "moonshot" in value:
+        return "Kimi"
+    if "qwen" in value:
+        return "Qwen"
+    if "minimax" in value:
+        return "MiniMax"
+    return model_id.split("/")[-1] if model_id else "Unknown"
+
+
+def _model_group_from_cache(raw_epochs, epoch, model_id, key="subgroups"):
+    epoch_payload = raw_epochs.get(str(epoch)) or raw_epochs.get(epoch) or {}
+    for subgroup in epoch_payload.get(key) or []:
+        if subgroup.get("modelId") != model_id:
+            continue
+        return subgroup.get("epoch_group_data") or {}
+    return {}
+
+
+def _model_raw_weight_from_group(group):
+    validation_weights = group.get("validation_weights") or []
+    if validation_weights:
+        return sum(int(item.get("weight") or 0) for item in validation_weights)
+    return int(group.get("total_weight") or 0)
+
+
+def _model_raw_weight_from_cache(raw_epochs, epoch, model_id, key="subgroups"):
+    group = _model_group_from_cache(raw_epochs, epoch, model_id, key)
+    if group:
+        return _model_raw_weight_from_group(group)
+    return None
+
+
+def _model_participant_rows(raw_epochs, epoch, model_id, key="subgroups"):
+    group = _model_group_from_cache(raw_epochs, epoch, model_id, key)
+    model_label = _model_label(model_id)
+    rows = {}
+    for item in group.get("validation_weights") or []:
+        address = item.get("member_address")
+        if not address:
+            continue
+        node_ids = [node.get("node_id", "") for node in item.get("ml_nodes") or [] if node.get("node_id")]
+        rows[(model_id, address)] = {
+            "modelId": model_id,
+            "modelLabel": model_label,
+            "address": address,
+            "weight": int(item.get("weight") or 0),
+            "confirmationWeight": int(item.get("confirmation_weight") or 0),
+            "votingPower": int(item.get("voting_power") or 0),
+            "nodeCount": len(node_ids),
+            "nodes": node_ids[:8],
+        }
+    return rows
+
+
+def _read_e266_entry_commit_rows(scale_by_model):
+    path = UPSTREAM / "e266" / "epoch266_commits.json"
+    if not path.exists():
+        return {}, {"source": "missing_e266_commits", "error": str(path)}
+
+    payload = load_json(path)
+    by_key = {}
+    for commit in payload.get("commits") or []:
+        model_id = commit.get("model_id") or ""
+        address = commit.get("participant_address") or ""
+        if not model_id or not address:
+            continue
+        key = (model_id, address)
+        row = by_key.setdefault(
+            key,
+            {
+                "modelId": model_id,
+                "modelLabel": _model_label(model_id),
+                "address": address,
+                "entryRawWeight": 0,
+                "entryCommitRows": 0,
+                "entryRootHashes": [],
+            },
+        )
+        row["entryRawWeight"] += int(commit.get("count") or 0)
+        row["entryCommitRows"] += 1
+        if commit.get("root_hash"):
+            row["entryRootHashes"].append(commit["root_hash"])
+
+    for (model_id, _address), row in by_key.items():
+        scale = _decimal_or_zero(scale_by_model.get(model_id, 1))
+        row["weightScaleFactor"] = float(scale)
+        row["entryScaledWeight"] = int(_decimal_or_zero(row["entryRawWeight"]) * scale)
+        row["entryRootHashes"] = row["entryRootHashes"][:3]
+
+    return by_key, {
+        "source": "upstream_e266_commits",
+        "sourceFile": "upstream/gonka-kimi-restitution/e266/epoch266_commits.json",
+        "measure": "commit count × model weight scale factor",
+    }
+
+
+def _build_no_attack_participant_rows(raw_epochs, rows_by_epoch):
+    scale_by_model_e266 = {
+        row.get("modelId"): row.get("weightScaleFactor")
+        for row in rows_by_epoch.get(266, [])
+        if row.get("modelId")
+    }
+    scale_by_model_e267 = {
+        row.get("modelId"): row.get("weightScaleFactor")
+        for row in rows_by_epoch.get(267, [])
+        if row.get("modelId")
+    }
+    entry_rows, entry_source = _read_e266_entry_commit_rows(scale_by_model_e266)
+
+    model_ids = sorted({
+        *(row.get("modelId") for row in rows_by_epoch.get(266, []) if row.get("modelId")),
+        *(row.get("modelId") for row in rows_by_epoch.get(267, []) if row.get("modelId")),
+        *(model_id for model_id, _address in entry_rows),
+    }, key=_model_label)
+    actual_e266 = {}
+    actual_e267 = {}
+    for model_id in model_ids:
+        actual_e266.update(_model_participant_rows(raw_epochs, 266, model_id))
+        actual_e267.update(_model_participant_rows(raw_epochs, 267, model_id))
+
+    rows = []
+    for key in sorted(set(entry_rows) | set(actual_e266) | set(actual_e267), key=lambda item: (_model_label(item[0]), item[1])):
+        model_id, address = key
+        entry = entry_rows.get(key, {})
+        end266 = actual_e266.get(key, {})
+        actual267 = actual_e267.get(key, {})
+        scale_266 = _decimal_or_zero(entry.get("weightScaleFactor") or scale_by_model_e266.get(model_id) or 1)
+        scale_267 = _decimal_or_zero(scale_by_model_e267.get(model_id) or scale_266 or 1)
+
+        entry_raw = int(entry.get("entryRawWeight") or 0)
+        entry_scaled = int(entry.get("entryScaledWeight") or (_decimal_or_zero(entry_raw) * scale_266))
+        actual_266_raw = int(end266.get("weight") or 0)
+        actual_266_scaled = int(_decimal_or_zero(actual_266_raw) * scale_266)
+        actual_267_raw = int(actual267.get("weight") or 0)
+        actual_267_scaled = int(_decimal_or_zero(actual_267_raw) * scale_267)
+        carry_raw_267 = entry_raw if entry_raw and not actual_267_raw else 0
+        carry_scaled_267 = int(_decimal_or_zero(carry_raw_267) * scale_267)
+
+        if entry_raw and not actual_266_raw:
+            e266_status = "excluded_in_e266_restored"
+        elif entry_raw and entry_scaled > actual_266_scaled:
+            e266_status = "weight_reduced_in_e266_restored"
+        elif entry_raw:
+            e266_status = "kept_in_e266"
+        elif actual_266_raw:
+            e266_status = "actual_e266_without_entry_commit"
+        else:
+            e266_status = "not_in_e266"
+
+        if entry_raw and actual_267_raw:
+            e267_status = "returned_in_e267"
+        elif entry_raw and carry_raw_267:
+            e267_status = "carried_into_e267"
+        elif actual_267_raw:
+            e267_status = "new_in_e267"
+        else:
+            e267_status = "missing_in_e267"
+
+        restored_scaled = max(0, entry_scaled - actual_266_scaled)
+        node_ids = end266.get("nodes") or actual267.get("nodes") or []
+        rows.append(
+            {
+                "address": address,
+                "modelId": model_id,
+                "modelLabel": _model_label(model_id),
+                "entryRawWeight": entry_raw,
+                "entryScaledWeight": entry_scaled,
+                "entryCommitRows": int(entry.get("entryCommitRows") or 0),
+                "e266ActualRawWeight": actual_266_raw,
+                "e266ActualScaledWeight": actual_266_scaled,
+                "e266RestoredScaledWeight": restored_scaled,
+                "e267ActualRawWeight": actual_267_raw,
+                "e267ActualScaledWeight": actual_267_scaled,
+                "e267CarryRawWeight": carry_raw_267,
+                "e267CarryScaledWeight": carry_scaled_267,
+                "e267SimulatedRawWeight": actual_267_raw + carry_raw_267,
+                "e267SimulatedScaledWeight": actual_267_scaled + carry_scaled_267,
+                "weightScaleFactorE266": float(scale_266),
+                "weightScaleFactorE267": float(scale_267),
+                "e266Status": e266_status,
+                "e267Status": e267_status,
+                "status": e267_status if e267_status == "carried_into_e267" else e266_status,
+                "nodeCount": max(int(end266.get("nodeCount") or 0), int(actual267.get("nodeCount") or 0)),
+                "nodes": node_ids,
+            }
+        )
+
+    rows.sort(
+        key=lambda row: (
+            -row["e266RestoredScaledWeight"],
+            -row["e267CarryScaledWeight"],
+            row["modelLabel"],
+            row["address"],
+        )
+    )
+
+    summary_by_model = []
+    for model_id in model_ids:
+        model_rows = [row for row in rows if row["modelId"] == model_id]
+        summary_by_model.append(
+            {
+                "modelId": model_id,
+                "modelLabel": _model_label(model_id),
+                "entryRawWeight": sum(row["entryRawWeight"] for row in model_rows),
+                "entryScaledWeight": sum(row["entryScaledWeight"] for row in model_rows),
+                "e266ActualRawWeight": sum(row["e266ActualRawWeight"] for row in model_rows),
+                "e266ActualScaledWeight": sum(row["e266ActualScaledWeight"] for row in model_rows),
+                "e266RestoredScaledWeight": sum(row["e266RestoredScaledWeight"] for row in model_rows),
+                "e267ActualRawWeight": sum(row["e267ActualRawWeight"] for row in model_rows),
+                "e267ActualScaledWeight": sum(row["e267ActualScaledWeight"] for row in model_rows),
+                "e267CarryScaledWeight": sum(row["e267CarryScaledWeight"] for row in model_rows),
+                "entryRows": sum(1 for row in model_rows if row["entryRawWeight"]),
+                "carriedRows": sum(1 for row in model_rows if row["e267CarryScaledWeight"]),
+            }
+        )
+
+    return rows, summary_by_model, entry_source
+
+
+def build_no_attack_e266_cap_scenario(rows, raw_epochs):
+    by_epoch = defaultdict(list)
+    for row in rows:
+        if row.get("status") == "missing_subgroup" or not row.get("modelId") or row.get("epoch") is None:
+            continue
+        by_epoch[int(row["epoch"])].append(row)
+
+    participant_rows, participant_summary_by_model, entry_source = _build_no_attack_participant_rows(raw_epochs, by_epoch)
+    participant_summary_by_epoch_model = {
+        (266, row["modelId"]): row["entryRawWeight"]
+        for row in participant_summary_by_model
+        if row["entryRawWeight"]
+    }
+    participant_summary_by_epoch_model.update(
+        {
+            (267, row["modelId"]): row["e267ActualRawWeight"] + sum(
+                participant["e267CarryRawWeight"]
+                for participant in participant_rows
+                if participant["modelId"] == row["modelId"]
+            )
+            for row in participant_summary_by_model
+        }
+    )
+    participant_scaled_by_epoch_model = {
+        (266, row["modelId"]): row["entryScaledWeight"]
+        for row in participant_summary_by_model
+        if row["entryScaledWeight"]
+    }
+    participant_scaled_by_epoch_model.update(
+        {
+            (267, row["modelId"]): row["e267ActualScaledWeight"] + row["e267CarryScaledWeight"]
+            for row in participant_summary_by_model
+        }
+    )
+
+    simulated_root_by_epoch = {}
+    scenario_rows = []
+    e265_rebuilt_total = 0
+    e266_actual_total = 0
+    e266_simulated_total = 0
+
+    for epoch in sorted(by_epoch):
+        previous_simulated_total = simulated_root_by_epoch.get(epoch - 1)
+        previous_actual_total = int((by_epoch[epoch][0] or {}).get("previousEpochRootTotalWeight") or 0)
+        actual_root_total = int((by_epoch[epoch][0] or {}).get("rootTotalWeight") or 0)
+        cap_basis = previous_simulated_total if epoch > 266 and previous_simulated_total is not None else previous_actual_total
+        epoch_rows = []
+
+        for row in sorted(by_epoch[epoch], key=lambda item: item.get("modelLabel") or item.get("modelId")):
+            model_id = row.get("modelId")
+            actual_raw = int(row.get("subgroupRawWeight") or 0)
+            raw_weight = actual_raw
+            raw_source = "actual_epoch"
+            if epoch == 266:
+                entry_raw = participant_summary_by_epoch_model.get((266, model_id))
+                if entry_raw is not None:
+                    raw_weight = entry_raw
+                    raw_source = "reconstructed_from_e266_entry_commits"
+            elif epoch == 267:
+                simulated_raw = participant_summary_by_epoch_model.get((267, model_id))
+                if simulated_raw is not None and simulated_raw != actual_raw:
+                    raw_weight = simulated_raw
+                    raw_source = "actual_e267_plus_e266_entry_carry"
+            scale = _decimal_or_zero(row.get("weightScaleFactor"))
+            scaled = participant_scaled_by_epoch_model.get((epoch, model_id))
+            if scaled is None:
+                scaled = int(_decimal_or_zero(raw_weight) * scale)
+            cap_applies = bool(row.get("capApplies"))
+            cap_factor = _decimal_or_zero(row.get("capFactor") or "0")
+            cap_limit = int(_decimal_or_zero(cap_basis) * cap_factor) if cap_applies and cap_basis else None
+            counted = min(scaled, cap_limit) if cap_limit is not None else scaled
+            clipped = max(0, scaled - counted)
+            epoch_rows.append(
+                {
+                    "epoch": epoch,
+                    "modelId": model_id,
+                    "modelLabel": row.get("modelLabel") or model_id,
+                    "rawWeight": raw_weight,
+                    "actualRawWeight": actual_raw,
+                    "rawSource": raw_source,
+                    "scenarioSource": entry_source.get("source") if raw_source.startswith(("reconstructed", "actual_e267_plus")) else "archive_rpc_model_subgroup",
+                    "weightScaleFactor": float(scale),
+                    "scaledWeight": scaled,
+                    "capApplies": cap_applies,
+                    "capFactor": float(cap_factor),
+                    "capBasis": cap_basis,
+                    "actualPreviousEpochRootTotalWeight": previous_actual_total,
+                    "capLimit": cap_limit,
+                    "countedWeight": counted,
+                    "clippedWeight": clipped,
+                    "actualCountedWeight": int(row.get("countedWeight") or row.get("cappedConsensusWeight") or row.get("rawConsensusWeight") or 0),
+                    "actualClippedWeight": int(row.get("clippedWeight") or 0),
+                    "actualRootTotalWeight": int(row.get("rootTotalWeight") or 0),
+                    "status": "capped" if clipped else "under_cap" if cap_applies else (row.get("status") or "uncapped"),
+                }
+            )
+
+        simulated_total = sum(item["countedWeight"] for item in epoch_rows)
+        pass_forward_total = simulated_total if epoch >= 266 else (actual_root_total or simulated_total)
+        simulated_root_by_epoch[epoch] = pass_forward_total
+        if epoch == 265:
+            e265_rebuilt_total = simulated_total
+        if epoch == 266:
+            e266_actual_total = actual_root_total
+            e266_simulated_total = simulated_total
+        for item in epoch_rows:
+            item["simulatedRootTotalWeight"] = pass_forward_total
+            scenario_rows.append(item)
+
+    return {
+        "id": "noAttackE266",
+        "label": "No e266 attack",
+        "description": "e266 is rebuilt from reconstructed entry commit weight; e267 keeps actual model membership and carries forward any e266 entry participant/model row missing from e267.",
+        "summary": {
+            "e265RebuiltTotalWeight": e265_rebuilt_total,
+            "e266ActualRootTotalWeight": e266_actual_total,
+            "e266SimulatedRootTotalWeight": e266_simulated_total,
+            "e267ActualCapBasis": next((row.get("previousEpochRootTotalWeight") for row in rows if row.get("epoch") == 267 and (row.get("modelLabel") or "").lower() == "kimi"), 0),
+            "e267SimulatedCapBasis": simulated_root_by_epoch.get(266, 0),
+            "participantSummaryByModel": participant_summary_by_model,
+            "entrySource": entry_source,
+        },
+        "participantRows": participant_rows,
+        "rows": scenario_rows,
+    }
+
+
 def read_model_cap_factors():
     payload = load_optional_json(DATA / "model_cap_factors" / "model_cap_factors.json", {})
     rows = payload.get("rows") or []
@@ -547,7 +901,13 @@ def read_model_cap_factors():
         "source": payload.get("source") or {},
         "errors": payload.get("errors") or [],
     }
-    return {"rows": rows, "paramSnapshots": param_snapshots, "paramModelRows": param_model_rows, "summary": summary}
+    return {
+        "rows": rows,
+        "paramSnapshots": param_snapshots,
+        "paramModelRows": param_model_rows,
+        "noAttackE266Scenario": build_no_attack_e266_cap_scenario(rows, (payload.get("raw") or {}).get("epochs") or {}),
+        "summary": summary,
+    }
 
 
 def read_onchain_graph_snapshot():
