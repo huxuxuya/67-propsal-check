@@ -205,101 +205,102 @@
             <h2>Model Cap Mechanics</h2>
             <span id="modelCapMechanicsSummary">-</span>
           </div>
-          <div class="model-cap-mechanics-grid">
-            <div class="chart-block">
-              <div class="chart-block-head">
-                <div class="chart-title">Kimi Cap Recovery</div>
-                <div class="chart-block-controls">
-                  <div class="segmented" role="tablist" aria-label="Kimi scale scenario">
-                    <button class="active" data-kimi-scale-scenario="actual" type="button">Actual</button>
-                    <button data-kimi-scale-scenario="noAttackE266" type="button">No e266 attack</button>
-                    <button data-kimi-scale-scenario="frozen" type="button">No scale drift</button>
-                    <button data-kimi-scale-scenario="constantRaw" type="button">Shock raw</button>
+          <div class="model-cap-mechanics-body" data-table-collapsible="1" data-table-collapsed="true" data-table-id="model-cap-mechanics-body">
+            <div class="model-cap-mechanics-grid">
+              <div class="chart-block">
+                <div class="chart-block-head">
+                  <div class="chart-title">Kimi Cap Recovery</div>
+                  <div class="chart-block-controls">
+                    <div class="segmented" role="tablist" aria-label="Kimi scale scenario">
+                      <button class="active" data-kimi-scale-scenario="actual" type="button">Actual</button>
+                      <button data-kimi-scale-scenario="noAttackE266" type="button">No e266 attack</button>
+                      <button data-kimi-scale-scenario="frozen" type="button">No scale drift</button>
+                      <button data-kimi-scale-scenario="constantRaw" type="button">Shock raw</button>
+                    </div>
+                    <label class="inline-number-control" title="Use a fixed raw weight for every epoch">
+                      <span>Raw</span>
+                      <input id="kimiFixedRawWeight" type="number" min="0" step="1000" value="400000">
+                    </label>
+                    <label class="inline-number-control" title="Use this raw weight only for epoch 266">
+                      <span>e266</span>
+                      <input id="kimiDipRawWeight" type="number" min="0" step="1000" value="50000">
+                    </label>
+                    <label class="inline-number-control" title="Use a fixed Qwen counted weight; total is Qwen plus Kimi final">
+                      <span>Qwen</span>
+                      <input id="kimiFixedQwenWeight" type="number" min="0" step="1000" value="300000">
+                    </label>
+                    <label class="inline-number-control" title="Apply a fixed scale factor for this simulation">
+                      <input id="kimiScaleLock125" type="checkbox">
+                      <span>Fix scale = 1.25</span>
+                    </label>
                   </div>
-                  <label class="inline-number-control" title="Use a fixed raw weight for every epoch">
-                    <span>Raw</span>
-                    <input id="kimiFixedRawWeight" type="number" min="0" step="1000" value="400000">
-                  </label>
-                  <label class="inline-number-control" title="Use this raw weight only for epoch 266">
-                    <span>e266</span>
-                    <input id="kimiDipRawWeight" type="number" min="0" step="1000" value="50000">
-                  </label>
-                  <label class="inline-number-control" title="Use a fixed Qwen counted weight; total is Qwen plus Kimi final">
-                    <span>Qwen</span>
-                    <input id="kimiFixedQwenWeight" type="number" min="0" step="1000" value="300000">
-                  </label>
-                  <label class="inline-number-control" title="Apply a fixed scale factor for this simulation">
-                    <input id="kimiScaleLock125" type="checkbox">
-                    <span>Fix scale = 1.25</span>
-                  </label>
                 </div>
-              </div>
-              <div class="chart-note">
-                ComputeGroupCap is an anti-dominance guard: a non-initial model group like Kimi can only count up to 75% of the previous epoch's total network weight. When Kimi tries to return above that limit, the excess is clipped until the network total catches up.
-                “No e266 attack” rebuilds e266 from reconstructed entry commit weight, then carries that simulated total_weight forward into later cap checks.
-              </div>
-              <div class="chart model-cap-mechanics-chart" id="capRecoveryChart"></div>
-              <div class="no-attack-evidence">
-                <div class="chart-title">No e266 Attack Reconstruction</div>
                 <div class="chart-note">
-                  e266 is rebuilt from participant/model commits at epoch entry: raw commit count × model scale factor. e267 keeps actual rows and only carries forward entry participant/model rows that did not appear in e267.
+                  ComputeGroupCap is an anti-dominance guard: a non-initial model group like Kimi can only count up to 75% of the previous epoch's total network weight. When Kimi tries to return above that limit, the excess is clipped until the network total catches up.
+                  “No e266 attack” rebuilds e266 from reconstructed entry commit weight, then carries that simulated total_weight forward into later cap checks.
                 </div>
-                <div class="no-attack-flow" id="noAttackFlow"></div>
-                <div class="no-attack-model-matrix" id="noAttackModelMatrix"></div>
-                <div class="table-wrap compact-table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Participant</th>
-                        <th>Model</th>
-                        <th>e266 entry raw</th>
-                        <th>e266 reconstructed</th>
-                        <th>e266 actual</th>
-                        <th>Restored</th>
-                        <th>e267 actual</th>
-                        <th>e267 simulated</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="noAttackParticipantTable"></tbody>
-                  </table>
+                <div class="chart model-cap-mechanics-chart" id="capRecoveryChart"></div>
+                <div class="no-attack-evidence">
+                  <div class="chart-title">No e266 Attack Reconstruction</div>
+                  <div class="chart-note">
+                    e266 is rebuilt from participant/model commits at epoch entry: raw commit count × model scale factor. e267 keeps actual rows and only carries forward entry participant/model rows that did not appear in e267.
+                  </div>
+                  <div class="no-attack-flow" id="noAttackFlow"></div>
+                  <div class="no-attack-model-matrix" id="noAttackModelMatrix"></div>
+                  <div class="table-wrap compact-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Participant</th>
+                          <th>Model</th>
+                          <th>e266 entry raw</th>
+                          <th>e266 reconstructed</th>
+                          <th>e266 actual</th>
+                          <th>Restored</th>
+                          <th>e267 actual</th>
+                          <th>e267 simulated</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="noAttackParticipantTable"></tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="chart-block">
-              <div class="chart-title">Kimi Cap Cut by Epoch</div>
-              <div class="chart model-cap-mechanics-chart" id="capWaterfallChart"></div>
-            </div>
-            <div class="chart-block">
-              <div class="chart-title">Scale Factor Timeline</div>
-              <div class="chart model-cap-mechanics-chart" id="scaleTimelineChart"></div>
-            </div>
-            <div class="chart-block">
-              <div class="chart-title">Kimi vs 75% Network Cap</div>
-              <div class="chart-note">
-                After e269, this is not new damage to participants. This is the normal 75% model-cap protection: after the e266 weight drop, Kimi tried to come back with more than 75% of the previous network weight, so the chain counted the allowed part and clipped the excess until the network recovered.
+              <div class="chart-block">
+                <div class="chart-title">Kimi Cap Cut by Epoch</div>
+                <div class="chart model-cap-mechanics-chart" id="capWaterfallChart"></div>
               </div>
-              <div class="chart model-cap-mechanics-chart" id="capPressureHeatmapChart"></div>
+              <div class="chart-block">
+                <div class="chart-title">Scale Factor Timeline</div>
+                <div class="chart model-cap-mechanics-chart" id="scaleTimelineChart"></div>
+              </div>
+              <div class="chart-block">
+                <div class="chart-title">Kimi vs 75% Network Cap</div>
+                <div class="chart-note">
+                  After e269, this is not new damage to participants. This is the normal 75% model-cap protection: after the e266 weight drop, Kimi tried to come back with more than 75% of the previous network weight, so the chain counted the allowed part and clipped the excess until the network recovered.
+                </div>
+                <div class="chart model-cap-mechanics-chart" id="capPressureHeatmapChart"></div>
+              </div>
             </div>
-          </div>
-          <div class="table-wrap compact-table" data-table-collapsible="1" data-table-collapsed="true" data-table-id="model-cap-mechanics-breakdown-table">
-            <div class="table-title">Model Cap Mechanics (epoch x model breakdown)</div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Epoch</th>
-                  <th>Model</th>
-                  <th>Raw</th>
-                  <th>Scale</th>
-                  <th>Consensus</th>
-                  <th>Cap</th>
-                  <th>Counted</th>
-                  <th>Clipped</th>
-                  <th>Headroom</th>
-                </tr>
-              </thead>
-              <tbody id="modelCapMechanicsTable"></tbody>
-            </table>
+            <div class="table-wrap compact-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Epoch</th>
+                    <th>Model</th>
+                    <th>Raw</th>
+                    <th>Scale</th>
+                    <th>Consensus</th>
+                    <th>Cap</th>
+                    <th>Counted</th>
+                    <th>Clipped</th>
+                    <th>Headroom</th>
+                  </tr>
+                </thead>
+                <tbody id="modelCapMechanicsTable"></tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div class="panel wide">
@@ -307,22 +308,24 @@
             <h2>Model Cap Factor by Epoch</h2>
             <span id="modelCapRows">-</span>
           </div>
-          <div class="chart model-cap-chart" id="modelCapChart"></div>
-          <div class="table-wrap compact-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Epoch</th>
-                  <th>Model</th>
-                  <th>Status</th>
-                  <th>Scale</th>
-                  <th>Raw</th>
-                  <th>Cap</th>
-                  <th>Pressure</th>
-                </tr>
-              </thead>
-              <tbody id="modelCapTable"></tbody>
-            </table>
+          <div class="model-cap-factor-content" data-table-collapsible="1" data-table-collapsed="true" data-table-id="model-cap-factor-content">
+            <div class="chart model-cap-chart" id="modelCapChart"></div>
+            <div class="table-wrap compact-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Epoch</th>
+                    <th>Model</th>
+                    <th>Status</th>
+                    <th>Scale</th>
+                    <th>Raw</th>
+                    <th>Cap</th>
+                    <th>Pressure</th>
+                  </tr>
+                </thead>
+                <tbody id="modelCapTable"></tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div class="panel wide">
@@ -365,27 +368,29 @@
           <div class="panel-head">
             <h2>Voter Governance Power by Address</h2>
           </div>
-          <div class="chart voter-power-chart" id="voterPowerChart"></div>
-          <div class="table-wrap compact-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Voter</th>
-                  <th>Address</th>
-                  <th>Vote</th>
-                  <th>Power</th>
-                  <th>Evidence</th>
-                </tr>
-              </thead>
-              <tbody id="voterPowerTable"></tbody>
-            </table>
+          <div class="voter-governance-body" data-table-collapsible="1" data-table-collapsed="true" data-table-id="voter-governance-body">
+            <div class="chart voter-power-chart" id="voterPowerChart"></div>
+            <div class="table-wrap compact-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Voter</th>
+                    <th>Address</th>
+                    <th>Vote</th>
+                    <th>Power</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody id="voterPowerTable"></tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div class="panel wide">
           <div class="panel-head">
             <h2>Actor Evidence Graph</h2>
           </div>
-          <div class="chart graph-chart" id="actorGraphChart"></div>
+          <div class="chart graph-chart" id="actorGraphChart" data-table-collapsible="1" data-table-collapsed="true" data-table-id="actor-evidence-graph"></div>
         </div>
         <div class="panel wide">
           <div class="panel-head">
@@ -444,7 +449,7 @@
             <h2>Voting-End Timing Leads</h2>
             <span id="entryExitRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="voting-end-timing-leads-table">
             <table>
               <thead>
                 <tr>
@@ -471,7 +476,7 @@
             <h2>Benefit + Power Matrix</h2>
             <span id="benefitPowerRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="benefit-power-matrix-table">
             <table>
               <thead>
                 <tr>
@@ -494,7 +499,7 @@
             <h2>Public Name Enrichment</h2>
             <span id="publicNameRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="public-name-enrichment-table">
             <table>
               <thead>
                 <tr>
@@ -720,7 +725,7 @@
             <h2>Recipients</h2>
             <span id="recipientRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="recipients-table">
             <table>
               <thead>
                 <tr>
@@ -742,7 +747,7 @@
             <h2>Final Voters</h2>
             <span id="voteRows">-</span>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap" data-table-collapsible="1" data-table-collapsed="true" data-table-id="final-voters-table">
             <table>
               <thead>
                 <tr>
@@ -819,7 +824,9 @@
           <h2>Searchable Address Index</h2>
           <span id="searchIndexRows">-</span>
         </div>
-        <div class="search-index" id="searchIndex"></div>
+        <div class="search-index-collapsible" data-table-collapsible="1" data-table-collapsed="true" data-table-id="searchable-address-index">
+          <div class="search-index" id="searchIndex"></div>
+        </div>
       </section>
     </main>
 

@@ -3569,10 +3569,12 @@ function ensureTableTitles() {
 }
 
 function initCollapsibleTables() {
-  document.querySelectorAll(".panel .table-wrap[data-table-collapsible='1']").forEach((wrap) => {
+  document.querySelectorAll(".panel [data-table-collapsible='1']").forEach((wrap) => {
     const panel = wrap.closest(".panel");
+    if (!panel) return;
+    if (wrap === panel) return;
     const heading = panel?.querySelector(":scope > .panel-head");
-    if (!panel || !heading) return;
+    if (!heading) return;
     if (heading.querySelector(".table-toggle")) return;
 
     const collapsed = wrap.dataset.tableCollapsed === "true";
@@ -3584,7 +3586,7 @@ function initCollapsibleTables() {
     const toggle = document.createElement("button");
     toggle.type = "button";
     toggle.className = "table-toggle";
-    const label = () => (wrap.classList.contains("hidden") ? "Show table" : "Hide table");
+    const label = () => (wrap.classList.contains("hidden") ? "Show section" : "Hide section");
     toggle.textContent = label();
     toggle.setAttribute("aria-expanded", String(!wrap.classList.contains("hidden")));
 
