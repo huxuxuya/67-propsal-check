@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Proposal #67 Forensic Dashboard</title>
-    <link rel="stylesheet" href="assets/styles.css?v=20260613-1">
+    <link rel="stylesheet" href="assets/styles.css?v=20260613-2">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
     <script src="data/dashboard.js?v=20260613-1"></script>
   </head>
@@ -287,9 +287,15 @@
                 </div>
                 <div class="chart model-cap-mechanics-chart" id="capRecoveryChart"></div>
                 <div class="no-attack-evidence">
-                  <div class="chart-title">No e266 Attack Reconstruction</div>
+                  <div class="chart-block-head">
+                    <div class="chart-title">No Attack Reconstruction (e265-e267)</div>
+                    <div class="segmented" role="tablist" aria-label="Reconstruction source">
+                      <button class="active" data-reconstruction-variant="compensation" type="button">Compensation package</button>
+                      <button data-reconstruction-variant="fullCpoc" type="button">Full CPoC scan</button>
+                    </div>
+                  </div>
                   <div class="chart-note">
-                    Baseline uses e255 participation and scale, then rebuilds e266 from participant/model commits at epoch entry: raw commit count × model scale factor. e267 keeps actual rows and only carries forward entry participant/model rows that did not appear in e267.
+                    Compact view compares what happened with the no-attack reconstruction. Use the package mode for the proposal math, or the full CPoC scan to inspect all saved Kimi/Qwen checkpoints.
                   </div>
                   <div class="no-attack-flow" id="noAttackFlow"></div>
                   <div class="no-attack-model-matrix" id="noAttackModelMatrix"></div>
@@ -855,6 +861,6 @@
     </aside>
     <div class="scrim" id="scrim"></div>
 
-    <script src="assets/app.js?v=20260613-1"></script>
+    <script src="assets/app.js?v=20260613-2"></script>
   </body>
 </html>

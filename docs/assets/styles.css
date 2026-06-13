@@ -413,14 +413,25 @@ select {
   display: grid;
   gap: 8px;
   margin: 0 0 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.no-attack-axis-note {
+  min-width: 980px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 0 8px 2px;
 }
 
 .no-attack-matrix-head,
 .no-attack-matrix-row {
   display: grid;
-  grid-template-columns: 170px minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: 160px repeat(3, minmax(260px, 1fr));
   gap: 10px;
   align-items: stretch;
+  min-width: 980px;
 }
 
 .no-attack-matrix-head {
@@ -442,6 +453,193 @@ select {
   display: grid;
   gap: 7px;
   align-content: start;
+}
+
+.no-attack-model-name {
+  min-width: 0;
+}
+
+.no-attack-model-name .muted {
+  overflow-wrap: anywhere;
+}
+
+.no-attack-epoch-group {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  align-content: start;
+}
+
+.recon-cell {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid rgba(167, 175, 186, 0.15);
+  border-radius: 8px;
+  background: rgba(16, 17, 20, 0.36);
+}
+
+.recon-cell.is-empty {
+  min-height: 96px;
+  place-items: center;
+  color: var(--muted);
+}
+
+.recon-cell-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.recon-cell-head strong {
+  min-width: 0;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recon-bars {
+  display: grid;
+  gap: 5px;
+}
+
+.recon-bar-row {
+  display: grid;
+  grid-template-columns: 72px minmax(62px, 1fr) 72px;
+  gap: 7px;
+  align-items: center;
+  min-width: 0;
+  font-size: 11px;
+}
+
+.recon-bar-row span {
+  min-width: 0;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recon-bar-row i {
+  height: 8px;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(167, 175, 186, 0.14);
+}
+
+.recon-bar-row b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.recon-bar-row strong {
+  min-width: 0;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recon-delta {
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.recon-meta {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.no-attack-epoch-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid rgba(167, 175, 186, 0.15);
+  border-radius: 8px;
+  background: rgba(16, 17, 20, 0.36);
+}
+
+.no-attack-epoch-card.is-actual {
+  background: rgba(167, 175, 186, 0.08);
+}
+
+.no-attack-epoch-card.is-simulated {
+  border-color: rgba(77, 183, 168, 0.28);
+  background: rgba(77, 183, 168, 0.07);
+}
+
+.no-attack-epoch-title {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.no-attack-epoch-title strong {
+  font-size: 12px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.no-attack-epoch-title span,
+.no-attack-weight-grid span {
+  color: var(--muted);
+  font-size: 11px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.no-attack-primary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 5px 8px;
+  align-items: center;
+  min-width: 0;
+  font-size: 12px;
+}
+
+.no-attack-primary span:first-child {
+  color: var(--muted);
+}
+
+.no-attack-primary strong {
+  min-width: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.no-attack-primary .bar-track {
+  grid-column: 1 / -1;
+}
+
+.no-attack-weight-grid {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 3px 8px;
+  align-items: baseline;
+  font-size: 12px;
+}
+
+.no-attack-weight-grid strong {
+  min-width: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .bar-compare {
@@ -929,11 +1127,6 @@ a {
 
   .no-attack-flow {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .no-attack-matrix-head,
-  .no-attack-matrix-row {
-    grid-template-columns: 1fr;
   }
 }
 

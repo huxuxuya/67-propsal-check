@@ -17,6 +17,8 @@ VISIBLE_DAMAGE_E265 = Decimal("30592.10")
 EXPECTED_TOTAL = Decimal("946509.93")
 ROUND_TOLERANCE = Decimal("0.01")
 EPOCHS = list(range(265, 277))
+KIMI_MODEL = "moonshotai/Kimi-K2.6"
+QWEN_MODEL = "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8"
 
 OPTION_NAMES = {
     1: "yes",
@@ -754,6 +756,265 @@ def _build_no_attack_participant_rows(raw_epochs, rows_by_epoch):
     return rows, summary_by_model, entry_source
 
 
+def _build_e265_cpoc_reconstruction():
+    healthy_group = load_upstream_epoch_group(265, "healthy")
+    end_group = load_upstream_epoch_group(265, "end")
+    commits_payload = load_optional_json(UPSTREAM / "e265" / "epoch265_commits.json", {})
+    compensation_payload = load_optional_json(UPSTREAM / "e265" / "compensation_265.json", {})
+    commits = commits_payload.get("commits") if isinstance(commits_payload, dict) else []
+    healthy_map = {
+        item.get("member_address"): item
+        for item in healthy_group.get("validation_weights") or []
+        if item.get("member_address")
+    }
+    end_map = {
+        item.get("member_address"): item
+        for item in end_group.get("validation_weights") or []
+        if item.get("member_address")
+    }
+    affected_by_model = defaultdict(set)
+    for item in compensation_payload.get("compensation") or []:
+        address = item.get("address")
+        if not address:
+            continue
+        affected_by_model[KIMI_MODEL].add(address)
+    by_model = defaultdict(set)
+    for commit in commits or []:
+        model_id = commit.get("model_id")
+        address = commit.get("participant_address")
+        if model_id and address:
+            by_model[model_id].add(address)
+
+    rows = []
+    for model_id, addresses in sorted(by_model.items(), key=lambda item: _model_label(item[0])):
+        affected = affected_by_model.get(model_id, set())
+        healthy_cw = sum(int(healthy_map.get(address, {}).get("confirmation_weight") or 0) for address in addresses)
+        end_cw = sum(int(end_map.get(address, {}).get("confirmation_weight") or 0) for address in addresses)
+        affected_healthy_cw = sum(int(healthy_map.get(address, {}).get("confirmation_weight") or 0) for address in affected)
+        affected_end_cw = sum(int(end_map.get(address, {}).get("confirmation_weight") or 0) for address in affected)
+        affected_weight = sum(int(end_map.get(address, {}).get("weight") or 0) for address in affected)
+        comp_rows = [row for row in compensation_payload.get("compensation") or [] if row.get("address") in affected]
+        correct_reward = sum((_decimal_or_zero(row.get("correct_reward_gonka")) for row in comp_rows), Decimal(0))
+        actual_reward = sum((_decimal_or_zero(row.get("actual_rewards_gonka")) for row in comp_rows), Decimal(0))
+        compensation = sum((_decimal_or_zero(row.get("compensation_gonka")) for row in comp_rows), Decimal(0))
+        rows.append(
+            {
+                "epoch": 265,
+                "modelId": model_id,
+                "modelLabel": _model_label(model_id),
+                "participantCount": len(addresses),
+                "affectedParticipantCount": len(affected),
+                "healthyConfirmationWeight": healthy_cw,
+                "endConfirmationWeight": end_cw,
+                "confirmationWeightDrop": max(0, healthy_cw - end_cw),
+                "affectedHealthyConfirmationWeight": affected_healthy_cw,
+                "affectedEndConfirmationWeight": affected_end_cw,
+                "affectedConfirmationWeightDrop": max(0, affected_healthy_cw - affected_end_cw),
+                "affectedWeight": affected_weight,
+                "correctRewardGonka": as_float(correct_reward),
+                "actualRewardGonka": as_float(actual_reward),
+                "compensationGonka": as_float(compensation),
+                "source": "upstream_e265_healthy_vs_end_cpoc",
+                "healthyHeight": compensation_payload.get("cpoc_cutoff_height") or 4103170,
+            }
+        )
+    return rows
+
+
+def _address_model_map_for_epoch(epoch):
+    payload = load_optional_json(UPSTREAM / f"e{epoch}" / f"epoch{epoch}_commits.json", {})
+    commits = payload.get("commits") if isinstance(payload, dict) else []
+    by_address = defaultdict(set)
+    for commit in commits or []:
+        address = commit.get("participant_address")
+        model_id = commit.get("model_id")
+        if address and model_id:
+            by_address[address].add(model_id)
+    return by_address
+
+
+def _build_full_cpoc_reconstruction_rows():
+    manifest_epochs = cpoc_manifest_epochs()
+    rows = []
+    for epoch in [265, 266, 267]:
+        manifest_epoch = manifest_epochs.get(epoch)
+        if not manifest_epoch:
+            continue
+        start_checkpoint = next((row for row in manifest_epoch.get("checkpoints") or [] if row.get("kind") == "start"), None)
+        cpoc_checkpoints = [row for row in manifest_epoch.get("checkpoints") or [] if row.get("kind") == "cpoc" and row.get("file")]
+        if not start_checkpoint or not cpoc_checkpoints:
+            continue
+        start_weights = cpoc_epoch_weights_from_group(load_cpoc_snapshot_file(start_checkpoint["file"]))
+        model_by_address = _address_model_map_for_epoch(epoch)
+        cpoc_weights = [
+            (checkpoint, cpoc_epoch_weights_from_group(load_cpoc_snapshot_file(checkpoint["file"])))
+            for checkpoint in cpoc_checkpoints
+        ]
+        for model_id in [KIMI_MODEL, QWEN_MODEL]:
+            addresses = sorted(address for address, models in model_by_address.items() if model_id in models)
+            if not addresses:
+                continue
+            start_confirmation = sum(start_weights.get(address, {}).get("confirmationWeight") or 0 for address in addresses)
+            min_confirmation = start_confirmation
+            min_checkpoint = None
+            affected = set()
+            for checkpoint, weights in cpoc_weights:
+                total = sum(weights.get(address, {}).get("confirmationWeight") or 0 for address in addresses)
+                if total < min_confirmation:
+                    min_confirmation = total
+                    min_checkpoint = checkpoint
+                for address in addresses:
+                    start = start_weights.get(address, {}).get("confirmationWeight") or 0
+                    current = weights.get(address, {}).get("confirmationWeight") or 0
+                    if start > 0 and current < start:
+                        affected.add(address)
+            rows.append(
+                {
+                    "epoch": epoch,
+                    "modelId": model_id,
+                    "modelLabel": _model_label(model_id),
+                    "metricType": "cpoc_confirmation_scan",
+                    "participantCount": len(addresses),
+                    "affectedParticipantCount": len(affected),
+                    "attackedValue": min_confirmation,
+                    "reconstructedValue": start_confirmation,
+                    "delta": max(0, start_confirmation - min_confirmation),
+                    "source": "full_cpoc_snapshot_scan",
+                    "checkpointCount": len(cpoc_checkpoints),
+                    "worstCheckpointIndex": min_checkpoint.get("index") if min_checkpoint else None,
+                    "worstCheckpointHeight": min_checkpoint.get("height") if min_checkpoint else None,
+                }
+            )
+    return rows
+
+
+def _build_reconstruction_comparison(e265_cpoc_rows, participant_summary_by_model, scenario_rows):
+    scenario_by_epoch_model = {
+        (row.get("epoch"), row.get("modelId")): row
+        for row in scenario_rows
+    }
+    e265_by_model = {row["modelId"]: row for row in e265_cpoc_rows}
+    full_cpoc_rows = _build_full_cpoc_reconstruction_rows()
+    full_cpoc_by_epoch_model = {
+        (row["epoch"], row["modelId"]): row
+        for row in full_cpoc_rows
+    }
+    model_ids = sorted(
+        {
+            *(row["modelId"] for row in participant_summary_by_model),
+            *(row["modelId"] for row in e265_cpoc_rows),
+            *(row["modelId"] for row in full_cpoc_rows),
+        },
+        key=_model_label,
+    )
+
+    compensation_epochs = []
+    for model_id in model_ids:
+        e265 = e265_by_model.get(model_id, {})
+        if e265:
+            compensation_epochs.append(
+                {
+                    "variant": "compensation",
+                    "epoch": 265,
+                    "modelId": model_id,
+                    "modelLabel": _model_label(model_id),
+                    "metricType": "cpoc_confirmation",
+                    "attackedLabel": "With attack",
+                    "reconstructedLabel": "No attack",
+                    "attackedValue": e265.get("affectedEndConfirmationWeight") if e265.get("affectedParticipantCount") else e265.get("endConfirmationWeight", 0),
+                    "reconstructedValue": e265.get("affectedHealthyConfirmationWeight") if e265.get("affectedParticipantCount") else e265.get("healthyConfirmationWeight", 0),
+                    "delta": e265.get("affectedConfirmationWeightDrop") if e265.get("affectedParticipantCount") else e265.get("confirmationWeightDrop", 0),
+                    "affectedParticipants": e265.get("affectedParticipantCount", 0),
+                    "compensationGonka": e265.get("compensationGonka", 0),
+                    "sourceLabel": "compensation_265 healthy vs end CPoC",
+                    "detail": "healthy confirmation vs epoch-end confirmation",
+                }
+            )
+        e266 = scenario_by_epoch_model.get((266, model_id), {})
+        if e266:
+            actual_scaled = int(_decimal_or_zero(e266.get("actualRawWeight")) * _decimal_or_zero(e266.get("weightScaleFactor")))
+            compensation_epochs.append(
+                {
+                    "variant": "compensation",
+                    "epoch": 266,
+                    "modelId": model_id,
+                    "modelLabel": _model_label(model_id),
+                    "metricType": "model_weight",
+                    "attackedLabel": "With attack",
+                    "reconstructedLabel": "No attack",
+                    "attackedValue": e266.get("actualCountedWeight", actual_scaled),
+                    "reconstructedValue": e266.get("countedWeight", 0),
+                    "delta": max(0, e266.get("countedWeight", 0) - e266.get("actualCountedWeight", actual_scaled)),
+                    "affectedParticipants": next((row.get("entryRows", 0) for row in participant_summary_by_model if row["modelId"] == model_id), 0),
+                    "compensationGonka": 0,
+                    "sourceLabel": "e266 entry commits reconstruction",
+                    "detail": "actual counted vs rebuilt counted weight",
+                }
+            )
+        e267 = scenario_by_epoch_model.get((267, model_id), {})
+        if e267:
+            actual_counted = e267.get("actualCountedWeight", 0)
+            compensation_epochs.append(
+                {
+                    "variant": "compensation",
+                    "epoch": 267,
+                    "modelId": model_id,
+                    "modelLabel": _model_label(model_id),
+                    "metricType": "cap_basis",
+                    "attackedLabel": "Actual",
+                    "reconstructedLabel": "Simulated",
+                    "attackedValue": actual_counted,
+                    "reconstructedValue": e267.get("countedWeight", 0),
+                    "delta": e267.get("countedWeight", 0) - actual_counted,
+                    "affectedParticipants": next((row.get("carriedRows", 0) for row in participant_summary_by_model if row["modelId"] == model_id), 0),
+                    "compensationGonka": 0,
+                    "sourceLabel": "no-attack carry-forward simulation",
+                    "detail": "actual counted vs simulated counted weight",
+                }
+            )
+
+    full_epochs = []
+    for model_id in model_ids:
+        for epoch in [265, 266, 267]:
+            row = full_cpoc_by_epoch_model.get((epoch, model_id))
+            if not row:
+                continue
+            full_epochs.append(
+                {
+                    "variant": "fullCpoc",
+                    "epoch": epoch,
+                    "modelId": model_id,
+                    "modelLabel": _model_label(model_id),
+                    "metricType": "cpoc_confirmation_scan",
+                    "attackedLabel": "Worst CPoC",
+                    "reconstructedLabel": "Start CPoC",
+                    "attackedValue": row["attackedValue"],
+                    "reconstructedValue": row["reconstructedValue"],
+                    "delta": row["delta"],
+                    "affectedParticipants": row["affectedParticipantCount"],
+                    "compensationGonka": 0,
+                    "sourceLabel": f"full CPoC scan ({row['checkpointCount']} checkpoints)",
+                    "detail": f"worst checkpoint #{row.get('worstCheckpointIndex') or '-'} height {row.get('worstCheckpointHeight') or '-'}",
+                }
+            )
+
+    return {
+        "defaultVariant": "compensation",
+        "variants": {
+            "compensation": {
+                "label": "Compensation package",
+                "description": "Uses the same compensation inputs as the restitution package.",
+                "rows": compensation_epochs,
+            },
+            "fullCpoc": {
+                "label": "Full CPoC scan",
+                "description": "Scans all saved CPoC checkpoints for Kimi and Qwen, not only compensated rows.",
+                "rows": full_epochs,
+            },
+        },
+    }
+
+
 def build_no_attack_e266_cap_scenario(rows, raw_epochs):
     by_epoch = defaultdict(list)
     for row in rows:
@@ -762,6 +1023,7 @@ def build_no_attack_e266_cap_scenario(rows, raw_epochs):
         by_epoch[int(row["epoch"])].append(row)
 
     participant_rows, participant_summary_by_model, entry_source = _build_no_attack_participant_rows(raw_epochs, by_epoch)
+    e265_cpoc_rows = _build_e265_cpoc_reconstruction()
     participant_summary_by_epoch_model = {
         (266, row["modelId"]): row["entryRawWeight"]
         for row in participant_summary_by_model
@@ -880,6 +1142,8 @@ def build_no_attack_e266_cap_scenario(rows, raw_epochs):
             "participantSummaryByModel": participant_summary_by_model,
             "entrySource": entry_source,
         },
+        "reconstructionComparison": _build_reconstruction_comparison(e265_cpoc_rows, participant_summary_by_model, scenario_rows),
+        "e265CpocReconstructionByModel": e265_cpoc_rows,
         "participantRows": participant_rows,
         "rows": scenario_rows,
     }

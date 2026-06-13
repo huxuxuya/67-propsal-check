@@ -15,6 +15,7 @@ const state = {
   timelineSort: "maxWeight",
   kimiScaleScenario: "actual",
   kimiScaleLocked: false,
+  reconstructionVariant: "compensation",
   kimiFixedRawWeight: 400000,
   kimiDipRawWeight: 50000,
   kimiFixedQwenWeight: 300000,
@@ -425,6 +426,13 @@ function setupFilters(data) {
       state.timelineSort = button.dataset.timelineSort;
       document.querySelectorAll("[data-timeline-sort]").forEach((item) => item.classList.toggle("active", item === button));
       renderAttackTimeline();
+    });
+  });
+  document.querySelectorAll("[data-reconstruction-variant]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.reconstructionVariant = button.dataset.reconstructionVariant || "compensation";
+      document.querySelectorAll("[data-reconstruction-variant]").forEach((item) => item.classList.toggle("active", item === button));
+      renderModelCapMechanics();
     });
   });
   const kimiScaleLockInput = document.getElementById("kimiScaleLock125");
@@ -984,20 +992,13 @@ function renderNoAttackEvidence(payload) {
   const byModel = summary.participantSummaryByModel || [];
   const participantRows = scenario.participantRows || [];
   const scenarioRows = scenario.rows || [];
-  const modelSummary = (label) => byModel.find((row) => (row.modelLabel || "").toLowerCase() === label.toLowerCase()) || {};
-  const kimi = modelSummary("Kimi");
-  const qwen = modelSummary("Qwen");
+  const comparison = scenario.reconstructionComparison || { defaultVariant: "compensation", variants: {} };
+  const selectedVariantKey = state.reconstructionVariant || comparison.defaultVariant || "compensation";
+  const selectedVariant = comparison.variants?.[selectedVariantKey] || comparison.variants?.[comparison.defaultVariant] || Object.values(comparison.variants || {})[0] || { rows: [], label: "Reconstruction" };
+  const comparisonRows = selectedVariant.rows || [];
   const entryTotal = byModel.reduce((sum, row) => sum + (row.entryScaledWeight || 0), 0);
-  const baselineTotal = byModel.reduce((sum, row) => sum + (row.e255ActualScaledWeight || 0), 0);
   const restoredTotal = byModel.reduce((sum, row) => sum + (row.e266RestoredScaledWeight || 0), 0);
-  const carriedTotal = byModel.reduce((sum, row) => sum + (row.e267CarryScaledWeight || 0), 0);
-  const carriedRows = byModel.reduce((sum, row) => sum + (row.carriedRows || 0), 0);
   const entrySource = summary.entrySource || {};
-  const epoch265ByModel = new Map(
-    scenarioRows
-      .filter((row) => row.epoch === 265)
-      .map((row) => [row.modelLabel || row.modelId, row]),
-  );
   const epochModelRows = scenarioRows
     .filter((row) => (row.modelLabel || "").toLowerCase() === "kimi" || (row.modelLabel || "").toLowerCase() === "qwen")
     .slice()
@@ -1007,52 +1008,84 @@ function renderNoAttackEvidence(payload) {
     reconstructed_from_e266_entry_commits: "Rebuilt from e266 entries",
     actual_e267_plus_e266_entry_carry: "Actual e267 + carry from e266 entries",
   };
-  const maxModelWeight = Math.max(
+  const maxCompareValue = Math.max(
     1,
-    ...byModel.flatMap((row) => [
-      (epoch265ByModel.get(row.modelLabel || row.modelId)?.scaledWeight || 0),
-      row.entryScaledWeight || 0,
-      row.e266ActualScaledWeight || 0,
-      row.e267ActualScaledWeight || 0,
-      (row.e267ActualScaledWeight || 0) + (row.e267CarryScaledWeight || 0),
-    ]),
+    ...comparisonRows.flatMap((row) => [Math.abs(row.attackedValue || 0), Math.abs(row.reconstructedValue || 0)]),
   );
-  const barWidth = (value) => `${Math.max(2, Math.min(100, ((value || 0) / maxModelWeight) * 100))}%`;
-  const modelRows = byModel
-    .slice()
-    .sort((a, b) => (a.modelLabel || "").localeCompare(b.modelLabel || ""));
+  const compareBarWidth = (value) => `${Math.max(2, Math.min(100, (Math.abs(value || 0) / maxCompareValue) * 100))}%`;
+  const metricLabel = {
+    cpoc_confirmation: "CPoC confirmation",
+    cpoc_confirmation_scan: "CPoC confirmation",
+    model_weight: "counted weight",
+    cap_basis: "counted weight",
+  };
+  const metricBadge = {
+    cpoc_confirmation: "CPoC",
+    cpoc_confirmation_scan: "CPoC scan",
+    model_weight: "Entry",
+    cap_basis: "Cap",
+  };
+  const totalDelta = comparisonRows.reduce((sum, row) => sum + Math.max(0, row.delta || 0), 0);
+  const totalAffected = comparisonRows.reduce((sum, row) => sum + (row.affectedParticipants || 0), 0);
+  const totalCompensation = comparisonRows.reduce((sum, row) => sum + (row.compensationGonka || 0), 0);
+  const models = [...new Set(comparisonRows.map((row) => row.modelLabel || row.modelId).filter(Boolean))].sort();
+  const epochs = [265, 266, 267];
+  const comparisonByModelEpoch = new Map(comparisonRows.map((row) => [`${row.modelLabel || row.modelId}|${row.epoch}`, row]));
+  const storyCell = (row, color) => {
+    if (!row) return `<div class="recon-cell is-empty"><span>No saved data</span></div>`;
+    const deltaClass = (row.delta || 0) >= 0 ? "warn-text" : "good-text";
+    return `
+      <div class="recon-cell">
+        <div class="recon-cell-head">
+          <span class="tag">${escapeHtml(metricBadge[row.metricType] || row.metricType || "Metric")}</span>
+          <strong>${escapeHtml(metricLabel[row.metricType] || "value")}</strong>
+        </div>
+        <div class="recon-bars">
+          <div class="recon-bar-row">
+            <span>${escapeHtml(row.attackedLabel || "With attack")}</span>
+            <i><b style="width:${compareBarWidth(row.attackedValue)}; background:rgba(217,101,95,.72)"></b></i>
+            <strong>${fmt.format(row.attackedValue || 0)}</strong>
+          </div>
+          <div class="recon-bar-row">
+            <span>${escapeHtml(row.reconstructedLabel || "No attack")}</span>
+            <i><b style="width:${compareBarWidth(row.reconstructedValue)}; background:${color}"></b></i>
+            <strong>${fmt.format(row.reconstructedValue || 0)}</strong>
+          </div>
+        </div>
+        <div class="recon-delta ${deltaClass}">
+          ${row.delta >= 0 ? "+" : "-"}${fmt.format(Math.abs(row.delta || 0))} ${escapeHtml(metricLabel[row.metricType] || "delta")}
+        </div>
+        <div class="recon-meta">
+          ${fmt.format(row.affectedParticipants || 0)} affected
+          ${row.compensationGonka ? ` · ${gonka(row.compensationGonka)} comp` : ""}
+          <br>${escapeHtml(row.sourceLabel || "")}
+          ${row.detail ? `<br>${escapeHtml(row.detail)}` : ""}
+        </div>
+      </div>
+    `;
+  };
 
   if (els.noAttackFlow) {
     els.noAttackFlow.innerHTML = [
       {
-        title: "e255 baseline",
-        metric: fmt.format(baselineTotal),
-        text: "actual baseline before the attack (scaled)",
+        title: "Mode",
+        metric: selectedVariant.label || selectedVariantKey,
+        text: selectedVariant.description || "",
       },
       {
-        title: "e265 reference",
-        metric: fmt.format(summary.e265RebuiltTotalWeight || 0),
-        text: "epoch 265 pre-attack reference total root weight",
+        title: "Restored delta",
+        metric: fmt.format(totalDelta),
+        text: "sum of visible deltas in the selected reconstruction mode",
       },
       {
-        title: "e266 with attack",
-        metric: fmt.format(summary.e266ActualRootTotalWeight || 0),
-        text: "actual end-of-epoch total_weight after the attack",
+        title: "Affected rows",
+        metric: fmt.format(totalAffected),
+        text: selectedVariantKey === "fullCpoc" ? "participants degraded in saved CPoC checkpoints" : "participants/rows used by package reconstruction",
       },
       {
-        title: "e266 no attack",
-        metric: fmt.format(summary.e266SimulatedRootTotalWeight || 0),
-        text: `counted after cap from reconstructed entry weight`,
-      },
-      {
-        title: "e267 actual basis",
-        metric: fmt.format(summary.e267ActualCapBasis || 0),
-        text: "actual e266 collapse became the normal e267 cap basis",
-      },
-      {
-        title: "e267 no-attack carry",
-        metric: fmt.format(carriedTotal),
-        text: `${fmt.format(carriedRows)} participant/model rows carried into e267`,
+        title: "Package compensation",
+        metric: gonka(totalCompensation),
+        text: "shown only when the selected rows carry direct compensation amounts",
       },
     ].map((card) => `
       <div class="no-attack-card">
@@ -1065,85 +1098,32 @@ function renderNoAttackEvidence(payload) {
 
   if (els.noAttackModelMatrix) {
     els.noAttackModelMatrix.innerHTML = `
+      <div class="no-attack-axis-note">
+        One row is one model. One column is one epoch. Each cell shows what happened versus the selected reconstruction source.
+      </div>
       <div class="no-attack-matrix-head">
         <div>Model</div>
-        <div>Epoch 265 actual</div>
-        <div>Epoch 255 baseline</div>
-        <div>Epoch 266: with attack -> no attack</div>
-        <div>Epoch 267: actual -> simulated</div>
+        <div>e265</div>
+        <div>e266</div>
+        <div>e267</div>
       </div>
-      ${modelRows.map((row) => {
-        const color = modelCapColor(row.modelLabel);
-        const e265 = epoch265ByModel.get(row.modelLabel || row.modelId) || {};
-        const e265Raw = e265.rawWeight || 0;
-        const e265Scaled = e265.scaledWeight || 0;
-        const e266Actual = row.e266ActualScaledWeight || 0;
-        const e266NoAttack = row.entryScaledWeight || 0;
-        const e265Source = e265.rawSource || "actual_epoch";
-        const e265SourceLabel = {
-          actual_epoch: "actual",
-          reconstructed_from_e266_entry_commits: "rebuilt",
-          actual_e267_plus_e266_entry_carry: "carried",
-        };
-        const e255Actual = row.e255ActualScaledWeight || 0;
-        const e255ActualRaw = row.e255ActualRawWeight || 0;
-        const e266Delta = e266NoAttack - e266Actual;
-        const e267Actual = row.e267ActualScaledWeight || 0;
-        const e267NoAttack = e267Actual + (row.e267CarryScaledWeight || 0);
+      ${models.map((model, index) => {
+        const color = modelCapColor(model, index);
+        const modelRows = comparisonRows.filter((row) => (row.modelLabel || row.modelId) === model);
+        const affected = modelRows.reduce((sum, row) => sum + (row.affectedParticipants || 0), 0);
+        const delta = modelRows.reduce((sum, row) => sum + Math.max(0, row.delta || 0), 0);
         return `
           <div class="no-attack-matrix-row">
             <div class="no-attack-model-name">
-              <span class="tag" style="border-color:${color}">${escapeHtml(row.modelLabel || row.modelId)}</span>
-              <span class="muted">${fmt.format(row.entryRows || 0)} entry rows</span>
+              <span class="tag" style="border-color:${color}">${escapeHtml(model)}</span>
+              <span class="muted">${fmt.format(affected)} affected · ${fmt.format(delta)} total delta</span>
             </div>
-            <div class="no-attack-epoch-cell">
-              <div class="bar-compare">
-                <span class="bar-label">${e265SourceLabel[e265Source] || e265Source}</span>
-                <span class="bar-track"><i style="width:${barWidth(e265Scaled)}; background:${color}; opacity:.2"></i></span>
-                <strong>${fmt.format(e265Scaled)}</strong><span class="muted">raw ${fmt.format(e265Raw)}</span>
-              </div>
-            </div>
-            <div class="no-attack-epoch-cell">
-              <div class="bar-compare">
-                <span class="bar-label">baseline</span>
-                <span class="bar-track"><i style="width:${barWidth(e255Actual)}; background:${color}; opacity:.22"></i></span>
-                <strong>${fmt.format(e255Actual)}</strong><span class="muted"> / raw ${fmt.format(e255ActualRaw)}</span>
-              </div>
-              <div class="bar-compare">
-                <span class="bar-label">with attack</span>
-                <span class="bar-track"><i style="width:${barWidth(e266Actual)}; background:${color}; opacity:.38"></i></span>
-                <strong>${fmt.format(e266Actual)}</strong>
-              </div>
-              <div class="bar-compare">
-                <span class="bar-label">no attack</span>
-                <span class="bar-track"><i style="width:${barWidth(e266NoAttack)}; background:${color}"></i></span>
-                <strong>${fmt.format(e266NoAttack)}</strong>
-              </div>
-              <div class="matrix-note ${e266Delta >= 0 ? "warn-text" : "muted"}">
-                restored lost participant/model weight ${fmt.format(row.e266RestoredScaledWeight || 0)}
-                ${e266Delta < 0 ? `; aggregate no-attack is ${fmt.format(Math.abs(e266Delta))} lower because actual e266 includes rows without entry commits` : ""}
-              </div>
-            </div>
-            <div class="no-attack-epoch-cell">
-              <div class="bar-compare">
-                <span class="bar-label">actual e267</span>
-                <span class="bar-track"><i style="width:${barWidth(e267Actual)}; background:${color}; opacity:.38"></i></span>
-                <strong>${fmt.format(e267Actual)}</strong>
-              </div>
-              <div class="bar-compare">
-                <span class="bar-label">simulated</span>
-                <span class="bar-track"><i style="width:${barWidth(e267NoAttack)}; background:${color}"></i></span>
-                <strong>${fmt.format(e267NoAttack)}</strong>
-              </div>
-              <div class="matrix-note ${row.e267CarryScaledWeight ? "good-text" : "muted"}">
-                ${fmt.format(row.carriedRows || 0)} not-entered rows carried, weight ${fmt.format(row.e267CarryScaledWeight || 0)}
-              </div>
-            </div>
+            ${epochs.map((epoch) => storyCell(comparisonByModelEpoch.get(`${model}|${epoch}`), color)).join("")}
           </div>
         `;
       }).join("")}
       <div class="no-attack-source-note">
-        Entry reconstruction source: ${escapeHtml(entrySource.measure || "unknown")} from ${escapeHtml(entrySource.source || "unknown")}. Reconstructed entry before cap: ${fmt.format(entryTotal)}; restored e266 participant/model loss: ${fmt.format(restoredTotal)}.
+        Package entry reconstruction source: ${escapeHtml(entrySource.measure || "unknown")} from ${escapeHtml(entrySource.source || "unknown")}. Reconstructed entry before cap: ${fmt.format(entryTotal)}; restored e266 participant/model loss: ${fmt.format(restoredTotal)}.
       </div>
     `;
   }
