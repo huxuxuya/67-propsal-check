@@ -3567,6 +3567,36 @@ function ensureTableTitles() {
   });
 }
 
+function initCollapsibleTables() {
+  document.querySelectorAll(".panel .table-wrap[data-table-collapsible='1']").forEach((wrap) => {
+    const panel = wrap.closest(".panel");
+    const heading = panel?.querySelector(":scope > .panel-head");
+    if (!panel || !heading) return;
+    if (heading.querySelector(".table-toggle")) return;
+
+    const collapsed = wrap.dataset.tableCollapsed === "true";
+    if (collapsed) {
+      wrap.classList.add("hidden");
+    }
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "table-toggle";
+    const label = () => (wrap.classList.contains("hidden") ? "Show table" : "Hide table");
+    toggle.textContent = label();
+    toggle.setAttribute("aria-expanded", String(!wrap.classList.contains("hidden")));
+
+    toggle.addEventListener("click", () => {
+      wrap.classList.toggle("hidden");
+      wrap.dataset.tableCollapsed = String(wrap.classList.contains("hidden"));
+      toggle.textContent = label();
+      toggle.setAttribute("aria-expanded", String(!wrap.classList.contains("hidden")));
+    });
+
+    heading.appendChild(toggle);
+  });
+}
+
 function claimSourceLine(row) {
   if (row.chatMessageId || row.chatAuthor || row.chatName) {
     return [

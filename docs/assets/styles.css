@@ -616,6 +616,22 @@ select {
   max-height: 520px;
 }
 
+.table-toggle {
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  min-height: 30px;
+}
+
+.table-toggle:hover {
+  border-color: rgba(77, 183, 168, 0.45);
+  color: var(--accent);
+}
+
 .table-title {
   color: var(--muted);
   font-size: 12px;
