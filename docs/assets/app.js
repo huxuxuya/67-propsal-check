@@ -59,6 +59,7 @@ const els = {
   epochTable: document.getElementById("epochTable"),
   recipientTable: document.getElementById("recipientTable"),
   voteTable: document.getElementById("voteTable"),
+  matrixInterestSummary: document.getElementById("matrixInterestSummary"),
   strictClusterTable: document.getElementById("strictClusterTable"),
   signalClusterTable: document.getElementById("signalClusterTable"),
   recipientCompByWindowTable: document.getElementById("recipientCompByWindowTable"),
@@ -2231,6 +2232,43 @@ function renderRecipientCompByWindow() {
 
 function renderMatrix() {
   const rows = state.data.chartData?.voteMatrixPower || [];
+  const interest = state.data.chartData?.recipientVoteInterestSummary || { rows: [] };
+  if (els.matrixInterestSummary) {
+    const optionRows = (interest.rows || [])
+      .filter((row) => row.addressCount || row.totalCompensationGonka)
+      .sort((a, b) => {
+        const order = { yes: 0, no_with_veto: 1, no: 2, abstain: 3, did_not_vote: 4 };
+        return (order[a.voteOption] ?? 99) - (order[b.voteOption] ?? 99);
+      });
+    els.matrixInterestSummary.innerHTML = `
+      <div class="interest-kpi">
+        <strong>${fmt.format(interest.proRecipientCount || 0)} / ${fmt.format(interest.totalRecipientCount || 0)}</strong>
+        <span>recipient addresses voted Yes</span>
+        <em>${fmt.format(interest.proRecipientPct || 0)}% of recipients · ${fmt.format(interest.proCompensationPct || 0)}% of compensation (${gonka(interest.proCompensationGonka || 0)})</em>
+      </div>
+      <div class="interest-kpi">
+        <strong>${fmt.format(interest.againstRecipientCount || 0)} / ${fmt.format(interest.totalRecipientCount || 0)}</strong>
+        <span>recipient addresses voted against</span>
+        <em>${fmt.format(interest.againstRecipientPct || 0)}% of recipients · ${fmt.format(interest.againstCompensationPct || 0)}% of compensation (${gonka(interest.againstCompensationGonka || 0)})</em>
+      </div>
+      <div class="interest-kpi">
+        <strong>${fmt.format(interest.nonVotingRecipientCount || 0)} / ${fmt.format(interest.totalRecipientCount || 0)}</strong>
+        <span>recipient addresses did not vote</span>
+        <em>${fmt.format(interest.nonVotingRecipientPct || 0)}% of recipients · ${fmt.format(interest.nonVotingCompensationPct || 0)}% of compensation (${gonka(interest.nonVotingCompensationGonka || 0)})</em>
+      </div>
+      <div class="interest-breakdown">
+        ${optionRows.map((row) => `
+          <span class="tag" style="border-color:${optionColors[row.voteOption] || optionColors.did_not_vote}">
+            ${escapeHtml(optionLabels[row.voteOption] || row.voteOption)}:
+            ${fmt.format(row.addressCount || 0)} recipients,
+            ${fmt.format(row.addressPct || 0)}%,
+            ${gonka(row.totalCompensationGonka || 0)}
+          </span>
+        `).join("")}
+      </div>
+      <div class="interest-note">${escapeHtml(interest.interpretation || "")}</div>
+    `;
+  }
   const byKey = new Map(rows.map((row) => [`${row.recipientStatus}:${row.voteOption}`, row]));
   const emptyRow = { addressCount: 0, totalCompensationGonka: 0, votingPower: 0 };
   const getRow = (recipientStatus, voteOption) => byKey.get(`${recipientStatus}:${voteOption}`) || emptyRow;

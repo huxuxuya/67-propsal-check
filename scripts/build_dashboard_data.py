@@ -4265,6 +4265,53 @@ def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomal
     recipient_by_address = {row["address"]: row for row in recipients}
     vote_options = ["yes", "no", "abstain", "no_with_veto"]
     vote_by_address = {vote["voter"]: vote for vote in votes}
+    recipient_vote_summary_groups = defaultdict(lambda: {"addresses": set(), "totalCompensationGonka": 0, "votingPower": 0})
+    total_recipient_compensation = sum(row.get("totalGonka", 0) for row in recipients)
+    for recipient in recipients:
+        vote = vote_by_address.get(recipient["address"])
+        vote_option = vote.get("primaryOption") if vote else "did_not_vote"
+        group = recipient_vote_summary_groups[vote_option]
+        group["addresses"].add(recipient["address"])
+        group["totalCompensationGonka"] += recipient.get("totalGonka", 0)
+        group["votingPower"] += vote.get("votingPower") or 0 if vote else 0
+    recipient_vote_interest_rows = []
+    for option in [*vote_options, "did_not_vote"]:
+        group = recipient_vote_summary_groups[option]
+        address_count = len(group["addresses"])
+        total_compensation = group["totalCompensationGonka"]
+        recipient_vote_interest_rows.append(
+            {
+                "voteOption": option,
+                "addressCount": address_count,
+                "addressPct": round(address_count / len(recipients) * 100, 6) if recipients else 0,
+                "totalCompensationGonka": round(total_compensation, 6),
+                "compensationPct": round(total_compensation / total_recipient_compensation * 100, 6) if total_recipient_compensation else 0,
+                "votingPower": round(group["votingPower"], 6),
+                "addresses": sorted(group["addresses"]),
+            }
+        )
+    pro_rows = [row for row in recipient_vote_interest_rows if row["voteOption"] == "yes"]
+    against_rows = [row for row in recipient_vote_interest_rows if row["voteOption"] in {"no", "no_with_veto"}]
+    non_voting_rows = [row for row in recipient_vote_interest_rows if row["voteOption"] == "did_not_vote"]
+    recipient_vote_interest_summary = {
+        "totalRecipientCount": len(recipients),
+        "totalCompensationGonka": round(total_recipient_compensation, 6),
+        "rows": recipient_vote_interest_rows,
+        "proRecipientCount": sum(row["addressCount"] for row in pro_rows),
+        "proRecipientPct": round(sum(row["addressCount"] for row in pro_rows) / len(recipients) * 100, 6) if recipients else 0,
+        "proCompensationGonka": round(sum(row["totalCompensationGonka"] for row in pro_rows), 6),
+        "proCompensationPct": round(sum(row["totalCompensationGonka"] for row in pro_rows) / total_recipient_compensation * 100, 6) if total_recipient_compensation else 0,
+        "againstRecipientCount": sum(row["addressCount"] for row in against_rows),
+        "againstRecipientPct": round(sum(row["addressCount"] for row in against_rows) / len(recipients) * 100, 6) if recipients else 0,
+        "againstCompensationGonka": round(sum(row["totalCompensationGonka"] for row in against_rows), 6),
+        "againstCompensationPct": round(sum(row["totalCompensationGonka"] for row in against_rows) / total_recipient_compensation * 100, 6) if total_recipient_compensation else 0,
+        "nonVotingRecipientCount": sum(row["addressCount"] for row in non_voting_rows),
+        "nonVotingRecipientPct": round(sum(row["addressCount"] for row in non_voting_rows) / len(recipients) * 100, 6) if recipients else 0,
+        "nonVotingCompensationGonka": round(sum(row["totalCompensationGonka"] for row in non_voting_rows), 6),
+        "nonVotingCompensationPct": round(sum(row["totalCompensationGonka"] for row in non_voting_rows) / total_recipient_compensation * 100, 6) if total_recipient_compensation else 0,
+        "interpretation": "Recipient-voter overlap is a direct financial interest signal: the same address both received compensation and cast a governance vote. It does not prove motive or owner-level coordination.",
+    }
+
     vote_matrix_groups = defaultdict(lambda: {"addresses": set(), "totalCompensationGonka": 0, "votingPower": 0})
     for address in sorted(set(recipient_by_address) | set(vote_by_address)):
         recipient = recipient_by_address.get(address)
@@ -4396,6 +4443,7 @@ def build_dashboard_chart_data(proposal, recipients, votes, epochs, epoch_anomal
 
     return {
         "voteMatrixPower": vote_matrix,
+        "recipientVoteInterestSummary": recipient_vote_interest_summary,
         "compensationComponents": compensation_components,
         "participantEpochTimeline": build_participant_epoch_timeline(recipients, votes),
         "timingLeads": sorted(timing_leads, key=lambda row: (-row["anomalyScore"], -row["e287Weight"], row["address"])),
