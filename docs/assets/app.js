@@ -1834,47 +1834,182 @@ function renderModelCapMechanics() {
     },
   }, true);
 
-  const paramRows = (payload.paramModelRows || []).filter((row) => row.position === "start" || row.position === "change" || row.position === "end");
-  const paramEpochs = [...new Set(paramRows.map((row) => `${row.epoch}:${row.position}`))].sort((a, b) => {
-    const [epochA, posA] = a.split(":");
-    const [epochB, posB] = b.split(":");
-    const order = { start: 0, change: 1, end: 2 };
-    return Number(epochA) - Number(epochB) || (order[posA] || 0) - (order[posB] || 0);
+  const paramRows = (payload.paramModelRows || [])
+    .filter((row) => row && Number.isFinite(Number(row.epoch)) && (row.position === "start" || row.position === "change" || row.position === "end"));
+  const paramModelRows = [...new Set(paramRows.map((row) => row.modelLabel || row.modelId || "Unknown"))].sort();
+  const positionPriority = { start: 0, change: 1, end: 2 };
+  const positionLabel = { start: "start", change: "change", end: "end" };
+  const timelinePointByKey = new Map();
+  const timelinePoints = [];
+  const modelScaleByPoint = new Map();
+  const changeByModelEpoch = new Map();
+  const capByPoint = new Map();
+  const sortedParamRows = [...paramRows].sort((a, b) => {
+    const byEpoch = Number(a.epoch) - Number(b.epoch);
+    if (byEpoch !== 0) return byEpoch;
+    const byPosition = (positionPriority[a.position] || 0) - (positionPriority[b.position] || 0);
+    if (byPosition !== 0) return byPosition;
+    return (Number(a.height) || 0) - (Number(b.height) || 0);
   });
-  const paramLabels = paramEpochs.map((key) => {
-    const [epoch, position] = key.split(":");
-    return position === "end" ? `e${epoch}` : `e${epoch} ${position}`;
+
+  for (const row of sortedParamRows) {
+    const model = row.modelLabel || row.modelId || "Unknown";
+    const epoch = Number(row.epoch);
+    const position = row.position || "end";
+    const height = Number(row.height || 0);
+    const pointKey = `${epoch}|${position}`;
+    if (!timelinePointByKey.has(pointKey)) {
+      const point = {
+        key: pointKey,
+        epoch,
+        position,
+        height,
+        label: `e${epoch} ${positionLabel[position] || position}`,
+      };
+      timelinePointByKey.set(pointKey, point);
+      timelinePoints.push(point);
+    } else {
+      const point = timelinePointByKey.get(pointKey);
+      if (!point.height) {
+        point.height = point.height || height;
+      }
+    }
+
+    const scaleKey = `${pointKey}|${model}`;
+    const existingScale = modelScaleByPoint.get(scaleKey);
+    const nextPriority = positionPriority[position] || 0;
+    const currentPriority = positionPriority[existingScale?.position || ""] || 0;
+    const nextHeight = Number(row.height || 0);
+    const currentHeight = Number(existingScale?.height || 0);
+    if (!existingScale || nextPriority > currentPriority || (nextPriority === currentPriority && nextHeight >= currentHeight)) {
+      modelScaleByPoint.set(scaleKey, row);
+    }
+
+    if (row.position === "change") {
+      const changeKey = `${model}|${epoch}`;
+      const existing = changeByModelEpoch.get(changeKey);
+      const existingHeight = Number(existing?.height || 0);
+      if (!existing || nextHeight >= existingHeight) {
+        changeByModelEpoch.set(changeKey, row);
+      }
+    }
+
+    const capKey = pointKey;
+    const existingCap = capByPoint.get(capKey);
+    const existingCapPriority = existingCap ? positionPriority[existingCap.position] || 0 : -1;
+    if (!existingCap || nextPriority > existingCapPriority || (nextPriority === existingCapPriority && nextHeight >= (Number(existingCap.height) || 0))) {
+      capByPoint.set(capKey, row);
+    }
+  }
+
+  timelinePoints.sort((a, b) => {
+    const byEpoch = a.epoch - b.epoch;
+    if (byEpoch !== 0) return byEpoch;
+    const byPosition = (positionPriority[a.position] || 0) - (positionPriority[b.position] || 0);
+    if (byPosition !== 0) return byPosition;
+    return (a.height || 0) - (b.height || 0);
   });
-  const paramModels = [...new Set(paramRows.map((row) => row.modelLabel || row.modelId))].sort();
-  const paramByKey = new Map(paramRows.map((row) => [`${row.epoch}:${row.position}|${row.modelLabel || row.modelId}`, row]));
+
+  const timelineIndexByKey = new Map(timelinePoints.map((point, index) => [point.key, index]));
+  const capTimelineSeries = timelinePoints.map((point) => {
+    const row = capByPoint.get(point.key);
+    return row && row.capFactor != null ? row.capFactor : null;
+  });
+
+  const paramByModelAndPoint = (model, point) => modelScaleByPoint.get(`${point.key}|${model}`);
+
   state.charts.scaleTimeline.setOption({
     grid: { left: 62, right: 24, top: 42, bottom: 62 },
-    legend: { top: 6, textStyle: { color: "#a7afba" } },
+    legend: { top: 6, textStyle: { color: "#a7afba" }, selectedMode: true },
     tooltip: chartTooltip({
       trigger: "axis",
       formatter: (params) => {
-        const key = paramEpochs[params[0]?.dataIndex] || "";
-        const lines = [`<strong>${escapeHtml(paramLabels[params[0]?.dataIndex] || "")}</strong>`];
+        const point = timelinePoints[params[0]?.dataIndex];
+        if (!point) return "";
+        const lines = [`<strong>${point.label}</strong>`, `block height ${fmt.format(point.height || 0)}`];
+        const capRow = capByPoint.get(point.key);
+        if (capRow) {
+          const capSource = capRow.position || "snapshot";
+          const capHeight = Number(capRow.height || 0);
+          lines.push(`capFactor ${fmt.format(capRow.capFactor || 0)}x from ${capSource} @${capHeight ? fmt.format(capHeight) : "n/a"}`);
+        }
         for (const item of params) {
-          const row = paramByKey.get(`${key}|${item.seriesName}`);
+          const model = String(item.seriesName || "").replace(/ scale$/, "");
+          if (!paramModelRows.includes(model)) continue;
+          const row = paramByModelAndPoint(model, point);
           if (!row) continue;
-          lines.push(`<span style="color:${item.color}">●</span> ${escapeHtml(row.modelLabel || row.modelId)}: ${fmt.format(row.weightScaleFactor || 0)}x`, `height ${fmt.format(row.height || 0)} · cap ${fmt.format(row.capFactor || 0)} · initial ${escapeHtml(row.initialModelLabel || "")}`);
+          lines.push(`<span style="color:${item.color}">●</span> ${escapeHtml(model)}: ${fmt.format(item.value || 0)}x`);
+          if (row.position || row.height) {
+            lines.push(`snapshot ${row.position || "snapshot"} @${fmt.format(row.height || 0)} · scale ${fmt.format(row.weightScaleFactor || 0)}x`);
+          }
+          const changeRow = changeByModelEpoch.get(`${model}|${point.epoch}`);
+          if (changeRow && Number(changeRow.weightScaleFactor || 0) !== Number(item.value || 0)) {
+            lines.push(`  changed inside epoch @${fmt.format(changeRow.height || 0)}: ${fmt.format(changeRow.weightScaleFactor || 0)}x`);
+          }
         }
         return lines.join("<br>");
       },
     }),
-    xAxis: { type: "category", data: paramLabels, axisLabel: { color: "#a7afba", rotate: 30 } },
+    xAxis: {
+      type: "category",
+      data: timelinePoints.map((point) => point.label || `e${point.epoch}`),
+      axisLabel: { color: "#a7afba", rotate: 30 },
+      axisTick: { alignWithLabel: true },
+      name: "param snapshot",
+      nameTextStyle: { color: "#a7afba" },
+    },
     yAxis: { type: "value", axisLabel: { color: "#a7afba" }, name: "scale factor", nameTextStyle: { color: "#a7afba" } },
-    series: paramModels.map((label, index) => ({
-      name: label,
-      type: "line",
-      step: "end",
-      connectNulls: true,
-      symbolSize: 7,
-      data: paramEpochs.map((key) => paramByKey.get(`${key}|${label}`)?.weightScaleFactor ?? null),
-      lineStyle: { width: 3, color: modelCapColor(label, index) },
-      itemStyle: { color: modelCapColor(label, index) },
-    })),
+    series: [
+      {
+        name: "Cap factor",
+        type: "line",
+        data: capTimelineSeries,
+        symbol: "circle",
+        symbolSize: 8,
+        step: "end",
+        showSymbol: true,
+        lineStyle: { width: 2, color: "#d7a84f", type: "dashed" },
+        itemStyle: { color: "#d7a84f" },
+        tooltip: { show: false },
+      },
+      ...paramModelRows.map((label, index) => {
+        const modelColor = modelCapColor(label, index);
+        const changeMarkers = timelinePoints
+          .map((point) => {
+            const row = paramByModelAndPoint(label, point);
+            if (!row || row.position !== "change" || row.weightScaleFactor == null) return null;
+            const x = timelineIndexByKey.get(point.key);
+            if (x === undefined) return null;
+            return {
+              value: String(row.height || 0),
+              xAxis: x,
+              yAxis: row.weightScaleFactor,
+              name: "change",
+            };
+          })
+          .filter(Boolean);
+        return {
+          name: `${label} scale`,
+          type: "line",
+          step: "end",
+          data: timelinePoints.map((point) => {
+            const row = paramByModelAndPoint(label, point);
+            return row?.weightScaleFactor == null ? null : row.weightScaleFactor;
+          }),
+          connectNulls: false,
+          symbolSize: 7,
+          lineStyle: { width: 2.8, color: modelColor },
+          itemStyle: { color: modelColor },
+          markPoint: {
+            symbol: "diamond",
+            symbolSize: 8,
+            symbolRotate: 0,
+            label: { show: false },
+            data: changeMarkers,
+          },
+        };
+      }),
+    ],
   }, true);
 
   const kimiPressureRows = kimiRows

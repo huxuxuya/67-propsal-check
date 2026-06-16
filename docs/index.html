@@ -285,6 +285,7 @@
                 <div class="chart-note">
                   ComputeGroupCap is an anti-dominance guard: a non-initial model group like Kimi can only count up to 75% of the previous epoch's total network weight. When Kimi tries to return above that limit, the excess is clipped until the network total catches up.
                   “No e266 attack” rebuilds e266 from reconstructed entry commit weight, then carries that simulated total_weight forward into later cap checks.
+                  Open the <a href="model-cap-actual-latest/index.html" target="_blank" rel="noopener">standalone 3-epoch Actual cap page</a> for independent data.
                 </div>
                 <div class="chart model-cap-mechanics-chart" id="capRecoveryChart"></div>
                 <div class="no-attack-evidence">
@@ -340,7 +341,10 @@
                 <div class="chart model-cap-mechanics-chart" id="capWaterfallChart"></div>
               </div>
               <div class="chart-block">
-                <div class="chart-title">Scale Factor Timeline</div>
+                <div class="chart-title">Model Scale Snapshot Timeline</div>
+                <div class="chart-note">
+                  Shows on-chain model scale/cap snapshots inside each epoch (start/change/end). Lines below use each snapshot point; the markers (diamond) indicate in-epoch change rows.
+                </div>
                 <div class="chart model-cap-mechanics-chart" id="scaleTimelineChart"></div>
               </div>
               <div class="chart-block">

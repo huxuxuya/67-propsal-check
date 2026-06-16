@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model Cap Mechanics (Actual)</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="data/model_cap_actual.js"></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <h1>Model Cap Mechanics (Actual)</h1>
+          <p>Latest 3 epochs, cap denominator, scale params, and next-epoch preview</p>
+        </div>
+        <p id="summaryText">Loading data...</p>
+      </header>
+
+      <section class="panel summary">
+        <div>
+          <h2>Window</h2>
+          <p id="windowText">-</p>
+        </div>
+        <div>
+          <h2>Source</h2>
+          <p id="sourceText">-</p>
+        </div>
+        <div>
+          <h2>Rows</h2>
+          <p id="rowsText">-</p>
+        </div>
+        <div>
+          <p id="fallbackText" class="muted"></p>
+        </div>
+      </section>
+
+      <section class="kpi-strip" id="kpiStrip"></section>
+      <section class="event-strip" id="cappedEvents"></section>
+      <section class="model-strip" id="modelOverview"></section>
+
+      <section class="panel controls">
+        <label>
+          Model
+          <select id="modelSelect">
+            <option value="all">All</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="chart-grid">
+        <section class="panel chart-panel">
+          <h2>Cap Calculation Path</h2>
+          <p class="chart-note">For the selected model: raw subgroup weight is scaled into requested consensus weight, then non-initial models are capped by previous epoch root total multiplied by cap factor. The last point is a preview for the next epoch if the latest requested weight repeats.</p>
+          <div id="capPathChart" class="chart tall"></div>
+        </section>
+
+        <section class="panel chart-panel">
+          <h2>Network Denominator & Next Cap</h2>
+          <p class="chart-note">The root total at the end of an epoch becomes the denominator for the next epoch's model cap. The dashed line shows the next cap limit produced by each epoch's root total.</p>
+          <div id="denominatorChart" class="chart"></div>
+        </section>
+
+        <section class="panel chart-panel">
+          <h2>Cap Pressure Matrix</h2>
+          <p class="chart-note">Pressure is requested weight divided by cap limit. Values above 100% are capped. Initial models are excluded from this matrix because cap does not apply to them.</p>
+          <div id="pressureMatrixChart" class="chart"></div>
+        </section>
+
+        <section class="panel chart-panel">
+          <h2>Param Snapshot Timeline</h2>
+          <p class="chart-note">On-chain cap factor, initial model, and model scale factors at start/end snapshots. This explains which parameters were used before the cap formula was applied.</p>
+          <div id="paramsTimelineChart" class="chart"></div>
+          <div class="table-wrap compact">
+            <table>
+              <thead>
+                <tr>
+                  <th>Epoch</th>
+                  <th>Snapshot</th>
+                  <th>Height</th>
+                  <th>Model</th>
+                  <th>Scale</th>
+                  <th>Cap factor</th>
+                  <th>Initial model</th>
+                </tr>
+              </thead>
+              <tbody id="paramTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Formula Inspector</h2>
+          <span id="tableStatus" class="muted">-</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Epoch</th>
+                <th>Model</th>
+                <th>Raw</th>
+                <th>Scale</th>
+                <th>Requested</th>
+                <th>Basis</th>
+                <th>Cap</th>
+                <th>Counted</th>
+                <th>Clipped</th>
+                <th>Headroom</th>
+                <th>Utilization</th>
+                <th>Participants</th>
+                <th>Nodes</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="rowsTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets/app.js"></script>
+  </body>
+</html>

@@ -46,10 +46,11 @@ def epoch_end_height_from_script(epoch):
     return int(match.group(1).replace("_", "")) if match else 0
 
 
-def load_epoch_group(epoch, rpc_node=""):
-    local = load_upstream_epoch_group(epoch, "healthy" if epoch == 265 else "")
-    if local:
-        return local
+def load_epoch_group(epoch, rpc_node="", prefer_rpc=False):
+    if not prefer_rpc:
+        local = load_upstream_epoch_group(epoch, "healthy" if epoch == 265 else "")
+        if local:
+            return local
     if not rpc_node:
         return {}
     try:
@@ -58,19 +59,19 @@ def load_epoch_group(epoch, rpc_node=""):
         return {}
 
 
-def epoch_end_height(epoch, rpc_node):
-    scripted = epoch_end_height_from_script(epoch)
+def epoch_end_height(epoch, rpc_node, prefer_rpc=False):
+    scripted = 0 if prefer_rpc else epoch_end_height_from_script(epoch)
     if scripted:
         return scripted
-    group = load_epoch_group(epoch, rpc_node)
-    next_group = load_epoch_group(epoch + 1, rpc_node)
+    group = load_epoch_group(epoch, rpc_node, prefer_rpc=prefer_rpc)
+    next_group = load_epoch_group(epoch + 1, rpc_node, prefer_rpc=prefer_rpc)
     if next_group.get("poc_start_block_height"):
         return int(next_group["poc_start_block_height"]) - 1
     return int(group.get("last_block_height") or group.get("effective_block_height") or group.get("poc_start_block_height") or 0)
 
 
-def epoch_start_height(epoch, rpc_node):
-    group = load_epoch_group(epoch, rpc_node)
+def epoch_start_height(epoch, rpc_node, prefer_rpc=False):
+    group = load_epoch_group(epoch, rpc_node, prefer_rpc=prefer_rpc)
     return int(group.get("effective_block_height") or group.get("poc_start_block_height") or 0)
 
 
@@ -355,9 +356,10 @@ def load_existing_cache():
     return load_json(path)
 
 
-def build_rows(epochs, rpc_node, api_node, use_cache=False):
+def build_rows(epochs, rpc_node, api_node, use_cache=False, prefer_rpc=False, height_overrides=None):
     cached = load_existing_cache() if use_cache else {}
     cached_raw = ((cached.get("raw") or {}).get("epochs") or {}) if isinstance(cached, dict) else {}
+    height_overrides = height_overrides or {}
     rows = []
     raw_epochs = {}
     param_snapshots = []
@@ -365,8 +367,8 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
     fetched_at = datetime.now(timezone.utc).isoformat()
 
     for epoch in epochs:
-        height = epoch_end_height(epoch, rpc_node)
-        start_height = epoch_start_height(epoch, rpc_node)
+        height = int(height_overrides.get(epoch) or epoch_end_height(epoch, rpc_node, prefer_rpc=prefer_rpc))
+        start_height = epoch_start_height(epoch, rpc_node, prefer_rpc=prefer_rpc)
         if not height:
             errors.append({"epoch": epoch, "error": "missing_epoch_end_height"})
             continue
@@ -457,9 +459,9 @@ def build_rows(epochs, rpc_node, api_node, use_cache=False):
                     "subgroups": [{"modelId": model_id, "epoch_group_data": group} for model_id, group in sorted(subgroups.items())],
                 }
 
-            prev_root = load_upstream_epoch_group(epoch - 1, "end" if epoch - 1 == 265 else "")
+            prev_root = load_upstream_epoch_group(epoch - 1, "end" if epoch - 1 == 265 else "") if not prefer_rpc else {}
             if not prev_root:
-                prev_root = load_epoch_group(epoch - 1, rpc_node)
+                prev_root = load_epoch_group(epoch - 1, rpc_node, prefer_rpc=prefer_rpc)
             previous_total = int(prev_root.get("total_weight") or 0)
             root_total = int(root.get("total_weight") or 0)
             cap_factor = params["capFactor"]
